@@ -11,12 +11,13 @@ public class RogueController : LivingEntity
     [Header("기본속성")]
     public RogueState rstate = RogueState.None; // 근접적 상태변수
     public float MoveSpeed = 3.5f; //이동 속도
-    public LayerMask targetLayer; // 공격 대상 레이어
-    public LivingEntity target; // 공격 대상
-    public float fRange = 10f; // 수색범위
+    public Vector3 targetPos; //공격 대상 위치
+    public GameObject target; // 공격 대상
+    public int Idlestate;
 
-    private UnityEngine.AI.NavMeshAgent nav; // NavMesh 컴포넌트
+    private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
+    private Rigidbody rigid;
 
     private bool move = false; //움직임 관련 bool값
     private bool attack = false; // 공격 관련 bool값
@@ -25,7 +26,7 @@ public class RogueController : LivingEntity
     {
         get
         {
-            if (target != null && !target.dead)
+            if (target != null )
             {
                 return true;
             }
@@ -65,8 +66,9 @@ public class RogueController : LivingEntity
         rstate = RogueState.Idle;
 
         // 컴포넌트 불러오기
-        nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        anim = GetComponentInChildren<Animator>();
+        nav = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody>();
 
         nav.speed = MoveSpeed;
     }
@@ -94,87 +96,76 @@ public class RogueController : LivingEntity
         }
     }
 
+
+    //애니메이션 상태 체크
+    void AnimationCheck()
+    {
+        switch (rstate)
+        {
+            case RogueState.Idle:
+                Idlestate = Random.Range(0, 3);
+                move = false;
+                attack = false;
+                anim.SetInteger("IdleCheck", Idlestate);
+                break;
+            case RogueState.MoveTarget:
+                move = true;
+                attack = false;
+                break;
+            case RogueState.Attack:
+                move = false;
+                attack = true;
+                break;
+            
+            case RogueState.Die:
+                break;
+        }
+    }
+
     // 대기 상태일때의 동작
     void IdleUpdate()
     {
         if (hasTarget) //타겟이 존재할때
         {
             rstate = RogueState.MoveTarget;
-            return;
         }
         else
         {
-
             nav.isStopped = true; // 동작 정지
-            attack = false; // 공격 false
-            move = false; // 이동 false
-
-        
-            FindNearEnemy(targetLayer); //가까운 상대 찾기 
+            nav.velocity = Vector3.zero; 
         }
 
     }
 
-    //가까운 거리의 적찾기
-    void FindNearEnemy(LayerMask tlayer)
-    {
-
-        Collider[] colliders = Physics.OverlapSphere(this.transform.position, fRange, tlayer);//콜라이더 설정하기
-        Collider colliderMin = null; // 가장가까운 대상의 콜라이더
-        float fPreDist = 99999999.0f; // 가장가까운 대상 거리 float값
-
-        //찾은대상중 가장 가까운 대상을 찾는다.
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            Collider collider = colliders[i];
-            float fDist = Vector3.Distance(collider.transform.position, this.transform.position);
-            //콜라이더를 통해 찾은 타겟과의 거리를 float값으로 계산
-
-            if (colliderMin == null || fPreDist > fDist) // 조건문으로 가장 가까운 대상 찾기
-                colliderMin = collider;
-            fPreDist = fDist;
-
-        }
-       
-        if(colliderMin != null) //콜라이더가 비어있지 않으면
-        { 
-            LivingEntity livingEntity = colliderMin.GetComponent<LivingEntity>();
-
-
-            if (livingEntity != null && !livingEntity.dead) //찾은 리빙엔티티가 죽지않고 null값이 아닐때
-            {
-                target = livingEntity;
-                rstate = RogueState.MoveTarget;
-            }
-        }
-    }
-
-
+   
     void MoveUpdate()
     {
-        move = true; //이동 활성화
-        attack = false; // 공격 비활성화
-        
-        if(bTeleportation)//텔레포트가 가능하면
+        Vector3 lookAtPosition = Vector3.zero;
+
+        if (hasTarget)
         {
-            rstate = RogueState.Teleport;
-            return;
+            targetPos = target.transform.position;
+
+            if (bTeleportation)//텔레포트가 가능하면
+            {
+                rstate = RogueState.Teleport;
+                return;
+            }
+            else if (isCollision && !bTeleportation)// 공격범위에 충돌하고 텔레포트가 불가능할시
+            {
+                rstate = RogueState.Attack; //공격 상태로 변환
+            }
+
+            lookAtPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z); //이동시 바라볼 방향 체크
+
         }
 
-
-        Vector3 temp = target.transform.position;
-        temp.y = this.transform.position.y;
-        this.transform.LookAt(temp); // 공격대상 바라보기
 
         // 추적 실행
         nav.isStopped = false;
-        nav.SetDestination(target.transform.position); // 목적지 설정
+        nav.SetDestination(lookAtPosition); // 목적지 설정
 
 
-        // 타겟이 공격 사거리에 들어온다면
-
-        CheckDistance();
-      
     }
 
     //텔레포트시
@@ -195,49 +186,38 @@ public class RogueController : LivingEntity
             curTpTime = Time.time;
             //순간이동 가능 여부 false로 변경
             bTeleportation = false;
-            CheckDistance();
-        }
-        else
-        {
-            if (curTpTime + tpCooldown <= Time.deltaTime) //텔포 쿨타임 지나면
-            { bTeleportation = true; }
 
+            if (isCollision) //타겟과 충돌시
+            {
+                rstate = RogueState.Attack; //공격으로 상태 전환
+            }
             else
-            { CheckDistance();  } //거리 확인시킴
+            {
+                rstate = RogueState.MoveTarget; //추적으로 상태 전환
+            }
         }
     }
 
-    // 타겟과의 거리 체크
-    void CheckDistance()
+    void CheckTelTime() //텔레포트 쿨타임 체크
     {
-        // 타겟이 공격 사거리에 들어온다면
-        if (Vector3.Distance(this.transform.position, target.transform.position) <= attackRange)
+        if (!bTeleportation)
         {
-            rstate = RogueState.Attack; // 공격상태로 변환
+            if (curTpTime + tpCooldown >= Time.time) //텔포 쿨타임 지나면
+            { bTeleportation = true; }
         }
-        else
-        {
-            rstate = RogueState.MoveTarget; // 이동상태로 변환
-        }
-      
     }
 
     // 공격시
     void AttackUpdate()
     {
-        //dist = target.transform.position - this.transform.position;
-
-        if(Vector3.Distance(this.transform.position, target.transform.position) > attackRange + 0.5f)
+       if (!isCollision) //공격범위보다 멀면
         {
             rstate = RogueState.MoveTarget;
-            return;
         }
         else
         {
-            nav.isStopped = true; // 네비 멈추기
-            attack = true;  // 공격 활성화
-            move = false; // 이동 비활성화
-           
+            nav.isStopped = true; // 네비 멈추기        
+            nav.velocity = Vector3.zero; // 이동속도 줄이기
         }
     }
 
@@ -254,14 +234,7 @@ public class RogueController : LivingEntity
         attackTarget.OnDamage(damage, hitPoint, hitNormal);
     }
 
-    //공격 딜레이
-    IEnumerator WaitUpdate()
-    {
-        anim.SetBool("Attack", attack);
-        yield return new WaitForSeconds(2f);
-        Debug.Log("2");
-       
-    }
+  
 
     // 공격을 당했을때
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
@@ -276,6 +249,16 @@ public class RogueController : LivingEntity
         }
     }
 
+    void OnSetTarget(GameObject _target) //타겟설정
+    {
+        if (hasTarget) //이미 타겟이 있다면
+        {
+            return;
+        }
+        target = _target;
+        //타겟을 향해 이동하는 상태로 전환
+        rstate = RogueState.MoveTarget;
+    }
 
 
     //죽었을때
@@ -299,16 +282,18 @@ public class RogueController : LivingEntity
 
     private void Update()
     {
-        CheckState();
+        if (hasTarget) //타겟이 있다면
+        {
+            sectorCheck();
+        }
+
+        CheckState(); //상태 체크
+        AnimationCheck();
+        CheckTelTime();// 텔레포트 가능 여부 체크
+
         anim.SetBool("Attack", attack);
         anim.SetBool("isRun", move);
 
-        if(hasTarget)
-        {
-            sectorCheck();
-            transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position); //타겟 바라보기    
-        }
-         
     }
     
 
@@ -334,8 +319,6 @@ public class RogueController : LivingEntity
 
     private void OnDrawGizmos() // 범위 그리기
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, fRange);
 
         Handles.color = isCollision ? red : blue;
         Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);

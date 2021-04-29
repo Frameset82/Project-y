@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 2233739336527722863}
   - component: {fileID: 2233739336527722860}
   - component: {fileID: 2103348281}
+  - component: {fileID: 1933678831}
   m_Layer: 9
   m_Name: MeleeEnemy
   m_TagString: Enemy
@@ -155,6 +156,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &1933678831
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2233739336527722866}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: ea591e47895236b4fa8629e6c2021b01, type: 3}
+  m_Controller: {fileID: 9100000, guid: 816937e87b545c54f930e8945a84769b, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5586751657608798434
 GameObject:
   m_ObjectHideFlags: 0
@@ -3924,7 +3944,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7247678137300738402}
-  - component: {fileID: 7247678137309990658}
   m_Layer: 9
   m_Name: MeleeEnemyAnimation
   m_TagString: Enemy
@@ -3961,25 +3980,6 @@ Transform:
   m_Father: {fileID: 2233739336527722861}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &7247678137309990658
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7247678137300647234}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: ea591e47895236b4fa8629e6c2021b01, type: 3}
-  m_Controller: {fileID: 9100000, guid: 816937e87b545c54f930e8945a84769b, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7247678137300647236
 GameObject:
   m_ObjectHideFlags: 0

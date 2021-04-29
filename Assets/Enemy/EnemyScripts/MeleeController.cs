@@ -12,7 +12,7 @@ public class MeleeController : LivingEntity
     public MeleeState mstate = MeleeState.None; // 근접적 상태변수
     public float MoveSpeed = 2.5f; //이동 속도
     public Vector3 targetPos; //공격 대상 위치
-    public LivingEntity target; // 공격 대상
+    public GameObject target; // 공격 대상
     public int Idlestate;
 
     private NavMeshAgent nav; // NavMesh 컴포넌트
@@ -41,7 +41,7 @@ public class MeleeController : LivingEntity
     {
         get
         {
-            if (target != null && !target.dead)
+            if (target != null)
             {
                 return true;
             }
@@ -131,8 +131,7 @@ public class MeleeController : LivingEntity
        
     }
 
-   
-
+  
 
     void MoveUpdate() //추적시에
     {
@@ -196,18 +195,18 @@ public class MeleeController : LivingEntity
     //공격 적용
     public void OnDamageEvent()
     {
-        LivingEntity attackTarget = target.GetComponent<LivingEntity>();
 
+        DummyPlayerController dm = target.GetComponent<DummyPlayerController>();
 
         Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
 
         Vector3 hitNormal = transform.position - target.transform.position;
-
-        attackTarget.OnDamage(damage, hitPoint, hitNormal);
+      
+        dm.OnDamage(damage, hitPoint, hitNormal);
     }
 
 
-    void OnSetTarget(LivingEntity _target)
+    void OnSetTarget(GameObject _target)
     {
         if (hasTarget) //이미 타겟이 있다면
         {

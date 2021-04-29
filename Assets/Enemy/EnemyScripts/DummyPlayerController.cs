@@ -29,19 +29,18 @@ public class DummyPlayerController : LivingEntity
         
         if(Input.GetMouseButtonDown(0)) //마우스클릭시 데미지 입히기(테스트용)
         {
-            OnDamage(10f);
+            //OnDamage(10f);
         }
     }
 
-    public void OnDamage(float damage)  // 데미지를 입는 기능
+    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)  // 데미지를 입는 기능
     {
-        health -= damage; 
+      
+        base.OnDamage(damage, hitPoint, hitNormal);
         animator.SetTrigger("IsHit");
+ 
         // 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
-        if (health <= 0 && !dead)
-        {
-            Die();
-        }
+      
         
     }
 
