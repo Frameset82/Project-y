@@ -202,7 +202,7 @@ public class RogueController : LivingEntity
     {
         if (!bTeleportation)
         {
-            if (curTpTime + tpCooldown >= Time.time) //텔포 쿨타임 지나면
+            if (curTpTime + tpCooldown <= Time.time) //텔포 쿨타임 지나면
             { bTeleportation = true; }
         }
     }
@@ -218,11 +218,12 @@ public class RogueController : LivingEntity
         {
             nav.isStopped = true; // 네비 멈추기        
             nav.velocity = Vector3.zero; // 이동속도 줄이기
+            transform.LookAt(target.transform);
         }
     }
 
     //공격 적용
-    public void OnDamageEvent()
+    public void OnAttackEvent()
     {
         LivingEntity attackTarget = target.GetComponent<LivingEntity>();
 

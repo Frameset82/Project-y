@@ -189,11 +189,13 @@ public class MeleeController : LivingEntity
         else
         {
             nav.isStopped = true; // 네비 멈추기
+            nav.velocity = Vector3.zero;
+            transform.LookAt(target.transform);
         }      
     }
 
     //공격 적용
-    public void OnDamageEvent()
+    public void OnAttackEvent()
     {
 
         DummyPlayerController dm = target.GetComponent<DummyPlayerController>();
