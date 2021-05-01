@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: 28772bd41e5600740ad3adbd39a8b151
+guid: 6381ef22c4a174449a45a14cc90ae199
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: RifleRun
+    second: Rifle Idle (1)
+  - first:
+      74: 6844528070769776256
+    second: Rifle Idle1
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,23 +38,23 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: RifleRun
+      name: Rifle Idle1
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 22
+      lastFrame: 257
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
