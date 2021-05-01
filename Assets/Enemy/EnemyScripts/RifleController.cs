@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.AI;
 
 public class RifleController : LivingEntity
@@ -11,21 +12,24 @@ public class RifleController : LivingEntity
     [Header("기본속성")]
     public RifleState rstate = RifleState.None; // 근접적 상태변수
     public float MoveSpeed = 3.5f; //이동 속도
-    public LayerMask targetLayer; // 공격 대상 레이어
-    public LivingEntity target; // 공격 대상
-    public float fRange = 10f; // 수색범위
+    public Vector3 targetPos; //공격 대상 위치
+    public GameObject target; // 공격 대상
+    public int Idlestate; 
 
-    private UnityEngine.AI.NavMeshAgent nav; // NavMesh 컴포넌트
+    private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
+    public Rig aimLayer; //리그 레이어 
+    public float aimDuration = 0.3f; // 공격 상태로 전환 시간 
 
     private bool move = false; //움직임 관련 bool값
     private bool attack = false; // 공격 관련 bool값
+  
 
     private bool hasTarget
     {
         get
         {
-            if (target != null && !target.dead)
+            if (target != null )
             {
                 return true;
             }
@@ -35,12 +39,8 @@ public class RifleController : LivingEntity
 
     [Header("전투 속성")]
     public float damage = 20f; // 공격력
+    public float attackRange = 7f; // 공격 사거리
 
-    private float timeBetAttack = 0.5f; // 공격 딜레이
-                                        // private float lastAttackTime = 0f; // 마지막 공격 시점
-    private Vector3 dist; // 공격 대상과의 거리                              
-
-    private float attackRange = 2f; // 공격 사거리
 
 
     [Header("공격범위 속성")]
@@ -51,15 +51,17 @@ public class RifleController : LivingEntity
     float dotValue = 0f;
     Vector3 direction;
 
-    private void Start()
+    private void Awake()
+    {
+        // 컴포넌트 불러오기
+        nav = GetComponent<NavMeshAgent>();
+        anim = GetComponentInChildren<Animator>();  
+    }
+
+    protected override void OnEnable()
     {
         //대기 상태로 설정
         rstate = RifleState.Idle;
-
-        // 컴포넌트 불러오기
-        nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        anim = GetComponentInChildren<Animator>();
-
         nav.speed = MoveSpeed;
     }
 
@@ -83,115 +85,89 @@ public class RifleController : LivingEntity
         }
     }
 
+
+    void AnimationCheck()
+    {
+        switch (rstate)
+        {
+            case RifleState.Idle:
+                Idlestate = Random.Range(0, 3);
+                move = false;
+                attack = false;
+                anim.SetInteger("Idlestate", Idlestate);
+                aimLayer.weight -= Time.deltaTime / aimDuration;
+                break;
+
+            case RifleState.MoveTarget:
+                move = true;
+                attack = false;
+                aimLayer.weight -= Time.deltaTime / aimDuration;
+                break;
+            case RifleState.Attack:
+                move = false;
+                attack = true;
+                aimLayer.weight += Time.deltaTime / aimDuration;
+                break;
+            case RifleState.Die:
+     
+                break;
+        }
+    }
+
     // 대기 상태일때의 동작
     void IdleUpdate()
     {
         if (hasTarget) //타겟이 존재할때
         {
-            rstate = RifleState.MoveTarget;
-            return;
+            rstate = RifleState.MoveTarget;       
         }
         else
         {
-
             nav.isStopped = true; // 동작 정지
-            attack = false; // 공격 false
-            move = false; // 이동 false
-            FindNearEnemy(targetLayer); //가까운 상대 찾기 
+            nav.velocity = Vector3.zero; // 속도 0으로 지정
         }
 
     }
 
-    //가까운 거리의 적찾기
-    void FindNearEnemy(LayerMask tlayer)
-    {
-
-        Collider[] colliders = Physics.OverlapSphere(this.transform.position, fRange, tlayer);//콜라이더 설정하기
-        Collider colliderMin = null; // 가장가까운 대상의 콜라이더
-        float fPreDist = 99999999.0f; // 가장가까운 대상 거리 float값
-
-        //찾은대상중 가장 가까운 대상을 찾는다.
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            Collider collider = colliders[i];
-            float fDist = Vector3.Distance(collider.transform.position, this.transform.position);
-            //콜라이더를 통해 찾은 타겟과의 거리를 float값으로 계산
-
-            if (colliderMin == null || fPreDist > fDist) // 조건문으로 가장 가까운 대상 찾기
-                colliderMin = collider;
-            fPreDist = fDist;
-
-        }
-
-        if (colliderMin != null) //콜라이더가 비어있지 않으면
-        {
-            LivingEntity livingEntity = colliderMin.GetComponent<LivingEntity>();
-
-
-            if (livingEntity != null && !livingEntity.dead) //찾은 리빙엔티티가 죽지않고 null값이 아닐때
-            {
-                target = livingEntity;
-                rstate = RifleState.MoveTarget;
-            }
-        }
-    }
-
+   
 
     void MoveUpdate()
     {
-        move = true; //이동 활성화
-        attack = false; // 공격 비활성화
+        Vector3 lookAtPosition = Vector3.zero;
 
-      
+        if(hasTarget)
+        {
+            targetPos = target.transform.position;
 
+            if(isCollision)
+            {
+                rstate = RifleState.Attack;
+            }
 
-        Vector3 temp = target.transform.position;
-        temp.y = this.transform.position.y;
-        this.transform.LookAt(temp); // 공격대상 바라보기
+            lookAtPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
+        }
 
         // 추적 실행
         nav.isStopped = false;
-        nav.SetDestination(target.transform.position); // 목적지 설정
-
-
-        // 타겟이 공격 사거리에 들어온다면
-
-        CheckDistance();
+        nav.SetDestination(lookAtPosition); // 목적지 설정
 
     }
 
-
-
-    // 타겟과의 거리 체크
-    void CheckDistance()
-    {
-        // 타겟이 공격 사거리에 들어온다면
-        if (Vector3.Distance(this.transform.position, target.transform.position) <= attackRange)
-        {
-            rstate = RifleState.Attack; // 공격상태로 변환
-        }
-        else
-        {
-            rstate = RifleState.MoveTarget; // 이동상태로 변환
-        }
-
-    }
 
     // 공격시
     void AttackUpdate()
     {
-        //dist = target.transform.position - this.transform.position;
+       
 
-        if (Vector3.Distance(this.transform.position, target.transform.position) > attackRange + 0.5f)
+        if (!isCollision)
         {
-            rstate = RifleState.MoveTarget;
-            return;
+            rstate = RifleState.MoveTarget;        
         }
         else
         {
             nav.isStopped = true; // 네비 멈추기
-            attack = true;  // 공격 활성화
-            move = false; // 이동 비활성화
+            nav.velocity = Vector3.zero;
+            transform.LookAt(target.transform);
 
         }
     }
@@ -209,15 +185,6 @@ public class RifleController : LivingEntity
         attackTarget.OnDamage(damage, hitPoint, hitNormal);
     }
 
-    //공격 딜레이
-    IEnumerator WaitUpdate()
-    {
-        anim.SetBool("Attack", attack);
-        yield return new WaitForSeconds(2f);
-        Debug.Log("2");
-
-    }
-
     // 공격을 당했을때
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
@@ -231,6 +198,16 @@ public class RifleController : LivingEntity
         }
     }
 
+    void OnSetTarget(GameObject _target) //타겟설정
+    {
+        if (hasTarget) //이미 타겟이 있다면
+        {
+            return;
+        }
+        target = _target;
+        //타겟을 향해 이동하는 상태로 전환
+        rstate = RifleState.MoveTarget;
+    }
 
 
     //죽었을때
@@ -254,15 +231,18 @@ public class RifleController : LivingEntity
 
     private void Update()
     {
+        if (hasTarget) //타겟이 있다면
+        {
+            sectorCheck();//공격범위 체크
+        }
+
+
         CheckState();
-        anim.SetBool("Attack", attack);
+        AnimationCheck(); //애니메이션 상태 체크
+
+        anim.SetBool("isAttack", attack);
         anim.SetBool("isRun", move);
 
-        if (hasTarget)
-        {
-            sectorCheck();
-            transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position); //타겟 바라보기    
-        }
 
     }
 
@@ -289,8 +269,6 @@ public class RifleController : LivingEntity
 
     private void OnDrawGizmos() // 범위 그리기
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, fRange);
 
         Handles.color = isCollision ? red : blue;
         Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
