@@ -64,26 +64,31 @@ public class PlayerAnimation : MonoBehaviour
     public void Attack()
     {
         playerAnimator.SetTrigger("Attack");
-        playerAnimator.SetBool("isMove", false);
+       /* playerAnimator.SetBool("isMove", false);*/
     }
 
-/*    public void MeleeAttack()
+    public void RunFire()
     {
-        playerAnimator.SetTrigger("MeleeAttack");
-        playerAnimator.SetBool("isMove", false);
-    }
-    public void LongMeleeAttack()
-    {
-        playerAnimator.SetTrigger("LongMeleeAttack");
-        playerAnimator.SetBool("isMove", false);
+        playerAnimator.SetBool("RunFire", true);
     }
 
-    public void SpearAttack()
-    {
-        playerAnimator.SetTrigger("SpearAttack");
-        playerAnimator.SetBool("isMove", false);
-    }
-*/
+    /*    public void MeleeAttack()
+        {
+            playerAnimator.SetTrigger("MeleeAttack");
+            playerAnimator.SetBool("isMove", false);
+        }
+        public void LongMeleeAttack()
+        {
+            playerAnimator.SetTrigger("LongMeleeAttack");
+            playerAnimator.SetBool("isMove", false);
+        }
+
+        public void SpearAttack()
+        {
+            playerAnimator.SetTrigger("SpearAttack");
+            playerAnimator.SetBool("isMove", false);
+        }
+    */
 
     public void Dead()
     {
