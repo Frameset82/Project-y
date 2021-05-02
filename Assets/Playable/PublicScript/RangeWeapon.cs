@@ -6,7 +6,7 @@ public class RangeWeapon : Weapon
 {
     public override void OnAttack()
     {
-        throw new System.NotImplementedException();
+        Bullet.rangeHitTarget.GetComponent<LivingEntity>().OnDamage(5.0f, transform.forward, transform.forward);
     }
     
     public override void OnActive()

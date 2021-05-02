@@ -11,8 +11,6 @@ public class keyboardController : MonoBehaviour
     private float timeBetDodge = 1f;
     private float nextDodgeableTime = 0f;
 
-    private Vector3 moveDestination;
-
     private keyboardInput keyboardInput; // 플레이어 입력 컴포넌트
     private PlayerEquipmentManager playerEquipmentManager;
     private Rigidbody playerRigidbody; // 캐릭터 리지드바디
@@ -27,6 +25,7 @@ public class keyboardController : MonoBehaviour
 
     public float currentAttackTime = 0.0f;
     public int comboCnt = 0;
+
     public enum PlayerState // 플레이어 상태 리스트
     {
         Idle, // 가만히 서있는 상태
@@ -134,30 +133,6 @@ public class keyboardController : MonoBehaviour
         {
             Debug.Log("무기없음");
             yield return new WaitForSeconds(0.0f);
-            /*            if (!playerAnimation.CompareStateName("2"))
-                        {
-                            float currentAttackTime = Time.time;
-
-                            if (currentAttackTime - mAttackTime < 1f && comboCnt != 1) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
-                                comboCnt += 1;
-                            else
-                                comboCnt = 0;
-
-                            switch (comboCnt)
-                            {
-                                case 0:
-                                    playerAnimation.abc1();
-                                    break;
-                                case 1:
-                                    playerAnimation.abc2();
-                                    comboCnt = -1;
-                                    break;
-                            }
-                            mAttackTime = currentAttackTime;
-
-                        }
-                        keyboardInput.isShoot = false;
-                        yield return null;*/
         }
         else if (playerEquipmentManager.equipWeapon.tag == "Rifle")
         {
@@ -202,12 +177,14 @@ public class keyboardController : MonoBehaviour
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
             }
             yield return new WaitForSeconds(0f);
+            playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
         }
         else if (playerEquipmentManager.equipWeapon.tag == "LongMelee")
         {
             playerAnimation.Attack();
             yield return new WaitForSeconds(1.3f);
+            playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
             pState = PlayerState.Idle;
         }
@@ -215,6 +192,7 @@ public class keyboardController : MonoBehaviour
         {
             playerAnimation.Attack();
             yield return new WaitForSeconds(1f);
+            playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
             pState = PlayerState.Idle;
         }

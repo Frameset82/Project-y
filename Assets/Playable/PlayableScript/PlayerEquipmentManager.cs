@@ -24,6 +24,8 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public GameObject dropWeapon1; // 무기 두칸이 다 차있을경우 떨어트릴 무기
     public GameObject dropWeapon2;
+
+    public Weapon weapon;
     void Interation()
     {
         if (Input.GetButtonDown("Interation") && nearObject != null)
@@ -169,5 +171,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         Interation();
         Swap();
+        if(equipWeapon != null)
+            weapon = equipWeapon.GetComponent<Weapon>();
     }
 }
