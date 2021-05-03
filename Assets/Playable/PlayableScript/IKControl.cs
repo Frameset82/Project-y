@@ -8,19 +8,54 @@ public class IKControl : MonoBehaviour
     public Transform leftHandMount; // 총의 왼쪽 손잡이, 왼손이 위치할 지점
     public Transform rightHandMount; // 오른손으로 총 잡는 지점
     public Animator playerAnimator; // 애니메이터 컴포넌트
-
- /*   public Transform swordPivot;
-    public Transform sleftHandMount;
-    public Transform srightHandMount;*/
+    private PlayerEquipmentManager playerEquipmentManager;
+    private GameObject player;
+    public string weaponName;
+    private string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
 
     void Start () 
     {
-        playerAnimator = gameObject.GetComponent<Animator>();
+        player = GameObject.Find("Player");
+        playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
     }
 
     private void Update()
     {
-        
+        playerAnimator = gameObject.GetComponent<Animator>();
+
+        if (playerEquipmentManager.equipWeapon != null)
+        {
+            if (playerEquipmentManager.equipWeapon.tag == "Spear")
+            {
+                weaponName = playerEquipmentManager.equipWeapon.name;
+                leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
+                rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
+            }
+            else if (playerEquipmentManager.equipWeapon.tag == "Melee")
+            {
+                weaponName = playerEquipmentManager.equipWeapon.name;
+                leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
+                rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
+            }
+            else if (playerEquipmentManager.equipWeapon.tag == "Sword")
+            {
+                weaponName = playerEquipmentManager.equipWeapon.name;
+                leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
+                rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
+            }
+            else if (playerEquipmentManager.equipWeapon.tag == "Gun")
+            {
+                weaponName = playerEquipmentManager.equipWeapon.name;
+                leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
+                rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
+            }
+            else if (playerEquipmentManager.equipWeapon.tag == "Rifle")
+            {
+                weaponName = playerEquipmentManager.equipWeapon.name;
+                leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
+                rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
+            }
+        }
     }
 
     void OnAnimatorIK(int layerIndex) {

@@ -9,8 +9,12 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
     public float delay;
     public float attackSpeed = 1.0f;
     public bool canAttack;
-    
-    public Animator animator;
+    [Header("장착 무기 타입")]
+    public bool isMelee;
+    public bool isSword;
+    public bool isSpear;
+    public bool isGun;
+    public bool isRifle;
 
     public abstract void OnAttack();    // 공격 기능
     public abstract void OnActive();    // 무기 액티브 스킬 기능
