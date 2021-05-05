@@ -6749,7 +6749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940a5d01f60b3a1438c015dc95216660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damege: 0
+  damage: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
@@ -7174,7 +7174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399418b794ff7d04eaa59b72f58e06da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damege: 0
+  damage: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
@@ -7190,6 +7190,7 @@ MonoBehaviour:
     m_Bits: 0
   enemies: []
   isCollision: 0
+  player: {fileID: 0}
 --- !u!1 &534517197 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4990402973033692420, guid: 53a68804edf27de46988c660eff01a88,
@@ -15288,7 +15289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940a5d01f60b3a1438c015dc95216660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damege: 0
+  damage: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
@@ -15609,6 +15610,12 @@ MonoBehaviour:
   healthSlider: {fileID: 1383292660}
   healthText: {fileID: 391639715}
   maxHealth: 0
+  damage: 10
+  AtkSpeed: 0
+  MoveSpeed: 0
+  shield: 0
+  criProbability: 0
+  criDamage: 0
 --- !u!136 &1182832092
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -17352,7 +17359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399418b794ff7d04eaa59b72f58e06da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damege: 0
+  damage: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
@@ -17368,6 +17375,7 @@ MonoBehaviour:
     m_Bits: 0
   enemies: []
   isCollision: 0
+  player: {fileID: 0}
 --- !u!1 &1646192998
 GameObject:
   m_ObjectHideFlags: 0
@@ -17785,21 +17793,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 815574241}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1736823469
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736823466}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 5a4cb9b0e09b5904883f03175571334a, type: 3}
---- !u!114 &1736823470
+--- !u!114 &1736823467
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17808,10 +17802,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1736823466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 399418b794ff7d04eaa59b72f58e06da, type: 3}
+  m_Script: {fileID: 11500000, guid: e11ed046f69e9f540a47ca28c62cf6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damege: 0
+  damage: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
@@ -17827,6 +17821,22 @@ MonoBehaviour:
     m_Bits: 512
   enemies: []
   isCollision: 0
+  player: {fileID: 0}
+  playerInfo: {fileID: 0}
+--- !u!64 &1736823469
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736823466}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 5a4cb9b0e09b5904883f03175571334a, type: 3}
 --- !u!1 &1741611724
 GameObject:
   m_ObjectHideFlags: 0

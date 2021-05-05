@@ -152,12 +152,7 @@ public class keyboardController : MonoBehaviour
         }
         else if (playerEquipmentManager.equipWeapon.tag == "Gun")
         {
-
             playerAnimation.Attack();
-
-            /*yield return new WaitForSeconds(0.05f);*/
-
-            //Instantiate(Bullet, FirePos.transform.position, FirePos.transform.rotation);
             CreateBullet(); //총알 생성하기
 
             //yield return new WaitForSeconds(1f); // 딜레이
