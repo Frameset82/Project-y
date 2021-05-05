@@ -31,7 +31,6 @@ public class keyboardInput : MonoBehaviour
     {
         InputMove();
         InputDodge();
-/*        InputMeleeAttack();*/
     }
 
     private void Update()
@@ -74,7 +73,6 @@ public class keyboardInput : MonoBehaviour
 
     public void InputDodge()
     {
-        RaycastHit hit;
         if (Input.GetButton(dodgeButtonName))
         {
             keyboardController.Dodge();
@@ -97,22 +95,4 @@ public class keyboardInput : MonoBehaviour
 
         }
     }
-
-/*    public void InputMeleeAttack()
-    {
-        if (Input.GetMouseButton(0) && !isShoot)
-        {
-            RaycastHit hit;
-            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.gameObject.tag == "Player") return;
-                Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
-                keyboardController.Attack(destination);
-            }
-
-        }
-    }*/
-
-
 }

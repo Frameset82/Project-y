@@ -15,15 +15,11 @@ public class MeleeWeapon : Weapon
 
     Color _blue = new Color(0f, 0f, 1f, 0.2f);
     Color _red = new Color(1f, 0f, 0f, 0.2f);
-    private GameObject player;
-
+    public GameObject player;
 
     public override void OnAttack()
     {
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            enemies[i].GetComponent<LivingEntity>().OnDamage(5.0f, Vector3.forward, Vector3.forward);
-        }
+        throw new System.NotImplementedException();
     }
 
     public override void OnActive()
@@ -41,8 +37,9 @@ public class MeleeWeapon : Weapon
         CollisionCheck();
     }
 
-    void CollisionCheck()
+    public void CollisionCheck()
     {
+        print("체크중");
         isCollision = false;
         enemies = new List<GameObject>();
 

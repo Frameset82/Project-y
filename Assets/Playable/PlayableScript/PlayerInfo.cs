@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : LivingEntity
+public class PlayerInfo : LivingEntity
 {
+    [Header("체력바 관련")]
     public Slider healthSlider; // 체력바
     public GameObject healthText; // 체력 텍스트
-    public float maxHealth;
+    [Header("플레이어 기본 속성들")]
+    public float maxHealth; // 최대체력( 시작 시 기본체력 )
+    public float damage; // 기본 데미지
+    public float AtkSpeed; // 공격속도
+    public float MoveSpeed; // 이동속도
+    [Header("플레이어 추가 속성들")]
+    public float shield; // 보호막
+    public float criProbability; // 치명타 확률
+    public float criDamage; // 치명타 데미지
 
     public static bool canDamage = true; // 데미지를 받을 수 있는 상태
 
@@ -69,7 +78,6 @@ public class PlayerHealth : LivingEntity
         if(other.tag == "Enemy")
         {
             OnDamage(10.0f, Vector3.forward, Vector3.forward);
-            /*Debug.Log("으악");*/
             return;
         }
     }
@@ -78,11 +86,9 @@ public class PlayerHealth : LivingEntity
     {
         if (other.tag == "HealKit")
         {
-           /* Debug.Log("접촉");*/
             if (Input.GetKeyDown(KeyCode.E))
             {
                 RestoreHealth(5.0f);
-               /* Debug.Log("오우야");*/
             }
         }
     }
