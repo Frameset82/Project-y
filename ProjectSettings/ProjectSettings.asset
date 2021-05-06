@@ -7,7 +7,7 @@ PlayerSettings:
   productGUID: 758f2a293be98184ba91d9044ea34887
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
-  AndroidEnableSustainedPerformanceMode: 0
+  AndroidEnableSustainedPerformanceMode: 1
   defaultScreenOrientation: 4
   targetDevice: 2
   useOnDemandResources: 0
@@ -331,6 +331,9 @@ PlayerSettings:
     m_Automatic: 1
   - m_BuildTarget: WindowsStandaloneSupport
     m_APIs: 02000000
+    m_Automatic: 1
+  - m_BuildTarget: MacStandaloneSupport
+    m_APIs: 1000000011000000
     m_Automatic: 1
   m_BuildTargetVRSettings:
   - m_BuildTarget: Standalone
