@@ -88,7 +88,7 @@ public class keyboardInput : MonoBehaviour
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.gameObject.tag == "Player") return;
+/*                if (hit.collider.gameObject.tag == "Player") return;*/
                 Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
                 keyboardController.Attack(destination);
             }

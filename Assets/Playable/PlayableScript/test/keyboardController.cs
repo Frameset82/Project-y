@@ -95,7 +95,6 @@ public class keyboardController : MonoBehaviour
         playerRigidbody.velocity = Vector3.zero;
 
         playerAnimation.DodgeAni();
-        /*        playerAnimation.MoveAni(false);*/
         yield return new WaitForSeconds(.5f); // 회피 지속시간
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
         playerRigidbody.constraints = RigidbodyConstraints.None;
@@ -134,7 +133,7 @@ public class keyboardController : MonoBehaviour
             Debug.Log("무기없음");
             yield return new WaitForSeconds(0.0f);
         }
-        else if (playerEquipmentManager.equipWeapon.tag == "Rifle")
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true)
         {
             playerAnimation.Attack();
             
@@ -150,7 +149,7 @@ public class keyboardController : MonoBehaviour
             keyboardInput.isShoot = false;
             pState = PlayerState.Idle;
         }
-        else if (playerEquipmentManager.equipWeapon.tag == "Gun")
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
         {
             playerAnimation.Attack();
             CreateBullet(); //총알 생성하기
@@ -160,7 +159,7 @@ public class keyboardController : MonoBehaviour
             keyboardInput.isShoot = false;
             pState = PlayerState.Idle;
         }
-        else if (playerEquipmentManager.equipWeapon.tag == "Melee")
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
         {
             playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점
@@ -175,7 +174,7 @@ public class keyboardController : MonoBehaviour
             playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
         }
-        else if (playerEquipmentManager.equipWeapon.tag == "LongMelee")
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
         {
             playerAnimation.Attack();
             yield return new WaitForSeconds(1.3f);
@@ -183,7 +182,7 @@ public class keyboardController : MonoBehaviour
             keyboardInput.isShoot = false;
             pState = PlayerState.Idle;
         }
-        else if (playerEquipmentManager.equipWeapon.tag == "Spear")
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
         {
             playerAnimation.Attack();
             yield return new WaitForSeconds(1f);

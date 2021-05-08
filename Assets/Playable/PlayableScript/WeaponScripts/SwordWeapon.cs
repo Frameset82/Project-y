@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpearWeapon : MeleeWeapon
+public class SwordWeapon : MeleeWeapon
 {
     public PlayerInfo playerInfo;
 

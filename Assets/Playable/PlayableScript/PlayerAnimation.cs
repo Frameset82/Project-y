@@ -23,23 +23,23 @@ public class PlayerAnimation : MonoBehaviour
             playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[0];
             
         }
-        else if(playerEquipmentManager.equipWeapon.tag == "Rifle")
+        else if(playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true)
         {
             playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[1];
         }
-        else if(playerEquipmentManager.equipWeapon.tag == "Gun")
+        else if(playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
         {
             playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[2];
         }
-        else if(playerEquipmentManager.equipWeapon.tag == "Melee")
+        else if(playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
         {
             playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[3];
         }
-        else if(playerEquipmentManager.equipWeapon.tag == "Spear")
+        else if(playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
         {
             playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[4];
         }
-        else if (playerEquipmentManager.equipWeapon.tag == "LongMelee")
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
         {
             playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[5];
         }
@@ -74,24 +74,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         playerAnimator.SetBool("RunFire", true);
     }
-
-    /*    public void MeleeAttack()
-        {
-            playerAnimator.SetTrigger("MeleeAttack");
-            playerAnimator.SetBool("isMove", false);
-        }
-        public void LongMeleeAttack()
-        {
-            playerAnimator.SetTrigger("LongMeleeAttack");
-            playerAnimator.SetBool("isMove", false);
-        }
-
-        public void SpearAttack()
-        {
-            playerAnimator.SetTrigger("SpearAttack");
-            playerAnimator.SetBool("isMove", false);
-        }
-    */
 
     public void Dead()
     {

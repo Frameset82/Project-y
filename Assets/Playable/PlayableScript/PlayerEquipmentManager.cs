@@ -30,7 +30,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Interation") && nearObject != null)
         {
-            if (nearObject.tag == "Rifle" || nearObject.tag == "Gun" || nearObject.tag == "Melee" || nearObject.tag == "LongMelee" || nearObject.tag == "Spear")
+            if (nearObject.tag == "Weapon")
             {
                 if (mainWeapon == null)
                 {
@@ -148,14 +148,14 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Rifle" || other.tag == "Gun" || other.tag == "Melee" || other.tag == "LongMelee" || other.tag == "Spear")
+        if (other.tag == "Weapon")
         {
             nearObject = other.gameObject;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Rifle" || other.tag == "Gun" || other.tag == "Melee" || other.tag == "LongMelee" || other.tag == "Spear")
+        if (other.tag == "Weapon")
         {
             nearObject = null;
         }

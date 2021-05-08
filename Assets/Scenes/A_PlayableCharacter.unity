@@ -7171,26 +7171,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 489651099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 399418b794ff7d04eaa59b72f58e06da, type: 3}
+  m_Script: {fileID: 11500000, guid: e49da8f8d2a06214c81d59ea230a4aa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
-  isMelee: 0
+  isMelee: 1
   isSword: 0
   isSpear: 0
   isGun: 0
   isRifle: 0
   attackRange: 5
-  angle: 45
+  angle: 90
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   enemies: []
   isCollision: 0
   player: {fileID: 0}
+  playerInfo: {fileID: 0}
 --- !u!1 &534517197 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4990402973033692420, guid: 53a68804edf27de46988c660eff01a88,
@@ -7448,7 +7449,7 @@ PrefabInstance:
     - target: {fileID: 3832703582600972128, guid: bceefb2a39f6db74d9bc9d006687b7f1,
         type: 3}
       propertyPath: m_TagString
-      value: Gun
+      value: Weapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bceefb2a39f6db74d9bc9d006687b7f1, type: 3}
@@ -13467,7 +13468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 123488, guid: f4fe4263ad76c804b8e85876ba6bb4e7, type: 3}
       propertyPath: m_TagString
-      value: Spear
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 474212, guid: f4fe4263ad76c804b8e85876ba6bb4e7, type: 3}
       propertyPath: m_RootOrder
@@ -16458,7 +16459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_TagString
-      value: LongMelee
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_RootOrder
@@ -17194,7 +17195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 118234, guid: a4e476a037022df448ead5d0ceea7d06, type: 3}
       propertyPath: m_TagString
-      value: Rifle
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 453068, guid: a4e476a037022df448ead5d0ceea7d06, type: 3}
       propertyPath: m_RootOrder
@@ -17356,7 +17357,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1643319988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 399418b794ff7d04eaa59b72f58e06da, type: 3}
+  m_Script: {fileID: 11500000, guid: 70017161356bf2e4d837d0aeb27d7ffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
@@ -17364,18 +17365,19 @@ MonoBehaviour:
   attackSpeed: 1
   canAttack: 0
   isMelee: 0
-  isSword: 0
+  isSword: 1
   isSpear: 0
   isGun: 0
   isRifle: 0
   attackRange: 5
-  angle: 45
+  angle: 90
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   enemies: []
   isCollision: 0
   player: {fileID: 0}
+  playerInfo: {fileID: 0}
 --- !u!1 &1646192998
 GameObject:
   m_ObjectHideFlags: 0
@@ -17811,7 +17813,7 @@ MonoBehaviour:
   canAttack: 0
   isMelee: 0
   isSword: 0
-  isSpear: 0
+  isSpear: 1
   isGun: 0
   isRifle: 0
   attackRange: 5
@@ -17942,7 +17944,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1280271141671754, guid: ebc8f1c90e252c646b165cc274829bf5, type: 3}
       propertyPath: m_TagString
-      value: Melee
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 4942850815452524, guid: ebc8f1c90e252c646b165cc274829bf5, type: 3}
       propertyPath: m_RootOrder
