@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyTest : MonoBehaviour
+public class EnemyTest : LivingEntity
 {
     public float Speed = 50.0f;
     private float timer =2.0f;
@@ -29,8 +29,6 @@ public class EnemyTest : MonoBehaviour
     void Start()
     {
         myTransform = GetComponent<Transform>();
-
-
     }
 
     void Awake()
@@ -47,7 +45,6 @@ public class EnemyTest : MonoBehaviour
     void FreezeVelocity()
     {
         if (isChase)
-
         {
             rigid.velocity = Vector3.zero;
             rigid.angularVelocity = Vector3.zero;

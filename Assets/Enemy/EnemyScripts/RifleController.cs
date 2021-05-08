@@ -157,8 +157,7 @@ public class RifleController : LivingEntity
     // 공격시
     void AttackUpdate()
     {
-       
-
+      
         if (!isCollision)
         {
             rstate = RifleState.MoveTarget;        

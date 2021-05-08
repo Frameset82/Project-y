@@ -10,9 +10,11 @@ public class BossController : LivingEntity
     public BossState bState = BossState.None; // 보스 상태 변수
     public float MoveSpeed; // 이동속도
     public GameObject target; // 공격대상
+    public Vector3 targetPos; // 공격 대상 위치 
 
     private NavMeshAgent nav; // NavMesh 컴포넌트
-    private Animator anim; // 애니메이터 컴포넌트
+    private Animator anim; // 애니메이터 컴포넌트                         
+    
 
     private bool hasTarget
     {
@@ -42,7 +44,7 @@ public class BossController : LivingEntity
     {
         // 컴포넌트 불러오기
         nav = GetComponent<NavMeshAgent>();
-        anim = GetComponentInChildren<Animator>();
+        anim = GetComponent<Animator>();
     }
 
     protected override void OnEnable()
@@ -50,10 +52,42 @@ public class BossController : LivingEntity
         nav.speed = MoveSpeed;
     }
 
-
-
-    void CheckState()
+    private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(NormalAttack());
+        }
+        targetPos = target.transform.position;
+    }
+
+    void CheckAnimaitonState()
+    {
+        switch(bState)
+        {
+            case BossState.NormalAttack:
+                anim.SetTrigger("Shoot");
+                break;
+        }
+    }
+
+    IEnumerator NormalAttack()
+    {
+      for(int i = 0; i< 3; i++)
+        {
+            bState = BossState.NormalAttack;
+            Vector3 lookPosition = Vector3.zero;
+            nav.isStopped = true;
+           
+            lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
+
+            transform.LookAt(lookPosition);
+            anim.SetTrigger("Shoot");
+
+            yield return new WaitForSeconds(0.5f);
+        }     
 
     }
+
+  
 }
