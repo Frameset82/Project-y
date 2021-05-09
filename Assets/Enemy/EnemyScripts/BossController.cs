@@ -49,27 +49,20 @@ public class BossController : LivingEntity
 
     protected override void OnEnable()
     { 
-        nav.speed = MoveSpeed;
+        nav.speed = MoveSpeed; //스피드 설정
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(NormalAttack());
+            //StartCoroutine(NormalAttack());
+            CreateBomobRobot();
         }
         targetPos = target.transform.position;
+        
     }
 
-    void CheckAnimaitonState()
-    {
-        switch(bState)
-        {
-            case BossState.NormalAttack:
-                anim.SetTrigger("Shoot");
-                break;
-        }
-    }
 
     IEnumerator NormalAttack()
     {
@@ -89,5 +82,21 @@ public class BossController : LivingEntity
 
     }
 
+    void CreateBomobRobot()
+    {
+        for(int i= 0; i<4; i++)
+        {
+            var BombRobot = ObjectPool.GetRobot();
+            Vector3 spawnPos = Random.insideUnitCircle * 4f; ;
+            spawnPos.x += this.transform.position.x;
+            spawnPos.z = spawnPos.y + this.transform.position.z;
+            spawnPos.y = this.transform.position.y;
+
+            BombRobot.transform.position = spawnPos;
+            BombRobot.SetTarget(target);
+
+            anim.SetTrigger("Spawn");
+        }
+    }
   
 }

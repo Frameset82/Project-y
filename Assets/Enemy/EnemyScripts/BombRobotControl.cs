@@ -9,8 +9,8 @@ public class BombRobotControl : LivingEntity
 
     public BombState bstate;
     public float Speed = 50.0f;
-  
-    public GameObject Explosion = null; // 폭발 이펙트
+
+    public GameObject Explosion;// 폭발 이펙트
     public GameObject target; // 공격 대상
 
     private bool isEnter = false; // 한번만 실행 시키기 위한 bool 함수
@@ -35,6 +35,7 @@ public class BombRobotControl : LivingEntity
 
     protected override void OnEnable()
     {
+        Explosion.SetActive(false); //폭발 프리팹 비활성화
         bstate = BombState.Idle; //기본 상태를 유휴 상태로 변경
     }
 
@@ -50,19 +51,21 @@ public class BombRobotControl : LivingEntity
        
         CheckState(); //상태 체크
         anim.SetBool("isWalk", isWalk); //걷기 관련 애니메이션 
+       
+
     }
 
     void CheckState()
     {
         switch(bstate)
         {
-            case BombState.Idle:
-                isWalk = false;
-                break;
+           
             case BombState.MoveTarget:
                 isWalk = true;
                 break;
             case BombState.Exploding:
+            case BombState.Die:
+            case BombState.Idle:
                 isWalk = false;
                 break;
         }
@@ -85,8 +88,10 @@ public class BombRobotControl : LivingEntity
     {
 
         yield return new WaitForSeconds(2.0f); // 2초간 정지후 실행
-        var explosion = Instantiate(Explosion, this.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(0.5f); // 1초간 정지후 실행       
+        Explosion.transform.position = this.transform.position;
+        Explosion.transform.rotation = this.transform.rotation;
+        Explosion.SetActive(true);
+        yield return new WaitForSeconds(1f); // 1초간 정지후 실행       
         Die();
 
     }
@@ -113,15 +118,23 @@ public class BombRobotControl : LivingEntity
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         base.OnDamage(damage, hitPoint, hitNormal);
+
+        if(health< 0)
+        {
+            dead = true;
+        }
     }
 
     public override void Die()
     {
         base.Die();
-
+        dead = true;
+        bstate = BombState.Die;
+        anim.SetBool("isDead", dead); //죽음 관련 애니메이션
         StopAllCoroutines();
         nav.enabled = false;
-        this.gameObject.SetActive(false);
+        Explosion.SetActive(false);
+        ObjectPool.ReturnBombRobot(this);
     }
 }
     
