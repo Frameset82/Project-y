@@ -1386,6 +1386,8 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   damage: 20
   attackRange: 7
+  dashSpeed: 0
+  dashTime: 0
   angleRange: 45
 --- !u!1 &5160908480101583157
 GameObject:
@@ -1791,6 +1793,7 @@ Transform:
   - {fileID: 2643919022287316934}
   - {fileID: 5074624329042810644}
   - {fileID: 7631361334211749262}
+  - {fileID: 6635228835975526709}
   m_Father: {fileID: 6639161468199889793}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2665,4 +2668,79 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: a0dfaf0497ab5334a99165f16b697e6e,
     type: 3}
   m_PrefabInstance: {fileID: 1964703435130041180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6630774492449139767
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 392558783585149924}
+    m_Modifications:
+    - target: {fileID: 1526779773558950, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_Name
+      value: Sheriff_Badges_Western_01_royalmix
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.79999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 9.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.80000013
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.23176022
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.12023057
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.06799985
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.024491236
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7019042
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.085618615
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.70668256
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 368.939
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a305a846dfc2e92438e0cca06bffc0a2, type: 3}
+--- !u!4 &6635228835975526709 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4555541545817346, guid: a305a846dfc2e92438e0cca06bffc0a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 6630774492449139767}
   m_PrefabAsset: {fileID: 0}
