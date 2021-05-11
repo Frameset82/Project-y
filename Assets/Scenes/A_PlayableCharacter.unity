@@ -6746,7 +6746,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 440741867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 940a5d01f60b3a1438c015dc95216660, type: 3}
+  m_Script: {fileID: 11500000, guid: 42bd64ed39b386a46b542bbae7ded851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
@@ -6757,7 +6757,8 @@ MonoBehaviour:
   isSword: 0
   isSpear: 0
   isGun: 0
-  isRifle: 0
+  isRifle: 1
+  playerInfo: {fileID: 0}
 --- !u!1 &441729897
 GameObject:
   m_ObjectHideFlags: 0
@@ -6985,8 +6986,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc98caf76c5c6642a9cc27d323fa297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHandMount: {fileID: 1854263194}
-  rightHandMount: {fileID: 1856830801}
+  leftHandMount: {fileID: 0}
+  rightHandMount: {fileID: 0}
   playerAnimator: {fileID: 451847705}
   weaponName: 
 --- !u!1 &453876686
@@ -15287,7 +15288,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1129587129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 940a5d01f60b3a1438c015dc95216660, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ab276c61dfab6848add0a51bb396051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
@@ -15297,8 +15298,9 @@ MonoBehaviour:
   isMelee: 0
   isSword: 0
   isSpear: 0
-  isGun: 0
+  isGun: 1
   isRifle: 0
+  playerInfo: {fileID: 0}
 --- !u!1 &1167620521
 GameObject:
   m_ObjectHideFlags: 0

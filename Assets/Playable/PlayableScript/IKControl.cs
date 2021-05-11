@@ -25,31 +25,31 @@ public class IKControl : MonoBehaviour
 
         if (playerEquipmentManager.equipWeapon != null)
         {
-            if (playerEquipmentManager.equipWeapon.tag == "Spear")
+            if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
             {
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
                 rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
             }
-            else if (playerEquipmentManager.equipWeapon.tag == "Melee")
+            else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
             {
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
                 rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
             }
-            else if (playerEquipmentManager.equipWeapon.tag == "Sword")
+            else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
             {
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
                 rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
             }
-            else if (playerEquipmentManager.equipWeapon.tag == "Gun")
+            else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
             {
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
                 rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
             }
-            else if (playerEquipmentManager.equipWeapon.tag == "Rifle")
+            else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true)
             {
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
