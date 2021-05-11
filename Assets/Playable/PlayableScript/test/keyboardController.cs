@@ -177,7 +177,7 @@ public class keyboardController : MonoBehaviour
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
         {
             playerAnimation.Attack();
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(3.5f);
             playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
             pState = PlayerState.Idle;
