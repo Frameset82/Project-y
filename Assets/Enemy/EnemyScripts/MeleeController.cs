@@ -10,14 +10,13 @@ public class MeleeController : LivingEntity
 
     [Header("기본속성")]
     public MeleeState mstate = MeleeState.None; // 근접적 상태변수
-    public float MoveSpeed = 2.5f; //이동 속도
     public Vector3 targetPos; //공격 대상 위치
     public GameObject target; // 공격 대상
     public int Idlestate;
 
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
-
+    private SkinnedMeshRenderer skinnedMeshRenderer = null;
 
     [Header("전투 속성")]
     public float damage = 20f; // 공격력
@@ -31,7 +30,7 @@ public class MeleeController : LivingEntity
     Color blue = new Color(0f, 0f, 1f, 0.2f);
     Color red = new Color(1f, 0f, 0f, 0.2f);
     float dotValue = 0f;
-    Vector3 direction;
+    Vector3 direction; 
 
     private bool move = false; //움직임 관련 bool값
     private bool attack = false; // 공격 관련 bool값
@@ -49,23 +48,31 @@ public class MeleeController : LivingEntity
         }
     }
 
- 
 
     private void Awake()
     {
         // 컴포넌트 불러오기
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-
+        skinnedMeshRenderer = this.GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     protected override void OnEnable()
     {
         //대기 상태로 설정
         mstate = MeleeState.Idle;
-        // 이동 속도 설정
-        nav.speed = MoveSpeed;
+        this.startingHealth = 10f;
+        base.OnEnable(); 
     }
+
+
+    public void Init(float _damage, float _speed, float _startHealth = 50f) //초기 설정 메소드
+    {
+        nav.speed = _speed; //이동속도 설정
+        this.damage = _damage; //데미지 설정
+        this.startingHealth = _startHealth; //초기 HP값 설정
+    }
+
 
     // 근접 적 상태 체크
     void CheckState()
@@ -123,32 +130,27 @@ public class MeleeController : LivingEntity
         }
         else// 타겟이 없으면
         {
-           
             nav.isStopped = true; // 동작 정지
             nav.velocity = Vector3.zero; // 속도 0으로 지정
-
-        }
-       
+        }       
     }
-
-  
 
     void MoveUpdate() //추적시에
     {
         Vector3 lookAtPosition = Vector3.zero;
 
-        if (hasTarget)
+        if (hasTarget) //타겟이 있다면
         {
-            targetPos = target.transform.position;
+            targetPos = target.transform.position; //타겟의 위치 지정
 
 
-            // 타겟이 공격 사거리에 들어온다면
+            // 타겟이 공격 사거리에 들어오고 첫번쨰 공격이라면
             if (Vector3.Distance(this.transform.position, target.transform.position) < 4f && isFirstAttack)
             {            
-                JumpAttack();
+                JumpAttack(); //점프 공격
                 return;              
             }
-            else if(isCollision && !isFirstAttack)
+            else if(isCollision && !isFirstAttack) 
             {
                 nav.velocity = Vector3.zero;
                 nav.isStopped = true;
@@ -159,22 +161,22 @@ public class MeleeController : LivingEntity
        
         }
 
-       
         nav.isStopped = false; // 추적 실행
         nav.SetDestination(lookAtPosition); // 목적지 설정
       
     }
 
 
-    void JumpAttack()
+    void JumpAttack() //점프 공격
     {
       
-        anim.SetBool("isFirstAttack", isFirstAttack);
+        anim.SetBool("isFirstAttack", isFirstAttack); //공격실행
+        damage *= 2; // 점프공격시 데미지 2배 적용
+
         if (Vector3.Distance(this.transform.position, target.transform.position) <= 2f)
-        {
-            
+        {          
             isFirstAttack = false;
-            anim.SetBool("isFirstAttack", isFirstAttack);
+            anim.SetBool("isFirstAttack", isFirstAttack);// 공격 종료
             mstate = MeleeState.Attack; // 공격상태로 변환
         }
     }
@@ -198,13 +200,18 @@ public class MeleeController : LivingEntity
     public void OnAttackEvent()
     {
 
-        DummyPlayerController dm = target.GetComponent<DummyPlayerController>();
+        LivingEntity enemytarget = target.GetComponent<LivingEntity>(); //타겟의 리빙엔티티 가져오기
 
         Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
 
         Vector3 hitNormal = transform.position - target.transform.position;
       
-        dm.OnDamage(damage, hitPoint, hitNormal);
+        if(isCollision) //공격범위 안이라면
+        {
+            enemytarget.OnDamage(damage, hitPoint, hitNormal); //데미지 이벤트 실행
+        }
+        
+       
     }
 
 
@@ -225,25 +232,50 @@ public class MeleeController : LivingEntity
     // 공격을 당했을때
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        anim.SetTrigger("isHit"); // 트리거 실행
-        
-        health -= damage; // 체력 감소
+      
 
+        health -= damage;
+        Debug.Log(health);
         if (health <= 0 && !dead) // 체력이 0보다 작고 사망상태가 아닐때
         {
-            mstate = MeleeState.Die; // 죽음 상태로 변환
+            StartCoroutine(Die());
         }
+        else
+        {
+            StartCoroutine(DamageRoutine());
+        }
+       
+    }
+    
+    IEnumerator DamageRoutine()
+    {
+        anim.SetTrigger("isHit"); // 트리거 실행
+
+        nav.velocity = Vector3.zero;
+        nav.isStopped = true;
+
+        yield return new WaitForSeconds(2f);
+
+        if(!dead)
+         nav.isStopped = false;
+        
     }
 
 
 
     //죽었을때
-    public override void Die()
+    public IEnumerator Die()
     {
+        anim.SetTrigger("isDead"); // 트리거 활성화
+        mstate = MeleeState.Die; //상태를 죽음으로 변경
 
-        base.Die();
+        this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
 
-        Collider[] enemyColliders = GetComponents<Collider>();
+        nav.isStopped = true; //네비 멈추기
+        nav.enabled = false; // 네비 비활성화
+        dead = true; //죽음 확성화
+
+        Collider[] enemyColliders = GetComponents<Collider>(); //모든 콜라이더 가져오기
 
         // 콜라이더 다끄기
         for (int i = 0; i < enemyColliders.Length; i++)
@@ -251,9 +283,12 @@ public class MeleeController : LivingEntity
             enemyColliders[i].enabled = false;
         }
 
-        nav.isStopped = true; //네비 멈추기
-        nav.enabled = false; // 네비 비활성화
-        anim.SetTrigger("isDead"); // 트리거 활성화
+       
+
+        yield return new WaitForSeconds(1f); // 1초 대기
+
+        //ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
+
     }
 
     private void Update()

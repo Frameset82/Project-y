@@ -9,6 +9,8 @@ public class DummyPlayerController : LivingEntity
     [Header("체력설정")]
     public float sHealth = 50f; // 초기 체력
 
+    public GameObject target;
+
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>(); //애니메이터 가져오기
@@ -30,14 +32,22 @@ public class DummyPlayerController : LivingEntity
         if(Input.GetMouseButtonDown(0)) //마우스클릭시 데미지 입히기(테스트용)
         {
             //OnDamage(10f);
+            LivingEntity enemytarget = target.GetComponent<LivingEntity>();
+
+            Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
+
+            Vector3 hitNormal = transform.position - target.transform.position;
+
+
+            enemytarget.OnDamage(10, hitPoint, hitNormal);
         }
     }
 
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)  // 데미지를 입는 기능
     {
       
-        base.OnDamage(damage, hitPoint, hitNormal);
-        animator.SetTrigger("IsHit");
+        //base.OnDamage(damage, hitPoint, hitNormal);
+        //animator.SetTrigger("IsHit");
  
         // 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
       
