@@ -25,13 +25,13 @@ public class IKControl : MonoBehaviour
 
         if (playerEquipmentManager.equipWeapon != null)
         {
-            if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
+            /*if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
             {
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
                 rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
-            }
-            else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
+            }*/
+             if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
             {
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
