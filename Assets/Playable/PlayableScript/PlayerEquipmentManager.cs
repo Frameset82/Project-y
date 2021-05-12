@@ -26,6 +26,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     public GameObject dropWeapon2;
 
     public Weapon weapon;
+
     void Interation()
     {
         if (Input.GetButtonDown("Interation") && nearObject != null)
@@ -69,6 +70,8 @@ public class PlayerEquipmentManager : MonoBehaviour
                     changeEquipment.SetActive(true);
                     changeImg1.sprite = mainWeaponImg.GetComponent<Image>().sprite;
                     changeImg2.sprite = subWeaponImg.GetComponent<Image>().sprite;
+                    keyboardInput.isShoot = true;
+                    Time.timeScale = 0; // 시간 정지
                 }
             }
         }
@@ -102,6 +105,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
     }
 
+    // 버튼에 들어갈 메인 웨펀과 서브웨펀
     public void ChangeMainWeapon()
     {
         GameObject dummyWeapon = (GameObject)Instantiate(dropWeapon1, gameObject.transform.position, gameObject.transform.rotation);
@@ -122,6 +126,8 @@ public class PlayerEquipmentManager : MonoBehaviour
         nearObject.SetActive(false);
         nearObject = null;
         changeEquipment.SetActive(false);
+        keyboardInput.isShoot = false;
+        Time.timeScale = 1; // 시간정지 해제
     }
 
     public void ChangeSubWeapon()
@@ -144,6 +150,8 @@ public class PlayerEquipmentManager : MonoBehaviour
         nearObject.SetActive(false);
         nearObject = null;
         changeEquipment.SetActive(false);
+        keyboardInput.isShoot = false;
+        Time.timeScale = 1; // 시간정지 해제
     }
 
     private void OnTriggerStay(Collider other)
