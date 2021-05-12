@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class BossController : LivingEntity
 {
-   public enum BossState { None, MoveTarget, NormalAttack, SpawnRobot, AmimingShot, Avoid, Die}; //보스 상태
+   public enum BossState { None, MoveTarget, NormalAttack, SpawnRobot, AmimingShot, Avoid, Dash, Die}; //보스 상태
 
     public BossState bState = BossState.None; // 보스 상태 변수
     public float MoveSpeed; // 이동속도
@@ -53,13 +53,16 @@ public class BossController : LivingEntity
         // 컴포넌트 불러오기
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
- 
+        nav.updateRotation = false; // 네비의회전 기능 비활성화
     }
 
     protected override void OnEnable()
     { 
         nav.speed = MoveSpeed; //스피드 설정
     }
+
+
+   
 
     private void Update()
     {
@@ -71,16 +74,43 @@ public class BossController : LivingEntity
             StartCoroutine(Dash(targetPos));
             
         }
+
         sectorCheck();
-        //Run();
+         
         targetPos = target.transform.position;
 
-    
+        StartCoroutine(Think());
+    }
+
+
+    IEnumerator Think()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        switch(bState)
+        {
+            
+            case BossState.MoveTarget: 
+
+                break;
+            case BossState.NormalAttack:
+                break;
+            case BossState.AmimingShot:
+                break;
+            case BossState.Avoid:
+                break;
+            case BossState.SpawnRobot:
+                break;
+            case BossState.Dash:
+                break;
+        }
     }
 
 
     IEnumerator NormalAttack()
     {
+        bState = BossState.NormalAttack;
+        
       for(int i = 0; i< 3; i++)
         {
             bState = BossState.NormalAttack;
@@ -93,13 +123,17 @@ public class BossController : LivingEntity
             anim.SetTrigger("Shoot");
 
             yield return new WaitForSeconds(0.5f);
-        }     
+        }
 
+        StartCoroutine(Think());
     }
 
     void CreateBomobRobot()
     {
-        for(int i= 0; i<4; i++)
+
+        bState = BossState.SpawnRobot;
+
+        for (int i= 0; i<4; i++)
         {
             var BombRobot = ObjectPool.GetRobot();
             Vector3 spawnPos = Random.insideUnitCircle * 4f; ;
@@ -112,11 +146,16 @@ public class BossController : LivingEntity
 
             anim.SetTrigger("Spawn");
         }
+
+        StartCoroutine(Think());
     }
   
 
     IEnumerator SnipingShot()
     {
+
+        bState = BossState.AmimingShot;
+
         anim.SetTrigger("Sniping");
         yield return new WaitForSeconds(0.7f);
 
@@ -133,13 +172,18 @@ public class BossController : LivingEntity
             yield return new WaitForSeconds(0.7f);
         }
         anim.SetTrigger("SnipingEnd");
+
+        StartCoroutine(Think());
     }
 
 
     IEnumerator Dash(Vector3 dashPos) //대쉬
     {
+        bState = BossState.Dash;
+
         float startTime = Time.time;
         Vector3 lookPosition = Vector3.zero;
+
 
         while (Time.time < startTime + dashTime)
         {
@@ -159,6 +203,29 @@ public class BossController : LivingEntity
         nav.acceleration = 8f;
         nav.speed = MoveSpeed;
 
+        StartCoroutine(Think());
+    }
+
+
+    IEnumerator Avoid(Vector3 pos)
+    {
+        bState = BossState.Avoid;
+        float startTime = Time.time;
+        Vector3 lookPosition = Vector3.zero;
+
+
+        while (Time.time < startTime + dashTime)
+        {
+            nav.SetDestination(pos);
+            nav.speed = dashSpeed;
+            nav.isStopped = false;
+            nav.acceleration = dashSpeed;
+            lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
+            transform.LookAt(lookPosition);
+            anim.SetTrigger("Dash");
+
+            yield return null;
+        }
     }
 
     void Run()
