@@ -65,10 +65,9 @@ public class PlayerAnimation : MonoBehaviour
     public void Attack()
     {
         playerAnimator.SetTrigger("Attack");
-        if (playerEquipmentManager.equipWeapon.tag != "Gun")
-        {
-            playerAnimator.SetBool("isMove", false);
-        }
+        
+        playerAnimator.SetBool("isMove", false);
+        
     }
 
     public void RunFire()

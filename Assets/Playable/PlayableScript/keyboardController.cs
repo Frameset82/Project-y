@@ -153,11 +153,14 @@ public class keyboardController : MonoBehaviour
         {
             playerAnimation.Attack();
             CreateBullet(); //총알 생성하기
+            yield return new WaitForSeconds(0.1f);
 
-            yield return new WaitForSeconds(0.2f); // 딜레이
+
             
             keyboardInput.isShoot = false;
+            yield return new WaitForSeconds(0.3f);
             pState = PlayerState.Idle;
+            
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
         {
@@ -169,26 +172,54 @@ public class keyboardController : MonoBehaviour
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                if (comboCnt == 3)
+                {
+                    yield return new WaitForSeconds(0.9f);
+                }
             }
-            yield return new WaitForSeconds(0f);
+            yield return new WaitForSeconds(0.2f);
             playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
         {
-            playerAnimation.Attack();
-            yield return new WaitForSeconds(3.5f);
+            playerAnimation.playerAnimator.SetBool("isAttack", true);
+            currentAttackTime = Time.time; // 재생한 시점
+            if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
+            {
+                Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
+                comboCnt += 1;
+                comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                if (comboCnt == 3)
+                {
+                    yield return new WaitForSeconds(0.67f);
+                }
+            }
+            yield return new WaitForSeconds(0.5f);
+            
             playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
-            pState = PlayerState.Idle;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
         {
-            playerAnimation.Attack();
-            yield return new WaitForSeconds(2.6f);
+            playerAnimation.playerAnimator.SetBool("isAttack", true);
+            currentAttackTime = Time.time; // 재생한 시점
+            if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
+            {
+                Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
+                comboCnt += 1;
+                comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                if (comboCnt == 3)
+                {
+                    yield return new WaitForSeconds(0.67f);
+                }
+            }
+            yield return new WaitForSeconds(0.5f);
             playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
-            pState = PlayerState.Idle;
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }

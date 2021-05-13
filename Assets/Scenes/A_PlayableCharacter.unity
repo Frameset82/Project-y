@@ -7088,13 +7088,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 465239821}
-  m_LocalRotation: {x: 0.000008667261, y: 0.004537886, z: -0.000008840338, w: 0.99998975}
-  m_LocalPosition: {x: 0.13899, y: 1.55, z: 1.349}
+  m_LocalRotation: {x: 0.000008673115, y: 0.0032653804, z: -0.000008898794, w: 0.99999475}
+  m_LocalPosition: {x: 0.010001004, y: 1.5499959, z: 1.3500012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 451847704}
   m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0.001, y: 0.52, z: -0.001}
+  m_LocalEulerAnglesHint: {x: 0.001, y: 0.374, z: -0.001}
 --- !u!1 &474939084
 GameObject:
   m_ObjectHideFlags: 0
@@ -7838,7 +7838,7 @@ PrefabInstance:
     - target: {fileID: 3832703582600944448, guid: bceefb2a39f6db74d9bc9d006687b7f1,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3832703582600944448, guid: bceefb2a39f6db74d9bc9d006687b7f1,
         type: 3}
@@ -13841,43 +13841,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.64
+      value: -0.584
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.032
+      value: 0.602
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.239
+      value: 0.078
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.22430475
+      value: 0.29194418
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.66550475
+      value: 0.57950294
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.71133554
+      value: 0.27990976
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.028153317
+      value: -0.70752776
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 165.019
+      value: 132.739
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -21.66199
+      value: 104.651
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -96.69501
+      value: 7.509995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63ab21a6830470240a998a3fd20f5eb5, type: 3}
@@ -15397,14 +15397,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbe76927c7ccb64a96fb7fca02c2775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 0}
+  playerAnimator: {fileID: 451847705}
   playerAnimators:
   - {fileID: 9100000, guid: c5dd4bdf7092a5845bac22e6f89912b5, type: 2}
   - {fileID: 9100000, guid: 07f098998a7d03a4fbd2bbf00e288b06, type: 2}
   - {fileID: 9100000, guid: d66b1462664922b4d9b95f410f84ac89, type: 2}
   - {fileID: 9100000, guid: 3c3da17a4e76f6b4e918ee2035bc29c2, type: 2}
-  - {fileID: 9100000, guid: 8592765d858b1fc4ab7191e2db8f84a7, type: 2}
-  - {fileID: 9100000, guid: 5487f4c0d33014442a877f4275e0d5eb, type: 2}
+  - {fileID: 9100000, guid: cfff4e312b5c34c40810aabf0d43f5bb, type: 2}
+  - {fileID: 9100000, guid: c37e9d63e00e649469795f2993d79532, type: 2}
 --- !u!114 &1182832096
 MonoBehaviour:
   m_ObjectHideFlags: 0
