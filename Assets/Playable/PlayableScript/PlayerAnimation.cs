@@ -18,10 +18,11 @@ public class PlayerAnimation : MonoBehaviour
     }
     void Update()
     {
+        playerAnimator = gameObject.GetComponentInChildren<Animator>();
+
         if(playerEquipmentManager.equipWeapon == null)
         {
             playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[0];
-            
         }
         else if(playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true)
         {

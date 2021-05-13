@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerEquipmentManager : MonoBehaviour
 {
     private string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
+    [Header("착용 무기")]
     public GameObject mainWeapon = null; // 1번무기
     public GameObject subWeapon = null; // 2번무기
     private int equipCount = 1; // main = 1 sub = 2
@@ -14,17 +15,20 @@ public class PlayerEquipmentManager : MonoBehaviour
     private string weaponName;
 
     private GameObject changeImg;
+    [Header("이미지관련(할당필요)")]
     public Image mainWeaponImg;
     public Image subWeaponImg;
-    public PlayerAnimation playerAnimation;
+    private PlayerAnimation playerAnimation;
 
     public GameObject changeEquipment; // Panel
     public Image changeImg1;
     public Image changeImg2;
 
+    [Header("떨어트릴 무기")]
     public GameObject dropWeapon1; // 무기 두칸이 다 차있을경우 떨어트릴 무기
     public GameObject dropWeapon2;
 
+    [Header("착용중 무기의 스크립트")]
     public Weapon weapon;
 
     void Interation()
@@ -171,7 +175,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     void Start()
     {
-
+        playerAnimation = gameObject.GetComponent<PlayerAnimation>();
     }
 
     // Update is called once per frame

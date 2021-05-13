@@ -51,13 +51,16 @@ public class PlayerInfo : LivingEntity
 
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        if (!dead)
+        if (canDamage)
         {
-            // 사망하지않은경우에만 효과음 재생
-        }
+            if (!dead)
+            {
+                // 사망하지않은경우에만 효과음 재생
+            }
 
-        base.OnDamage(damage, hitPoint, hitNormal);
-        healthSlider.value = health;
+            base.OnDamage(damage, hitPoint, hitNormal);
+            healthSlider.value = health;
+        }
     }
 
     public override void Die()

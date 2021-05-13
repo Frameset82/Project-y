@@ -35,7 +35,7 @@ public class keyboardInput : MonoBehaviour
 
     private void Update()
     {
-        InputRifleShoot();
+        Attack();
     }
 
     public void InputMove()
@@ -80,7 +80,7 @@ public class keyboardInput : MonoBehaviour
         }
     }
 
-    public void InputRifleShoot()
+    public void Attack()
     {
         if (Input.GetMouseButtonDown(0) && !isShoot && playerEquipmentManager.equipWeapon != null)
         {

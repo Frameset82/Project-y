@@ -5,7 +5,7 @@ using UnityEngine;
 public class keyboardController : MonoBehaviour
 {
     // 이동속도와 회전속도 회피속도
-    private float dodgePower = 700f;
+    public float dodgePower = 400f;
 
     // 회피명령 딜레이 변수
     private float timeBetDodge = 1f;
@@ -19,7 +19,6 @@ public class keyboardController : MonoBehaviour
 
     public PlayerState pState;
 
-    public GameObject Bullet; // 원거리무기 투사체
     public Transform FirePos; // 투사체 발사 위치
     bool isSwap;
 
@@ -32,6 +31,7 @@ public class keyboardController : MonoBehaviour
         Movement, // 이동중인 상태
         Dodge, // 회피중인 상태
         Attack, // 공격중인 상태
+        onHit, // 맞고있는 상태
         Death // 사망한 상태
     }
 
@@ -87,17 +87,18 @@ public class keyboardController : MonoBehaviour
     // 캐릭터 실제 회피
     public IEnumerator DodgeCoroutine(Vector3 destination)
     {
-        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        /*        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;*/
+        PlayerInfo.canDamage = false; // 무적으로 전환
         pState = PlayerState.Dodge;
         willMove = false;
         Vector3 power = (destination - transform.position).normalized * dodgePower;
         playerRigidbody.AddForce(gameObject.transform.forward * dodgePower);
         playerRigidbody.velocity = Vector3.zero;
-
         playerAnimation.DodgeAni();
         yield return new WaitForSeconds(.5f); // 회피 지속시간
+        PlayerInfo.canDamage = true; // 비무적으로 전환
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
-        playerRigidbody.constraints = RigidbodyConstraints.None;
+/*        playerRigidbody.constraints = RigidbodyConstraints.None;*/
 
         // 회피중 이동명령을 받았는지 체크
         if (willMove)
@@ -139,8 +140,7 @@ public class keyboardController : MonoBehaviour
             
             for (int i = 0; i < 3; i++)
             {
-
-                Instantiate(Bullet, FirePos.transform.position, FirePos.transform.rotation);
+                CreateBullet(); //총알 생성하기
                 yield return new WaitForSeconds(0.1f);
             }
             
@@ -154,7 +154,7 @@ public class keyboardController : MonoBehaviour
             playerAnimation.Attack();
             CreateBullet(); //총알 생성하기
 
-            //yield return new WaitForSeconds(1f); // 딜레이
+            yield return new WaitForSeconds(0.2f); // 딜레이
             
             keyboardInput.isShoot = false;
             pState = PlayerState.Idle;
@@ -190,7 +190,7 @@ public class keyboardController : MonoBehaviour
             keyboardInput.isShoot = false;
             pState = PlayerState.Idle;
         }
-        playerRigidbody.constraints = RigidbodyConstraints.None;
+        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     //오브젝트풀에서 총알 가져와서 생성하기
