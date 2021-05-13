@@ -8,6 +8,9 @@ public class MeleeController : LivingEntity
 {
     public enum MeleeState {None, Idle, MoveTarget, Attack, Die};
 
+
+
+
     [Header("기본속성")]
     public MeleeState mstate = MeleeState.None; // 근접적 상태변수
     public Vector3 targetPos; //공격 대상 위치
@@ -16,7 +19,8 @@ public class MeleeController : LivingEntity
 
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
-    private SkinnedMeshRenderer skinnedMeshRenderer = null;
+    [SerializeField]
+    private Healthbar healthbar;
 
     [Header("전투 속성")]
     public float damage = 20f; // 공격력
@@ -54,14 +58,15 @@ public class MeleeController : LivingEntity
         // 컴포넌트 불러오기
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        skinnedMeshRenderer = this.GetComponentInChildren<SkinnedMeshRenderer>();
+        
     }
 
     protected override void OnEnable()
     {
         //대기 상태로 설정
         mstate = MeleeState.Idle;
-        this.startingHealth = 10f;
+        this.startingHealth = 50f;
+        healthbar.SetMaxHealth((int)startingHealth);
         base.OnEnable(); 
     }
 
@@ -169,7 +174,7 @@ public class MeleeController : LivingEntity
 
     void JumpAttack() //점프 공격
     {
-      
+       
         anim.SetBool("isFirstAttack", isFirstAttack); //공격실행
         damage *= 2; // 점프공격시 데미지 2배 적용
 
@@ -243,23 +248,29 @@ public class MeleeController : LivingEntity
         else
         {
             StartCoroutine(DamageRoutine());
+           
         }
-       
+        healthbar.SetHealth((int)health);
+
     }
     
     IEnumerator DamageRoutine()
     {
         anim.SetTrigger("isHit"); // 트리거 실행
 
+      
+        float startTime = Time.time;
+
         nav.velocity = Vector3.zero;
-        nav.isStopped = true;
+    
+        while (Time.time < startTime + 0.8f)
+        {
+            nav.velocity = Vector3.zero;
+            yield return null;
+        }
+   }
 
-        yield return new WaitForSeconds(2f);
-
-        if(!dead)
-         nav.isStopped = false;
-        
-    }
+  
 
 
 

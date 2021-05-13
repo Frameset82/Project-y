@@ -5,10 +5,21 @@ using UnityEngine.UI;
 
 public class Healthbar: MonoBehaviour
 {
-
+	Transform cam;
 	public Slider slider;
 	public Gradient gradient;
 	public Image fill;
+
+	void Start()
+	{
+		cam = Camera.main.transform;
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+		transform.LookAt(transform.position + cam.rotation * Vector3.forward, cam.rotation * Vector3.up);
+	}
 
 	public void SetMaxHealth(int health)
 	{
@@ -20,9 +31,15 @@ public class Healthbar: MonoBehaviour
 
 	public void SetHealth(int health)
 	{
-		slider.value = health;
 
-		fill.color = gradient.Evaluate(slider.normalizedValue);
+		slider.value = health;
+        fill.color = gradient.Evaluate(slider.normalizedValue);
+
+		if (health <=0)
+		{
+			//slider.value = 0;
+			fill.color = Color.clear;
+		}
 	}
 
 }
