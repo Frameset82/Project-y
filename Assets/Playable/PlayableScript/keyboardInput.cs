@@ -84,6 +84,7 @@ public class keyboardInput : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !isShoot && playerEquipmentManager.equipWeapon != null)
         {
+            print("공격");
             RaycastHit hit;
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))

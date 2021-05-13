@@ -92,19 +92,19 @@ public class PlayerEquipmentManager : MonoBehaviour
         {
             if (equipCount == 1)
             {
-                playerAnimation.Swap();
                 mainWeapon.SetActive(false);
                 subWeapon.SetActive(true);
                 equipWeapon = subWeapon;
                 equipCount = 2;
+                StartCoroutine(SwapCoroutine());
             }
             else if (equipCount == 2)
             {
-                playerAnimation.Swap();
                 subWeapon.SetActive(false);
                 mainWeapon.SetActive(true);
                 equipWeapon = mainWeapon;
                 equipCount = 1;
+                StartCoroutine(SwapCoroutine());
             }
         }
     }
@@ -185,5 +185,11 @@ public class PlayerEquipmentManager : MonoBehaviour
         Swap();
         if(equipWeapon != null)
             weapon = equipWeapon.GetComponent<Weapon>();
+    }
+
+    public IEnumerator SwapCoroutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        playerAnimation.Swap();
     }
 }
