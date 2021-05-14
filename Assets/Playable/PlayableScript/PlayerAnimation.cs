@@ -65,14 +65,8 @@ public class PlayerAnimation : MonoBehaviour
     public void Attack()
     {
         playerAnimator.SetTrigger("Attack");
-        
         playerAnimator.SetBool("isMove", false);
         
-    }
-
-    public void RunFire()
-    {
-        playerAnimator.SetBool("RunFire", true);
     }
 
     public void Dead()
@@ -81,7 +75,10 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void Swap()
     {
-        playerAnimator.SetTrigger("Swap");
+        
+            playerAnimator.SetTrigger("Swap");
+           
+        
     }
     public void Combo1Check()
     {

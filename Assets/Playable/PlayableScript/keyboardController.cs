@@ -17,7 +17,7 @@ public class keyboardController : MonoBehaviour
     private PlayerAnimation playerAnimation;
     public GameObject playerAvatar;
 
-    public PlayerState pState;
+    public static PlayerState pState;
 
     public Transform FirePos; // 투사체 발사 위치
     bool isSwap;
@@ -32,7 +32,8 @@ public class keyboardController : MonoBehaviour
         Dodge, // 회피중인 상태
         Attack, // 공격중인 상태
         onHit, // 맞고있는 상태
-        Death // 사망한 상태
+        Death, // 사망한 상태
+        Swap // 스왑 상태
     }
 
     // 사용할 컴포넌트 할당(애니메이터는 수동할당)
@@ -53,7 +54,7 @@ public class keyboardController : MonoBehaviour
     // 캐릭터 이동명령
     public void Move()
     {
-        if (pState == PlayerState.Idle)
+        if (pState == PlayerState.Idle )
         {
             pState = PlayerState.Movement;
             if (isSwap)
@@ -95,7 +96,7 @@ public class keyboardController : MonoBehaviour
         playerRigidbody.AddForce(gameObject.transform.forward * dodgePower);
         playerRigidbody.velocity = Vector3.zero;
         playerAnimation.DodgeAni();
-        yield return new WaitForSeconds(.5f); // 회피 지속시간
+        yield return new WaitForSeconds(0.5f); // 회피 지속시간
         PlayerInfo.canDamage = true; // 비무적으로 전환
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
 /*        playerRigidbody.constraints = RigidbodyConstraints.None;*/
@@ -170,16 +171,17 @@ public class keyboardController : MonoBehaviour
             {
                 Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
-                comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
+                comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
                 if (comboCnt == 3)
                 {
-                    yield return new WaitForSeconds(0.9f);
+                    yield return new WaitForSeconds(0.67f);
                 }
             }
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.25f);
             playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
+            
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
         {
@@ -189,20 +191,20 @@ public class keyboardController : MonoBehaviour
             {
                 Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
-                comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
+                comboCnt = Mathf.Clamp(comboCnt, 0, 3);  // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
-                if (comboCnt == 3)
+                if (comboCnt == 3) 
                 {
                     yield return new WaitForSeconds(0.67f);
-                }
+                }   
             }
             yield return new WaitForSeconds(0.5f);
-            
             playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
+            
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
-        {
+        { 
             playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면

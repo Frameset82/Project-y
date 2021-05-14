@@ -1474,9 +1474,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1182832088}
-  offsetX: 7
-  offsetY: 7
-  offsetZ: 7
+  offsetX: 6
+  offsetY: 8
+  offsetZ: 6
   DelayTime: 5
 --- !u!114 &286148429
 MonoBehaviour:
@@ -15419,7 +15419,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dodgePower: 500
   playerAvatar: {fileID: 451847703}
-  pState: 0
   FirePos: {fileID: 465239822}
   currentAttackTime: 0
   comboCnt: 0
