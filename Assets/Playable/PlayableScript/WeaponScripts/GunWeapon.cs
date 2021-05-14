@@ -8,7 +8,8 @@ public class GunWeapon : RangeWeapon
 
     public override void OnAttack()
     {
-        Bullet.rangeHitTarget.GetComponent<LivingEntity>().OnDamage(damage + playerInfo.damage, transform.forward, transform.forward);
+        //데미지 처리 구조체 오류
+        //Bullet.rangeHitTarget.GetComponent<LivingEntity>().OnDamage(damage + playerInfo.damage, transform.forward, transform.forward);
     }
 
     public override void OnActive()

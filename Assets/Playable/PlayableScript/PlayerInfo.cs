@@ -49,6 +49,7 @@ public class PlayerInfo : LivingEntity
         healthSlider.value = health; // 갱신된 체력으로 슬라이더 갱신
     }
 
+    /*
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         if (canDamage)
@@ -61,7 +62,7 @@ public class PlayerInfo : LivingEntity
             base.OnDamage(damage, hitPoint, hitNormal);
             healthSlider.value = health;
         }
-    }
+    } 이거 데미지 구조체로 바꾼거 때문에 오류남 고치셈*/
 
     public override void Die()
     {
@@ -80,7 +81,7 @@ public class PlayerInfo : LivingEntity
     {
         if(other.tag == "Enemy")
         {
-            OnDamage(10.0f, Vector3.forward, Vector3.forward);
+            //OnDamage(10.0f, Vector3.forward, Vector3.forward); 요것도 오류나서 주석처리함
             return;
         }
     }

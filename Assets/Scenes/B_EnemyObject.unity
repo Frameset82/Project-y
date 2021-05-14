@@ -2541,7 +2541,6 @@ MonoBehaviour:
   equipWeapon: {fileID: 0}
   mainWeaponImg: {fileID: 0}
   subWeaponImg: {fileID: 0}
-  playerAnimation: {fileID: 542035430}
   changeEquipment: {fileID: 0}
   changeImg1: {fileID: 0}
   changeImg2: {fileID: 0}
@@ -2592,9 +2591,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd0344fae65408847897260799f07273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dodgePower: 400
   playerAvatar: {fileID: 912441468}
   pState: 0
-  Bullet: {fileID: 1846816503626709796, guid: a901e33f3a6f4b3409e2d7e4c5367135, type: 3}
   FirePos: {fileID: 1815684448}
   currentAttackTime: 0
   comboCnt: -1
@@ -2688,7 +2687,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 542035427}
   m_LocalRotation: {x: -0, y: 0.11299717, z: -0, w: 0.99359536}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.53, y: 0, z: 15.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 912441470}
@@ -4908,6 +4907,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_UseGravity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233739336527722862, guid: 98f0c92db2e39c845a1d63cc4239a148,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233739336527722863, guid: 98f0c92db2e39c845a1d63cc4239a148,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2233739336527722866, guid: 98f0c92db2e39c845a1d63cc4239a148,
         type: 3}

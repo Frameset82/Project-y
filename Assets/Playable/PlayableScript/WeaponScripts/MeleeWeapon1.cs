@@ -15,7 +15,8 @@ public class MeleeWeapon1 : MeleeWeapon
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].GetComponent<LivingEntity>().OnDamage(damage + playerInfo.damage, Vector3.forward, Vector3.forward);
+            //데미지 구조체 오류처리
+            //enemies[i].GetComponent<LivingEntity>().OnDamage(damage + playerInfo.damage, Vector3.forward, Vector3.forward);
         }
     }
     private void Awake()

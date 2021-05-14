@@ -6,7 +6,7 @@ using UnityEditor;
 
 public class MeleeController : LivingEntity
 {
-    public enum MeleeState {None, Idle, MoveTarget, Attack, Die};
+    public enum MeleeState {None, Idle, MoveTarget, JumpAttack, Attack, Die};
 
 
 
@@ -58,7 +58,7 @@ public class MeleeController : LivingEntity
         // 컴포넌트 불러오기
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        
+        nav.updateRotation = false; // 네비의회전 기능 비활성화
     }
 
     protected override void OnEnable()
@@ -151,8 +151,11 @@ public class MeleeController : LivingEntity
 
             // 타겟이 공격 사거리에 들어오고 첫번쨰 공격이라면
             if (Vector3.Distance(this.transform.position, target.transform.position) < 4f && isFirstAttack)
-            {            
-                JumpAttack(); //점프 공격
+            {
+                isFirstAttack = false;
+                StartCoroutine(JumpAttack(targetPos));
+              //점프 공격
+     
                 return;              
             }
             else if(isCollision && !isFirstAttack) 
@@ -161,31 +164,75 @@ public class MeleeController : LivingEntity
                 nav.isStopped = true;
                 mstate = MeleeState.Attack; // 공격상태로 변환
             }
-
-            lookAtPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z); //이동시 바라볼 방향 체크
-       
+            else
+            {
+                lookAtPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z); //이동시 바라볼 방향 체크
+                nav.isStopped = false; // 추적 실행
+                transform.LookAt(lookAtPosition);
+                nav.SetDestination(lookAtPosition); // 목적지 설정
+            }
+         
         }
 
-        nav.isStopped = false; // 추적 실행
-        nav.SetDestination(lookAtPosition); // 목적지 설정
+        
       
     }
 
 
-    void JumpAttack() //점프 공격
+    /*
+    void JumpAttack(Vector3 tPos) //점프 공격
     {
-       
-        anim.SetBool("isFirstAttack", isFirstAttack); //공격실행
+
+        nav.SetDestination(tPos);
+
+        anim.SetBool("isFirstAttack", true); //공격실행
         damage *= 2; // 점프공격시 데미지 2배 적용
 
-        if (Vector3.Distance(this.transform.position, target.transform.position) <= 2f)
-        {          
-            isFirstAttack = false;
-            anim.SetBool("isFirstAttack", isFirstAttack);// 공격 종료
-            mstate = MeleeState.Attack; // 공격상태로 변환
-        }
-    }
     
+
+        if (Vector3.Distance(this.transform.position, target.transform.position) <= 2f)
+        {
+            isFirstAttack = false;
+            anim.SetBool("isFirstAttack", false);// 공격 종료
+            mstate = MeleeState.Attack; // 공격상태로 변환
+            damage /= 2; //데미지 원상복귀
+        }
+    }*/
+    
+    IEnumerator JumpAttack(Vector3 tPos)
+    {
+        mstate = MeleeState.JumpAttack; //점프어택
+
+        Vector3 lookAtPosition = Vector3.zero;
+
+        lookAtPosition = new Vector3(tPos.x, this.transform.position.y, tPos.z);
+
+        nav.SetDestination(lookAtPosition); //목적지 설정
+        anim.SetBool("isFirstAttack", true); //공격실행
+        damage *= 2; // 점프공격시 데미지 2배 적용
+        yield return new WaitForSeconds(0.3f);
+        nav.isStopped = true;
+ 
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log(nav.isStopped);
+        anim.SetBool("isFirstAttack", false);// 공격 종료
+        damage /= 2; //데미지 원상복귀
+
+        this.transform.LookAt(targetPos);
+
+        if (isCollision)
+        {
+            mstate = MeleeState.Attack;
+        }
+        else
+        {
+            mstate = MeleeState.MoveTarget;
+        }
+
+     
+
+    }
+
     // 공격시
     void AttackUpdate()
     {
@@ -213,10 +260,8 @@ public class MeleeController : LivingEntity
       
         if(isCollision) //공격범위 안이라면
         {
-            enemytarget.OnDamage(damage, hitPoint, hitNormal); //데미지 이벤트 실행
-        }
-        
-       
+           //enemytarget.OnDamage(damage, hitPoint, hitNormal); //데미지 이벤트 실행
+        } 
     }
 
 
@@ -235,7 +280,7 @@ public class MeleeController : LivingEntity
     }
 
     // 공격을 당했을때
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public override void OnDamage(Damage dInfo)
     {
       
 

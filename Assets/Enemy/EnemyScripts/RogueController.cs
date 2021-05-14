@@ -232,13 +232,13 @@ public class RogueController : LivingEntity
 
         Vector3 hitNormal = transform.position - target.transform.position;
 
-        attackTarget.OnDamage(damage, hitPoint, hitNormal);
+       // attackTarget.OnDamage(damage, hitPoint, hitNormal);
     }
 
   
 
     // 공격을 당했을때
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public override void OnDamage(Damage dInfo)
     {
         anim.SetTrigger("isHit"); // 트리거 실행
 

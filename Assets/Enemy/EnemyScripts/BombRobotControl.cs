@@ -115,9 +115,9 @@ public class BombRobotControl : LivingEntity
     }
 
 
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public override void OnDamage(Damage dInfo)
     {
-        base.OnDamage(damage, hitPoint, hitNormal);
+       
 
         if(health< 0)
         {
