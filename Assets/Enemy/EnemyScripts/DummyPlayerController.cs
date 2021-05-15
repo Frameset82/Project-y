@@ -8,7 +8,8 @@ public class DummyPlayerController : LivingEntity
     private Animator animator; //애니메이터
     [Header("체력설정")]
     public float sHealth = 50f; // 초기 체력
-    
+    Damage damage;
+    Damage damage1;
 
     public GameObject target;
 
@@ -22,7 +23,13 @@ public class DummyPlayerController : LivingEntity
     {
         startingHealth = sHealth;     
         base.OnEnable();
-        
+        damage.dType = Damage.DamageType.NuckBack;
+        damage.dValue = 10f;
+        damage.ccTime = 3f;
+
+        damage1.dType = Damage.DamageType.NuckBack;
+        damage1.dValue = 10f;
+        damage1.ccTime = 3f;
     }
 
     private void Update()
@@ -33,16 +40,39 @@ public class DummyPlayerController : LivingEntity
         if(Input.GetMouseButtonDown(0)) //마우스클릭시 데미지 입히기(테스트용)
         {
             //OnDamage(10f);
-            //LivingEntity enemytarget = target.GetComponent<LivingEntity>();
+            LivingEntity enemytarget = target.GetComponent<LivingEntity>();
 
             //Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
 
-            //Vector3 hitNormal = transform.position - target.transform.position;
-
-
-            //enemytarget.OnDamage(10, hitPoint, hitNormal);
-            Debug.Log(Damage.DamageType.Melee);
+            Vector3 hitNormal = transform.position - target.transform.position;
            
+
+            Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
+            hitNormal = hitNormal.normalized;
+            //hitNormal.y = 1;
+            enemytarget.OnDamage(damage);
+            rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
+            // Debug.Log(Damage.DamageType.Melee);
+           
+        }
+
+        if (Input.GetMouseButtonDown(2)) //마우스클릭시 데미지 입히기(테스트용)
+        {
+            //OnDamage(10f);
+            LivingEntity enemytarget = target.GetComponent<LivingEntity>();
+
+            //Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
+
+            Vector3 hitNormal = transform.position - target.transform.position;
+
+
+            Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
+            hitNormal = hitNormal.normalized;
+            hitNormal.y = 1;
+            enemytarget.OnDamage(damage1);
+            //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
+            // Debug.Log(Damage.DamageType.Melee);
+
         }
     }
 

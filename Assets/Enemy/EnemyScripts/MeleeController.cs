@@ -6,9 +6,10 @@ using UnityEditor;
 
 public class MeleeController : LivingEntity
 {
-    public enum MeleeState {None, Idle, MoveTarget, JumpAttack, Attack, Die};
-
-
+    public enum MeleeState {None, Idle, MoveTarget, JumpAttack, NuckBack, Stun, Attack, Die};
+   
+    [Header("전투 속성")]
+    private Damage damage;
 
 
     [Header("기본속성")]
@@ -17,13 +18,15 @@ public class MeleeController : LivingEntity
     public GameObject target; // 공격 대상
     public int Idlestate;
 
+
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
+    private Rigidbody rigid;
     [SerializeField]
     private Healthbar healthbar;
 
-    [Header("전투 속성")]
-    public float damage = 20f; // 공격력
+ 
+
     [SerializeField]
     private float attackRange = 2f; // 공격 사거리
 
@@ -58,6 +61,7 @@ public class MeleeController : LivingEntity
         // 컴포넌트 불러오기
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
+        rigid = GetComponent<Rigidbody>();
         nav.updateRotation = false; // 네비의회전 기능 비활성화
     }
 
@@ -74,7 +78,8 @@ public class MeleeController : LivingEntity
     public void Init(float _damage, float _speed, float _startHealth = 50f) //초기 설정 메소드
     {
         nav.speed = _speed; //이동속도 설정
-        this.damage = _damage; //데미지 설정
+        damage.dValue = _damage; //초기 데미지값 설정
+        damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
         this.startingHealth = _startHealth; //초기 HP값 설정
     }
 
@@ -89,6 +94,8 @@ public class MeleeController : LivingEntity
                 break;
             case MeleeState.MoveTarget:
                 MoveUpdate();
+                break;
+            case MeleeState.NuckBack:
                 break;
             case MeleeState.Attack:
                 AttackUpdate();
@@ -142,6 +149,7 @@ public class MeleeController : LivingEntity
 
     void MoveUpdate() //추적시에
     {
+
         Vector3 lookAtPosition = Vector3.zero;
 
         if (hasTarget) //타겟이 있다면
@@ -173,9 +181,6 @@ public class MeleeController : LivingEntity
             }
          
         }
-
-        
-      
     }
 
 
@@ -201,24 +206,31 @@ public class MeleeController : LivingEntity
     
     IEnumerator JumpAttack(Vector3 tPos)
     {
+
         mstate = MeleeState.JumpAttack; //점프어택
 
         Vector3 lookAtPosition = Vector3.zero;
 
         lookAtPosition = new Vector3(tPos.x, this.transform.position.y, tPos.z);
 
+       
         nav.SetDestination(lookAtPosition); //목적지 설정
-        anim.SetBool("isFirstAttack", true); //공격실행
-        damage *= 2; // 점프공격시 데미지 2배 적용
+        damage.dValue *= 2; // 점프공격시 데미지 2배 적용
+        anim.SetTrigger("JumpAttack"); //공격실행
+        
         yield return new WaitForSeconds(0.3f);
         nav.isStopped = true;
- 
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log(nav.isStopped);
-        anim.SetBool("isFirstAttack", false);// 공격 종료
-        damage /= 2; //데미지 원상복귀
 
+        yield return new WaitForSeconds(1.5f);
+
+        //anim.SetBool("isFirstAttack", false);// 공격 종료
+        damage.dValue /= 2; //데미지 원상복귀
+
+       
         this.transform.LookAt(targetPos);
+        
+
+       
 
         if (isCollision)
         {
@@ -251,16 +263,18 @@ public class MeleeController : LivingEntity
     //공격 적용
     public void OnAttackEvent()
     {
+        StopAllCoroutines();
 
         LivingEntity enemytarget = target.GetComponent<LivingEntity>(); //타겟의 리빙엔티티 가져오기
 
-        Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
+        damage.hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
 
-        Vector3 hitNormal = transform.position - target.transform.position;
+        damage.hitNormal = transform.position - target.transform.position;
       
         if(isCollision) //공격범위 안이라면
         {
-           //enemytarget.OnDamage(damage, hitPoint, hitNormal); //데미지 이벤트 실행
+           enemytarget.OnDamage(damage); //데미지 이벤트 실행
+          
         } 
     }
 
@@ -282,29 +296,49 @@ public class MeleeController : LivingEntity
     // 공격을 당했을때
     public override void OnDamage(Damage dInfo)
     {
-      
 
-        health -= damage;
-        Debug.Log(health);
-        if (health <= 0 && !dead) // 체력이 0보다 작고 사망상태가 아닐때
+        health -= dInfo.dValue; //체력 감소
+
+        StopAllCoroutines();
+
+        if (health <= 0 && !dead && this.gameObject.activeInHierarchy) // 체력이 0보다 작고 사망상태가 아닐때
         {
             StartCoroutine(Die());
         }
         else
         {
-            StartCoroutine(DamageRoutine());
+            switch(dInfo.dType)
+            {
+                case Damage.DamageType.Melee:
+                    if (mstate == MeleeState.JumpAttack)
+                      { mstate = MeleeState.NuckBack;  StartCoroutine(NuckBackDamageRoutine(dInfo.ccTime));  }
+                    else
+                      { StartCoroutine(NormalDamageRoutine()); }//일반 공격일시
+                    break;
+
+                case Damage.DamageType.NuckBack:
+                    mstate = MeleeState.NuckBack;
+                    StartCoroutine(NuckBackDamageRoutine(dInfo.ccTime));
+                    break;
+                case Damage.DamageType.Stun:
+                    mstate = MeleeState.Stun;
+                    StartCoroutine(StunRoutine(dInfo.ccTime));
+                    break;
+            }
+
+           
            
         }
         healthbar.SetHealth((int)health);
 
     }
     
-    IEnumerator DamageRoutine()
+    IEnumerator NormalDamageRoutine()
     {
         anim.SetTrigger("isHit"); // 트리거 실행
 
       
-        float startTime = Time.time;
+        float startTime = Time.time; //시간체크
 
         nav.velocity = Vector3.zero;
     
@@ -315,22 +349,100 @@ public class MeleeController : LivingEntity
         }
    }
 
-  
+
+    IEnumerator NuckBackDamageRoutine(float nuckTime) //넉백시
+    {
+
+        nav.velocity = Vector3.zero;
+
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.NuckBack"))
+        { anim.SetTrigger("isNuckBack"); }// 트리거 실행
+
+        float startTime = Time.time;
+
+        while (Time.time < startTime + nuckTime)
+        {
+            nav.isStopped = true;
+           rigid.angularVelocity = Vector3.zero;
+            yield return null;
+        }
+
+        startTime = Time.time;
+        anim.SetTrigger("wakeUp");
+
+        while (Time.time < startTime + 2.8f)
+        {
+            rigid.angularVelocity = Vector3.zero;
+           // nav.isStopped = true;
+            yield return null;
+        }
+
+        if (isCollision)
+        {
+            mstate = MeleeState.Attack;
+        }
+        else
+        {
+            mstate = MeleeState.MoveTarget;
+        }
+    }
+
+    IEnumerator StunRoutine(float nuckTime) //스턴
+    {
+        nav.velocity = Vector3.zero;
+
+        anim.SetTrigger("isStun"); // 트리거 실행
+
+        float startTime = Time.time;
+
+        while (Time.time < startTime + nuckTime)
+        {
+            nav.isStopped = true;
+            rigid.angularVelocity = Vector3.zero;
+            yield return null;
+        }
 
 
+        anim.SetTrigger("wakeUp");
+
+        yield return new WaitForSeconds(0.2f);
+
+        if (isCollision)
+        {
+            mstate = MeleeState.Attack;
+        }
+        else
+        {
+            mstate = MeleeState.MoveTarget;
+        }
+    }
 
     //죽었을때
     public IEnumerator Die()
     {
-        anim.SetTrigger("isDead"); // 트리거 활성화
+
+        rigid.isKinematic = true;
+
+        if (mstate == MeleeState.NuckBack)
+        {
+            anim.SetTrigger("Lying");
+        }
+        else
+        {
+            anim.SetTrigger("isDead"); // 트리거 활성화
+        }
+
+        
         mstate = MeleeState.Die; //상태를 죽음으로 변경
 
-        this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+     
+
+       
 
         nav.isStopped = true; //네비 멈추기
         nav.enabled = false; // 네비 비활성화
         dead = true; //죽음 확성화
-
+        
         Collider[] enemyColliders = GetComponents<Collider>(); //모든 콜라이더 가져오기
 
         // 콜라이더 다끄기
@@ -339,7 +451,7 @@ public class MeleeController : LivingEntity
             enemyColliders[i].enabled = false;
         }
 
-       
+    
 
         yield return new WaitForSeconds(1f); // 1초 대기
 
@@ -377,6 +489,11 @@ public class MeleeController : LivingEntity
         else
             isCollision = false;
     }
+
+
+
+
+   
 
     private void OnDrawGizmos() // 범위 그리기
     {
