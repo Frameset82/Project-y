@@ -347,7 +347,7 @@ public class MeleeController : LivingEntity
             nav.velocity = Vector3.zero;
             yield return null;
         }
-   }
+    }
 
 
     IEnumerator NuckBackDamageRoutine(float nuckTime) //넉백시

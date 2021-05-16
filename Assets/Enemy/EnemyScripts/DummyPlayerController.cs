@@ -23,7 +23,7 @@ public class DummyPlayerController : LivingEntity
     {
         startingHealth = sHealth;     
         base.OnEnable();
-        damage.dType = Damage.DamageType.NuckBack;
+        damage.dType = Damage.DamageType.Stun;
         damage.dValue = 10f;
         damage.ccTime = 3f;
 
@@ -51,7 +51,7 @@ public class DummyPlayerController : LivingEntity
             hitNormal = hitNormal.normalized;
             //hitNormal.y = 1;
             enemytarget.OnDamage(damage);
-            rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
+            //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
             // Debug.Log(Damage.DamageType.Melee);
            
         }

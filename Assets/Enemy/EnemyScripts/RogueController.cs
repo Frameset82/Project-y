@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class RogueController : LivingEntity
 {
-    public enum RogueState { None, Idle, MoveTarget, Teleport, Attack, Die };
+    public enum RogueState { None, Idle, MoveTarget, Teleport, KnockBack, Stun, Attack, Die };
 
     [Header("기본속성")]
     public RogueState rstate = RogueState.None; // 근접적 상태변수
@@ -18,6 +18,9 @@ public class RogueController : LivingEntity
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
     private Rigidbody rigid;
+
+    [SerializeField]
+    private Healthbar healthbar;
 
     private bool move = false; //움직임 관련 bool값
     private bool attack = false; // 공격 관련 bool값
@@ -35,10 +38,8 @@ public class RogueController : LivingEntity
     }
 
     [Header("전투 속성")]
-    public float damage = 20f; // 공격력
+    public Damage damage; // 공격속성
 
-    private float timeBetAttack = 0.5f; // 공격 딜레이
-                                        // private float lastAttackTime = 0f; // 마지막 공격 시점
     private Vector3 dist; // 공격 대상과의 거리                              
 
     private float attackRange = 2f; // 공격 사거리
@@ -60,17 +61,31 @@ public class RogueController : LivingEntity
     float dotValue = 0f;
     Vector3 direction;
 
-    private void Start()
-    {
-        //대기 상태로 설정
-        rstate = RogueState.Idle;
 
+    private void Awake()
+    {
         // 컴포넌트 불러오기
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+        nav.updateRotation = false; // 네비의회전 기능 비활성화
+    }
 
-        nav.speed = MoveSpeed;
+    protected override void OnEnable()
+    {
+        //대기 상태로 설정
+        rstate = RogueState.Idle;
+        this.startingHealth = 50f; //테스트용 설정
+        healthbar.SetMaxHealth((int)startingHealth);
+        base.OnEnable();
+    }
+
+    public void Init(float _damage, float _speed, float _startHealth = 50f) //초기 설정 메소드
+    {
+        nav.speed = _speed; //이동속도 설정
+        damage.dValue = _damage; //초기 데미지값 설정
+        damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
+        this.startingHealth = _startHealth; //초기 HP값 설정
     }
 
     // 근접 적 상태 체크
@@ -155,17 +170,14 @@ public class RogueController : LivingEntity
             {
                 rstate = RogueState.Attack; //공격 상태로 변환
             }
-
-            lookAtPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z); //이동시 바라볼 방향 체크
-
+            else
+            {
+                lookAtPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z); //이동시 바라볼 방향 체크                                                                                           
+                nav.isStopped = false;   // 추적 실행
+                transform.LookAt(lookAtPosition);
+                nav.SetDestination(lookAtPosition); // 목적지 설정
+            }
         }
-
-
-        // 추적 실행
-        nav.isStopped = false;
-        nav.SetDestination(lookAtPosition); // 목적지 설정
-
-
     }
 
     //텔레포트시
@@ -225,14 +237,21 @@ public class RogueController : LivingEntity
     //공격 적용
     public void OnAttackEvent()
     {
+        StopAllCoroutines();
+
         LivingEntity attackTarget = target.GetComponent<LivingEntity>();
 
 
-        Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
+        damage.hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
 
-        Vector3 hitNormal = transform.position - target.transform.position;
+        damage.hitNormal = transform.position - target.transform.position;
 
        // attackTarget.OnDamage(damage, hitPoint, hitNormal);
+
+        if(isCollision)
+        {
+            attackTarget.OnDamage(damage);
+        }
     }
 
   
@@ -240,15 +259,121 @@ public class RogueController : LivingEntity
     // 공격을 당했을때
     public override void OnDamage(Damage dInfo)
     {
+        health -= dInfo.dValue; //체력 감소
+
         anim.SetTrigger("isHit"); // 트리거 실행
 
-        health -= damage; // 체력 감소
+        StopAllCoroutines();
 
-        if (health <= 0 && !dead) // 체력이 0보다 작고 사망상태가 아닐때
+        if (health <= 0 && this.gameObject.activeInHierarchy && !dead) // 체력이 0보다 작고 사망상태가 아닐때
         {
-            rstate = RogueState.Die; // 죽음 상태로 변환
+            StartCoroutine(Die());
+        }
+        else
+        {
+            switch (dInfo.dType)
+            {
+                case Damage.DamageType.Melee:     
+                 StartCoroutine(NormalDamageRoutine());//일반 공격일시
+                 break;
+
+                case Damage.DamageType.NuckBack:
+                    rstate = RogueState.KnockBack;
+                    StartCoroutine(NuckBackDamageRoutine(dInfo.ccTime));
+                    break;
+                case Damage.DamageType.Stun:
+                    rstate = RogueState.Stun;
+                    StartCoroutine(StunRoutine(dInfo.ccTime));
+                    break;
+            }
+        }
+        healthbar.SetHealth((int)health);
+    }
+
+
+    IEnumerator NormalDamageRoutine()
+    {
+        anim.SetTrigger("isHit"); // 트리거 실행
+
+
+        float startTime = Time.time; //시간체크
+
+        nav.velocity = Vector3.zero;
+
+        while (Time.time < startTime + 0.8f)
+        {
+            nav.velocity = Vector3.zero;
+            yield return null;
         }
     }
+
+    IEnumerator NuckBackDamageRoutine(float nuckTime) //넉백시
+    {
+
+        nav.velocity = Vector3.zero;
+
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        { anim.SetTrigger("isNuckBack"); }// 트리거 실행
+
+        float startTime = Time.time;
+
+        while (Time.time < startTime + nuckTime)
+        {
+            nav.isStopped = true;
+            rigid.angularVelocity = Vector3.zero;
+            yield return null;
+        }
+
+        startTime = Time.time;
+        anim.SetTrigger("wakeUp");
+
+        while (Time.time < startTime + 3.8f)
+        {
+            rigid.angularVelocity = Vector3.zero;
+            // nav.isStopped = true;
+            yield return null;
+        }
+
+        if (isCollision)
+        {
+            rstate = RogueState.Attack;
+        }
+        else
+        {
+            rstate = RogueState.MoveTarget;
+        }
+    }
+
+    IEnumerator StunRoutine(float nuckTime) //스턴
+    {
+        nav.velocity = Vector3.zero;
+
+        anim.SetTrigger("isStun"); // 트리거 실행
+
+        float startTime = Time.time;
+
+        while (Time.time < startTime + nuckTime)
+        {
+            nav.isStopped = true;
+            rigid.angularVelocity = Vector3.zero;
+            yield return null;
+        }
+
+
+        anim.SetTrigger("wakeUp");
+
+        yield return new WaitForSeconds(0.2f);
+
+        if (isCollision)
+        {
+            rstate = RogueState.Attack;
+        }
+        else
+        {
+            rstate = RogueState.MoveTarget;
+        }
+    }
+
 
     void OnSetTarget(GameObject _target) //타겟설정
     {
@@ -263,10 +388,25 @@ public class RogueController : LivingEntity
 
 
     //죽었을때
-    public override void Die()
+    public IEnumerator Die()
     {
+        rigid.isKinematic = true;
+      
+        if(rstate == RogueState.KnockBack)
+        {
+            anim.SetTrigger("Lying");
+        }
+        else
+        {
+            anim.SetTrigger("isDead"); // 트리거 활성화
+        }
 
-        base.Die();
+
+        rstate = RogueState.Die; // 죽음상태로 변경
+
+        nav.isStopped = true; //네비 멈추기
+        nav.enabled = false; // 네비 비활성화
+        dead = true;
 
         Collider[] enemyColliders = GetComponents<Collider>();
 
@@ -276,9 +416,10 @@ public class RogueController : LivingEntity
             enemyColliders[i].enabled = false;
         }
 
-        nav.isStopped = true; //네비 멈추기
-        nav.enabled = false; // 네비 비활성화
-        anim.SetTrigger("isDead"); // 트리거 활성화
+
+        yield return new WaitForSeconds(1f); // 1초 대기
+
+        //ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
     }
 
     private void Update()
