@@ -5,6 +5,7 @@ using UnityEngine;
 public class SwordWeapon : MeleeWeapon
 {
     public PlayerInfo playerInfo;
+    private Damage damage;
 
     public override void OnActive()
     {
@@ -15,14 +16,16 @@ public class SwordWeapon : MeleeWeapon
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            //데미지 구조체 변경 오류
-           // enemies[i].GetComponent<LivingEntity>().OnDamage(damage + playerInfo.damage, Vector3.forward, Vector3.forward);
+            damage.hitPoint = enemies[i].GetComponent<Collider>().ClosestPoint(transform.position);
+            damage.hitNormal = transform.position - enemies[i].transform.position;
+            enemies[i].GetComponent<LivingEntity>().OnDamage(damage);
         }
     }
     private void Awake()
     {
         playerInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
-        damage = 10f;
+        damage.dValue = 10f; //초기 데미지값 설정
+        damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
     }
 
     // Update is called once per frame

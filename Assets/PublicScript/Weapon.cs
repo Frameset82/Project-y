@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour, IDamageSource
 {
     [SerializeField]
-    public float damage;
+    public float damageValue;
     public float delay;
     public float attackSpeed = 1.0f;
     public bool canAttack;

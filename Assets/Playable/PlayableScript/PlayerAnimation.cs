@@ -75,10 +75,8 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void Swap()
     {
-        
-            playerAnimator.SetTrigger("Swap");
-           
-        
+        playerAnimator.SetTrigger("Swap");
+        keyboardController.isSwap = true;
     }
     public void Combo1Check()
     {

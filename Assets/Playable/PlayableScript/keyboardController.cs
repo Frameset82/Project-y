@@ -17,10 +17,11 @@ public class keyboardController : MonoBehaviour
     private PlayerAnimation playerAnimation;
     public GameObject playerAvatar;
 
-    public static PlayerState pState;
+    public PlayerState pState;
 
     public Transform FirePos; // 투사체 발사 위치
-    bool isSwap;
+    public static bool isSwap;
+    public static bool isDodge;
 
     public float currentAttackTime = 0.0f;
     public int comboCnt = 0;
@@ -74,6 +75,7 @@ public class keyboardController : MonoBehaviour
     {
         if ((pState == PlayerState.Idle || pState == PlayerState.Movement) && Time.time >= nextDodgeableTime)
         {
+            isDodge = true;
             nextDodgeableTime = Time.time + timeBetDodge;
             Vector3 destination = Vector3.forward;
             StartCoroutine(DodgeCoroutine(destination));
@@ -99,6 +101,7 @@ public class keyboardController : MonoBehaviour
         yield return new WaitForSeconds(0.5f); // 회피 지속시간
         PlayerInfo.canDamage = true; // 비무적으로 전환
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
+        isDodge = false;
 /*        playerRigidbody.constraints = RigidbodyConstraints.None;*/
 
         // 회피중 이동명령을 받았는지 체크
@@ -234,8 +237,20 @@ public class keyboardController : MonoBehaviour
         Bulletobj.transform.rotation = FirePos.transform.rotation;// 회전 지정
     }
 
+    public void SwapCheck()
+    {
+        if(isSwap == true)
+        {
+            pState = PlayerState.Swap;
+        }
+        else if(pState == PlayerState.Swap && isSwap == false)
+        {
+            pState = PlayerState.Idle;
+        }
+    }
+
     private void Update()
     {
-
+        SwapCheck();
     }
 }

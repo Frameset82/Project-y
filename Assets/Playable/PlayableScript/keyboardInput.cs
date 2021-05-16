@@ -82,7 +82,7 @@ public class keyboardInput : MonoBehaviour
 
     public void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && !isShoot && playerEquipmentManager.equipWeapon != null)
+        if (Input.GetMouseButtonDown(0) && !isShoot && playerEquipmentManager.equipWeapon != null && keyboardController.isSwap == false)
         {
             print("공격");
             RaycastHit hit;
