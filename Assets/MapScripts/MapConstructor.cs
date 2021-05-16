@@ -8,13 +8,13 @@ public class MapConstructor : MonoBehaviour
     GameObject tileParents;
     ArrayList tiles = new ArrayList();
     float sideLength = Mathf.Sqrt(3);
-    int fieldRadius = 7;
+    int fieldRadius = 50;
 
     void Start() {
         tileParents = GameObject.Find("Tiles");
 
-        for(int x = -fieldRadius-15; x <= fieldRadius+15; x ++) {
-            for(int y = -fieldRadius-15; y <= fieldRadius+15; y++) {
+        for(int x = -fieldRadius; x <= fieldRadius; x ++) {
+            for(int y = -fieldRadius; y <= fieldRadius; y++) {
                 for(int z = -fieldRadius; z <= fieldRadius; z++) {
                     if(x+y+z==0){
                         HexaCoord hexaCoord = new HexaCoord(new Vector3(x, y, z));
