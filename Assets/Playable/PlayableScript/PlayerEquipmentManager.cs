@@ -35,7 +35,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     void Interation()
     {
-        if (Input.GetButtonDown("Interation") && nearObject != null)
+        if ((Input.GetButtonDown("Interation") && nearObject != null ) && keyboardController.isSwap == false)
         {
             if (nearObject.tag == "Weapon")
             {

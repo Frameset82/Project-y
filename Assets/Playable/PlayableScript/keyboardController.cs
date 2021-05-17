@@ -181,7 +181,7 @@ public class keyboardController : MonoBehaviour
                     yield return new WaitForSeconds(0.67f);
                 }
             }
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.1f);
             playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
             
@@ -189,7 +189,7 @@ public class keyboardController : MonoBehaviour
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
         {
             playerAnimation.playerAnimator.SetBool("isAttack", true);
-            currentAttackTime = Time.time; // 재생한 시점
+            currentAttackTime = Time.time; // 재생한 시점 
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
             {
                 Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
@@ -222,7 +222,7 @@ public class keyboardController : MonoBehaviour
                     yield return new WaitForSeconds(0.67f);
                 }
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.4f);
             playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
         }

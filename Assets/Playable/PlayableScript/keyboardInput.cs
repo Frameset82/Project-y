@@ -40,7 +40,7 @@ public class keyboardInput : MonoBehaviour
 
     public void InputMove()
     {
-        if (keyboardController.pState == keyboardController.PlayerState.Dodge || keyboardController.pState == keyboardController.PlayerState.Death || keyboardController.pState == keyboardController.PlayerState.Attack)
+        if (keyboardController.pState == keyboardController.PlayerState.Dodge || keyboardController.pState == keyboardController.PlayerState.Death || keyboardController.pState == keyboardController.PlayerState.Attack || keyboardController.isSwap == true)
             return;
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
@@ -64,7 +64,7 @@ public class keyboardInput : MonoBehaviour
         rigi.MovePosition(rigi.position + moveVec);
         moveVec1 = moveVec;
         moveVec1.y = 0;
-
+         
         transform.LookAt(transform.position + moveVec1);
 
         avater.SetFloat("Up", vAxis);
