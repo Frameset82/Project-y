@@ -335,7 +335,8 @@ public class MeleeController : LivingEntity
     
     IEnumerator NormalDamageRoutine()
     {
-        anim.SetTrigger("isHit"); // 트리거 실행
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        { anim.SetTrigger("isHit"); }// 트리거 실행
 
       
         float startTime = Time.time; //시간체크
@@ -355,8 +356,8 @@ public class MeleeController : LivingEntity
 
         nav.velocity = Vector3.zero;
 
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.NuckBack"))
-        { anim.SetTrigger("isNuckBack"); }// 트리거 실행
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        { anim.SetTrigger("isKnockBack"); }// 트리거 실행
 
         float startTime = Time.time;
 
@@ -390,8 +391,8 @@ public class MeleeController : LivingEntity
     IEnumerator StunRoutine(float nuckTime) //스턴
     {
         nav.velocity = Vector3.zero;
-
-        anim.SetTrigger("isStun"); // 트리거 실행
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        { anim.SetTrigger("isStun"); } // 트리거 실행
 
         float startTime = Time.time;
 
@@ -423,7 +424,7 @@ public class MeleeController : LivingEntity
 
         rigid.isKinematic = true;
 
-        if (mstate == MeleeState.NuckBack)
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
         {
             anim.SetTrigger("Lying");
         }

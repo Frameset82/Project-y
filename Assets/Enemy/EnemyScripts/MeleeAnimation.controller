@@ -444,7 +444,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isNuckBack
+    m_ConditionEvent: isKnockBack
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6708996885428096914}
@@ -742,7 +742,7 @@ AnimatorStateMachine:
     m_Position: {x: 530, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5193792647214166803}
-    m_Position: {x: -220, y: -120, z: 0}
+    m_Position: {x: 270, y: -290, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: -1858616483098080156}
@@ -753,6 +753,7 @@ AnimatorStateMachine:
   - {fileID: -131005548339960779}
   - {fileID: -2737914258305094242}
   - {fileID: -4023243968329880643}
+  - {fileID: 3172879853493308910}
   m_EntryTransitions:
   - {fileID: -205342558773710777}
   - {fileID: 109965842205746677}
@@ -902,7 +903,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: isNuckBack
+  - m_Name: isKnockBack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1105,6 +1106,31 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.1
   m_TransitionOffset: 0
   m_ExitTime: 0.2
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &3172879853493308910
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Lying
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 5193792647214166803}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.1
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -1326,14 +1352,13 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NuckBack
+  m_Name: KnockBack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8656389311218235105}
   - {fileID: -5445162373879245231}
-  m_StateMachineBehaviours:
-  - {fileID: -8416829320462654283}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1361,8 +1386,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 2080573595443604354}
   - {fileID: 3107071778830951480}
-  m_StateMachineBehaviours:
-  - {fileID: -5083922994534572666}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

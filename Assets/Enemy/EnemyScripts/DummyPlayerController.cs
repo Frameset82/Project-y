@@ -23,11 +23,11 @@ public class DummyPlayerController : LivingEntity
     {
         startingHealth = sHealth;     
         base.OnEnable();
-        damage.dType = Damage.DamageType.Stun;
+        damage.dType = Damage.DamageType.NuckBack;
         damage.dValue = 10f;
         damage.ccTime = 3f;
 
-        damage1.dType = Damage.DamageType.NuckBack;
+        damage1.dType = Damage.DamageType.Melee;
         damage1.dValue = 10f;
         damage1.ccTime = 3f;
     }
@@ -50,7 +50,7 @@ public class DummyPlayerController : LivingEntity
             Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
             hitNormal = hitNormal.normalized;
             //hitNormal.y = 1;
-            enemytarget.OnDamage(damage);
+            enemytarget.OnDamage(damage1);
             //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
             // Debug.Log(Damage.DamageType.Melee);
            
@@ -69,7 +69,7 @@ public class DummyPlayerController : LivingEntity
             Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
             hitNormal = hitNormal.normalized;
             hitNormal.y = 1;
-            enemytarget.OnDamage(damage1);
+            enemytarget.OnDamage(damage);
             //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
             // Debug.Log(Damage.DamageType.Melee);
 

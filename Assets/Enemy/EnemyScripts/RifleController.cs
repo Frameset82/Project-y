@@ -95,18 +95,18 @@ public class RifleController : LivingEntity
                 move = false;
                 attack = false;
                 anim.SetInteger("Idlestate", Idlestate);
-                aimLayer.weight -= Time.deltaTime / aimDuration;
+                aimLayer.weight -= (Time.deltaTime / aimDuration) *5;
                 break;
 
             case RifleState.MoveTarget:
                 move = true;
                 attack = false;
-                aimLayer.weight -= Time.deltaTime / aimDuration;
+                aimLayer.weight -= (Time.deltaTime / aimDuration) * 5;
                 break;
             case RifleState.Attack:
                 move = false;
                 attack = true;
-                aimLayer.weight += Time.deltaTime / aimDuration;
+                aimLayer.weight += (Time.deltaTime / aimDuration) *5;
                 break;
             case RifleState.Die:
      

@@ -259,9 +259,9 @@ public class RogueController : LivingEntity
     // 공격을 당했을때
     public override void OnDamage(Damage dInfo)
     {
-        health -= dInfo.dValue; //체력 감소
+        if (dead) return;
 
-        anim.SetTrigger("isHit"); // 트리거 실행
+        health -= dInfo.dValue; //체력 감소
 
         StopAllCoroutines();
 
@@ -269,6 +269,7 @@ public class RogueController : LivingEntity
         {
             StartCoroutine(Die());
         }
+     
         else
         {
             switch (dInfo.dType)
@@ -293,7 +294,8 @@ public class RogueController : LivingEntity
 
     IEnumerator NormalDamageRoutine()
     {
-        anim.SetTrigger("isHit"); // 트리거 실행
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        { anim.SetTrigger("isHit"); } // 트리거 실행}
 
 
         float startTime = Time.time; //시간체크
@@ -312,8 +314,8 @@ public class RogueController : LivingEntity
 
         nav.velocity = Vector3.zero;
 
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { anim.SetTrigger("isNuckBack"); }// 트리거 실행
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))     
+        { anim.SetTrigger("isKnockBack"); }// 트리거 실행
 
         float startTime = Time.time;
 
@@ -330,7 +332,7 @@ public class RogueController : LivingEntity
         while (Time.time < startTime + 3.8f)
         {
             rigid.angularVelocity = Vector3.zero;
-            // nav.isStopped = true;
+           
             yield return null;
         }
 
@@ -348,7 +350,8 @@ public class RogueController : LivingEntity
     {
         nav.velocity = Vector3.zero;
 
-        anim.SetTrigger("isStun"); // 트리거 실행
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        { anim.SetTrigger("isStun"); } // 트리거 실행
 
         float startTime = Time.time;
 
@@ -391,8 +394,8 @@ public class RogueController : LivingEntity
     public IEnumerator Die()
     {
         rigid.isKinematic = true;
-      
-        if(rstate == RogueState.KnockBack)
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
         {
             anim.SetTrigger("Lying");
         }
