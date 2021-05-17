@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 708d5ff1f3aa3fd439b727aa2a03638d
+guid: 87440e4cd512f2f45b08a5c21189687e
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: RifleHit
+    second: LyingDie
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: RifleHit
+      name: LyingDie
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 69
+      lastFrame: 205
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -49,11 +49,11 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 1
-      loopBlendPositionXZ: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000

@@ -18,7 +18,7 @@ public class RifleController : LivingEntity
 
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
-    public Rig aimLayer; //리그 레이어 
+    //public Rig aimLayer; //리그 레이어 
     public float aimDuration = 0.3f; // 공격 상태로 전환 시간 
 
     private bool move = false; //움직임 관련 bool값
@@ -95,18 +95,18 @@ public class RifleController : LivingEntity
                 move = false;
                 attack = false;
                 anim.SetInteger("Idlestate", Idlestate);
-                aimLayer.weight -= (Time.deltaTime / aimDuration) *5;
+                //aimLayer.weight -= (Time.deltaTime / aimDuration) *5;
                 break;
 
             case RifleState.MoveTarget:
                 move = true;
                 attack = false;
-                aimLayer.weight -= (Time.deltaTime / aimDuration) * 5;
+                //aimLayer.weight -= (Time.deltaTime / aimDuration) * 5;
                 break;
             case RifleState.Attack:
                 move = false;
                 attack = true;
-                aimLayer.weight += (Time.deltaTime / aimDuration) *5;
+                //aimLayer.weight += (Time.deltaTime / aimDuration) *5;
                 break;
             case RifleState.Die:
      
