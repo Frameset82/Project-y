@@ -19,4 +19,9 @@ public class testgril : LivingEntity
         print(gameObject.name + "의 HP" +
             health);
     }
+
+    public override void OnDamage(Damage dInfo)
+    {
+        health -= dInfo.dValue; //체력 감소
+    }
 }

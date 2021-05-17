@@ -93,7 +93,6 @@ public class keyboardInput : MonoBehaviour
                 Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
                 keyboardController.Attack(destination);
             }
-
         }
     }
 }

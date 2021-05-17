@@ -49,8 +49,8 @@ public class PlayerInfo : LivingEntity
         healthSlider.value = health; // 갱신된 체력으로 슬라이더 갱신
     }
 
-    /*
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+
+    public override void OnDamage(Damage dInfo)
     {
         if (canDamage)
         {
@@ -59,10 +59,10 @@ public class PlayerInfo : LivingEntity
                 // 사망하지않은경우에만 효과음 재생
             }
 
-            base.OnDamage(damage, hitPoint, hitNormal);
+            health -= dInfo.dValue; //체력 감소
             healthSlider.value = health;
         }
-    } 이거 데미지 구조체로 바꾼거 때문에 오류남 고치셈*/
+    }
 
     public override void Die()
     {

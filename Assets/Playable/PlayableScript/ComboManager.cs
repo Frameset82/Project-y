@@ -6,11 +6,13 @@ public class ComboManager : MonoBehaviour
 {
     private keyboardController keyboardController;
     private PlayerAnimation playerAnimation;
+    private GameObject player;
 
     public void Start()
     {
         keyboardController = GameObject.Find("Player").GetComponent<keyboardController>();
         playerAnimation = GameObject.Find("Player").GetComponent<PlayerAnimation>();
+        player = GameObject.Find("Player");
     }
 
     public void Combo1Check()
@@ -39,5 +41,10 @@ public class ComboManager : MonoBehaviour
         playerAnimation.playerAnimator.SetBool("isAttack", false);
         keyboardController.comboCnt = 0;
         playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
+    }
+
+    public void www()
+    {
+        keyboardController.qqq();
     }
 }

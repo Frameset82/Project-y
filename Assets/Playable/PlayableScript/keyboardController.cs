@@ -13,7 +13,7 @@ public class keyboardController : MonoBehaviour
 
     private keyboardInput keyboardInput; // 플레이어 입력 컴포넌트
     private PlayerEquipmentManager playerEquipmentManager;
-    private Rigidbody playerRigidbody; // 캐릭터 리지드바디
+    public Rigidbody playerRigidbody; // 캐릭터 리지드바디
     private PlayerAnimation playerAnimation;
     public GameObject playerAvatar;
 
@@ -73,8 +73,16 @@ public class keyboardController : MonoBehaviour
     // 캐릭터 회피명령
     public void Dodge()
     {
-        if ((pState == PlayerState.Idle || pState == PlayerState.Movement) && Time.time >= nextDodgeableTime)
+        if ((pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack) && Time.time >= nextDodgeableTime)
         {
+            if(pState == PlayerState.Attack)
+            {
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
+                playerAnimation.playerAnimator.SetBool("isAttack", false);
+                comboCnt = 0;
+                keyboardInput.isShoot = false;
+                playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            }
             isDodge = true;
             nextDodgeableTime = Time.time + timeBetDodge;
             Vector3 destination = Vector3.forward;
@@ -158,8 +166,6 @@ public class keyboardController : MonoBehaviour
             playerAnimation.Attack();
             CreateBullet(); //총알 생성하기
             yield return new WaitForSeconds(0.1f);
-
-
             
             keyboardInput.isShoot = false;
             yield return new WaitForSeconds(0.3f);
@@ -184,7 +190,6 @@ public class keyboardController : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             playerEquipmentManager.weapon.OnAttack();
             keyboardInput.isShoot = false;
-            
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
         {
@@ -247,6 +252,13 @@ public class keyboardController : MonoBehaviour
         {
             pState = PlayerState.Idle;
         }
+    }
+
+    public void qqq()
+    {
+        print("오우야");
+        playerRigidbody.AddForce(transform.forward * 500f);
+        playerRigidbody.velocity = Vector3.zero;
     }
 
     private void Update()
