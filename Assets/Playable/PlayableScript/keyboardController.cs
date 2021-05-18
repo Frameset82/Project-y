@@ -20,11 +20,15 @@ public class keyboardController : MonoBehaviour
     public PlayerState pState;
 
     public Transform FirePos; // 투사체 발사 위치
+    public Transform FirePos2; // 총구 화염 위치
+
     public static bool isSwap;
     public static bool isDodge;
 
     public float currentAttackTime = 0.0f;
     public int comboCnt = 0;
+
+    public GameObject effect; //총구 화염 이펙트
 
     public enum PlayerState // 플레이어 상태 리스트
     {
@@ -44,6 +48,7 @@ public class keyboardController : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         playerRigidbody = GetComponent<Rigidbody>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
+        
     }
 
     // 캐릭터 이동감지
@@ -152,6 +157,8 @@ public class keyboardController : MonoBehaviour
             
             for (int i = 0; i < 3; i++)
             {
+                Instantiate(effect, FirePos2.transform.position, FirePos2.transform.rotation);
+                /*Destroy(effect);*/
                 CreateBullet(); //총알 생성하기
                 yield return new WaitForSeconds(0.1f);
             }
@@ -166,7 +173,7 @@ public class keyboardController : MonoBehaviour
             playerAnimation.Attack();
             CreateBullet(); //총알 생성하기
             yield return new WaitForSeconds(0.1f);
-            
+             
             keyboardInput.isShoot = false;
             yield return new WaitForSeconds(0.3f);
             pState = PlayerState.Idle;
@@ -240,6 +247,7 @@ public class keyboardController : MonoBehaviour
         var Bulletobj = BulletObjectPool.GetBullet(); // 오브젝트 풀에서 총알 가져오기
         Bulletobj.transform.position = FirePos.transform.position; //위치 지정
         Bulletobj.transform.rotation = FirePos.transform.rotation;// 회전 지정
+        
     }
 
     public void SwapCheck()
@@ -256,7 +264,7 @@ public class keyboardController : MonoBehaviour
 
     public void qqq()
     {
-        print("오우야");
+        
         playerRigidbody.AddForce(transform.forward * 500f);
         playerRigidbody.velocity = Vector3.zero;
     }

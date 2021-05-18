@@ -15,11 +15,11 @@ public class Bullet : MonoBehaviour
         player = GameObject.Find("Player");
         playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
     }
-
+     
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * 1f);
+        transform.Translate(this.transform.forward * -1f);
 
         if(time > 1f)
         {
