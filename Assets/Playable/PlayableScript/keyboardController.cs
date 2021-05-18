@@ -76,7 +76,7 @@ public class keyboardController : MonoBehaviour
     }
 
     // 캐릭터 회피명령
-    public void Dodge()
+    public void Dodge(Vector3 dir)
     {
         if ((pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack) && Time.time >= nextDodgeableTime)
         {
@@ -90,8 +90,7 @@ public class keyboardController : MonoBehaviour
             }
             isDodge = true;
             nextDodgeableTime = Time.time + timeBetDodge;
-            Vector3 destination = Vector3.forward;
-            StartCoroutine(DodgeCoroutine(destination));
+            StartCoroutine(DodgeCoroutine(dir));
         }
     }
     // 회피중 이동명령 예약
@@ -101,14 +100,14 @@ public class keyboardController : MonoBehaviour
         willMove = true;
     }
     // 캐릭터 실제 회피
-    public IEnumerator DodgeCoroutine(Vector3 destination)
+    public IEnumerator DodgeCoroutine(Vector3 dir)
     {
         /*        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;*/
         PlayerInfo.canDamage = false; // 무적으로 전환
         pState = PlayerState.Dodge;
         willMove = false;
-        Vector3 power = (destination - transform.position).normalized * dodgePower;
-        playerRigidbody.AddForce(gameObject.transform.forward * dodgePower);
+        /*        Vector3 power = (destination - transform.position).normalized * dodgePower;*/
+        playerRigidbody.AddForce(dir.normalized * dodgePower);
         playerRigidbody.velocity = Vector3.zero;
         playerAnimation.DodgeAni();
         yield return new WaitForSeconds(0.5f); // 회피 지속시간
