@@ -101,7 +101,7 @@ public class MeleeController : LivingEntity
                 AttackUpdate();
                 break;
             case MeleeState.JumpAttack:
-             
+                JumpAttackRoutine();
                 break;
 
             case MeleeState.Die:
@@ -133,8 +133,6 @@ public class MeleeController : LivingEntity
                 break;
 
             case MeleeState.JumpAttack:
-                move = false;
-                attack = false;
                 break;
 
             case MeleeState.Die:              
@@ -169,11 +167,7 @@ public class MeleeController : LivingEntity
             // 타겟이 공격 사거리에 들어오고 첫번쨰 공격이라면
             if (Vector3.Distance(this.transform.position, target.transform.position) < 4f && isFirstAttack)
             {
-                isFirstAttack = false;
-                StartCoroutine(JumpAttack(targetPos));
                 mstate = MeleeState.JumpAttack;
-     
-                return;              
             }
             else if(isCollision && !isFirstAttack) 
             {
@@ -192,6 +186,14 @@ public class MeleeController : LivingEntity
         }
     }
 
+    void JumpAttackRoutine()
+    {
+        
+
+       StartCoroutine(JumpAttack(targetPos));
+      
+       
+    }
 
     /*
     void JumpAttack(Vector3 tPos) //점프 공격
@@ -221,22 +223,32 @@ public class MeleeController : LivingEntity
 
         nav.SetDestination(lookAtPosition); //목적지 설정
         damage.dValue *= 2; // 점프공격시 데미지 2배 적용
-        this.transform.LookAt(targetPos);
+        //this.transform.LookAt(lookAtPosition);
 
-        anim.SetTrigger("JumpAttack"); //공격실행
+        if(isFirstAttack)
+        {
+            anim.SetTrigger("JumpAttack"); //공격실행
+            isFirstAttack = false;
+        }
+       
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.89f);
         nav.isStopped = true;
 
-        Debug.Log(nav.isStopped);
-
-        yield return new WaitForSeconds(0.4f);
-     
         damage.dValue /= 2; //데미지 원상복귀
        
-        mstate = MeleeState.MoveTarget;
+        if(isCollision)
+        {
+            //yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+            mstate = MeleeState.Attack;
+        }
+        else
+        {
+            //yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+            mstate = MeleeState.MoveTarget;
+        }
 
-        Debug.Log(nav.isStopped);
+     
     }
 
     // 공격시

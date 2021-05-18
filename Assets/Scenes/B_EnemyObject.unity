@@ -1524,12 +1524,6 @@ Transform:
   m_Father: {fileID: 1667751804}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &260423215 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2626480825856293180, guid: 0c8306f512d83124c905fb34fd57db43,
-    type: 3}
-  m_PrefabInstance: {fileID: 734987533}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &260798887
 GameObject:
   m_ObjectHideFlags: 0
@@ -3323,8 +3317,10 @@ MonoBehaviour:
   playerAvatar: {fileID: 912441468}
   pState: 0
   FirePos: {fileID: 1815684448}
+  FirePos2: {fileID: 0}
   currentAttackTime: 0
   comboCnt: -1
+  effect: {fileID: 0}
 --- !u!114 &542035432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3338,6 +3334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  moveVec2: {x: 0, y: 0, z: 0}
   mainCamera: {fileID: 600004508}
   avater: {fileID: 912441469}
 --- !u!114 &542035433
@@ -6900,6 +6897,12 @@ Transform:
   m_Father: {fileID: 1272971569}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &982393636 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2233739336527722866, guid: 98f0c92db2e39c845a1d63cc4239a148,
+    type: 3}
+  m_PrefabInstance: {fileID: 511914581}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &983481028
 GameObject:
   m_ObjectHideFlags: 0
@@ -14433,7 +14436,7 @@ PrefabInstance:
         type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 260423215}
+      objectReference: {fileID: 982393636}
     - target: {fileID: 7262994449290341953, guid: 5908a24ac735ea748809cc23aed0e9d4,
         type: 3}
       propertyPath: m_Constraints
