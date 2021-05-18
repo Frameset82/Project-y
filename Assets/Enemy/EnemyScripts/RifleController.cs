@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class RifleController : LivingEntity
 {
-    public enum RifleState { None, Idle, MoveTarget,  Attack, Die };
+    public enum RifleState { None, Idle, MoveTarget, KnockBack, Stun, Attack, Die };
 
     [Header("기본속성")]
     public RifleState rstate = RifleState.None; // 근접적 상태변수
@@ -18,8 +18,10 @@ public class RifleController : LivingEntity
 
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
-    //public Rig aimLayer; //리그 레이어 
-    public float aimDuration = 0.3f; // 공격 상태로 전환 시간 
+ 
+
+    [SerializeField]
+    private Healthbar healthbar;
 
     private bool move = false; //움직임 관련 bool값
     private bool attack = false; // 공격 관련 bool값

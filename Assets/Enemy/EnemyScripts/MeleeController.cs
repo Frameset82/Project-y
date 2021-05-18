@@ -100,6 +100,10 @@ public class MeleeController : LivingEntity
             case MeleeState.Attack:
                 AttackUpdate();
                 break;
+            case MeleeState.JumpAttack:
+             
+                break;
+
             case MeleeState.Die:
                 Die();
                 break;
@@ -126,6 +130,11 @@ public class MeleeController : LivingEntity
             case MeleeState.Attack:             
                 move = false;
                 attack = true;              
+                break;
+
+            case MeleeState.JumpAttack:
+                move = false;
+                attack = false;
                 break;
 
             case MeleeState.Die:              
@@ -162,7 +171,7 @@ public class MeleeController : LivingEntity
             {
                 isFirstAttack = false;
                 StartCoroutine(JumpAttack(targetPos));
-              //점프 공격
+                mstate = MeleeState.JumpAttack;
      
                 return;              
             }
@@ -206,43 +215,28 @@ public class MeleeController : LivingEntity
     
     IEnumerator JumpAttack(Vector3 tPos)
     {
-
-        mstate = MeleeState.JumpAttack; //점프어택
-
         Vector3 lookAtPosition = Vector3.zero;
 
         lookAtPosition = new Vector3(tPos.x, this.transform.position.y, tPos.z);
 
-       
         nav.SetDestination(lookAtPosition); //목적지 설정
         damage.dValue *= 2; // 점프공격시 데미지 2배 적용
+        this.transform.LookAt(targetPos);
+
         anim.SetTrigger("JumpAttack"); //공격실행
-        
-        yield return new WaitForSeconds(0.3f);
+
+        yield return new WaitForSeconds(0.5f);
         nav.isStopped = true;
 
-        yield return new WaitForSeconds(1.5f);
+        Debug.Log(nav.isStopped);
 
-        //anim.SetBool("isFirstAttack", false);// 공격 종료
-        damage.dValue /= 2; //데미지 원상복귀
-
-       
-        this.transform.LookAt(targetPos);
-        
-
-       
-
-        if (isCollision)
-        {
-            mstate = MeleeState.Attack;
-        }
-        else
-        {
-            mstate = MeleeState.MoveTarget;
-        }
-
+        yield return new WaitForSeconds(0.4f);
      
+        damage.dValue /= 2; //데미지 원상복귀
+       
+        mstate = MeleeState.MoveTarget;
 
+        Debug.Log(nav.isStopped);
     }
 
     // 공격시
