@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class keyboardInput : MonoBehaviour
 {
+    [Header("옵션창 활성화 여부")]
+    [SerializeField] GameObject optionCanvas;
+    [SerializeField] bool optionCanvasOn = false;
+
     // 입력 버튼 이름
     private string dodgeButtonName = "Jump";
 
@@ -37,6 +41,7 @@ public class keyboardInput : MonoBehaviour
 
     private void Update()
     {
+        InputEscape();
         Attack();
     }
 
@@ -106,6 +111,16 @@ public class keyboardInput : MonoBehaviour
                 Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
                 keyboardController.Attack(destination);
             }
+        }
+    }
+
+    // ESC 키 입력
+    void InputEscape(){
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            Debug.Log("InputEscape()");
+            optionCanvasOn = optionCanvas.activeSelf;
+            optionCanvasOn = optionCanvasOn ? false : true;
+            optionCanvas.SetActive(optionCanvasOn);
         }
     }
 }
