@@ -9,6 +9,7 @@ public class Respawn : MonoBehaviour
     [SerializeField] GameObject enemy; // private 변수를 inspector 로 접근가능하는게 [SerializeField], enemy 지정
     [SerializeField] Transform[] createnemy; // enemy가 나올 장소를 배열로 지정
     [SerializeField] float creat_time; // 젠 시간
+    [SerializeField] GameObject explosion;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +19,14 @@ public class Respawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     void creat()
     {
         int i = Random.Range(0, 3); // 배열 값 지정(리스폰 되는 장소 갯수)
+        Instantiate(explosion, createnemy[i].position, createnemy[i].rotation); // 생성 이펙트
         Instantiate(enemy, createnemy[i].position, createnemy[i].rotation); // enemy 생성 코드
+
     }
 
 
