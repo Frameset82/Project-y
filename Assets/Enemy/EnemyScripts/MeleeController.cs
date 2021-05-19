@@ -302,7 +302,7 @@ public class MeleeController : LivingEntity
     // 공격을 당했을때
     public override void OnDamage(Damage dInfo)
     {
-
+        if (dead) return;
         health -= dInfo.dValue; //체력 감소
 
         StopAllCoroutines();
@@ -332,8 +332,6 @@ public class MeleeController : LivingEntity
                     break;
             }
 
-           
-           
         }
         healthbar.SetHealth((int)health);
 

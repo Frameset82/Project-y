@@ -17,8 +17,9 @@ public class RifleController : LivingEntity
     public int Idlestate; 
 
     private NavMeshAgent nav; // NavMesh 컴포넌트
+    private Rigidbody rigid; 
     private Animator anim; // 애니메이터 컴포넌트
- 
+    public EnemyGun eGun; 
 
     [SerializeField]
     private Healthbar healthbar;
@@ -40,7 +41,7 @@ public class RifleController : LivingEntity
     }
 
     [Header("전투 속성")]
-    public float damage = 20f; // 공격력
+    public Damage damage; // 공격력
     public float attackRange = 7f; // 공격 사거리
 
 
@@ -57,14 +58,26 @@ public class RifleController : LivingEntity
     {
         // 컴포넌트 불러오기
         nav = GetComponent<NavMeshAgent>();
-        anim = GetComponentInChildren<Animator>();  
+        rigid = GetComponent<Rigidbody>();
+        anim = GetComponentInChildren<Animator>();
+        nav.updateRotation = false; // 네비의회전 기능 비활성화
     }
 
     protected override void OnEnable()
     {
         //대기 상태로 설정
         rstate = RifleState.Idle;
-        nav.speed = MoveSpeed;
+        this.startingHealth = 50f; //테스트용 설정
+        healthbar.SetMaxHealth((int)startingHealth);
+        base.OnEnable();
+    }
+
+    public void Init(float _damage, float _speed, float _startHealth = 50f) //초기 설정 메소드
+    {
+        nav.speed = _speed; //이동속도 설정
+        damage.dValue = _damage; //초기 데미지값 설정
+        damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
+        this.startingHealth = _startHealth; //초기 HP값 설정
     }
 
     // 근접 적 상태 체크
@@ -96,22 +109,20 @@ public class RifleController : LivingEntity
                 Idlestate = Random.Range(0, 3);
                 move = false;
                 attack = false;
-                anim.SetInteger("Idlestate", Idlestate);
-                //aimLayer.weight -= (Time.deltaTime / aimDuration) *5;
+                anim.SetInteger("Idlestate", Idlestate);                
                 break;
 
             case RifleState.MoveTarget:
                 move = true;
                 attack = false;
-                //aimLayer.weight -= (Time.deltaTime / aimDuration) * 5;
                 break;
+
             case RifleState.Attack:
                 move = false;
                 attack = true;
-                //aimLayer.weight += (Time.deltaTime / aimDuration) *5;
                 break;
-            case RifleState.Die:
-     
+
+            case RifleState.Die:   
                 break;
         }
     }
@@ -145,14 +156,19 @@ public class RifleController : LivingEntity
             {
                 rstate = RifleState.Attack;
             }
-
-            lookAtPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
+            else
+            {
+                lookAtPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
+                // 추적 실행
+                nav.isStopped = false;
+                transform.LookAt(lookAtPosition);
+                nav.SetDestination(lookAtPosition); // 목적지 설정
+             
+            }
+            
         }
 
-        // 추적 실행
-        nav.isStopped = false;
-        nav.SetDestination(lookAtPosition); // 목적지 설정
-
+     
     }
 
 
@@ -169,19 +185,14 @@ public class RifleController : LivingEntity
             nav.isStopped = true; // 네비 멈추기
             nav.velocity = Vector3.zero;
             transform.LookAt(target.transform);
-
         }
     }
 
     //공격 적용
-    public void OnDamageEvent()
+    public void OnAttackEvent()
     {
-        LivingEntity attackTarget = target.GetComponent<LivingEntity>();
-
-
-        Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
-
-        Vector3 hitNormal = transform.position - target.transform.position;
+        StopAllCoroutines();
+        eGun.Fire(damage,attackRange);
 
        // attackTarget.OnDamage(damage, hitPoint, hitNormal);
     }
@@ -189,15 +200,126 @@ public class RifleController : LivingEntity
     // 공격을 당했을때
     public override void OnDamage(Damage dInfo)
     {
-        anim.SetTrigger("isHit"); // 트리거 실행
+        if (dead) return;
 
-        health -= damage; // 체력 감소
+        StopAllCoroutines();
 
-        if (health <= 0 && !dead) // 체력이 0보다 작고 사망상태가 아닐때
+
+        health -= dInfo.dValue; // 체력 감소
+
+
+        if (health <= 0 && this.gameObject.activeInHierarchy && !dead) // 체력이 0보다 작고 사망상태가 아닐때
         {
-            rstate = RifleState.Die; // 죽음 상태로 변환
+            StartCoroutine(Die());
+        }
+        else
+        {
+            switch (dInfo.dType)
+            {
+                case Damage.DamageType.Melee:
+                    StartCoroutine(NormalDamageRoutine());//일반 공격일시
+                    break;
+
+                case Damage.DamageType.NuckBack:
+                    rstate = RifleState.KnockBack;
+                    StartCoroutine(NuckBackDamageRoutine(dInfo.ccTime));
+                    break;
+                case Damage.DamageType.Stun:
+                    rstate = RifleState.Stun;
+                    StartCoroutine(StunRoutine(dInfo.ccTime));
+                    break;
+            }
+        }
+
+        healthbar.SetHealth((int)health);
+        Debug.Log(health);
+    }
+
+    IEnumerator NormalDamageRoutine()
+    {
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        { anim.SetTrigger("isHit"); } // 트리거 실행}
+
+
+        float startTime = Time.time; //시간체크
+
+        nav.velocity = Vector3.zero;
+
+        while (Time.time < startTime + 0.8f)
+        {
+            nav.velocity = Vector3.zero;
+            yield return null;
         }
     }
+
+    IEnumerator NuckBackDamageRoutine(float nuckTime) //넉백시
+    {
+
+        nav.velocity = Vector3.zero;
+
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        { anim.SetTrigger("isKnockBack"); }// 트리거 실행
+
+        float startTime = Time.time;
+
+        while (Time.time < startTime + nuckTime)
+        {
+            nav.isStopped = true;
+            rigid.angularVelocity = Vector3.zero;
+            yield return null;
+        }
+
+        startTime = Time.time;
+        anim.SetTrigger("wakeUp");
+
+        while (Time.time < startTime + 3.8f)
+        {
+            rigid.angularVelocity = Vector3.zero;
+
+            yield return null;
+        }
+
+        if (isCollision)
+        {
+            rstate = RifleState.Attack;
+        }
+        else
+        {
+            rstate = RifleState.MoveTarget;
+        }
+    }
+
+    IEnumerator StunRoutine(float nuckTime) //스턴
+    {
+        nav.velocity = Vector3.zero;
+
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        { anim.SetTrigger("isStun"); } // 트리거 실행
+
+        float startTime = Time.time;
+
+        while (Time.time < startTime + nuckTime)
+        {
+            nav.isStopped = true;
+            rigid.angularVelocity = Vector3.zero;
+            yield return null;
+        }
+
+
+        anim.SetTrigger("wakeUp");
+
+        yield return new WaitForSeconds(0.2f);
+
+        if (isCollision)
+        {
+            rstate = RifleState.Attack;
+        }
+        else
+        {
+            rstate = RifleState.MoveTarget;
+        }
+    }
+
 
     void OnSetTarget(GameObject _target) //타겟설정
     {
@@ -212,10 +334,25 @@ public class RifleController : LivingEntity
 
 
     //죽었을때
-    public override void Die()
+    public IEnumerator Die()
     {
+        rigid.isKinematic = true;
 
-        base.Die();
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        {
+            anim.SetTrigger("Lying");
+        }
+        else
+        {
+            anim.SetTrigger("isDead"); // 트리거 활성화
+        }
+
+
+        rstate = RifleState.Die; // 죽음상태로 변경
+
+        nav.isStopped = true; //네비 멈추기
+        nav.enabled = false; // 네비 비활성화
+        dead = true;
 
         Collider[] enemyColliders = GetComponents<Collider>();
 
@@ -225,9 +362,10 @@ public class RifleController : LivingEntity
             enemyColliders[i].enabled = false;
         }
 
-        nav.isStopped = true; //네비 멈추기
-        nav.enabled = false; // 네비 비활성화
-        anim.SetTrigger("isDead"); // 트리거 활성화
+
+        yield return new WaitForSeconds(1f); // 1초 대기
+
+        //ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
     }
 
     private void Update()
@@ -246,9 +384,6 @@ public class RifleController : LivingEntity
 
 
     }
-
-
-
 
     void sectorCheck() // 부챗꼴 범위 충돌
     {

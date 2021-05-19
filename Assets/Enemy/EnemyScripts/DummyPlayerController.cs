@@ -80,7 +80,7 @@ public class DummyPlayerController : LivingEntity
     {
       
         //base.OnDamage(damage, hitPoint, hitNormal);
-        //animator.SetTrigger("IsHit");
+        animator.SetTrigger("IsHit");
  
         // 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
       
