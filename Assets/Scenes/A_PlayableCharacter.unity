@@ -6351,6 +6351,8 @@ MonoBehaviour:
   isSpear: 0
   isGun: 0
   isRifle: 1
+  player: {fileID: 0}
+  playerAnimation: {fileID: 0}
   playerInfo: {fileID: 0}
 --- !u!1 &441729897
 GameObject:
@@ -6547,7 +6549,7 @@ Animator:
   m_GameObject: {fileID: 451847703}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cb5c9cedca12e1a4aa282ae7b53f42ab, type: 3}
-  m_Controller: {fileID: 9100000, guid: 55a4479db6d49334f99bc3b4090fa34a, type: 2}
+  m_Controller: {fileID: 9100000, guid: c5dd4bdf7092a5845bac22e6f89912b5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6682,6 +6684,45 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 914517416}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &489651100
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489651099}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!114 &489651102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6703,6 +6744,9 @@ MonoBehaviour:
   isSpear: 0
   isGun: 0
   isRifle: 0
+  player: {fileID: 0}
+  playerAnimation: {fileID: 0}
+  playerInfo: {fileID: 0}
   attackRange: 5
   angle: 90
   enemyLayers:
@@ -6710,8 +6754,6 @@ MonoBehaviour:
     m_Bits: 768
   enemies: []
   isCollision: 0
-  player: {fileID: 0}
-  playerInfo: {fileID: 0}
 --- !u!1 &534517197 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4990402973033692420, guid: 53a68804edf27de46988c660eff01a88,
@@ -13455,6 +13497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 54333176588385812, guid: ebc8f1c90e252c646b165cc274829bf5, type: 3}
+    - {fileID: 23444126801197092, guid: ebc8f1c90e252c646b165cc274829bf5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ebc8f1c90e252c646b165cc274829bf5, type: 3}
 --- !u!4 &914517417 stripped
 Transform:
@@ -13839,7 +13882,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1018919361
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14348,6 +14391,8 @@ MonoBehaviour:
   isSpear: 0
   isGun: 1
   isRifle: 0
+  player: {fileID: 0}
+  playerAnimation: {fileID: 0}
   playerInfo: {fileID: 0}
 --- !u!4 &1170197623 stripped
 Transform:
@@ -14569,6 +14614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7eb1aaf04925694da0545224edf75a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  optionCanvas: {fileID: 0}
+  optionCanvasOn: 0
   speed: 5
   moveVec2: {x: 0, y: 0, z: 0}
   mainCamera: {fileID: 286148431}
@@ -14652,13 +14699,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAnimator: {fileID: 451847705}
-  playerAnimators:
-  - {fileID: 9100000, guid: c5dd4bdf7092a5845bac22e6f89912b5, type: 2}
-  - {fileID: 9100000, guid: 07f098998a7d03a4fbd2bbf00e288b06, type: 2}
-  - {fileID: 9100000, guid: d66b1462664922b4d9b95f410f84ac89, type: 2}
-  - {fileID: 9100000, guid: 3c3da17a4e76f6b4e918ee2035bc29c2, type: 2}
-  - {fileID: 9100000, guid: cfff4e312b5c34c40810aabf0d43f5bb, type: 2}
-  - {fileID: 9100000, guid: c37e9d63e00e649469795f2993d79532, type: 2}
 --- !u!114 &1182832096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14715,7 +14755,9 @@ MonoBehaviour:
   changeImg2: {fileID: 1467600826}
   dropWeapon1: {fileID: 0}
   dropWeapon2: {fileID: 0}
-  weapon: {fileID: 0}
+  mainWeaponScript: {fileID: 0}
+  subWeaponScript: {fileID: 0}
+  equipWeaponScript: {fileID: 0}
 --- !u!1 &1191681359
 GameObject:
   m_ObjectHideFlags: 0
@@ -15949,6 +15991,9 @@ MonoBehaviour:
   isSpear: 0
   isGun: 0
   isRifle: 0
+  player: {fileID: 0}
+  playerAnimation: {fileID: 0}
+  playerInfo: {fileID: 0}
   attackRange: 5
   angle: 90
   enemyLayers:
@@ -15956,8 +16001,6 @@ MonoBehaviour:
     m_Bits: 512
   enemies: []
   isCollision: 0
-  player: {fileID: 0}
-  playerInfo: {fileID: 0}
 --- !u!1 &1646192998
 GameObject:
   m_ObjectHideFlags: 0
@@ -16426,6 +16469,9 @@ MonoBehaviour:
   isSpear: 1
   isGun: 0
   isRifle: 0
+  player: {fileID: 0}
+  playerAnimation: {fileID: 0}
+  playerInfo: {fileID: 0}
   attackRange: 5
   angle: 90
   enemyLayers:
@@ -16433,8 +16479,6 @@ MonoBehaviour:
     m_Bits: 512
   enemies: []
   isCollision: 0
-  player: {fileID: 0}
-  playerInfo: {fileID: 0}
 --- !u!64 &1736823469
 MeshCollider:
   m_ObjectHideFlags: 0

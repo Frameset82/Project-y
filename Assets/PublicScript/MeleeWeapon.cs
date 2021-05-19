@@ -12,10 +12,10 @@ public class MeleeWeapon : Weapon
     public LayerMask enemyLayers;
     public List<GameObject> enemies;
     public bool isCollision = false;
+    
 
     Color _blue = new Color(0f, 0f, 1f, 0.2f);
     Color _red = new Color(1f, 0f, 0f, 0.2f);
-    public GameObject player;
 
     public override void OnAttack()
     {
@@ -27,9 +27,14 @@ public class MeleeWeapon : Weapon
         throw new System.NotImplementedException();
     }
 
-    void Start()
+    public override void ChangeAnimator()
     {
-        player = GameObject.Find("Player");
+        throw new System.NotImplementedException();
+    }
+
+    private void Start()
+    {
+        
     }
 
     void Update()

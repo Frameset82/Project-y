@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Animations;
 
 public class PlayerAnimation : MonoBehaviour
 {
 
     public Animator playerAnimator; // 캐릭터 애니메이터
-    public AnimatorController[] playerAnimators;
     private PlayerEquipmentManager playerEquipmentManager;
     private keyboardController keyboardController;
 
@@ -19,31 +17,6 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
         playerAnimator = gameObject.GetComponentInChildren<Animator>();
-
-        if(playerEquipmentManager.equipWeapon == null)
-        {
-            playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[0];
-        }
-        else if(playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true)
-        {
-            playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[1];
-        }
-        else if(playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
-        {
-            playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[2];
-        }
-        else if(playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
-        {
-            playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[3];
-        }
-        else if(playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
-        {
-            playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[4];
-        }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
-        {
-            playerAnimator.runtimeAnimatorController = (RuntimeAnimatorController)playerAnimators[5];
-        }
     }
 
     // 캐릭터 선자세 애니메이션
@@ -66,7 +39,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         playerAnimator.SetTrigger("Attack");
         playerAnimator.SetBool("isMove", false);
-        
     }
 
     public void Dead()
@@ -77,14 +49,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         playerAnimator.SetTrigger("Swap");
         keyboardController.isSwap = true;
-    }
-    public void Combo1Check()
-    {
-        if (keyboardController.comboCnt == 1)
-        {
-            playerAnimator.SetBool("isAttack", false);
-            keyboardController.comboCnt = 0;
-        }
     }
 
     public bool CompareStateName(string aaa)

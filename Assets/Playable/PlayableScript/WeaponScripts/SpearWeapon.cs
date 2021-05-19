@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpearWeapon : MeleeWeapon
 {
-    public PlayerInfo playerInfo;
     private Damage damage;
 
     public override void OnActive()
@@ -22,9 +21,17 @@ public class SpearWeapon : MeleeWeapon
     }
     private void Awake()
     {
-        playerInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
+        player = GameObject.Find("Player");
+        playerAnimation = player.GetComponent<PlayerAnimation>();
+        playerInfo = player.GetComponent<PlayerInfo>();
         damage.dValue = 10f; //초기 데미지값 설정
         damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
+        playerAnimation.playerAnimator.runtimeAnimatorController = Resources.Load("PlayerAnimator/TestSpear") as RuntimeAnimatorController;
+    }
+    public override void ChangeAnimator()
+    {
+        print("창");
+        playerAnimation.playerAnimator.runtimeAnimatorController = Resources.Load("PlayerAnimator/TestSpear") as RuntimeAnimatorController;
     }
 
     // Update is called once per frame

@@ -194,7 +194,7 @@ public class keyboardController : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(0.1f);
-            playerEquipmentManager.weapon.OnAttack();
+            playerEquipmentManager.equipWeaponScript.OnAttack();
             keyboardInput.isShoot = false;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
@@ -213,7 +213,7 @@ public class keyboardController : MonoBehaviour
                 }   
             }
             yield return new WaitForSeconds(0.5f);
-            playerEquipmentManager.weapon.OnAttack();
+            playerEquipmentManager.equipWeaponScript.OnAttack();
             keyboardInput.isShoot = false;
             
         }
@@ -234,7 +234,7 @@ public class keyboardController : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(0.4f);
-            playerEquipmentManager.weapon.OnAttack();
+            playerEquipmentManager.equipWeaponScript.OnAttack();
             keyboardInput.isShoot = false;
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;

@@ -28,10 +28,10 @@ public class PlayerEquipmentManager : MonoBehaviour
     public GameObject dropWeapon1; // 무기 두칸이 다 차있을경우 떨어트릴 무기
     public GameObject dropWeapon2;
 
-    
-   
     [Header("착용중 무기의 스크립트")]
-    public Weapon weapon;
+    public Weapon mainWeaponScript;
+    public Weapon subWeaponScript;
+    public Weapon equipWeaponScript;
 
     void Interation()
     {
@@ -99,7 +99,7 @@ public class PlayerEquipmentManager : MonoBehaviour
                     equipWeapon = subWeapon;
                     subWeapon.SetActive(true);
                     equipCount = 2;
-
+                    subWeaponScript.ChangeAnimator();
                 }
                 else if (equipCount == 2)
                 {
@@ -109,6 +109,7 @@ public class PlayerEquipmentManager : MonoBehaviour
                     equipWeapon = mainWeapon;
                     mainWeapon.SetActive(true);
                     equipCount = 1;
+                    mainWeaponScript.ChangeAnimator();
                 }
             }
         
@@ -188,8 +189,12 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         Interation();
         Swap();
+        if(mainWeapon != null)
+            mainWeaponScript = mainWeapon.GetComponent<Weapon>();
+        if(subWeapon != null)
+            subWeaponScript = subWeapon.GetComponent<Weapon>();
         if(equipWeapon != null)
-            weapon = equipWeapon.GetComponent<Weapon>();
+            equipWeaponScript = equipWeapon.GetComponent<Weapon>();
     }
 
     public IEnumerator SwapCoroutine()

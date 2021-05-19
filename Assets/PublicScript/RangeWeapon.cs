@@ -14,13 +14,8 @@ public class RangeWeapon : Weapon
         throw new System.NotImplementedException();
     }
 
-    void Start()
+    public override void ChangeAnimator()
     {
-        
-    }
-
-    void Update()
-    {
-        
+        throw new System.NotImplementedException();
     }
 }
