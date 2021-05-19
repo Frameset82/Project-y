@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class BombRobotControl : LivingEntity
 {
-    public enum BombState { None, Idle, MoveTarget, Exploding, Die };
+    public enum BombState { None, Idle, MoveTarget, Exploding, KnockBack, Stun, Die };
 
     public BombState bstate;
     public float Speed = 50.0f;
@@ -16,10 +16,12 @@ public class BombRobotControl : LivingEntity
     private bool isEnter = false; // 한번만 실행 시키기 위한 bool 함수
     private bool isWalk;
 
-    MeshRenderer[] mesh;
-    NavMeshAgent nav;
-    Animator anim;
+    private MeshRenderer[] mesh;
+    private NavMeshAgent nav;
+    private Animator anim;
 
+    [SerializeField]
+    private Healthbar healthbar;
 
     void Awake()
     {
