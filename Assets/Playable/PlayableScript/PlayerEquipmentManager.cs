@@ -35,7 +35,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     void Interation()
     {
-        if ((Input.GetButtonDown("Interation") && nearObject != null ) && keyboardController.isSwap == false)
+        if ((Input.GetButtonDown("Interation") && nearObject != null ) && PlayerKeyboardController.isSwap == false)
         {
             if (nearObject.tag == "Weapon")
             {
@@ -76,7 +76,7 @@ public class PlayerEquipmentManager : MonoBehaviour
                     changeEquipment.SetActive(true);
                     changeImg1.sprite = mainWeaponImg.GetComponent<Image>().sprite;
                     changeImg2.sprite = subWeaponImg.GetComponent<Image>().sprite;
-                    keyboardInput.isShoot = true;
+                    PlayerKeyboardInput.isShoot = true;
                     Time.timeScale = 0; // 시간 정지
                 }
             }
@@ -90,7 +90,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             if (Input.GetButtonDown("Swap2") && (subWeapon == null || equipCount == 2))
                 return;
        
-            if ((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2")) && keyboardInput.isShoot == false && !keyboardController.isDodge && !keyboardController.isSwap)
+            if ((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2")) && PlayerKeyboardInput.isShoot == false && !PlayerKeyboardController.isDodge && !PlayerKeyboardController.isSwap)
             {
                 if (equipCount == 1)
                 {
@@ -136,7 +136,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         nearObject.SetActive(false);
         nearObject = null;
         changeEquipment.SetActive(false);
-        keyboardInput.isShoot = false;
+        PlayerKeyboardInput.isShoot = false;
         Time.timeScale = 1; // 시간정지 해제
     } 
 
@@ -160,7 +160,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         nearObject.SetActive(false);
         nearObject = null;
         changeEquipment.SetActive(false);
-        keyboardInput.isShoot = false;
+        PlayerKeyboardInput.isShoot = false;
         Time.timeScale = 1; // 시간정지 해제
     }
 
@@ -199,7 +199,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public IEnumerator SwapCoroutine()
     {
-        if (keyboardController.isDodge == false && keyboardInput.isShoot == false)
+        if (PlayerKeyboardController.isDodge == false && PlayerKeyboardInput.isShoot == false)
         {
             yield return new WaitForSeconds(0.01f);
             playerAnimation.Swap();

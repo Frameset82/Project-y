@@ -25,8 +25,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public virtual void OnDamage(Damage dInfo)
     {
         // 데미지만큼 체력 감소
-       // health -= damage;
-
+        // health -= damage;
         // 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
         if (health <= 0 && !dead)
         {

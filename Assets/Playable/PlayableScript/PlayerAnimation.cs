@@ -7,12 +7,12 @@ public class PlayerAnimation : MonoBehaviour
 
     public Animator playerAnimator; // 캐릭터 애니메이터
     private PlayerEquipmentManager playerEquipmentManager;
-    private keyboardController keyboardController;
+    private PlayerKeyboardController playerKeyboardController;
 
     private void Start()
     {
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
-        keyboardController = GetComponent<keyboardController>();
+        playerKeyboardController = GetComponent<PlayerKeyboardController>();
     }
     void Update()
     {
@@ -43,12 +43,18 @@ public class PlayerAnimation : MonoBehaviour
 
     public void Dead()
     {
+        print("사망");
         playerAnimator.SetTrigger("isDeath");
     }
     public void Swap()
     {
         playerAnimator.SetTrigger("Swap");
-        keyboardController.isSwap = true;
+        PlayerKeyboardController.isSwap = true;
+    }
+
+    public void OnHit()
+    {
+        playerAnimator.SetTrigger("OnHit");
     }
 
     public bool CompareStateName(string aaa)

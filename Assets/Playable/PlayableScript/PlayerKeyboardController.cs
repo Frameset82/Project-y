@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class keyboardController : MonoBehaviour
+public class PlayerKeyboardController : MonoBehaviour
 {
     // 이동속도와 회전속도 회피속도
     public float dodgePower = 400f;
@@ -11,7 +11,7 @@ public class keyboardController : MonoBehaviour
     private float timeBetDodge = 1f;
     private float nextDodgeableTime = 0f;
 
-    private keyboardInput keyboardInput; // 플레이어 입력 컴포넌트
+    private PlayerKeyboardInput playerKeyboardInput; // 플레이어 입력 컴포넌트
     private PlayerEquipmentManager playerEquipmentManager;
     public Rigidbody playerRigidbody; // 캐릭터 리지드바디
     private PlayerAnimation playerAnimation;
@@ -24,6 +24,7 @@ public class keyboardController : MonoBehaviour
 
     public static bool isSwap;
     public static bool isDodge;
+    public static bool onHit;
 
     public float currentAttackTime = 0.0f;
     public int comboCnt = 0;
@@ -44,7 +45,7 @@ public class keyboardController : MonoBehaviour
     // 사용할 컴포넌트 할당(애니메이터는 수동할당)
     private void Start()
     {
-        keyboardInput = GetComponent<keyboardInput>();
+        playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
         playerAnimation = GetComponent<PlayerAnimation>();
         playerRigidbody = GetComponent<Rigidbody>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
@@ -85,7 +86,7 @@ public class keyboardController : MonoBehaviour
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
                 comboCnt = 0;
-                keyboardInput.isShoot = false;
+                PlayerKeyboardInput.isShoot = false;
                 playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
             isDodge = true;
@@ -140,7 +141,7 @@ public class keyboardController : MonoBehaviour
     public IEnumerator AttackCoroutine(Vector3 destination)
     {
         playerRigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        keyboardInput.isShoot = true;
+        PlayerKeyboardInput.isShoot = true;
         pState = PlayerState.Attack;
 
         gameObject.transform.LookAt(destination);
@@ -163,8 +164,8 @@ public class keyboardController : MonoBehaviour
             }
             
             yield return new WaitForSeconds(0.2f); // 딜레이
-            
-            keyboardInput.isShoot = false;
+
+            PlayerKeyboardInput.isShoot = false;
             pState = PlayerState.Idle;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
@@ -172,8 +173,8 @@ public class keyboardController : MonoBehaviour
             playerAnimation.Attack();
             CreateBullet(); //총알 생성하기
             yield return new WaitForSeconds(0.1f);
-             
-            keyboardInput.isShoot = false;
+
+            PlayerKeyboardInput.isShoot = false;
             yield return new WaitForSeconds(0.3f);
             pState = PlayerState.Idle;
             
@@ -195,7 +196,7 @@ public class keyboardController : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
             playerEquipmentManager.equipWeaponScript.OnAttack();
-            keyboardInput.isShoot = false;
+            PlayerKeyboardInput.isShoot = false;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
         {
@@ -214,7 +215,7 @@ public class keyboardController : MonoBehaviour
             }
             yield return new WaitForSeconds(0.5f);
             playerEquipmentManager.equipWeaponScript.OnAttack();
-            keyboardInput.isShoot = false;
+            PlayerKeyboardInput.isShoot = false;
             
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
@@ -235,7 +236,7 @@ public class keyboardController : MonoBehaviour
             }
             yield return new WaitForSeconds(0.4f);
             playerEquipmentManager.equipWeaponScript.OnAttack();
-            keyboardInput.isShoot = false;
+            PlayerKeyboardInput.isShoot = false;
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }

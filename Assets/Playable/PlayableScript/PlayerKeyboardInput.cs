@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class keyboardInput : MonoBehaviour
+public class PlayerKeyboardInput : MonoBehaviour
 {
     [Header("옵션창 활성화 여부")]
     [SerializeField] GameObject optionCanvas;
@@ -19,7 +19,7 @@ public class keyboardInput : MonoBehaviour
     public static Vector3 moveVec1; // 상태 초기화용 벡터
     public Vector3 moveVec2;
     private Rigidbody rigi;
-    private keyboardController keyboardController;
+    private PlayerKeyboardController playerKeyboardController;
     public Ray ray;
     public Camera mainCamera;
     public Animator avater;
@@ -29,7 +29,7 @@ public class keyboardInput : MonoBehaviour
     void Start()
     {
         rigi = GetComponent<Rigidbody>();
-        keyboardController = GetComponent<keyboardController>();
+        playerKeyboardController = GetComponent<PlayerKeyboardController>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         moveVec2 = transform.forward;
     }
@@ -47,16 +47,16 @@ public class keyboardInput : MonoBehaviour
 
     public void InputMove()
     {
-        if (keyboardController.pState == keyboardController.PlayerState.Dodge || keyboardController.pState == keyboardController.PlayerState.Death || keyboardController.pState == keyboardController.PlayerState.Attack || keyboardController.isSwap == true)
+        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || PlayerKeyboardController.isSwap == true || PlayerKeyboardController.onHit == true)
             return;
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
-            keyboardController.Move();
+            playerKeyboardController.Move();
             avater.SetBool("isMove", true);
         }
         else
         {
-            keyboardController.unMove();
+            playerKeyboardController.unMove();
             avater.SetBool("isMove", false);
         }
 
@@ -93,14 +93,14 @@ public class keyboardInput : MonoBehaviour
                 moveVec2 += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * speed;
             }
 
-            keyboardController.Dodge(moveVec2);
+            playerKeyboardController.Dodge(moveVec2);
             transform.LookAt(transform.position + moveVec2);
         }
     }
 
     public void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && !isShoot && playerEquipmentManager.equipWeapon != null && keyboardController.isSwap == false)
+        if (Input.GetMouseButtonDown(0) && !isShoot && playerEquipmentManager.equipWeapon != null && PlayerKeyboardController.isSwap == false)
         {
             print("공격");
             RaycastHit hit;
@@ -109,7 +109,7 @@ public class keyboardInput : MonoBehaviour
             {
 /*                if (hit.collider.gameObject.tag == "Player") return;*/
                 Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
-                keyboardController.Attack(destination);
+                playerKeyboardController.Attack(destination);
             }
         }
     }

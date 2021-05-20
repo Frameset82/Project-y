@@ -10,7 +10,7 @@ public class PlayerInfo : LivingEntity
     public GameObject healthText; // 체력 텍스트
     [Header("플레이어 기본 속성들")]
     public float maxHealth; // 최대체력( 시작 시 기본체력 )
-    public float damage; // 기본 데미지
+    public float defaultDamage; // 기본 데미지
     public float AtkSpeed; // 공격속도
     public float MoveSpeed; // 이동속도
     [Header("플레이어 추가 속성들")]
@@ -21,14 +21,17 @@ public class PlayerInfo : LivingEntity
     public static bool canDamage = true; // 데미지를 받을 수 있는 상태
 
     private PlayerAnimation playerAnimation;
-    private keyboardController keyboardController;
+    private PlayerKeyboardController playerKeyboardController;
+    private Damage damage;
+    public float timer = 0f;
 
     private void Awake()
     {
         startingHealth = 30.0f; // 시작체력
         maxHealth = startingHealth;
         playerAnimation = GetComponent<PlayerAnimation>();
-        keyboardController = GetComponent<keyboardController>();
+        playerKeyboardController = GetComponent<PlayerKeyboardController>();
+        damage.dValue = 10f; //초기 데미지값 설정(발판)
     }
 
     protected override void OnEnable() // PlayerHealth 컴포넌트가 활성화될때마다 실행
@@ -54,20 +57,25 @@ public class PlayerInfo : LivingEntity
     {
         if (canDamage)
         {
-            if (!dead)
-            {
-                // 사망하지않은경우에만 효과음 재생
-            }
-
             health -= dInfo.dValue; //체력 감소
             healthSlider.value = health;
+            if (!dead) // 사망하지않았으면
+            {
+                canDamage = false;
+                PlayerKeyboardController.onHit = true;
+                playerAnimation.OnHit();
+            }
+        }
+        if (health <= 0 && !dead)
+        {
+            Die();
         }
     }
 
     public override void Die()
     {
         base.Die();
-        keyboardController.pState = keyboardController.PlayerState.Death;
+        playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Death;
         playerAnimation.Dead();
         healthSlider.gameObject.SetActive(false);
     }
@@ -75,13 +83,24 @@ public class PlayerInfo : LivingEntity
     private void Update()
     {
         healthText.GetComponent<Text>().text = healthSlider.value + " / " + maxHealth; // 체력 갱신
+
+        if (!canDamage) // 무적시간 계산
+        {
+            timer += Time.deltaTime;
+        }
+        if (timer >= 0.5f)
+        {
+            canDamage = true;
+            PlayerKeyboardController.onHit = false;
+            timer = 0.0f;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Enemy")
         {
-            //OnDamage(10.0f, Vector3.forward, Vector3.forward); 요것도 오류나서 주석처리함
+            GetComponent<LivingEntity>().OnDamage(damage);
             return;
         }
     }
