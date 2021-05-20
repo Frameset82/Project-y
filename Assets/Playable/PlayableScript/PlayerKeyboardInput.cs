@@ -92,6 +92,10 @@ public class PlayerKeyboardInput : MonoBehaviour
                 moveVec2 = heading * Time.fixedDeltaTime * Input.GetAxisRaw("Vertical") * speed;
                 moveVec2 += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * speed;
             }
+            else if (hAxis == 0 && vAxis == 0)
+            {
+                moveVec2 = transform.forward;
+            }
 
             playerKeyboardController.Dodge(moveVec2);
             transform.LookAt(transform.position + moveVec2);

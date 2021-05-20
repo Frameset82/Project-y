@@ -191,7 +191,7 @@ public class PlayerKeyboardController : MonoBehaviour
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
                 if (comboCnt == 3)
                 {
-                    yield return new WaitForSeconds(0.67f);
+                    yield return new WaitForSeconds(0.2f);
                 }
             }
             yield return new WaitForSeconds(0.1f);
