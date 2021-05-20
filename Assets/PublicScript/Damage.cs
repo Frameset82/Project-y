@@ -8,6 +8,8 @@ public struct Damage
     public DamageType dType; 
     public float dValue; //데미지 수치
     public float ccTime; //cc기 지속시간
+    public float inCapValue; //무력화 수치
     public Vector3 hitPoint; //타격지점
     public Vector3 hitNormal; // 타격 방향
+
 }

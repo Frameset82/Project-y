@@ -33,7 +33,8 @@ public class BossController : LivingEntity
     }
 
     [Header("전투 속성")]
-    private Damage damage;
+    private Damage nDamage; //노말 데미지
+    private Damage sDamge; // 스나이핑 데미지
     public float attackRange = 7f; // 공격 사거리
     public float diff; //방어도
 
@@ -66,12 +67,18 @@ public class BossController : LivingEntity
         base.OnEnable();
     }
 
-    public void Init(float _damage, float _speed, float _diff, float _startHealth = 50f) //초기 설정 메소드
+    public void Init(float _nDamage, float _sDamage, float _speed, float _diff, float _startHealth = 50f) //초기 설정 메소드
     {
         nav.speed = _speed; //이동속도 설정
-        damage.dValue = _damage; //초기 데미지값 설정
-        damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
-        diff = _diff;
+        nDamage.dValue = _nDamage; //초기 데미지값 설정
+        nDamage.dType = Damage.DamageType.Melee; //데미지 종류 설정
+
+        sDamge.dValue = _sDamage;
+        sDamge.dType = Damage.DamageType.NuckBack;
+        sDamge.ccTime = 0.5f; 
+
+        diff = _diff; //방어도 설정
+
         this.startingHealth = _startHealth; //초기 HP값 설정
     }
 
@@ -79,57 +86,108 @@ public class BossController : LivingEntity
 
     private void Update()
     {
-        StartCoroutine(Enable());
+        
         if (Input.GetKey(KeyCode.Space))
         {
             //StartCoroutine(NormalAttack());
             //CreateBomobRobot();
             //StartCoroutine(SnipingShot());
             //StartCoroutine(Dash(targetPos));
-            
+            StartCoroutine(Enable());
+
         }
 
         sectorCheck();
+        CheckState();
+
         targetPos = target.transform.position;
+
+        anim.SetBool("isRun", isRun);
     }
+
+    // 근접 적 상태 체크
+    void CheckState()
+    {
+        switch (bState)
+        {
+        
+            case BossState.MoveTarget:
+                Run();
+                break;
+           
+        }
+    }
+
 
 
     IEnumerator Enable() //처음 실행되는 모션
     {
         anim.SetTrigger("Enable");
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(6f);
 
-        Run();
+        bState = BossState.MoveTarget;
     }
 
-    IEnumerator Think()
+    IEnumerator AThink() // 공격후 생각
     {
         yield return new WaitForSeconds(0.1f);
 
         randState = Random.Range(0, 3);
 
-        switch (bState)
+        if(direction.sqrMagnitude <= 5f)
         {
-            case BossState.MoveTarget: 
-                break;
-            case BossState.NormalAttack:
-             
+            switch(randState)
+            {
+                case 0 :
+                case 1 :
+                   // StartCoroutine(BackStep());
+                    break;
+                case 2:
+                    CreateBomobRobot();
+                    break;
+            }
+        }
+        else
+        {
+            switch(randState)
+            {
+                case 0:
+                 
+                    break;
+                case 1:
+                    CreateBomobRobot();
+                    break;
+                case 2:
+                    StartCoroutine(SnipingShot());
+                    break;
 
-      
-
-                break;
-            case BossState.AmimingShot:
-                break;
-            case BossState.Avoid:
-                break;
-            case BossState.SpawnRobot:
-                break;
-            case BossState.Dash:
-                break;
+            }
         }
     }
 
+    IEnumerator BThink()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        randState = Random.Range(0, 3);
+
+        if(direction.sqrMagnitude <= 5f)
+        {
+            switch(randState)
+            {
+                case 0:
+                    CreateBomobRobot();
+                    break;
+                case 1:
+                    StartCoroutine(NormalAttack());
+                    break;
+                case 2:
+                  //  StartCoroutine(BackStep());
+                    break;
+            }
+        }
+    }
 
     IEnumerator NormalAttack() //일반 공격
     {
@@ -149,7 +207,7 @@ public class BossController : LivingEntity
         yield return new WaitForSeconds(0.5f);
       }
 
-        StartCoroutine(Think());
+        StartCoroutine(AThink());
     }
 
     void CreateBomobRobot()
@@ -171,7 +229,7 @@ public class BossController : LivingEntity
             anim.SetTrigger("Spawn");
         }
 
-        StartCoroutine(Think());
+        //StartCoroutine(Think());
     }
   
 
@@ -197,7 +255,7 @@ public class BossController : LivingEntity
         }
         anim.SetTrigger("SnipingEnd");
 
-        StartCoroutine(Think());
+       // StartCoroutine(Think());
     }
 
 
@@ -227,7 +285,7 @@ public class BossController : LivingEntity
         nav.acceleration = 8f;
         nav.speed = MoveSpeed;
 
-        StartCoroutine(Think());
+       // StartCoroutine(Think());
     }
 
     IEnumerator BackStep(Vector3 dashPos)
@@ -256,7 +314,7 @@ public class BossController : LivingEntity
         nav.acceleration = 8f;
         nav.speed = MoveSpeed;
 
-        StartCoroutine(Think());
+       // StartCoroutine(Think());
     }
 
     IEnumerator Avoid(Vector3 pos)
@@ -282,23 +340,28 @@ public class BossController : LivingEntity
 
     void Run() //타겟으로 이동
     {
+        isRun = true;
         Vector3 lookPosition = Vector3.zero;
         bState = BossState.MoveTarget;
         lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
         nav.isStopped = false;
         nav.SetDestination(lookPosition);
         transform.LookAt(lookPosition);
-        isRun = true;
-        anim.SetBool("isRun", isRun);
 
-        if (isCollision&& isRun)
+        float dist = Vector3.Distance(lookPosition, transform.position);
+
+        
+
+        if (dist <= attackRange )
         {
+            Debug.Log("aaa");
             isRun = false;
             nav.isStopped = true;
             nav.velocity = Vector3.zero;
-            anim.SetBool("isRun", isRun);
+
+        
             StartCoroutine(NormalAttack());
-            return;
+           
         }
     }
 
@@ -306,7 +369,7 @@ public class BossController : LivingEntity
     {
         dotValue = Mathf.Cos(Mathf.Deg2Rad * (angleRange / 2));
         direction = target.transform.position - transform.position;
-        if (direction.magnitude < attackRange)
+        if (direction.magnitude <= attackRange)
         {
             if (Vector3.Dot(direction.normalized, transform.forward) > dotValue)
             {
