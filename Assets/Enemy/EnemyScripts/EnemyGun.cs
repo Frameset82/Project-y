@@ -8,7 +8,7 @@ public class EnemyGun : MonoBehaviour
     public GameObject muzzleFlashEffect; // 총구 화염 효과
   
 
-    private LineRenderer bulletLineRenderer; // 라인렌더러
+    protected LineRenderer bulletLineRenderer; // 라인렌더러
 
     private void Awake()
     {
@@ -21,10 +21,10 @@ public class EnemyGun : MonoBehaviour
 
     public void Fire(Damage damage, float fireDistance)
     {
-        RaycastHit hit;
-        Vector3 hitPosition = Vector3.zero;
+        RaycastHit hit; //레이캐스트 
+        Vector3 hitPosition = Vector3.zero; //레이를 쏠 방향
 
-        if(Physics.Raycast(fireTransform.position, fireTransform.forward, out hit, fireDistance))
+        if(Physics.Raycast(fireTransform.position, fireTransform.forward, out hit, fireDistance, 8))
         {
             LivingEntity attackTarget = hit.collider.GetComponent<LivingEntity>();
 
@@ -45,7 +45,7 @@ public class EnemyGun : MonoBehaviour
         }
     }
 
-    private IEnumerator ShotEffect(Vector3 hitPoint)
+    protected IEnumerator ShotEffect(Vector3 hitPoint)
     {
         muzzleFlashEffect.SetActive(true);
         bulletLineRenderer.SetPosition(0, fireTransform.position);

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.AI;
 
@@ -402,7 +402,7 @@ public class RifleController : LivingEntity
             isCollision = false;
     }
 
-
+    /*
     private void OnDrawGizmos() // 범위 그리기
     {
 
@@ -410,5 +410,5 @@ public class RifleController : LivingEntity
         Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
         Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
 
-    }
+    }*/
 }

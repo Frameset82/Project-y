@@ -29,9 +29,9 @@ public class ObjectPool : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             RobotQueue.Enqueue(CreateNewBomb());
-            MeleeQueue.Enqueue(CreateNewMelee());
-            RogueQueue.Enqueue(CreateNewRogue());
-            RifleQueue.Enqueue(CreateNewRifle());
+           // MeleeQueue.Enqueue(CreateNewMelee());
+            //RogueQueue.Enqueue(CreateNewRogue());
+            //RifleQueue.Enqueue(CreateNewRifle());
         }
     }
 
