@@ -60,7 +60,7 @@ public class IKControl : MonoBehaviour
 
     void OnAnimatorIK(int layerIndex)
     {
-        if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true && playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
+        if (playerEquipmentManager.equipWeaponScript.GetComponent<Weapon>().isRifle == true && playerEquipmentManager.equipWeaponScript.GetComponent<Weapon>().isGun == true)
         {
             // IK를 사용하여 왼손의 위치와 회전을 총의 오른쪽 손잡이에 맞춘다
             playerAnimator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1.0f);
