@@ -18,8 +18,12 @@ public class BossController : LivingEntity
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Rigidbody rigid; 
     private Animator anim; // 애니메이터 컴포넌트                         
-  
+    public BossGun bGun; //보스 총 컴포넌트
 
+
+
+
+ 
     private bool hasTarget
     {
         get
@@ -53,17 +57,32 @@ public class BossController : LivingEntity
 
     private void Awake()
     {
+   
+       // bulletLineRenderer = GetComponent<LineRenderer>();
+     
+
         // 컴포넌트 불러오기
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+       // bGun = GetComponentInChildren<BossGun>(); 
         nav.updateRotation = false; // 네비의회전 기능 비활성화
     }
 
     protected override void OnEnable()
     {
+        nDamage.dValue = 50f; //초기 데미지값 설정
+        nDamage.dType = Damage.DamageType.Melee; //데미지 종류 설정
+
+        sDamge.dValue = 60f;
+        sDamge.dType = Damage.DamageType.NuckBack;
+        sDamge.ccTime = 0.5f;
+
         bState = BossState.None;
         this.startingHealth = 50f; //테스트용 설정
+
+
+
         base.OnEnable();
     }
 
@@ -87,14 +106,15 @@ public class BossController : LivingEntity
     private void Update()
     {
         
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
+            bGun.StartFiring(nDamage);
+            anim.SetTrigger("Shoot");
             //StartCoroutine(NormalAttack());
             //CreateBomobRobot();
             //StartCoroutine(SnipingShot());
             //StartCoroutine(BackDash());
             //StartCoroutine(Enable());
-
         }
 
         sectorCheck();
@@ -221,11 +241,15 @@ public class BossController : LivingEntity
         transform.LookAt(lookPosition);
         anim.SetTrigger("Shoot");
 
-        yield return new WaitForSeconds(0.5f);
-      }
+     
+      yield return new WaitForSeconds(0.9f);
+            
+       }
 
-       StartCoroutine(AThink());
+       //StartCoroutine(AThink());
     }
+
+
 
     void CreateBomobRobot()
     {
@@ -382,4 +406,8 @@ public class BossController : LivingEntity
         Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
         Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
     }*/
+
+
+  
+
 }

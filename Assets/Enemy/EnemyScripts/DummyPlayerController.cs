@@ -11,7 +11,7 @@ public class DummyPlayerController : LivingEntity
     Damage damage;
     Damage damage1;
 
-    public GameObject target;
+    //public GameObject target;
 
     private void Awake()
     {
@@ -36,40 +36,21 @@ public class DummyPlayerController : LivingEntity
     {
         if (health <= 0) // health가 0이하일경우 추가 입력 방지
             return;
-        
-        if(Input.GetMouseButtonDown(0)) //마우스클릭시 데미지 입히기(테스트용)
+
+        if (Input.GetMouseButtonDown(0)) //마우스클릭시 데미지 입히기(테스트용)
         {
             //OnDamage(10f);
-            LivingEntity enemytarget = target.GetComponent<LivingEntity>();
+            //LivingEntity enemytarget = target.GetComponent<LivingEntity>();
 
             //Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
 
-            Vector3 hitNormal = transform.position - target.transform.position;
-           
+            //Vector3 hitNormal = transform.position - target.transform.position;
 
-            Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
-            hitNormal = hitNormal.normalized;
+
+           // Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
+            //hitNormal = hitNormal.normalized;
             //hitNormal.y = 1;
-            enemytarget.OnDamage(damage1);
-            //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
-            // Debug.Log(Damage.DamageType.Melee);
-           
-        }
-
-        if (Input.GetMouseButtonDown(2)) //마우스클릭시 데미지 입히기(테스트용)
-        {
-            //OnDamage(10f);
-            LivingEntity enemytarget = target.GetComponent<LivingEntity>();
-
-            //Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
-
-            Vector3 hitNormal = transform.position - target.transform.position;
-
-
-            Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
-            hitNormal = hitNormal.normalized;
-            hitNormal.y = 1;
-            enemytarget.OnDamage(damage);
+            //enemytarget.OnDamage(damage1);
             //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
             // Debug.Log(Damage.DamageType.Melee);
 

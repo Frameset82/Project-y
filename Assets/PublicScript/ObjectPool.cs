@@ -9,14 +9,18 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField]
     private GameObject BombRobot; // 자폭 로봇 프리팹
+    [SerializeField]
     private GameObject MeeleEnemy; // 근접적 프리팹
     private GameObject RobueEnemy; // 로그적 프리팹
     private GameObject RifeEnemy; // 라이플적 프리팹
+    [SerializeField]
+    private GameObject Bullet;
 
     private Queue<BombRobotControl> RobotQueue = new Queue<BombRobotControl>(); //자폭로봇 큐
     private Queue<MeleeController> MeleeQueue = new Queue<MeleeController>();  //근접적 큐
     private Queue<RogueController> RogueQueue = new Queue<RogueController>();  // 로그적 큐
     private Queue<RifleController> RifleQueue = new Queue<RifleController>();  // 라이플적 큐
+    private Queue<EnemyBullet> BulletQueue = new Queue<EnemyBullet>(); 
 
     void Start()
     {
@@ -29,7 +33,8 @@ public class ObjectPool : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             RobotQueue.Enqueue(CreateNewBomb());
-           // MeleeQueue.Enqueue(CreateNewMelee());
+            BulletQueue.Enqueue(CreateNewBullet());
+            //MeleeQueue.Enqueue(CreateNewMelee());
             //RogueQueue.Enqueue(CreateNewRogue());
             //RifleQueue.Enqueue(CreateNewRifle());
         }
@@ -58,6 +63,13 @@ public class ObjectPool : MonoBehaviour
         return newObj;
     }
 
+    private EnemyBullet CreateNewBullet() //총알 생성
+    {
+        var newBullet = Instantiate(Bullet, transform).GetComponent<EnemyBullet>();
+        newBullet.gameObject.SetActive(false);
+        return newBullet;
+    }
+
     private MeleeController CreateNewMelee() //근접적생성 
     {
         var newObj = Instantiate(MeeleEnemy, transform).GetComponent<MeleeController>();
@@ -83,6 +95,7 @@ public class ObjectPool : MonoBehaviour
             return newObj;
         }
     }
+
 
     public static void ReturnBombRobot(BombRobotControl bombr) //로봇 반환
     {
@@ -115,5 +128,33 @@ public class ObjectPool : MonoBehaviour
         mbr.gameObject.SetActive(false); //오브젝트 비활성화
         mbr.transform.SetParent(Instance.transform); //오브젝트 풀의 자식으로 설정
         Instance.MeleeQueue.Enqueue(mbr); //다시 큐에 넣기
+    }
+
+
+
+    public static EnemyBullet GetBullet() //총알 가져가기
+    {
+        if (Instance.BulletQueue.Count > 0) //0보다 많으면 큐에서 꺼내주기
+        {
+            var obj = Instance.BulletQueue.Dequeue();
+            obj.transform.SetParent(null);
+            obj.gameObject.SetActive(true);
+            return obj;
+        }
+
+        else // 0보다 적으면 새로 생성하기
+        {
+            var newObj = Instance.CreateNewBullet();
+            newObj.transform.SetParent(null);
+            newObj.gameObject.SetActive(false);
+            return newObj;
+        }
+    }
+
+    public static void ReturnBullet(EnemyBullet bl) //총알 반환
+    {
+        bl.gameObject.SetActive(false); //오브젝트 비활성화
+        bl.transform.SetParent(Instance.transform); //오브젝트 풀의 자식으로 설정
+        Instance.BulletQueue.Enqueue(bl); //다시 큐에 넣기
     }
 }

@@ -24,7 +24,7 @@ public class EnemyGun : MonoBehaviour
         RaycastHit hit; //레이캐스트 
         Vector3 hitPosition = Vector3.zero; //레이를 쏠 방향
 
-        if(Physics.Raycast(fireTransform.position, fireTransform.forward, out hit, fireDistance, 8))
+        if(Physics.Raycast(fireTransform.position, fireTransform.forward, out hit, fireDistance))
         {
             LivingEntity attackTarget = hit.collider.GetComponent<LivingEntity>();
 
