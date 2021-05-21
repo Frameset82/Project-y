@@ -11,7 +11,7 @@ public class EnemyTest : LivingEntity
     //폭발 Object
     public GameObject Explosion = null; // 폭팔
     private bool isEnter = true; // 한번만 실행 시키기 위한 bool 함수
-    private bool isWalk = true;
+ 
 
 
     public int maxHealth;
