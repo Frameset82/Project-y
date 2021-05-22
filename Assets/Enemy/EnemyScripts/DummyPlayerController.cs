@@ -11,7 +11,7 @@ public class DummyPlayerController : LivingEntity
     Damage damage;
     Damage damage1;
 
-    //public GameObject target;
+    public GameObject target;
 
     private void Awake()
     {
@@ -24,8 +24,8 @@ public class DummyPlayerController : LivingEntity
         startingHealth = sHealth;     
         base.OnEnable();
         damage.dType = Damage.DamageType.NuckBack;
-        damage.dValue = 10f;
-        damage.ccTime = 3f;
+        damage.dValue = 100f;
+        damage.inCapValue = 10f;
 
         damage1.dType = Damage.DamageType.Melee;
         damage1.dValue = 10f;
@@ -40,7 +40,7 @@ public class DummyPlayerController : LivingEntity
         if (Input.GetMouseButtonDown(0)) //마우스클릭시 데미지 입히기(테스트용)
         {
             //OnDamage(10f);
-            //LivingEntity enemytarget = target.GetComponent<LivingEntity>();
+            LivingEntity enemytarget = target.GetComponent<LivingEntity>();
 
             //Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
 
@@ -50,7 +50,7 @@ public class DummyPlayerController : LivingEntity
            // Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
             //hitNormal = hitNormal.normalized;
             //hitNormal.y = 1;
-            //enemytarget.OnDamage(damage1);
+            enemytarget.OnDamage(damage);
             //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
             // Debug.Log(Damage.DamageType.Melee);
 

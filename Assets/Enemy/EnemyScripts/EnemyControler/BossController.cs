@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEditor;
+using UnityEditor;
+using UnityEngine.UI;
 using UnityEngine.AI;
 
 public class BossController : LivingEntity
 {
    public enum BossState { None, MoveTarget, NormalAttack, SpawnRobot, AmimingShot, BackDash, Dash, Stun,Die}; //보스 상태
+
+    public Text text;
+    public Text text2;
 
     public BossState bState = BossState.None; // 보스 상태 변수
     public float MoveSpeed; // 이동속도
@@ -20,10 +24,6 @@ public class BossController : LivingEntity
     private Animator anim; // 애니메이터 컴포넌트                         
     public BossGun bGun; //보스 총 컴포넌트
 
-
-
-
- 
     private bool hasTarget
     {
         get
@@ -35,6 +35,7 @@ public class BossController : LivingEntity
             return false;
         }
     }
+
 
     [Header("전투 속성")]
     private Damage nDamage; //노말 데미지
@@ -57,10 +58,6 @@ public class BossController : LivingEntity
 
     private void Awake()
     {
-   
-       // bulletLineRenderer = GetComponent<LineRenderer>();
-     
-
         // 컴포넌트 불러오기
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
@@ -75,13 +72,12 @@ public class BossController : LivingEntity
         nDamage.dType = Damage.DamageType.Melee; //데미지 종류 설정
 
         sDamge.dValue = 60f;
-        sDamge.dType = Damage.DamageType.NuckBack;
+        sDamge.dType = Damage.DamageType.Stun;
         sDamge.ccTime = 0.5f;
 
         bState = BossState.None;
-        this.startingHealth = 50f; //테스트용 설정
-
-
+        this.startingHealth = 10000f; //테스트용 설정
+        this.diff = 50f;
 
         base.OnEnable();
     }
@@ -105,23 +101,25 @@ public class BossController : LivingEntity
 
     private void Update()
     {
-        
+        text.text = "diff: " + diff;
+        text2.text = "HP: " + health;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            bGun.StartFiring(nDamage);
-            anim.SetTrigger("Shoot");
+            //StartCoroutine(NormalAttack());
+            //anim.SetTrigger("Shoot");
             //StartCoroutine(NormalAttack());
             //CreateBomobRobot();
-            //StartCoroutine(SnipingShot());
-            //StartCoroutine(BackDash());
-            //StartCoroutine(Enable());
+          // StartCoroutine(SnipingShot());
+           // StartCoroutine(BackDash());
+            StartCoroutine(Enable());
         }
 
         sectorCheck();
         CheckState();
 
         targetPos = target.transform.position;
-        anim.SetBool("isRun", isRun);
+   
     }
 
     // 근접 적 상태 체크
@@ -165,25 +163,34 @@ public class BossController : LivingEntity
 
         yield return new WaitForSeconds(6f);
 
+        StartCoroutine(Dash());
        
     }
 
-    IEnumerator AThink() // 공격후 생각
-    {
-        yield return new WaitForSeconds(0.1f);
+    IEnumerator Think() // 패턴설정
+    {     
+        yield return new WaitForSeconds(0.2f);
+        //StopAllCoroutines();
 
-        randState = Random.Range(0, 3);
+        randState = Random.Range(0, 7);
 
-        if(direction.sqrMagnitude <= 5f)
+        if(direction.magnitude <= attackRange)
         {
-            switch(randState)
+            switch (randState)
             {
-                case 0 :
-                case 1 :
-                   // StartCoroutine(BackStep());
+                case 0:
+                case 1:
+                case 4:
+                case 5:
+                    if (!WallCheck())
+                    { StartCoroutine(BackDash()); }
+                    else
+                    { StartCoroutine(CreateBomobRobot()); }
                     break;
                 case 2:
-                    CreateBomobRobot();
+                case 3:
+                case 6:
+                    StartCoroutine(CreateBomobRobot());
                     break;
             }
         }
@@ -192,41 +199,22 @@ public class BossController : LivingEntity
             switch(randState)
             {
                 case 0:
-                    bState = BossState.MoveTarget;
+                case 3:
+                case 4:
+                    StartCoroutine(Dash());
                     break;
                 case 1:
-                    CreateBomobRobot();
+                case 5:
+                    StartCoroutine(CreateBomobRobot());
                     break;
                 case 2:
+                case 6:
                     StartCoroutine(SnipingShot());
                     break;
-
             }
         }
     }
 
-    IEnumerator BThink()
-    {
-        yield return new WaitForSeconds(0.1f);
-
-        randState = Random.Range(0, 3);
-
-        if(direction.sqrMagnitude <= 5f)
-        {
-            switch(randState)
-            {
-                case 0:
-                    CreateBomobRobot();
-                    break;
-                case 1:
-                    StartCoroutine(NormalAttack());
-                    break;
-                case 2:
-                  //  StartCoroutine(BackStep());
-                    break;
-            }
-        }
-    }
 
     IEnumerator NormalAttack() //일반 공격
     {   
@@ -242,21 +230,22 @@ public class BossController : LivingEntity
         anim.SetTrigger("Shoot");
 
      
-      yield return new WaitForSeconds(0.9f);
-            
-       }
+        yield return new WaitForSeconds(0.1f);
+        bGun.StartFiring(nDamage);
 
-       //StartCoroutine(AThink());
+        yield return new WaitForSeconds(0.5f);
+        }
+
+       StartCoroutine(Think());
     }
 
-
-
-    void CreateBomobRobot()
-    {
-
+    IEnumerator CreateBomobRobot()
+    { 
         bState = BossState.SpawnRobot;
 
-        for (int i= 0; i<4; i++)
+        randState = Random.Range(1, 4);
+
+        for (int i= 0; i< randState; i++)
         {
             var BombRobot = ObjectPool.GetRobot();
             Vector3 spawnPos = Random.insideUnitCircle * 4f; ;
@@ -266,12 +255,13 @@ public class BossController : LivingEntity
 
             BombRobot.transform.position = spawnPos;
             BombRobot.SetTarget(target);
-
-            anim.SetTrigger("Spawn");
         }
+        anim.SetTrigger("Spawn");
 
-        //StartCoroutine(Think());
-    }
+        yield return new WaitForSeconds(0.3f);
+
+        StartCoroutine(Think());
+    }//로봇소환
   
     bool WallCheck() //뒷쪽에 장애물이 있는지 체크
     {
@@ -301,25 +291,30 @@ public class BossController : LivingEntity
 
         bState = BossState.AmimingShot;
 
+        nav.isStopped = true;
         anim.SetTrigger("Sniping");
         yield return new WaitForSeconds(0.7f);
 
-        for (int i = 0; i < 6; i++)
-        {
-            yield return new WaitForSeconds(0.1f);
-            bState = BossState.AmimingShot;
-            Vector3 lookPosition = Vector3.zero;
-            nav.isStopped = true;
-            lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
-            transform.LookAt(lookPosition);
-            anim.SetTrigger("SnipingShoot");
 
-            yield return new WaitForSeconds(0.7f);
+        for (int i=0; i < 3; i++)
+        {
+       
+            transform.LookAt(targetPos);
+            anim.SetTrigger("SnipingShoot");
+            bGun.StartFiring(sDamge);
+            //Vector3 lookPosition = Vector3.zero;
+
+            //lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
+            yield return new WaitForSeconds(0.6f);
         }
+
+
+        yield return new WaitForSeconds(2f);
         anim.SetTrigger("SnipingEnd");
 
-       // StartCoroutine(Think());
-    }
+        
+        StartCoroutine(Think());
+    } //스나이핑 샷
 
 
     IEnumerator Dash() //대쉬
@@ -329,9 +324,8 @@ public class BossController : LivingEntity
         float startTime = Time.time;
         Vector3 lookPosition = Vector3.zero;
 
-        
-
-        while (Time.time < startTime + dashTime)
+        //Time.time < startTime + dashTime
+        while (!isCollision)
         {
             lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
             nav.SetDestination(lookPosition);
@@ -341,8 +335,7 @@ public class BossController : LivingEntity
             transform.LookAt(lookPosition);
             anim.SetTrigger("Dash");
 
-            yield return null;
-           // yield return new WaitForSeconds(0.3f);
+            yield return null;        
         }
 
         nav.velocity = Vector3.zero;
@@ -350,7 +343,10 @@ public class BossController : LivingEntity
         nav.acceleration = 8f;
         nav.speed = MoveSpeed;
 
-       // StartCoroutine(Think());
+
+        yield return new WaitForSeconds(0.3f);
+
+        StartCoroutine(NormalAttack());
     }
 
 
@@ -379,8 +375,90 @@ public class BossController : LivingEntity
         nav.isStopped = true;
         nav.acceleration = 8f;
         nav.speed = MoveSpeed;
+
+        yield return new WaitForSeconds(0.2f);
+        StartCoroutine(SnipingShot());
+    }//백 스텝
+
+    // 공격을 당했을때
+    public override void OnDamage(Damage dInfo)
+    {
+        if (dead) return;
+
+        //StopAllCoroutines();
+
+
+        health -= dInfo.dValue; // 체력 감소
+
+        diff -= (int)((dInfo.dValue * dInfo.inCapValue) / 100); //총공격력에서 무력화수치 퍼센트만큼 방어도 감소
+
+        if (diff <= 0 && bState != BossState.Stun)
+        {          
+            StopAllCoroutines();
+            StartCoroutine(Stun());
+        }
+        else if(diff<= 0)
+        {
+            diff = 0;
+        }
+     
+        if (health <= 0 && this.gameObject.activeInHierarchy && !dead) // 체력이 0보다 작고 사망상태가 아닐때
+        {
+            StopAllCoroutines();
+            StartCoroutine(Die());
+        }
+        
     }
 
+    IEnumerator Stun()
+    {
+        bState = BossState.Stun;
+
+        anim.SetTrigger("isStun");
+
+
+        yield return new WaitForSeconds(3f);
+
+        diff = 50f;
+
+        StartCoroutine(Think());
+    }
+
+
+    //죽었을때
+    public new IEnumerator Die()
+    {
+        rigid.isKinematic = true;
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        {
+            anim.SetTrigger("Lying");
+        }
+        else
+        {
+            anim.SetTrigger("isDead"); // 트리거 활성화
+        }
+
+
+        bState = BossState.Die; // 죽음상태로 변경
+
+        nav.isStopped = true; //네비 멈추기
+        nav.enabled = false; // 네비 비활성화
+        dead = true;
+
+        Collider[] enemyColliders = GetComponents<Collider>();
+
+        // 콜라이더 다끄기
+        for (int i = 0; i < enemyColliders.Length; i++)
+        {
+            enemyColliders[i].enabled = false;
+        }
+
+
+        yield return new WaitForSeconds(1f); // 1초 대기
+
+        //ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
+    }
 
     void sectorCheck() // 부챗꼴 범위 충돌
     {
@@ -399,13 +477,13 @@ public class BossController : LivingEntity
             isCollision = false;
     }
 
-    /*
+    
     private void OnDrawGizmos() // 범위 그리기
     {
         Handles.color = isCollision ? red : blue;
         Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
         Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
-    }*/
+    }
 
 
   

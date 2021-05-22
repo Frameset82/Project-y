@@ -39591,6 +39591,7 @@ MonoBehaviour:
   Speed: 50
   Explosion: {fileID: 160508202370550085}
   target: {fileID: 0}
+  healthbar: {fileID: 0}
 --- !u!195 &4301235947934188342
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -39612,7 +39613,7 @@ NavMeshAgent:
   m_Height: 0.32
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 1
 --- !u!1 &4302177529687783018
 GameObject:
   m_ObjectHideFlags: 0

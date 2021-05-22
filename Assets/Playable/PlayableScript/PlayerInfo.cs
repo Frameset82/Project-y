@@ -27,7 +27,7 @@ public class PlayerInfo : LivingEntity
 
     private void Awake()
     {
-        startingHealth = 30.0f; // 시작체력
+        startingHealth = 1000.0f; // 시작체력
         maxHealth = startingHealth;
         playerAnimation = GetComponent<PlayerAnimation>();
         playerKeyboardController = GetComponent<PlayerKeyboardController>();

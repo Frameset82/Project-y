@@ -17,15 +17,15 @@ public class EnemyBullet : MonoBehaviour
     private void OnEnable()
     {
         time = 0f; // 시간을 0으로 초기화
-        rigid.velocity = this.transform.forward * 5f;
+      
     }
 
     private void FixedUpdate()
     {
-       
-        if(time> 4f)
+        rigid.velocity = this.transform.forward * 50f;
+        if (time> 4f)
         {
-            ObjectPool.ReturnBullet(this);
+            ReturnToPool();
         }
 
         time += Time.deltaTime;
@@ -35,14 +35,26 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 8)
+        if (other.gameObject.layer == 8) //충돌대상이 플레이어일때
         {
-            //Debug.Log("aaaaaa");
             LivingEntity enemytarget = other.gameObject.GetComponent<LivingEntity>();
             enemytarget.OnDamage(damage);
-            ObjectPool.ReturnBullet(this);
+            ReturnToPool();
         }
 
         
+    }
+
+    private void ReturnToPool() //탄환 반납
+    {
+        switch(damage.dType)
+        {
+            case Damage.DamageType.Melee:
+                ObjectPool.ReturnBullet(this);
+                break;
+            case Damage.DamageType.Stun:
+                ObjectPool.ReturnSBullet(this);
+                break;
+        }
     }
 }
