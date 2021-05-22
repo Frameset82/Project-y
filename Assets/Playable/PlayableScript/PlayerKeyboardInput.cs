@@ -17,7 +17,7 @@ public class PlayerKeyboardInput : MonoBehaviour
 
     Vector3 moveVec; // 움직임 벡터
     public static Vector3 moveVec1; // 상태 초기화용 벡터
-    public Vector3 moveVec2;
+    public Vector3 moveVec2; // 구르기용 벡터
     private Rigidbody rigi;
     private PlayerKeyboardController playerKeyboardController;
     public Ray ray;
@@ -43,6 +43,7 @@ public class PlayerKeyboardInput : MonoBehaviour
     {
         InputEscape();
         Attack();
+        Equip();
     }
 
     public void InputMove()
@@ -115,6 +116,14 @@ public class PlayerKeyboardInput : MonoBehaviour
                 Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
                 playerKeyboardController.Attack(destination);
             }
+        }
+    }
+
+    public void Equip()
+    {
+        if ((Input.GetButtonDown("Interation") && playerEquipmentManager.nearObject != null) && PlayerKeyboardController.isSwap == false)
+        {
+            playerEquipmentManager.Interation();
         }
     }
 

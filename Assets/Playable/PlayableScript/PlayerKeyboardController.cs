@@ -140,7 +140,7 @@ public class PlayerKeyboardController : MonoBehaviour
     // 실제 공격
     public IEnumerator AttackCoroutine(Vector3 destination)
     {
-        playerRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+/*        playerRigidbody.constraints = RigidbodyConstraints.FreezeAll;*/
         PlayerKeyboardInput.isShoot = true;
         pState = PlayerState.Attack;
 
@@ -252,20 +252,19 @@ public class PlayerKeyboardController : MonoBehaviour
 
     public void SwapCheck()
     {
-        if(isSwap == true)
+        if (isSwap == true)
         {
             pState = PlayerState.Swap;
         }
-        else if(pState == PlayerState.Swap && isSwap == false)
+        else if (pState == PlayerState.Swap && isSwap == false)
         {
             pState = PlayerState.Idle;
         }
     }
 
-    public void qqq()
+    public void ComboMove()
     {
-        
-        playerRigidbody.AddForce(transform.forward * 500f);
+        playerRigidbody.AddForce(transform.forward * 300f);
         playerRigidbody.velocity = Vector3.zero;
     }
 

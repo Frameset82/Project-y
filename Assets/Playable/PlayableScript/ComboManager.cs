@@ -43,8 +43,8 @@ public class ComboManager : MonoBehaviour
         playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
     }
 
-    public void www()
+    public void ComboMoveCheck()
     {
-        playerKeyboardController.qqq();
+        playerKeyboardController.ComboMove();
     }
 }

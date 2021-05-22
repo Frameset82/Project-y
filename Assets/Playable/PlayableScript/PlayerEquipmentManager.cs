@@ -11,7 +11,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     public GameObject subWeapon = null; // 2번무기
     private int equipCount = 1; // main = 1 sub = 2
     public GameObject equipWeapon;
-    private GameObject nearObject;
+    public GameObject nearObject;
     private string weaponName;
 
     private GameObject changeImg;
@@ -33,52 +33,49 @@ public class PlayerEquipmentManager : MonoBehaviour
     public Weapon subWeaponScript;
     public Weapon equipWeaponScript;
 
-    void Interation()
+    public void Interation()
     {
-        if ((Input.GetButtonDown("Interation") && nearObject != null ) && PlayerKeyboardController.isSwap == false)
+        if (nearObject.tag == "Weapon")
         {
-            if (nearObject.tag == "Weapon")
+            if (mainWeapon == null)
             {
-                if (mainWeapon == null)
-                {
-                    dropWeapon1 = nearObject;
-                    weaponName = nearObject.name;
-                    mainWeapon = GameObject.Find(weaponRoot + weaponName);
-                    mainWeapon.SetActive(true);
-                    equipWeapon = mainWeapon;
-                    changeImg = GameObject.Find(weaponRoot + weaponName + "/" + weaponName);
-                    mainWeaponImg.sprite = changeImg.GetComponent<Image>().sprite;
-                    changeImg.SetActive(false);
-                    if (subWeapon != null)
-                        subWeapon.SetActive(false);
-                    equipCount = 1;
-                    nearObject.SetActive(false);
-                    nearObject = null;
-                }
-                else if (subWeapon == null)
-                {
-                    dropWeapon2 = nearObject;
-                    weaponName = nearObject.name;
-                    subWeapon = GameObject.Find(weaponRoot + weaponName);
-                    subWeapon.SetActive(true);
-                    equipWeapon = subWeapon;
-                    changeImg = GameObject.Find(weaponRoot + weaponName + "/" + weaponName);
-                    subWeaponImg.sprite = changeImg.GetComponent<Image>().sprite;
-                    changeImg.SetActive(false);
-                    if (mainWeapon != null)
-                        mainWeapon.SetActive(false);
-                    equipCount = 2;
-                    nearObject.SetActive(false);
-                    nearObject = null;
-                }
-                else if (mainWeapon != null && subWeapon != null) // 무기 둘다 가지고 있을 시 교체기능
-                {
-                    changeEquipment.SetActive(true);
-                    changeImg1.sprite = mainWeaponImg.GetComponent<Image>().sprite;
-                    changeImg2.sprite = subWeaponImg.GetComponent<Image>().sprite;
-                    PlayerKeyboardInput.isShoot = true;
-                    Time.timeScale = 0; // 시간 정지
-                }
+                dropWeapon1 = nearObject;
+                weaponName = nearObject.name;
+                mainWeapon = GameObject.Find(weaponRoot + weaponName);
+                mainWeapon.SetActive(true);
+                equipWeapon = mainWeapon;
+                changeImg = GameObject.Find(weaponRoot + weaponName + "/" + weaponName);
+                mainWeaponImg.sprite = changeImg.GetComponent<Image>().sprite;
+                changeImg.SetActive(false);
+                if (subWeapon != null)
+                    subWeapon.SetActive(false);
+                equipCount = 1;
+                nearObject.SetActive(false);
+                nearObject = null;
+            }
+            else if (subWeapon == null)
+            {
+                dropWeapon2 = nearObject;
+                weaponName = nearObject.name;
+                subWeapon = GameObject.Find(weaponRoot + weaponName);
+                subWeapon.SetActive(true);
+                equipWeapon = subWeapon;
+                changeImg = GameObject.Find(weaponRoot + weaponName + "/" + weaponName);
+                subWeaponImg.sprite = changeImg.GetComponent<Image>().sprite;
+                changeImg.SetActive(false);
+                if (mainWeapon != null)
+                    mainWeapon.SetActive(false);
+                equipCount = 2;
+                nearObject.SetActive(false);
+                nearObject = null;
+            }
+            else if (mainWeapon != null && subWeapon != null) // 무기 둘다 가지고 있을 시 교체기능
+            {
+                changeEquipment.SetActive(true);
+                changeImg1.sprite = mainWeaponImg.GetComponent<Image>().sprite;
+                changeImg2.sprite = subWeaponImg.GetComponent<Image>().sprite;
+                PlayerKeyboardInput.isShoot = true;
+                Time.timeScale = 0; // 시간 정지
             }
         }
     }
@@ -187,7 +184,6 @@ public class PlayerEquipmentManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Interation();
         Swap();
         if(mainWeapon != null)
             mainWeaponScript = mainWeapon.GetComponent<Weapon>();
