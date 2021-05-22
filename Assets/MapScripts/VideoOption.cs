@@ -25,11 +25,12 @@ public class VideoOption : MonoBehaviour
     void InitUI(){
         // 모니터가 지원하는 해상도 정보를 리스트 resolutions에 할당
         // 화면 재생 빈도가 144인 값만 할당
-        for(int i = 0; i<Screen.resolutions.Length; i++){
-            if(Screen.resolutions[i].refreshRate == 144)
-                resolutions.Add(Screen.resolutions[i]);
-        }
-        //resolutions.AddRange(Screen.resolutions);
+        // for(int i = 0; i<Screen.resolutions.Length; i++){
+        //     if(Screen.resolutions[i].refreshRate == 144)
+        //         resolutions.Add(Screen.resolutions[i]);
+        // }
+        resolutions.AddRange(Screen.resolutions);
+        resolutions.Reverse();
 
         // 드롭다운의 옵션 정리
         resolutionDropdown.options.Clear();
