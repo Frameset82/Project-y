@@ -53,14 +53,13 @@ public class BombRobotControl : LivingEntity
 
     void Update()
     {
-        timer += Time.time;
+        timer += Time.deltaTime;
         if (target!= null && bstate != BombState.Exploding) //타겟이 있을때만
         {
             nav.SetDestination(target.transform.position); //네비게이션 경로 설정
             bstate = BombState.MoveTarget;
-        }
-       
-        if(timer > 5f && bstate != BombState.Exploding)
+        } 
+        else if(timer >= 15f && bstate != BombState.Exploding)
         {
             isEnter = true;
             bstate = BombState.Exploding;
