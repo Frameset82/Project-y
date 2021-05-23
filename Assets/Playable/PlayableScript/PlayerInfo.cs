@@ -62,7 +62,7 @@ public class PlayerInfo : LivingEntity
             if (!dead) // 사망하지않았으면
             {
                 canDamage = false;
-                PlayerKeyboardController.onHit = true;
+                PlayerKeyboardInput.onHit = true;
                 playerAnimation.OnHit();
             }
         }
@@ -91,7 +91,7 @@ public class PlayerInfo : LivingEntity
         if (timer >= 0.5f)
         {
             canDamage = true;
-            PlayerKeyboardController.onHit = false;
+            PlayerKeyboardInput.onHit = false;
             timer = 0.0f;
         }
     }

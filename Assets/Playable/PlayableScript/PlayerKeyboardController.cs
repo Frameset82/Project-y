@@ -22,10 +22,6 @@ public class PlayerKeyboardController : MonoBehaviour
     public Transform FirePos; // 투사체 발사 위치
     public Transform FirePos2; // 총구 화염 위치
 
-    public static bool isSwap;
-    public static bool isDodge;
-    public static bool onHit;
-
     public float currentAttackTime = 0.0f;
     public int comboCnt = 0;
 
@@ -64,7 +60,7 @@ public class PlayerKeyboardController : MonoBehaviour
         if (pState == PlayerState.Idle )
         {
             pState = PlayerState.Movement;
-            if (isSwap)
+            if (PlayerKeyboardInput.isSwap)
                 pState = PlayerState.Idle;
         }
     }
@@ -89,7 +85,7 @@ public class PlayerKeyboardController : MonoBehaviour
                 PlayerKeyboardInput.isShoot = false;
                 playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
-            isDodge = true;
+            PlayerKeyboardInput.isDodge = true;
             nextDodgeableTime = Time.time + timeBetDodge;
             StartCoroutine(DodgeCoroutine(dir));
         }
@@ -114,7 +110,7 @@ public class PlayerKeyboardController : MonoBehaviour
         yield return new WaitForSeconds(0.5f); // 회피 지속시간
         PlayerInfo.canDamage = true; // 비무적으로 전환
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
-        isDodge = false;
+        PlayerKeyboardInput.isDodge = false;
 /*        playerRigidbody.constraints = RigidbodyConstraints.None;*/
 
         // 회피중 이동명령을 받았는지 체크
@@ -130,7 +126,6 @@ public class PlayerKeyboardController : MonoBehaviour
 
     public void Attack(Vector3 destination)
     {
-        // 구르기 중이 아닐 때 사격 가능
         if (pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack)
         {
             StartCoroutine(AttackCoroutine(destination));
@@ -241,6 +236,66 @@ public class PlayerKeyboardController : MonoBehaviour
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
+    public void RightAttack(Vector3 destination)
+    {
+        if (pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack)
+        {
+            StartCoroutine(RightAttackCoroutine(destination));
+        }
+    }
+
+    public IEnumerator RightAttackCoroutine(Vector3 destination)
+    {
+        PlayerKeyboardInput.isShoot = true;
+        pState = PlayerState.Attack;
+
+        gameObject.transform.LookAt(destination);
+
+        if (playerEquipmentManager.equipWeapon == null)
+        {
+            Debug.Log("무기없음");
+            yield return new WaitForSeconds(0.0f);
+        }
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true)
+        {
+            playerAnimation.RightAttack();
+            yield return new WaitForSeconds(0.2f); // 딜레이
+            PlayerKeyboardInput.isShoot = false;
+            pState = PlayerState.Idle;
+        }
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
+        {
+            playerAnimation.RightAttack();
+            PlayerKeyboardInput.isShoot = false;
+            yield return new WaitForSeconds(0.3f);
+            pState = PlayerState.Idle;
+
+        }
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
+        {
+            playerAnimation.RightAttack();
+            PlayerKeyboardInput.isShoot = false;
+            yield return new WaitForSeconds(0.3f);
+            pState = PlayerState.Idle;
+        }
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
+        {
+            playerAnimation.RightAttack();
+            PlayerKeyboardInput.isShoot = false;
+            yield return new WaitForSeconds(0.3f);
+            pState = PlayerState.Idle;
+
+        }
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
+        {
+            playerAnimation.RightAttack();
+            PlayerKeyboardInput.isShoot = false;
+            yield return new WaitForSeconds(0.3f);
+            pState = PlayerState.Idle;
+        }
+        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
     //오브젝트풀에서 총알 가져와서 생성하기
     public void CreateBullet()
     {
@@ -252,11 +307,11 @@ public class PlayerKeyboardController : MonoBehaviour
 
     public void SwapCheck()
     {
-        if (isSwap == true)
+        if (PlayerKeyboardInput.isSwap == true)
         {
             pState = PlayerState.Swap;
         }
-        else if (pState == PlayerState.Swap && isSwap == false)
+        else if (pState == PlayerState.Swap && PlayerKeyboardInput.isSwap == false)
         {
             pState = PlayerState.Idle;
         }

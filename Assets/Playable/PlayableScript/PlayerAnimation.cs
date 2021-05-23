@@ -34,10 +34,16 @@ public class PlayerAnimation : MonoBehaviour
     {
         playerAnimator.SetTrigger("dodge");
     }
-    // 캐릭터 라이플 사격 애니메이션
+    // 캐릭터 공격 애니메이션
     public void Attack()
     {
         playerAnimator.SetTrigger("Attack");
+        playerAnimator.SetBool("isMove", false);
+    }
+
+    public void RightAttack()
+    {
+        playerAnimator.SetTrigger("RightAttack");
         playerAnimator.SetBool("isMove", false);
     }
 
@@ -49,7 +55,7 @@ public class PlayerAnimation : MonoBehaviour
     public void Swap()
     {
         playerAnimator.SetTrigger("Swap");
-        PlayerKeyboardController.isSwap = true;
+        PlayerKeyboardInput.isSwap = true;
     }
 
     public void OnHit()

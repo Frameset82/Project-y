@@ -87,7 +87,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             if (Input.GetButtonDown("Swap2") && (subWeapon == null || equipCount == 2))
                 return;
        
-            if ((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2")) && PlayerKeyboardInput.isShoot == false && !PlayerKeyboardController.isDodge && !PlayerKeyboardController.isSwap)
+            if ((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2")) && PlayerKeyboardInput.isShoot == false && !PlayerKeyboardInput.isDodge && !PlayerKeyboardInput.isSwap)
             {
                 if (equipCount == 1)
                 {
@@ -195,7 +195,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public IEnumerator SwapCoroutine()
     {
-        if (PlayerKeyboardController.isDodge == false && PlayerKeyboardInput.isShoot == false)
+        if (PlayerKeyboardInput.isDodge == false && PlayerKeyboardInput.isShoot == false)
         {
             yield return new WaitForSeconds(0.01f);
             playerAnimation.Swap();

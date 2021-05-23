@@ -25,7 +25,10 @@ public class PlayerKeyboardInput : MonoBehaviour
     public Animator avater;
     private PlayerEquipmentManager playerEquipmentManager;
 
-    public static bool isShoot = false;
+    public static bool isShoot = false; // 공격중
+    public static bool isSwap = false; // 스왑중
+    public static bool isDodge = false; // 회피중
+    public static bool onHit = false; // 맞는중
     void Start()
     {
         rigi = GetComponent<Rigidbody>();
@@ -44,11 +47,12 @@ public class PlayerKeyboardInput : MonoBehaviour
         InputEscape();
         Attack();
         Equip();
+        RightAttack();
     }
 
     public void InputMove()
     {
-        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || PlayerKeyboardController.isSwap == true || PlayerKeyboardController.onHit == true)
+        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true)
             return;
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
@@ -105,23 +109,37 @@ public class PlayerKeyboardInput : MonoBehaviour
 
     public void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && !isShoot && playerEquipmentManager.equipWeapon != null && PlayerKeyboardController.isSwap == false)
+        if (Input.GetMouseButtonDown(0) && !isShoot && playerEquipmentManager.equipWeapon != null && isSwap == false)
         {
             print("공격");
             RaycastHit hit;
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-/*                if (hit.collider.gameObject.tag == "Player") return;*/
                 Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
                 playerKeyboardController.Attack(destination);
             }
         }
     }
 
+    public void RightAttack()
+    {
+        if (Input.GetMouseButtonDown(1) && !isShoot && playerEquipmentManager.equipWeapon != null && isSwap == false)
+        {
+            print("공격");
+            RaycastHit hit;
+            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
+                playerKeyboardController.RightAttack(destination);
+            }
+        }
+    }
+
     public void Equip()
     {
-        if ((Input.GetButtonDown("Interation") && playerEquipmentManager.nearObject != null) && PlayerKeyboardController.isSwap == false)
+        if ((Input.GetButtonDown("Interation") && playerEquipmentManager.nearObject != null) && isSwap == false) // g키로 획득
         {
             playerEquipmentManager.Interation();
         }
