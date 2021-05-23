@@ -149,7 +149,7 @@ public class ObjectPool : MonoBehaviour
         {
             var obj = Instance.BulletQueue.Dequeue();
             obj.transform.SetParent(null);
-            obj.gameObject.SetActive(true);
+            //obj.gameObject.SetActive(true);
             return obj;
         }
 
@@ -157,7 +157,7 @@ public class ObjectPool : MonoBehaviour
         {
             var newObj = Instance.CreateNewBullet();
             newObj.transform.SetParent(null);
-            newObj.gameObject.SetActive(false);
+            //newObj.gameObject.SetActive(false);
             return newObj;
         }
     }
@@ -168,7 +168,7 @@ public class ObjectPool : MonoBehaviour
         {
             var obj = Instance.SBulletQueue.Dequeue();
             obj.transform.SetParent(null);
-            obj.gameObject.SetActive(true);
+            //obj.gameObject.SetActive(true);
             return obj;
         }
 
@@ -176,7 +176,7 @@ public class ObjectPool : MonoBehaviour
         {
             var newObj = Instance.CreateNewSBullet();
             newObj.transform.SetParent(null);
-            newObj.gameObject.SetActive(false);
+            //newObj.gameObject.SetActive(false);
             return newObj;
         }
     }

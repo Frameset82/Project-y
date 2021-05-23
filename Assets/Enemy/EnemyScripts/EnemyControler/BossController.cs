@@ -9,14 +9,11 @@ public class BossController : LivingEntity
 {
    public enum BossState { None, MoveTarget, NormalAttack, SpawnRobot, AmimingShot, BackDash, Dash, Stun,Die}; //보스 상태
 
-    public Text text;
-    public Text text2;
 
     public BossState bState = BossState.None; // 보스 상태 변수
     public float MoveSpeed; // 이동속도
     public GameObject target; // 공격대상
     public Vector3 targetPos; // 공격 대상 위치 
-    private bool isRun = false;
     private int randState;
 
     private NavMeshAgent nav; // NavMesh 컴포넌트
@@ -39,7 +36,7 @@ public class BossController : LivingEntity
 
     [Header("전투 속성")]
     private Damage nDamage; //노말 데미지
-    private Damage sDamge; // 스나이핑 데미지
+    private Damage sDamage; // 스나이핑 데미지
     public float attackRange = 7f; // 공격 사거리
     public float diff; //방어도
 
@@ -71,9 +68,9 @@ public class BossController : LivingEntity
         nDamage.dValue = 50f; //초기 데미지값 설정
         nDamage.dType = Damage.DamageType.Melee; //데미지 종류 설정
 
-        sDamge.dValue = 60f;
-        sDamge.dType = Damage.DamageType.Stun;
-        sDamge.ccTime = 0.5f;
+        sDamage.dValue = 60f;
+        sDamage.dType = Damage.DamageType.Stun;
+        sDamage.ccTime = 0.5f;
 
         bState = BossState.None;
         this.startingHealth = 10000f; //테스트용 설정
@@ -88,38 +85,36 @@ public class BossController : LivingEntity
         nDamage.dValue = _nDamage; //초기 데미지값 설정
         nDamage.dType = Damage.DamageType.Melee; //데미지 종류 설정
 
-        sDamge.dValue = _sDamage;
-        sDamge.dType = Damage.DamageType.NuckBack;
-        sDamge.ccTime = 0.5f; 
+        sDamage.dValue = _sDamage;
+        sDamage.dType = Damage.DamageType.NuckBack;
+        sDamage.ccTime = 0.5f; 
 
         diff = _diff; //방어도 설정
 
         this.startingHealth = _startHealth; //초기 HP값 설정
     }
 
-
+    private void FixedUpdate()
+    {
+        targetPos = target.transform.position;
+    }
 
     private void Update()
     {
-        text.text = "diff: " + diff;
-        text2.text = "HP: " + health;
-
-        if (Input.GetKeyDown(KeyCode.Space))
+ 
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             //StartCoroutine(NormalAttack());
             //anim.SetTrigger("Shoot");
             //StartCoroutine(NormalAttack());
             //CreateBomobRobot();
-          // StartCoroutine(SnipingShot());
+         // StartCoroutine(SnipingShot());
            // StartCoroutine(BackDash());
             StartCoroutine(Enable());
         }
 
         sectorCheck();
         CheckState();
-
-        targetPos = target.transform.position;
-   
     }
 
     // 근접 적 상태 체크
@@ -130,13 +125,12 @@ public class BossController : LivingEntity
             case BossState.MoveTarget:
                 Run();
                 break;
-            
         }
     }
 
     void Run() //타겟으로 이동
     {
-        isRun = true;
+  
         Vector3 lookPosition = Vector3.zero;
         bState = BossState.MoveTarget;
         lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
@@ -148,7 +142,7 @@ public class BossController : LivingEntity
 
         if (dist <= attackRange)
         {
-            isRun = false;
+
             nav.isStopped = true;
             nav.velocity = Vector3.zero;
 
@@ -160,6 +154,8 @@ public class BossController : LivingEntity
     IEnumerator Enable() //처음 실행되는 모션
     {
         anim.SetTrigger("Enable");
+        yield return new WaitForSeconds(0.8f);
+        bGun.muzzleFlash.Emit(1);
 
         yield return new WaitForSeconds(6f);
 
@@ -185,7 +181,7 @@ public class BossController : LivingEntity
                     if (!WallCheck())
                     { StartCoroutine(BackDash()); }
                     else
-                    { StartCoroutine(CreateBomobRobot()); }
+                    { StartCoroutine(NormalAttack()); }
                     break;
                 case 2:
                 case 3:
@@ -217,37 +213,35 @@ public class BossController : LivingEntity
 
 
     IEnumerator NormalAttack() //일반 공격
-    {   
-      for(int i = 0; i< 3; i++)
-      {
-           
-        Vector3 lookPosition = Vector3.zero;
+    {
+
+        bState = BossState.NormalAttack;
         nav.isStopped = true;
-           
-        lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
 
-        transform.LookAt(lookPosition);
-        anim.SetTrigger("Shoot");
 
-     
-        yield return new WaitForSeconds(0.1f);
-        bGun.StartFiring(nDamage);
+        for (int i = 0; i< 3; i++)
+        {
+            transform.LookAt(targetPos);
+             anim.SetTrigger("Shoot");    
+        //yield return new WaitForSeconds(0.1f);
+        //bGun.StartFiring(nDamage);
 
         yield return new WaitForSeconds(0.5f);
         }
 
-       StartCoroutine(Think());
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(Think());
     }
 
     IEnumerator CreateBomobRobot()
     { 
         bState = BossState.SpawnRobot;
 
-        randState = Random.Range(1, 4);
+        anim.SetTrigger("Spawn");
 
-        for (int i= 0; i< randState; i++)
+        for (int i= 0; i< 3; i++)
         {
-            var BombRobot = ObjectPool.GetRobot();
+            BombRobotControl BombRobot = ObjectPool.GetRobot();
             Vector3 spawnPos = Random.insideUnitCircle * 4f; ;
             spawnPos.x += this.transform.position.x;
             spawnPos.z = spawnPos.y + this.transform.position.z;
@@ -255,10 +249,10 @@ public class BossController : LivingEntity
 
             BombRobot.transform.position = spawnPos;
             BombRobot.SetTarget(target);
+            yield return new WaitForSeconds(0.1f);
         }
-        anim.SetTrigger("Spawn");
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
 
         StartCoroutine(Think());
     }//로봇소환
@@ -288,34 +282,39 @@ public class BossController : LivingEntity
 
     IEnumerator SnipingShot()
     {
-
         bState = BossState.AmimingShot;
 
         nav.isStopped = true;
         anim.SetTrigger("Sniping");
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(2.5f);
 
 
         for (int i=0; i < 3; i++)
         {
-       
+            //yield return new WaitForSeconds(0.5f);   
             transform.LookAt(targetPos);
             anim.SetTrigger("SnipingShoot");
-            bGun.StartFiring(sDamge);
-            //Vector3 lookPosition = Vector3.zero;
-
-            //lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
-            yield return new WaitForSeconds(0.6f);
+           // yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(2f);
         }
 
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         anim.SetTrigger("SnipingEnd");
 
-        
+        yield return new WaitForSeconds(0.1f);
         StartCoroutine(Think());
     } //스나이핑 샷
 
+    void SShot()
+    {
+        bGun.StartFiring(sDamage);
+    }
+
+    void NShot()
+    {
+        bGun.StartFiring(nDamage);
+    }
 
     IEnumerator Dash() //대쉬
     {
@@ -457,7 +456,7 @@ public class BossController : LivingEntity
 
         yield return new WaitForSeconds(1f); // 1초 대기
 
-        //ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
+       
     }
 
     void sectorCheck() // 부챗꼴 범위 충돌

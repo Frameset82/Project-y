@@ -17,12 +17,12 @@ public class EnemyBullet : MonoBehaviour
     private void OnEnable()
     {
         time = 0f; // 시간을 0으로 초기화
-      
+        rigid.velocity = this.transform.forward * 50f;
     }
 
     private void FixedUpdate()
     {
-        rigid.velocity = this.transform.forward * 50f;
+      
         if (time> 4f)
         {
             ReturnToPool();
@@ -41,8 +41,7 @@ public class EnemyBullet : MonoBehaviour
             enemytarget.OnDamage(damage);
             ReturnToPool();
         }
-
-        
+  
     }
 
     private void ReturnToPool() //탄환 반납

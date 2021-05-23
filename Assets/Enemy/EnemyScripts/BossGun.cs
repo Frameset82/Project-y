@@ -25,8 +25,10 @@ public class BossGun : MonoBehaviour
         }
 
         bullet.damage = _damage;
+       
         bullet.transform.position = fireTransform.position;
-        bullet.transform.rotation = fireTransform.rotation;
+        bullet.transform.rotation = Quaternion.Euler( new Vector3(0f, fireTransform.eulerAngles.y, fireTransform.eulerAngles.z));
+        bullet.gameObject.SetActive(true);
     }
 
 
