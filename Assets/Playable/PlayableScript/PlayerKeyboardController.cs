@@ -6,7 +6,7 @@ public class PlayerKeyboardController : MonoBehaviour
 {
     // 이동속도와 회전속도 회피속도
     public float dodgePower = 400f;
-
+    public ParticleSystem ps;
     // 회피명령 딜레이 변수
     private float timeBetDodge = 1f;
     private float nextDodgeableTime = 0f;
@@ -149,10 +149,11 @@ public class PlayerKeyboardController : MonoBehaviour
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true)
         {
             playerAnimation.Attack();
+            ps.Emit(1);
             
             for (int i = 0; i < 3; i++)
             {
-                Instantiate(effect, FirePos2.transform.position, FirePos2.transform.rotation);
+               /* Instantiate(effect, FirePos2.transform.position, FirePos2.transform.rotation);*/
                 /*Destroy(effect);*/
                 CreateBullet(); //총알 생성하기
                 yield return new WaitForSeconds(0.1f);
