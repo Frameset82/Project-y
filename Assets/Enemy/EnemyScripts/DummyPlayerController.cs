@@ -23,13 +23,13 @@ public class DummyPlayerController : LivingEntity
     {
         startingHealth = sHealth;     
         base.OnEnable();
-        damage.dType = Damage.DamageType.NuckBack;
-        damage.dValue = 100f;
-        damage.inCapValue = 10f;
+        damage.dType = Damage.DamageType.Stun;
+        damage.dValue = 10f;
+        damage.ccTime = 3f;
 
         damage1.dType = Damage.DamageType.Melee;
         damage1.dValue = 10f;
-        damage1.ccTime = 3f;
+        damage1.ccTime = 1f;
     }
 
     private void Update()
@@ -51,6 +51,24 @@ public class DummyPlayerController : LivingEntity
             //hitNormal = hitNormal.normalized;
             //hitNormal.y = 1;
             enemytarget.OnDamage(damage);
+            //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
+            // Debug.Log(Damage.DamageType.Melee);
+
+        }
+        if (Input.GetMouseButtonDown(1)) //마우스클릭시 데미지 입히기(테스트용)
+        {
+            //OnDamage(10f);
+            LivingEntity enemytarget = target.GetComponent<LivingEntity>();
+
+            //Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
+
+            //Vector3 hitNormal = transform.position - target.transform.position;
+
+
+            // Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
+            //hitNormal = hitNormal.normalized;
+            //hitNormal.y = 1;
+            enemytarget.OnDamage(damage1);
             //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
             // Debug.Log(Damage.DamageType.Melee);
 

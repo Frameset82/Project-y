@@ -338,7 +338,7 @@ public class MeleeController : LivingEntity
     {
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
         { anim.SetTrigger("isHit"); }// 트리거 실행
-
+        
       
         float startTime = Time.time; //시간체크
 
@@ -346,6 +346,7 @@ public class MeleeController : LivingEntity
     
         while (Time.time < startTime + 0.8f)
         {
+            
             nav.velocity = Vector3.zero;
             yield return null;
         }
@@ -436,10 +437,6 @@ public class MeleeController : LivingEntity
 
         
         mstate = MeleeState.Die; //상태를 죽음으로 변경
-
-     
-
-       
 
         nav.isStopped = true; //네비 멈추기
         nav.enabled = false; // 네비 비활성화

@@ -51,6 +51,8 @@ public class BombRobotControl : LivingEntity
         timer = 0;
         Explosion.SetActive(false); //폭발 프리팹 비활성화
         bstate = BombState.Idle; //기본 상태를 유휴 상태로 변경
+        this.startingHealth = 100f; //테스트용 설정
+        health = startingHealth;
         healthbar.SetMaxHealth((int)startingHealth);
     }
 
@@ -63,13 +65,13 @@ public class BombRobotControl : LivingEntity
             nav.SetDestination(target.transform.position); //네비게이션 경로 설정
             bstate = BombState.MoveTarget;
         } 
-        else if(timer >= 15f && bstate != BombState.Exploding)
+        /*else if(timer >= 15f && bstate != BombState.Exploding)
         {
             isEnter = true;
             bstate = BombState.Exploding;
             StartCoroutine(Explode()); //폭발 코루틴 실행
             StartCoroutine(ExplosionEffect()); // 폭발 진행 이펙트 루틴 실행
-        }
+        }*/
 
         CheckState(); //상태 체크
         anim.SetBool("isWalk", isWalk); //걷기 관련 애니메이션 
@@ -161,7 +163,7 @@ public class BombRobotControl : LivingEntity
         if(health <= 0 && this.gameObject.activeInHierarchy && !dead)
         {
             dead = true;
-            Die();
+            StartCoroutine(Die());
         }
         else
         {
@@ -173,7 +175,7 @@ public class BombRobotControl : LivingEntity
 
                 case Damage.DamageType.NuckBack:
                     bstate = BombState.KnockBack;
-                    //StartCoroutine(NuckBackDamageRoutine(dInfo.ccTime));
+                    StartCoroutine(NuckBackDamageRoutine(dInfo.ccTime));
                     break;
                 case Damage.DamageType.Stun:
                     bstate = BombState.Stun;
@@ -194,11 +196,12 @@ public class BombRobotControl : LivingEntity
 
         nav.velocity = Vector3.zero;
 
-        while (Time.time < startTime + 0.8f)
+        while (Time.time < startTime + 0.7f)
         {
             nav.velocity = Vector3.zero;
             yield return null;
         }
+
     }
 
     IEnumerator StunRoutine(float nuckTime) //스턴
@@ -216,7 +219,9 @@ public class BombRobotControl : LivingEntity
             yield return null;
         }
         anim.SetTrigger("wakeUp");
-        yield return new WaitForSeconds(0.2f);     
+        yield return new WaitForSeconds(0.1f);
+
+        nav.isStopped = false;
         bstate = BombState.MoveTarget;
         
     }
@@ -241,24 +246,27 @@ public class BombRobotControl : LivingEntity
         startTime = Time.time;
         anim.SetTrigger("wakeUp");
 
-        while (Time.time < startTime + 3.8f)
+        while (Time.time < startTime + 2f)
         {
             rigid.angularVelocity = Vector3.zero;
 
             yield return null;
         }
+        nav.isStopped = false;
+        bstate = BombState.MoveTarget;
 
-    
     }
 
-    public override void Die()
+    public new IEnumerator Die()
     {
+
+        anim.SetBool("isDead", dead); //죽음 관련 애니메이션
         base.Die();
         dead = true;
-        bstate = BombState.Die;
-        anim.SetBool("isDead", dead); //죽음 관련 애니메이션
         StopAllCoroutines();
+        bstate = BombState.Die;
         nav.enabled = false;
+        yield return new WaitForSeconds(1f);
         Explosion.SetActive(false);
         ObjectPool.ReturnBombRobot(this);
     }
