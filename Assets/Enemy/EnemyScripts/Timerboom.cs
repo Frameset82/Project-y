@@ -13,6 +13,6 @@ public class Timerboom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Destroy(this.gameObject, 0.4f);
+        Destroy(this.gameObject, 0.7f);
     }
 }
