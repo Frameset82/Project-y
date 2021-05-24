@@ -188,11 +188,8 @@ public class MeleeController : LivingEntity
 
     void JumpAttackRoutine()
     {
-        
 
        StartCoroutine(JumpAttack(targetPos));
-      
-       
     }
 
     /*
