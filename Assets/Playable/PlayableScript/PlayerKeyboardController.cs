@@ -11,6 +11,9 @@ public class PlayerKeyboardController : MonoBehaviour
     private float timeBetDodge = 1f;
     private float nextDodgeableTime = 0f;
 
+    public InteractionObj targetInterObj {get; private set;}
+    public static bool isInteraction;
+
     private PlayerKeyboardInput playerKeyboardInput; // 플레이어 입력 컴포넌트
     private PlayerEquipmentManager playerEquipmentManager;
     public Rigidbody playerRigidbody; // 캐릭터 리지드바디
@@ -48,11 +51,20 @@ public class PlayerKeyboardController : MonoBehaviour
         
     }
 
-    // 캐릭터 이동감지
-    private void FixedUpdate()
-    {
-
+    public void OnInteractionEnter(InteractionObj interObj){
+        targetInterObj = interObj;
     }
+
+    public void OnInteractionExit(){
+        targetInterObj.InactiveUI();
+        targetInterObj = null;
+    }
+    
+    // // 캐릭터 이동감지
+    // private void FixedUpdate()
+    // {
+
+    // }
 
     // 캐릭터 이동명령
     public void Move()

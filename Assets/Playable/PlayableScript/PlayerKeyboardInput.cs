@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerKeyboardInput : MonoBehaviour
 {
     [Header("옵션창 활성화 여부")]
-    [SerializeField] GameObject optionCanvas;
-    [SerializeField] bool optionCanvasOn = false;
+    [SerializeField] UISetting uiSetting;
+    //[SerializeField] bool optionCanvasOn = false;
 
     // 입력 버튼 이름
     private string dodgeButtonName = "Jump";
@@ -20,10 +20,11 @@ public class PlayerKeyboardInput : MonoBehaviour
     public Vector3 moveVec2; // 구르기용 벡터
     private Rigidbody rigi;
     private PlayerKeyboardController playerKeyboardController;
+    private PlayerEquipmentManager playerEquipmentManager;
+    
     public Ray ray;
     public Camera mainCamera;
     public Animator avater;
-    private PlayerEquipmentManager playerEquipmentManager;
 
     public static bool isShoot = false; // 공격중
     public static bool isSwap = false; // 스왑중
@@ -46,7 +47,7 @@ public class PlayerKeyboardInput : MonoBehaviour
     {
         InputEscape();
         Attack();
-        Equip();
+        Interation();
         RightAttack();
         SwapInput();
     }
@@ -137,13 +138,23 @@ public class PlayerKeyboardInput : MonoBehaviour
             }
         }
     }
-
-    public void Equip()
+    // 상호작용 키 입력
+    public void Interation()
     {
-        if ((Input.GetButtonDown("Interation") && playerEquipmentManager.nearObject != null) && isSwap == false) // g키로 획득
-        {
-            playerEquipmentManager.Interation();
+        if(Input.GetButtonDown("Interation")){
+            if(playerEquipmentManager.nearObject != null && isSwap == false){
+                playerEquipmentManager.Interation();
+            }
+            if(playerKeyboardController.targetInterObj != null){
+                playerKeyboardController.targetInterObj.ActiveUI();
+            }
         }
+
+
+        // if ((Input.GetButtonDown("Interation") && playerEquipmentManager.nearObject != null) && isSwap == false) // g키로 획득
+        // {
+        //     playerEquipmentManager.Interation();
+        // }
     }
 
     public void SwapInput()
@@ -162,10 +173,14 @@ public class PlayerKeyboardInput : MonoBehaviour
     // ESC 키 입력
     void InputEscape(){
         if(Input.GetKeyDown(KeyCode.Escape)){
-            Debug.Log("InputEscape()");
-            optionCanvasOn = optionCanvas.activeSelf;
-            optionCanvasOn = optionCanvasOn ? false : true;
-            optionCanvas.SetActive(optionCanvasOn);
+            if(PlayerKeyboardController.isInteraction){
+                if(playerKeyboardController.targetInterObj != null){
+                    playerKeyboardController.targetInterObj.InactiveUI();
+                }
+                uiSetting.CloseUI();
+            } else {
+                uiSetting.OpenUI();
+            }
         }
     }
 }

@@ -6,25 +6,28 @@ public class InteractionObj : MonoBehaviour
 {
     // 상호작용 UI 할당
     [SerializeField] GameObject interactionCanvas;
-    // 상호작용 가능 판단
-    public bool isInteractive = false;
-
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject uiCanvas;
+    public UserInterface userInterface;
 
     void OnTriggerEnter(Collider coll) {
         if(coll.tag == "Player"){
             interactionCanvas.SetActive(true);
-            isInteractive = true;
+            coll.GetComponent<PlayerKeyboardController>().OnInteractionEnter(this);
         }
     }
 
     void OnTriggerExit(Collider coll) {
         if(coll.tag == "Player"){
             interactionCanvas.SetActive(false);
-            isInteractive = false;
+            coll.GetComponent<PlayerKeyboardController>().OnInteractionExit();
         }
+    }
+
+    public void ActiveUI(){
+        userInterface.OpenUI();
+    }
+
+    public void InactiveUI(){
+        userInterface.CloseUI();
     }
 }

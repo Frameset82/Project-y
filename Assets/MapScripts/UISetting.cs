@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VideoOption : MonoBehaviour
+public class UISetting : UserInterface
 {
 
     FullScreenMode screenMode;
@@ -15,8 +15,6 @@ public class VideoOption : MonoBehaviour
     List<Resolution> resolutions = new List<Resolution>();
     // 드롭다운 항목 값
     [SerializeField] int resolutionNum;
-    // 옵션창 
-    [SerializeField] GameObject optionCanvas;
 
     void Start(){
         InitUI();
@@ -78,6 +76,6 @@ public class VideoOption : MonoBehaviour
 
     // x 버튼
     public void EscapeBtnClick(){
-        optionCanvas.SetActive(false);
+        CloseUI();
     }
 } 
