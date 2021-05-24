@@ -105,7 +105,7 @@ public class MeleeController : LivingEntity
                 break;
 
             case MeleeState.Die:
-                Die();
+               
                 break;
         }
     }
