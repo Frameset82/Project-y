@@ -433,7 +433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theEnemy: {fileID: 6662435579319529695}
-  explosion: {fileID: 0}
+  explosion: {fileID: 103688, guid: 61d06c6d35a503b47a23c676bb289e02, type: 3}
   xPos: 0
   zPos: 0
   enemycount: 0
@@ -2760,6 +2760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dodgePower: 400
+  ps: {fileID: 0}
   playerRigidbody: {fileID: 0}
   playerAvatar: {fileID: 912441468}
   pState: 0
@@ -4668,7 +4669,7 @@ MonoBehaviour:
   - {fileID: 1618944724}
   - {fileID: 1387372793}
   creat_time: 1
-  explosion: {fileID: 0}
+  explosion: {fileID: 103688, guid: 61d06c6d35a503b47a23c676bb289e02, type: 3}
 --- !u!4 &823950516
 Transform:
   m_ObjectHideFlags: 0
