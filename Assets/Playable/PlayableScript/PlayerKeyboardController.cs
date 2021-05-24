@@ -318,26 +318,9 @@ public class PlayerKeyboardController : MonoBehaviour
         
     }
 
-    public void SwapCheck()
-    {
-        if (PlayerKeyboardInput.isSwap == true)
-        {
-            pState = PlayerState.Swap;
-        }
-        else if (pState == PlayerState.Swap && PlayerKeyboardInput.isSwap == false)
-        {
-            pState = PlayerState.Idle;
-        }
-    }
-
     public void ComboMove()
     {
         playerRigidbody.AddForce(transform.forward * 300f);
         playerRigidbody.velocity = Vector3.zero;
-    }
-
-    private void Update()
-    {
-        SwapCheck();
     }
 }

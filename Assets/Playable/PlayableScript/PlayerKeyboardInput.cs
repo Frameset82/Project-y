@@ -30,6 +30,7 @@ public class PlayerKeyboardInput : MonoBehaviour
     public static bool isSwap = false; // 스왑중
     public static bool isDodge = false; // 회피중
     public static bool onHit = false; // 맞는중
+
     void Start()
     {
         rigi = GetComponent<Rigidbody>();
@@ -167,6 +168,18 @@ public class PlayerKeyboardInput : MonoBehaviour
         if ((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2")) && PlayerKeyboardInput.isShoot == false && !PlayerKeyboardInput.isDodge && !PlayerKeyboardInput.isSwap)
         {
             playerEquipmentManager.Swap();
+        }
+    }
+
+    public void SwapCheck()
+    {
+        if (PlayerKeyboardInput.isSwap == true)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Swap;
+        }
+        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Swap && PlayerKeyboardInput.isSwap == false)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
         }
     }
 
