@@ -9,11 +9,12 @@ public class PlayerEquipmentManager : MonoBehaviour
     [Header("착용 무기")]
     public GameObject mainWeapon = null; // 1번무기
     public GameObject subWeapon = null; // 2번무기
-    private int equipCount = 1; // main = 1 sub = 2
+    public static int equipCount = 1; // main = 1 sub = 2
     public GameObject equipWeapon;
     public GameObject nearObject;
     private string weaponName;
 
+    private bool changeAnim = false;
     private GameObject changeImg;
     [Header("이미지관련(할당필요)")]
     public Image mainWeaponImg;
@@ -80,36 +81,27 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
     }
      
-    void Swap()
+    public void Swap()
     {
-            if (Input.GetButtonDown("Swap1") && (mainWeapon == null || equipCount == 1))
-                return;
-            if (Input.GetButtonDown("Swap2") && (subWeapon == null || equipCount == 2))
-                return;
-       
-            if ((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2")) && PlayerKeyboardInput.isShoot == false && !PlayerKeyboardInput.isDodge && !PlayerKeyboardInput.isSwap)
-            {
-                if (equipCount == 1)
-                {
-                    mainWeapon.SetActive(false);
-                    StartCoroutine(SwapCoroutine());
-                    equipWeapon = subWeapon;
-                    subWeapon.SetActive(true);
-                    equipCount = 2;
-                    subWeaponScript.ChangeAnimator();
-                }
-                else if (equipCount == 2)
-                {
-                    
-                    subWeapon.SetActive(false);
-                    StartCoroutine(SwapCoroutine());
-                    equipWeapon = mainWeapon;
-                    mainWeapon.SetActive(true);
-                    equipCount = 1;
-                    mainWeaponScript.ChangeAnimator();
-                }
-            }
-        
+        if (equipCount == 1)
+        {
+            mainWeapon.SetActive(false);
+            StartCoroutine(SwapCoroutine());
+            equipWeapon = subWeapon;
+            subWeapon.SetActive(true);
+            equipCount = 2;
+            subWeaponScript.ChangeAnimator();
+        }
+        else if (equipCount == 2)
+        {
+
+            subWeapon.SetActive(false);
+            StartCoroutine(SwapCoroutine());
+            equipWeapon = mainWeapon;
+            mainWeapon.SetActive(true);
+            equipCount = 1;
+            mainWeaponScript.ChangeAnimator();
+        }
     }
 
     // 버튼에 들어갈 메인 웨펀과 서브웨펀
@@ -134,6 +126,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         nearObject = null;
         changeEquipment.SetActive(false);
         PlayerKeyboardInput.isShoot = false;
+        changeAnim = true;
         Time.timeScale = 1; // 시간정지 해제
     } 
 
@@ -158,6 +151,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         nearObject = null;
         changeEquipment.SetActive(false);
         PlayerKeyboardInput.isShoot = false;
+        changeAnim = true;
         Time.timeScale = 1; // 시간정지 해제
     }
 
@@ -184,13 +178,17 @@ public class PlayerEquipmentManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Swap();
         if(mainWeapon != null)
             mainWeaponScript = mainWeapon.GetComponent<Weapon>();
         if(subWeapon != null)
             subWeaponScript = subWeapon.GetComponent<Weapon>();
         if(equipWeapon != null)
             equipWeaponScript = equipWeapon.GetComponent<Weapon>();
+        if (changeAnim)
+        {
+            equipWeaponScript.ChangeAnimator();
+            changeAnim = false;
+        }
     }
 
     public IEnumerator SwapCoroutine()

@@ -48,6 +48,7 @@ public class PlayerKeyboardInput : MonoBehaviour
         Attack();
         Equip();
         RightAttack();
+        SwapInput();
     }
 
     public void InputMove()
@@ -142,6 +143,19 @@ public class PlayerKeyboardInput : MonoBehaviour
         if ((Input.GetButtonDown("Interation") && playerEquipmentManager.nearObject != null) && isSwap == false) // g키로 획득
         {
             playerEquipmentManager.Interation();
+        }
+    }
+
+    public void SwapInput()
+    {
+        if (Input.GetButtonDown("Swap1") && (playerEquipmentManager.mainWeapon == null || PlayerEquipmentManager.equipCount == 1))
+            return;
+        if (Input.GetButtonDown("Swap2") && (playerEquipmentManager.subWeapon == null || PlayerEquipmentManager.equipCount == 2))
+            return;
+
+        if ((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2")) && PlayerKeyboardInput.isShoot == false && !PlayerKeyboardInput.isDodge && !PlayerKeyboardInput.isSwap)
+        {
+            playerEquipmentManager.Swap();
         }
     }
 
