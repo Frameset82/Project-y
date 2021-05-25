@@ -63,6 +63,16 @@ public class PlayerAnimation : MonoBehaviour
         playerAnimator.SetTrigger("OnHit");
     }
 
+    public void OnNuckBack()
+    {
+        playerAnimator.SetTrigger("OnNuckBack");
+    }
+
+    public void OnStun()
+    {
+        playerAnimator.SetTrigger("OnStun");
+    }
+
     public bool CompareStateName(string aaa)
     {
         return

@@ -38,7 +38,8 @@ public class PlayerKeyboardController : MonoBehaviour
         Attack, // 공격중인 상태
         onHit, // 맞고있는 상태
         Death, // 사망한 상태
-        Swap // 스왑 상태
+        Swap, // 스왑 상태
+        onCC // CC 상태
     }
 
     // 사용할 컴포넌트 할당(애니메이터는 수동할당)
@@ -87,7 +88,7 @@ public class PlayerKeyboardController : MonoBehaviour
     // 캐릭터 회피명령
     public void Dodge(Vector3 dir)
     {
-        if ((pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack) && Time.time >= nextDodgeableTime)
+        if ((pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack || pState == PlayerState.onCC) && Time.time >= nextDodgeableTime)
         {
             if(pState == PlayerState.Attack)
             {
@@ -321,6 +322,12 @@ public class PlayerKeyboardController : MonoBehaviour
     public void ComboMove()
     {
         playerRigidbody.AddForce(transform.forward * 300f);
+        playerRigidbody.velocity = Vector3.zero;
+    }
+
+    public void NuckBackMove()
+    {
+        playerRigidbody.AddForce(-transform.forward * 300f);
         playerRigidbody.velocity = Vector3.zero;
     }
 }

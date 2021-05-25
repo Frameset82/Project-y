@@ -21,6 +21,7 @@ public class PlayerKeyboardInput : MonoBehaviour
     private Rigidbody rigi;
     private PlayerKeyboardController playerKeyboardController;
     private PlayerEquipmentManager playerEquipmentManager;
+    private PlayerAnimation playerAnimation;
     
     public Ray ray;
     public Camera mainCamera;
@@ -30,12 +31,18 @@ public class PlayerKeyboardInput : MonoBehaviour
     public static bool isSwap = false; // 스왑중
     public static bool isDodge = false; // 회피중
     public static bool onHit = false; // 맞는중
+    public static bool onNuckBack = false; // 넉백(다운)중
+    public static bool onStun = false; // 스턴중
+
+    public static float maxCcTime = 0f; // 시간 저장용
+    private float ccTime = 0f;
 
     void Start()
     {
         rigi = GetComponent<Rigidbody>();
         playerKeyboardController = GetComponent<PlayerKeyboardController>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
+        playerAnimation = GetComponent<PlayerAnimation>();
         moveVec2 = transform.forward;
     }
     void FixedUpdate()
@@ -51,11 +58,12 @@ public class PlayerKeyboardInput : MonoBehaviour
         Interation();
         RightAttack();
         SwapInput();
+        CcCheck();
     }
 
     public void InputMove()
     {
-        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true)
+        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC)
             return;
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
@@ -180,6 +188,26 @@ public class PlayerKeyboardInput : MonoBehaviour
         else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Swap && PlayerKeyboardInput.isSwap == false)
         {
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+        }
+    }
+
+    public void CcCheck()
+    {
+        if (onNuckBack || onStun)
+        {
+            playerAnimation.playerAnimator.SetBool("OnCC", true);
+            playerAnimation.playerAnimator.SetBool("isMove", false);
+            playerAnimation.playerAnimator.SetFloat("Up", 0.0f);
+            playerAnimation.playerAnimator.SetFloat("Speed", 0.0f);
+            ccTime += Time.deltaTime;
+            if (ccTime >= maxCcTime)
+            {
+                ccTime = 0f;
+                onNuckBack = false;
+                onStun = false;
+                playerAnimation.playerAnimator.SetBool("OnCC", false);
+                playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+            }
         }
     }
 

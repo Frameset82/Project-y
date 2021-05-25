@@ -57,14 +57,33 @@ public class PlayerInfo : LivingEntity
     {
         if (canDamage)
         {
-            health -= dInfo.dValue; //체력 감소
-            healthSlider.value = health;
-            if (!dead) // 사망하지않았으면
+            if (dInfo.dType == Damage.DamageType.NuckBack && !dead) // 넉백공격일때
+            {
+                PlayerKeyboardInput.maxCcTime = dInfo.ccTime;
+                playerAnimation.OnNuckBack();
+                PlayerKeyboardInput.onNuckBack = true;
+                playerKeyboardController.pState = PlayerKeyboardController.PlayerState.onCC;
+                playerKeyboardController.NuckBackMove();
+            }
+            else if((dInfo.dType == Damage.DamageType.Melee || dInfo.dType == Damage.DamageType.None) && !dead) // 일반공격일때
             {
                 canDamage = false;
                 PlayerKeyboardInput.onHit = true;
                 playerAnimation.OnHit();
             }
+            else if(dInfo.dType == Damage.DamageType.Stun && !dead)
+            {
+                PlayerKeyboardInput.maxCcTime = dInfo.ccTime;
+                playerAnimation.OnStun();
+                PlayerKeyboardInput.onStun = true;
+                playerKeyboardController.pState = PlayerKeyboardController.PlayerState.onCC;
+            }
+        }
+
+        if (canDamage)
+        {
+            health -= dInfo.dValue; //체력 감소
+            healthSlider.value = health;
         }
         if (health <= 0 && !dead)
         {
@@ -88,7 +107,7 @@ public class PlayerInfo : LivingEntity
         {
             timer += Time.deltaTime;
         }
-        if (timer >= 0.5f)
+        if (timer >= 1.5f)
         {
             canDamage = true;
             PlayerKeyboardInput.onHit = false;
