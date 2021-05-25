@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class InteractionObj : MonoBehaviour
 {
-    // 상호작용 UI 할당
-    [SerializeField] GameObject interactionCanvas;
-    [SerializeField] GameObject uiCanvas;
-    public UserInterface userInterface;
+    public GameObject interactionCanvas;    // 상호작용 가능표시 UI
+    public GameObject uiCanvas;             // 상호작용 UI
+    public UserInterface userInterface;     // 추상 클래스 UserInterface
 
+    // 플레이어 충돌 체크
+    // 플레이어 충돌 시 상호작용 가능표시 UI 활성화
+    // 플레이어 충돌 시 컨트롤러로 UI 할당
     void OnTriggerEnter(Collider coll) {
         if(coll.tag == "Player"){
             interactionCanvas.SetActive(true);
@@ -16,6 +18,9 @@ public class InteractionObj : MonoBehaviour
         }
     }
 
+    // 플레이어 충돌 종료 체크
+    // 플레이어 충돌 종료 시 상호작용 가능표시 UI 비활성화
+    // 플레이어 충돌 종료 시 컨트롤러로 전달한 UI 초기화
     void OnTriggerExit(Collider coll) {
         if(coll.tag == "Player"){
             interactionCanvas.SetActive(false);
@@ -23,10 +28,11 @@ public class InteractionObj : MonoBehaviour
         }
     }
 
+    // UI 활성화
     public void ActiveUI(){
         userInterface.OpenUI();
     }
-
+    // UI 비활성화
     public void InactiveUI(){
         userInterface.CloseUI();
     }
