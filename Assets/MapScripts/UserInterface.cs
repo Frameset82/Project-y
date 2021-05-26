@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public abstract class UserInterface : MonoBehaviour
 {
     public GameObject uiCanvas; // UI 할당
+    public InteractionObj interactionObj;
     // UI 활성화
     public void OpenUI(){
         if(PlayerKeyboardController.isInteraction == true) return;
@@ -17,5 +18,11 @@ public abstract class UserInterface : MonoBehaviour
     public void CloseUI(){
         uiCanvas.SetActive(false);
         PlayerKeyboardController.isInteraction = false;
+    }
+    // UI 변경
+    public void ChangeUI(UserInterface ui){
+        if(interactionObj != null) {
+            interactionObj.ChageCanvas(ui);
+        }
     }
 }

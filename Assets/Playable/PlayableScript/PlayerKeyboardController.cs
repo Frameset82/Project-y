@@ -49,24 +49,18 @@ public class PlayerKeyboardController : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         playerRigidbody = GetComponent<Rigidbody>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
-        
     }
 
+    // 상호작용 범위에 들어갔을 때
     public void OnInteractionEnter(InteractionObj interObj){
         targetInterObj = interObj;
     }
-
+    // 상효작용 범위를 벗어났을 때
     public void OnInteractionExit(){
         targetInterObj.InactiveUI();
         targetInterObj = null;
     }
     
-    // // 캐릭터 이동감지
-    // private void FixedUpdate()
-    // {
-
-    // }
-
     // 캐릭터 이동명령
     public void Move()
     {

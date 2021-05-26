@@ -6,7 +6,6 @@ public class PlayerKeyboardInput : MonoBehaviour
 {
     [Header("옵션창 활성화 여부")]
     [SerializeField] UISetting uiSetting;
-    //[SerializeField] bool optionCanvasOn = false;
 
     // 입력 버튼 이름
     private string dodgeButtonName = "Jump";
@@ -47,6 +46,7 @@ public class PlayerKeyboardInput : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if(PlayerKeyboardController.isInteraction){return;}
         InputMove();
         InputDodge();
     }

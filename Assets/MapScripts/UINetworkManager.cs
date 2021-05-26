@@ -5,34 +5,29 @@ using UnityEngine.UI;
 
 public class UINetworkManager : UserInterface
 {
-    [SerializeField] NetworkManager networkManager; // 네트워크 매니저
-    public Text StatusText;                         // 네트워크 상태 텍스트
-    public InputField roomInput, nicknameInput;     // 닉네임, 방 이름 인풋필드
-
-    public Button ServerConnetBtn;      // 서버 연결 버튼
+    [SerializeField]
+    NetworkManager networkManager;      // 네트워크 매니저
+    public Text StatusText;             // 네트워크 상태 텍스트
+    public Text LobbyInfoText;          // 로비 정보 텍스트
+    public InputField roomInput;        // 방 이름 인풋필드
     public Button CreateRoomBtn;        // 방 만들기 버튼
     public Button JoinRoomBtn;          // 방 입장 버튼
     public Button JoinRandomRoomBtn;    // 방 랜덤 입장 버튼
     public Button LeaveRoomBtn;         // 방 나가기 버튼
 
+    // 시작 시 모든 버튼 비활성화 후 서버 연결 시도
     void Start() {
-        CreateRoomBtn.interactable = false;
-        JoinRoomBtn.interactable = false;
-        JoinRandomRoomBtn.interactable = false;
-        LeaveRoomBtn.interactable = false;
+        AllBtnInactive();
+        networkManager.Connect();
     }
+
     // 모든 버튼 비활성화
     public void AllBtnInactive(){
-        ServerConnetBtn.interactable = false;
         CreateRoomBtn.interactable = false;
         JoinRoomBtn.interactable = false;
         JoinRandomRoomBtn.interactable = false;
         LeaveRoomBtn.interactable = false;
     }
-    // 서버 연결 버튼 활성화
-    public void ServerConnetBtnActive(){ServerConnetBtn.interactable = true;}
-    // 서버 연결 버튼 비활성화
-    public void ServerConnetBtnInactive(){ServerConnetBtn.interactable = false;}
     // 방 나가기 버튼 활성화
     public void LeaveRoomBtnActive(){LeaveRoomBtn.interactable = true;}
     // 방 나가기 버튼 비활성화
@@ -53,17 +48,12 @@ public class UINetworkManager : UserInterface
     public void StateUpdate(){
         StatusText.text = networkManager.networkState;
     }
+    // 로비정보 갱신
+    public void LobbyInfoUpdate(){
+        LobbyInfoText.text = networkManager.lobbyInfo;
+    }
 
     // 버튼 클릭 메서드
-    // 서버 연결 버튼 클릭
-    public void ClickServerConnetBtn(){
-        if(nicknameInput.text==""){
-            StatusText.text = "닉네임은 공백일 수 없습니다.";
-            return;
-        }
-        networkManager.userNickname = nicknameInput.text;
-        networkManager.Connect();
-    }
     // 방 만들기 버튼 클릭
     public void ClickCreateRoomBtn(){
         if(roomInput.text==""){
@@ -93,6 +83,10 @@ public class UINetworkManager : UserInterface
     // ESC 버튼 클릭
     public void ClickEscapeBtn(){
         CloseUI();
+    }
+    // 로비정보 새로고침 버튼 클릭
+    public void ClickRefreshBtn(){
+        networkManager.RefreshLobbyInfo();
     }
 
 }
