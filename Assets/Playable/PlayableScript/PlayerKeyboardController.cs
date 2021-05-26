@@ -143,7 +143,6 @@ public class PlayerKeyboardController : MonoBehaviour
     // 실제 공격
     public IEnumerator AttackCoroutine(Vector3 destination)
     {
-/*        playerRigidbody.constraints = RigidbodyConstraints.FreezeAll;*/
         PlayerKeyboardInput.isShoot = true;
         pState = PlayerState.Attack;
 
@@ -154,15 +153,13 @@ public class PlayerKeyboardController : MonoBehaviour
             Debug.Log("무기없음");
             yield return new WaitForSeconds(0.0f);
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
         {
             playerAnimation.Attack();
             ps.Emit(1);
             
             for (int i = 0; i < 3; i++)
             {
-               /* Instantiate(effect, FirePos2.transform.position, FirePos2.transform.rotation);*/
-                /*Destroy(effect);*/
                 CreateBullet(); //총알 생성하기
                 yield return new WaitForSeconds(0.1f);
             }
@@ -172,7 +169,7 @@ public class PlayerKeyboardController : MonoBehaviour
             PlayerKeyboardInput.isShoot = false;
             pState = PlayerState.Idle;
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
         {
             playerAnimation.Attack();
             CreateBullet(); //총알 생성하기
@@ -183,7 +180,7 @@ public class PlayerKeyboardController : MonoBehaviour
             pState = PlayerState.Idle;
             
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
             playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점
@@ -199,10 +196,10 @@ public class PlayerKeyboardController : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(0.1f);
-            playerEquipmentManager.equipWeaponScript.OnAttack();
+            playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
             playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점 
@@ -218,11 +215,11 @@ public class PlayerKeyboardController : MonoBehaviour
                 }   
             }
             yield return new WaitForSeconds(0.5f);
-            playerEquipmentManager.equipWeaponScript.OnAttack();
+            playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
             
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         { 
             playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점
@@ -239,7 +236,7 @@ public class PlayerKeyboardController : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(0.4f);
-            playerEquipmentManager.equipWeaponScript.OnAttack();
+            playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -264,7 +261,7 @@ public class PlayerKeyboardController : MonoBehaviour
             Debug.Log("무기없음");
             yield return new WaitForSeconds(0.0f);
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
         {
             playerAnimation.RightAttack();
             yield return new WaitForSeconds(1); // 딜레이
@@ -279,14 +276,14 @@ public class PlayerKeyboardController : MonoBehaviour
             pState = PlayerState.Idle;
 
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
             playerAnimation.RightAttack();
             PlayerKeyboardInput.isRight = false;
             yield return new WaitForSeconds(1);
             pState = PlayerState.Idle;
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
             playerAnimation.RightAttack();
             PlayerKeyboardInput.isRight = false;
@@ -294,7 +291,7 @@ public class PlayerKeyboardController : MonoBehaviour
             pState = PlayerState.Idle;
 
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         {
             playerAnimation.RightAttack();
             PlayerKeyboardInput.isRight = false;

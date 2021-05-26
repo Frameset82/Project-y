@@ -25,14 +25,12 @@ public class MeleeWeapon1 : MeleeWeapon
         player = GameObject.Find("Player");
         playerAnimation = player.GetComponent<PlayerAnimation>();
         playerInfo = player.GetComponent<PlayerInfo>();
-        anim = Resources.Load("PlayerAnimator/TestMelee") as RuntimeAnimatorController;
     }
 
     private void OnEnable()
     {
         damage.dValue = 10f; //초기 데미지값 설정
         damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
-        playerAnimation.playerAnimator.runtimeAnimatorController = anim;
     }
 
     // Update is called once per frame

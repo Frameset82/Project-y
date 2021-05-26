@@ -58,7 +58,7 @@ public class IKControl : MonoBehaviour
         }
     }
 
-    void OnAnimatorIK(int layerIndex)
+/*    void OnAnimatorIK(int layerIndex)
     {
         if (playerEquipmentManager.equipWeaponScript.GetComponent<Weapon>().isRifle == true && playerEquipmentManager.equipWeaponScript.GetComponent<Weapon>().isGun == true)
         {
@@ -73,10 +73,10 @@ public class IKControl : MonoBehaviour
             playerAnimator.SetIKPosition(AvatarIKGoal.RightHand, rightHandMount.position);
             playerAnimator.SetIKRotation(AvatarIKGoal.RightHand, rightHandMount.rotation);
 
-            /*playerAnimator.SetIKPosition(AvatarIKGoal.LeftHand, sleftHandMount.position);
+            *//*playerAnimator.SetIKPosition(AvatarIKGoal.LeftHand, sleftHandMount.position);
             playerAnimator.SetIKRotation(AvatarIKGoal.LeftHand, sleftHandMount.rotation);
             playerAnimator.SetIKPosition(AvatarIKGoal.RightHand, srightHandMount.position);
-            playerAnimator.SetIKRotation(AvatarIKGoal.RightHand, srightHandMount.rotation);*/
+            playerAnimator.SetIKRotation(AvatarIKGoal.RightHand, srightHandMount.rotation);*//*
         }
-    }
+    }*/
 }

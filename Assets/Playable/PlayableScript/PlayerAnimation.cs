@@ -8,11 +8,20 @@ public class PlayerAnimation : MonoBehaviour
     public Animator playerAnimator; // 캐릭터 애니메이터
     private PlayerEquipmentManager playerEquipmentManager;
     private PlayerKeyboardController playerKeyboardController;
+    public RuntimeAnimatorController[] anim = new RuntimeAnimatorController[4]; // 0 검 1 밀리 2 창 3 라이플
 
     private void Start()
     {
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         playerKeyboardController = GetComponent<PlayerKeyboardController>();
+    }
+
+    private void Awake()
+    {
+/*        anim[0] = Resources.Load("PlayerAnimator/TestSword") as RuntimeAnimatorController;
+        anim[1] = Resources.Load("PlayerAnimator/TestMelee") as RuntimeAnimatorController;
+        anim[2] = Resources.Load("PlayerAnimator/TestSpear") as RuntimeAnimatorController;
+        anim[3] = Resources.Load("PlayerAnimator/Rifle") as RuntimeAnimatorController;*/
     }
     void Update()
     {
