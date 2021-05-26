@@ -12,9 +12,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public string networkState;             // 네트워크 상태
     public string lobbyInfo;                // 로비 정보
     public string userNickname="Player";    // 유저 닉네임
-    public string roomName;                 // 방 이름
+    public string inputRoomName;            // 방 이름
+    public List<string> roomUser;           // 방 참가자 리스트
+    public List<string> roomList;           // 방 목록
+    public List<string> roomName;           // 방 이름 리스트
+    public List<string> roomMax;            // 방 인원 리스트
+    List<RoomInfo> serverRoomList = new List<RoomInfo>();          // 방 목록 리스트
+    
+    int currentPage = 1, maxPage, multiple; // 페이지 관리 변수
+    public bool isProviousBtnActive;        // 이전 버튼 활성화 여부
+    public bool isNextBtnActive;            // 다음 버튼 활성화 여부
+    public List<bool> roomListBtn;              // 방 목록 버튼 활성화 여부
 
     public UnityEvent networkStateUpate;    // 네트워크 상태 갱신 이벤트
+    public UnityEvent lobbyInfoRefresh;     // 로비 정보 새로고침 이벤트
+    public UnityEvent roomInfoRefresh;      // 방 정보 새로고침 이벤트
     public UnityEvent allBtnInactive;       // 모든 버튼 비활성화 이벤트
     public UnityEvent isConnected;          // 서버 연결 이벤트
     public UnityEvent isJoinedRoom;         // 방 입장 이벤트
@@ -42,13 +54,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         networkStateUpate.Invoke();
         JoinLobby();
     }
+    // 마스터 서버 접속 끊기 시도
+    public void DisConnect(){
+        PhotonNetwork.Disconnect();
+    }
     // 마스터 서버 접속 끊어짐
-    // 서버 접속 재시도
     public override void OnDisconnected(DisconnectCause cause){
-        StateUpdate("서버 접속 끊어짐, 재접속 시도 중...");
-        Connect();
+        StateUpdate("서버 접속 끊어짐");
         networkStateUpate.Invoke();
-        allBtnInactive.Invoke();
     }
     // 로비 접속 시도
     public void JoinLobby(){
@@ -59,6 +72,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // 로비 접속 성공
     public override void OnJoinedLobby(){
         StateUpdate("온라인 : 로비 접속 성공");
+        RefreshLobbyInfo();
         networkStateUpate.Invoke();
         isConnected.Invoke();
     }
@@ -66,7 +80,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void CreateRoom(){
         StateUpdate("방 만들기 시도 중...");
         PhotonNetwork.CreateRoom(
-            roomName, new RoomOptions { MaxPlayers = 2});
+            inputRoomName, new RoomOptions { MaxPlayers = 2});
         networkStateUpate.Invoke();
         allBtnInactive.Invoke();
     }
@@ -79,13 +93,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // 방 참가하기 시도
     public void JoinRoom(){
         StateUpdate("방 참가하기 시도 중...");
-        PhotonNetwork.JoinRoom(roomName);
+        PhotonNetwork.JoinRoom(inputRoomName);
         networkStateUpate.Invoke();
         allBtnInactive.Invoke();
     }
     // 방 참가하기 성공
     public override void OnJoinedRoom(){
         StateUpdate("방 참가 완료");
+        RefreshRoomInfo();
         networkStateUpate.Invoke();
         isJoinedRoom.Invoke();
     }
@@ -126,6 +141,60 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void RefreshLobbyInfo(){
         lobbyInfo = (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms)
          + "로비 / " + PhotonNetwork.CountOfPlayers + "접속";
+        ServerRoomListRefresh();
+        lobbyInfoRefresh.Invoke();
     }
+    // 방 정보 새로 고침
+    public void RefreshRoomInfo(){
+        inputRoomName = PhotonNetwork.CurrentRoom.Name;
+        for(int i=0; i < PhotonNetwork.PlayerList.Length; i++){
+            roomUser.Add(PhotonNetwork.PlayerList[i].NickName);
+        }
+        roomInfoRefresh.Invoke();
+    }
+    // 방에 유저가 참가했을 때
+    public override void OnPlayerEnteredRoom(Player newPlayer){
+        print(PhotonNetwork.PlayerList.Length);
+        RefreshRoomInfo();
+    }
+    // 방 목록이 갱신 될 때
+    public override void OnRoomListUpdate(List<RoomInfo> roomList){
+        int roomCount = roomList.Count;
+        for(int i = 0; i < roomCount; i++){
+            if(!roomList[i].RemovedFromList){
+                if(!serverRoomList.Contains(roomList[i])) serverRoomList.Add(roomList[i]);
+                else serverRoomList[serverRoomList.IndexOf(roomList[i])] = roomList[i];
+            }
+            else if (serverRoomList.IndexOf(roomList[i]) != -1)
+                serverRoomList.RemoveAt(serverRoomList.IndexOf(roomList[i]));
+        }
+        ServerRoomListRefresh();
+    }
+    // 방 목록 패널 버튼 클릭시
+    public void ServerRoomListClick(int num){
+        if(num == -2) --currentPage;
+        else if(num == -1) ++currentPage;
+        RefreshLobbyInfo();
+    }
+    // 방 목록 패널 새로고침
+    void ServerRoomListRefresh(){
+        if(serverRoomList.Count!=0){
+            maxPage = (serverRoomList.Count % roomList.Count == 0)
+            ? serverRoomList.Count / roomList.Count : serverRoomList.Count / roomList.Count + 1;
+        }
+        isProviousBtnActive = (currentPage <= 1) ? false : true;
+        isNextBtnActive = (currentPage >= maxPage) ? false : true;
 
+        multiple = (currentPage - 1) * roomList.Count;
+        for(int i = 0; i < roomList.Count; i++){
+            roomListBtn[i] = (multiple + i < serverRoomList.Count)
+             ? true : false;
+
+            roomName[i] = (multiple + i < serverRoomList.Count)
+             ? serverRoomList[multiple + i].Name : "";
+
+            roomMax[i] = (multiple + i < serverRoomList.Count)
+             ? serverRoomList[multiple + i].PlayerCount + "/" + serverRoomList[multiple + i].MaxPlayers : "";
+        }
+    }
 }

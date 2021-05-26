@@ -1093,7 +1093,7 @@ GameObject:
   - component: {fileID: 33699616}
   - component: {fileID: 33699615}
   m_Layer: 5
-  m_Name: RoomNum
+  m_Name: RoomMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1150,7 +1150,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Num
+  m_Text: 
 --- !u!222 &33699616
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2208,7 +2208,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 65096956}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 256365233}
+        m_MethodName: ClickNextBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &65096956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4779,7 +4790,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RoomName
+  m_Text: 
 --- !u!222 &158413479
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7091,10 +7102,10 @@ RectTransform:
   m_Father: {fileID: 808185881}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1042.5, y: -665}
+  m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &253659447
 MonoBehaviour:
@@ -7332,7 +7343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &256365229
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7435,12 +7446,20 @@ MonoBehaviour:
   interactionObj: {fileID: 0}
   networkManager: {fileID: 359360136}
   StatusText: {fileID: 1708060514}
-  LobbyInfoText: {fileID: 0}
+  LobbyInfoText: {fileID: 122313790}
+  RoomName: {fileID: 1045332517}
+  HostUser: {fileID: 1743279596}
+  RoomUser: {fileID: 391138723}
   roomInput: {fileID: 115603303}
+  roomListPnl: {fileID: 1969747212}
+  roomPnl: {fileID: 1477508214}
   CreateRoomBtn: {fileID: 405969976}
   JoinRoomBtn: {fileID: 1254361185}
   JoinRandomRoomBtn: {fileID: 253659447}
   LeaveRoomBtn: {fileID: 461472920}
+  PreviousBtn: {fileID: 1237117478}
+  NextBtn: {fileID: 65096955}
+  RoomListBtn: []
 --- !u!4 &259465281 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 413614, guid: e37a5396a520a8e4e8e48c74975b6a61,
@@ -10276,13 +10295,76 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   networkState: 
   lobbyInfo: 
-  userNickname: 
-  roomName: MyRoom
+  userNickname: Player
+  inputRoomName: 
+  roomUser: []
+  roomList: []
+  roomName:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  roomMax: []
+  isProviousBtnActive: 0
+  isNextBtnActive: 0
+  roomListBtn: 
   networkStateUpate:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 256365233}
         m_MethodName: StateUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  lobbyInfoRefresh:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 256365233}
+        m_MethodName: MoveListBtnUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 256365233}
+        m_MethodName: RoomListBtnUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 256365233}
+        m_MethodName: LobbyInfoUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  roomInfoRefresh:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 256365233}
+        m_MethodName: RoomInfoUpdate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10331,6 +10413,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 256365233}
+        m_MethodName: RoomListPnlActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 256365233}
+        m_MethodName: RoomPnlInactive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   isJoinedRoom:
     m_PersistentCalls:
       m_Calls:
@@ -10347,6 +10451,28 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 256365233}
         m_MethodName: LeaveRoomBtnActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 256365233}
+        m_MethodName: RoomListPnlInactive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 256365233}
+        m_MethodName: RoomPnlActive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12087,10 +12213,10 @@ RectTransform:
   m_Father: {fileID: 808185881}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 712.5, y: -665}
+  m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &405969976
 MonoBehaviour:
@@ -13920,10 +14046,10 @@ RectTransform:
   m_Father: {fileID: 808185881}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1207.5, y: -665}
+  m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &461472920
 MonoBehaviour:
@@ -14148,7 +14274,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RoomName
+  m_Text: 
 --- !u!222 &464928921
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20570,7 +20696,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RoomName
+  m_Text: 
 --- !u!222 &740344944
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21703,7 +21829,7 @@ GameObject:
   - component: {fileID: 776912869}
   - component: {fileID: 776912868}
   m_Layer: 5
-  m_Name: RoomNum
+  m_Name: RoomMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21760,7 +21886,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Num
+  m_Text: 
 --- !u!222 &776912869
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31187,7 +31313,7 @@ GameObject:
   - component: {fileID: 1125420997}
   - component: {fileID: 1125420996}
   m_Layer: 5
-  m_Name: RoomNum
+  m_Name: RoomMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31244,7 +31370,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Num
+  m_Text: 
 --- !u!222 &1125420997
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34268,7 +34394,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1237117479}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 256365233}
+        m_MethodName: ClickPreviousBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1237117479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34742,10 +34879,10 @@ RectTransform:
   m_Father: {fileID: 808185881}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 877.5, y: -665}
+  m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1254361185
 MonoBehaviour:
@@ -41889,7 +42026,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RoomName
+  m_Text: 
 --- !u!222 &1506156336
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -43218,7 +43355,7 @@ GameObject:
   - component: {fileID: 1561153964}
   - component: {fileID: 1561153963}
   m_Layer: 5
-  m_Name: RoomNum
+  m_Name: RoomMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43275,7 +43412,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Num
+  m_Text: 
 --- !u!222 &1561153964
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -43873,7 +44010,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1576362273}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 256365233}
+        m_MethodName: ClickRefreshBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1576362273
 MonoBehaviour:
   m_ObjectHideFlags: 0
