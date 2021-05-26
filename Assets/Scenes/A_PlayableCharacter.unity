@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 75d566e096df73943891aa2f139c4303,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5648,6 +5648,70 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2.8405201
   m_Center: {x: 0.20473242, y: 1.2310433, z: 0.20749211}
+--- !u!1 &743582964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 743582966}
+  - component: {fileID: 743582965}
+  m_Layer: 0
+  m_Name: TestWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &743582965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743582964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8b15aa3bc75f548875d86cef7b4f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: 
+  explain: 
+  damageValue: 0
+  delay: 0
+  attackSpeed: 1
+  canAttack: 0
+  isMelee: 0
+  isSword: 0
+  isSpear: 0
+  isGun: 0
+  isRifle: 0
+  player: {fileID: 0}
+  playerAnimation: {fileID: 0}
+  playerInfo: {fileID: 0}
+  attackRange: 5
+  angle: 45
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  enemies: []
+  isCollision: 0
+--- !u!4 &743582966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743582964}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &783354666
 GameObject:
   m_ObjectHideFlags: 0
@@ -18367,6 +18431,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1182832098}
+    - target: {fileID: 8317579304542785016, guid: 32db1665a65e5df418210292b779f7e6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8317579305236934240, guid: 32db1665a65e5df418210292b779f7e6,
         type: 3}
       propertyPath: m_Pivot.x
@@ -18482,5 +18551,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1182832098}
+    - target: {fileID: 8317579305913026087, guid: 32db1665a65e5df418210292b779f7e6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32db1665a65e5df418210292b779f7e6, type: 3}
