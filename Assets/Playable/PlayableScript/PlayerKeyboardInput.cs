@@ -36,7 +36,8 @@ public class PlayerKeyboardInput : MonoBehaviour
 
     public static float maxCcTime = 0f; // 시간 저장용
     private float ccTime = 0f;
-
+    //스턴 파티클
+    public GameObject Stunps;
     void Start()
     {
         rigi = GetComponent<Rigidbody>();
@@ -202,8 +203,12 @@ public class PlayerKeyboardInput : MonoBehaviour
             playerAnimation.playerAnimator.SetFloat("Up", 0.0f);
             playerAnimation.playerAnimator.SetFloat("Speed", 0.0f);
             ccTime += Time.deltaTime;
+
+            Stunps.SetActive(true);
+
             if (ccTime >= maxCcTime)
             {
+                Stunps.SetActive(false);
                 ccTime = 0f;
                 onNuckBack = false;
                 onStun = false;
