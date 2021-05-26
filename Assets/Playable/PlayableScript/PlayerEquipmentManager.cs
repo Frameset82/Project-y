@@ -14,7 +14,6 @@ public class PlayerEquipmentManager : MonoBehaviour
     public GameObject nearObject;//플레이어와 가까이 있는 무기 오브젝트
     private string weaponName; //무기 이름
 
-    private bool changeAnim = false; //애니메이션 전환 유무
     private GameObject changeImg; // 교체이미지
 
     [Header("이미지관련(할당필요)")]
@@ -91,7 +90,6 @@ public class PlayerEquipmentManager : MonoBehaviour
             equipWeapon = subWeapon; //현재 착용중인 무기를 서브웨폰으로 변경
             subWeapon.SetActive(true); // 서브웨폰 활성화
             equipCount = 2; // 2번쨰 무기를 들고 있는 상태로 변경
-            subWeaponScript.ChangeAnimator(); // 애니메이터 변경
         }
         else if (equipCount == 2)
         {
@@ -100,7 +98,6 @@ public class PlayerEquipmentManager : MonoBehaviour
             equipWeapon = mainWeapon;
             mainWeapon.SetActive(true);
             equipCount = 1;
-            mainWeaponScript.ChangeAnimator();
         }
     }
 
@@ -126,7 +123,6 @@ public class PlayerEquipmentManager : MonoBehaviour
         nearObject = null;
         changeEquipment.SetActive(false);
         PlayerKeyboardInput.isShoot = false;
-        changeAnim = true;
         Time.timeScale = 1; // 시간정지 해제
     } 
 
@@ -151,7 +147,6 @@ public class PlayerEquipmentManager : MonoBehaviour
         nearObject = null;
         changeEquipment.SetActive(false);
         PlayerKeyboardInput.isShoot = false;
-        changeAnim = true;
         Time.timeScale = 1; // 시간정지 해제
     } //2번째 무기를 드랍할 무기와 변경
 
@@ -184,11 +179,6 @@ public class PlayerEquipmentManager : MonoBehaviour
             subWeaponScript = subWeapon.GetComponent<Weapon>();
         if(equipWeapon != null)
             equipWeaponScript = equipWeapon.GetComponent<Weapon>();
-        if (changeAnim)
-        {
-            equipWeaponScript.ChangeAnimator();
-            changeAnim = false;
-        }
     }
 
     public IEnumerator SwapCoroutine()

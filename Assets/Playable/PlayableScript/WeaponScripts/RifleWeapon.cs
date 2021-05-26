@@ -5,6 +5,7 @@ using UnityEngine;
 public class RifleWeapon : RangeWeapon
 {
     private Damage damage;
+    private RuntimeAnimatorController anim;
 
     public override void OnAttack()
     {
@@ -22,15 +23,14 @@ public class RifleWeapon : RangeWeapon
         player = GameObject.Find("Player");
         playerAnimation = player.GetComponent<PlayerAnimation>();
         playerInfo = player.GetComponent<PlayerInfo>();
-        damage.dValue = 10f; //초기 데미지값 설정
-        damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
-        playerAnimation.playerAnimator.runtimeAnimatorController = Resources.Load("PlayerAnimator/Rifle") as RuntimeAnimatorController;
+        anim = Resources.Load("PlayerAnimator/Rifle") as RuntimeAnimatorController;
     }
 
-    public override void ChangeAnimator()
+    private void OnEnable()
     {
-        print("라이플");
-        playerAnimation.playerAnimator.runtimeAnimatorController = Resources.Load("PlayerAnimator/Rifle") as RuntimeAnimatorController;
+        damage.dValue = 10f; //초기 데미지값 설정
+        damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
+        playerAnimation.playerAnimator.runtimeAnimatorController = anim;
     }
 
     // Update is called once per frame

@@ -27,6 +27,7 @@ public class PlayerKeyboardInput : MonoBehaviour
     public Animator avater;
 
     public static bool isShoot = false; // 공격중
+    public static bool isRight = false; // 우클릭 공격중
     public static bool isSwap = false; // 스왑중
     public static bool isDodge = false; // 회피중
     public static bool onHit = false; // 맞는중
@@ -120,7 +121,7 @@ public class PlayerKeyboardInput : MonoBehaviour
 
     public void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && !isShoot && playerEquipmentManager.equipWeapon != null && isSwap == false)
+        if (Input.GetMouseButtonDown(0) && !isShoot && playerKeyboardController.pState != PlayerKeyboardController.PlayerState.RIghtAttack && playerEquipmentManager.equipWeapon != null && isSwap == false)
         {
             print("공격");
             RaycastHit hit;
@@ -135,7 +136,7 @@ public class PlayerKeyboardInput : MonoBehaviour
 
     public void RightAttack()
     {
-        if (Input.GetMouseButtonDown(1) && !isShoot && playerEquipmentManager.equipWeapon != null && isSwap == false)
+        if (Input.GetMouseButtonDown(1) && !isRight && playerKeyboardController.pState != PlayerKeyboardController.PlayerState.Attack && playerEquipmentManager.equipWeapon != null && isSwap == false)
         {
             print("공격");
             RaycastHit hit;
@@ -147,6 +148,7 @@ public class PlayerKeyboardInput : MonoBehaviour
             }
         }
     }
+
     // 상호작용 키 입력
     public void Interation()
     {

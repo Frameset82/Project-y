@@ -25,5 +25,4 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
 
     public abstract void OnAttack();    // 공격 기능
     public abstract void OnActive();    // 무기 액티브 스킬 기능
-    public abstract void ChangeAnimator(); // 애니메이터 바꾸기
 }

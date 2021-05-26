@@ -36,6 +36,7 @@ public class PlayerKeyboardController : MonoBehaviour
         Movement, // 이동중인 상태
         Dodge, // 회피중인 상태
         Attack, // 공격중인 상태
+        RIghtAttack, // 우클릭 공격중인 상태
         onHit, // 맞고있는 상태
         Death, // 사망한 상태
         Swap, // 스왑 상태
@@ -254,9 +255,8 @@ public class PlayerKeyboardController : MonoBehaviour
 
     public IEnumerator RightAttackCoroutine(Vector3 destination)
     {
-        PlayerKeyboardInput.isShoot = true;
-        pState = PlayerState.Attack;
-
+        PlayerKeyboardInput.isRight = true;
+        pState = PlayerState.RIghtAttack;
         gameObject.transform.LookAt(destination);
 
         if (playerEquipmentManager.equipWeapon == null)
@@ -267,38 +267,38 @@ public class PlayerKeyboardController : MonoBehaviour
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isRifle == true)
         {
             playerAnimation.RightAttack();
-            yield return new WaitForSeconds(0.2f); // 딜레이
-            PlayerKeyboardInput.isShoot = false;
+            yield return new WaitForSeconds(1); // 딜레이
+            PlayerKeyboardInput.isRight = false;
             pState = PlayerState.Idle;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
         {
             playerAnimation.RightAttack();
-            PlayerKeyboardInput.isShoot = false;
-            yield return new WaitForSeconds(0.3f);
+            PlayerKeyboardInput.isRight = false;
+            yield return new WaitForSeconds(1f);
             pState = PlayerState.Idle;
 
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isMelee == true)
         {
             playerAnimation.RightAttack();
-            PlayerKeyboardInput.isShoot = false;
-            yield return new WaitForSeconds(0.3f);
+            PlayerKeyboardInput.isRight = false;
+            yield return new WaitForSeconds(1);
             pState = PlayerState.Idle;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSword == true)
         {
             playerAnimation.RightAttack();
-            PlayerKeyboardInput.isShoot = false;
-            yield return new WaitForSeconds(0.3f);
+            PlayerKeyboardInput.isRight = false;
+            yield return new WaitForSeconds(1f);
             pState = PlayerState.Idle;
 
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
         {
             playerAnimation.RightAttack();
-            PlayerKeyboardInput.isShoot = false;
-            yield return new WaitForSeconds(0.3f);
+            PlayerKeyboardInput.isRight = false;
+            yield return new WaitForSeconds(1f);
             pState = PlayerState.Idle;
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;

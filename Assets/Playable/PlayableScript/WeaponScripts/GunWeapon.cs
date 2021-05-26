@@ -27,12 +27,6 @@ public class GunWeapon : RangeWeapon
         playerAnimation.playerAnimator.runtimeAnimatorController = Resources.Load("PlayerAnimator/Pistol") as RuntimeAnimatorController;
     }
 
-    public override void ChangeAnimator()
-    {
-        print("피스톨");
-        playerAnimation.playerAnimator.runtimeAnimatorController = Resources.Load("PlayerAnimator/Pistol") as RuntimeAnimatorController;
-    }
-
     // Update is called once per frame
     void Update()
     {

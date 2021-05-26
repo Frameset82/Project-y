@@ -27,11 +27,6 @@ public class MeleeWeapon : Weapon
         throw new System.NotImplementedException();
     }
 
-    public override void ChangeAnimator()
-    {
-        throw new System.NotImplementedException();
-    }
-
     private void Start()
     {
         
