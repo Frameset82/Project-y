@@ -81,25 +81,27 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         nearObject.transform.SetParent(player.transform);
         Weapon newWeapon = nearObject.GetComponent<Weapon>();
-        switch (newWeapon.wType)
-        {
-            case Weapon.WeaponType.Rifle:
-                nearObject.transform.position = rifleTr.position;
-                nearObject.transform.rotation = rifleTr.rotation;
-                break;
-            case Weapon.WeaponType.Melee:
-                nearObject.transform.position = meleeTr.position;
-                nearObject.transform.rotation = meleeTr.rotation;
-                break;
-            case Weapon.WeaponType.Sword:
-                nearObject.transform.position = swordTr.position;
-                nearObject.transform.rotation = swordTr.rotation;
-                break;
-            case Weapon.WeaponType.Spear:
-                nearObject.transform.position = spearTr.position;
-                nearObject.transform.rotation = spearTr.rotation;
-                break;
-        }
+        /*        switch (newWeapon.wType)
+                {
+                    case Weapon.WeaponType.Rifle:
+                        nearObject.transform.position = rifleTr.position;
+                        nearObject.transform.rotation = rifleTr.rotation;
+                        break;
+                    case Weapon.WeaponType.Melee:
+                        nearObject.transform.position = meleeTr.position;
+                        nearObject.transform.rotation = meleeTr.rotation;
+                        break;
+                    case Weapon.WeaponType.Sword:
+                        nearObject.transform.position = swordTr.position;
+                        nearObject.transform.rotation = swordTr.rotation;
+                        break;
+                    case Weapon.WeaponType.Spear:
+                        nearObject.transform.position = spearTr.position;
+                        nearObject.transform.rotation = spearTr.rotation;
+                        break;
+                }*/
+        nearObject.transform.position = newWeapon.tr.position;
+        nearObject.transform.rotation = newWeapon.tr.rotation;
     }
 
     public void WeaponAnimChange(Weapon.WeaponType wType)
@@ -167,6 +169,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj = mainWeapon.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
         changeEquipment.SetActive(false); // 패널 끄기
+        PlayerKeyboardInput.isShoot = false;
     }
 
     public void ChangeSubWeapon()
@@ -190,6 +193,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj = subWeapon.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
         changeEquipment.SetActive(false); // 패널 끄기
+        PlayerKeyboardInput.isShoot = false;
     }
 
     private void OnTriggerStay(Collider other) //착용가능한 무기와 충돌시

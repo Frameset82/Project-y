@@ -66,7 +66,7 @@ public class PlayerKeyboardInput : MonoBehaviour
 
     public void InputMove()
     {
-        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC)
+        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight)
             return;
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
