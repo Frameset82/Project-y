@@ -7459,7 +7459,11 @@ MonoBehaviour:
   LeaveRoomBtn: {fileID: 461472920}
   PreviousBtn: {fileID: 1237117478}
   NextBtn: {fileID: 65096955}
-  RoomListBtn: []
+  RoomListBtn:
+  - {fileID: 1351388340}
+  - {fileID: 1006859497}
+  - {fileID: 1860782446}
+  - {fileID: 894172470}
 --- !u!4 &259465281 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 413614, guid: e37a5396a520a8e4e8e48c74975b6a61,
@@ -7791,7 +7795,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &277772723
 PrefabInstance:
@@ -9223,7 +9227,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &328822056
 PrefabInstance:
@@ -10279,7 +10283,7 @@ Transform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &359360136
 MonoBehaviour:
@@ -10304,12 +10308,14 @@ MonoBehaviour:
   - 
   - 
   - 
+  roomMax:
   - 
   - 
-  roomMax: []
+  - 
+  - 
   isProviousBtnActive: 0
   isNextBtnActive: 0
-  roomListBtn: 
+  roomListBtn: 00000000
   networkStateUpate:
     m_PersistentCalls:
       m_Calls:
@@ -22975,7 +22981,7 @@ Transform:
   - {fileID: 256365229}
   - {fileID: 1513702551}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &813312191
 PrefabInstance:
@@ -28765,7 +28771,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031249404}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 0.1, z: 0.5}
+  m_LocalPosition: {x: 0.7, y: 0.1, z: -18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1760904564}
@@ -43595,7 +43601,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1567333162
 PrefabInstance:
@@ -44006,7 +44012,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1576362273}
   m_OnClick:
     m_PersistentCalls:
@@ -50295,7 +50301,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1812738977
 GameObject:

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.AI;
 
@@ -479,9 +479,9 @@ public class BossController : LivingEntity
     
     private void OnDrawGizmos() // 범위 그리기
     {
-        Handles.color = isCollision ? red : blue;
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
+        //Handles.color = isCollision ? red : blue;
+        //Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
+        //Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
     }
 
 

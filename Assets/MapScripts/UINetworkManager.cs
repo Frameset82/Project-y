@@ -71,7 +71,7 @@ public class UINetworkManager : UserInterface
         for(int i=0; i < RoomListBtn.Count; i++){
             RoomListBtn[i].interactable = networkManager.roomListBtn[i];
             RoomListBtn[i].transform.GetChild(0).GetComponent<Text>().text = networkManager.roomName[i];
-            RoomListBtn[i].transform.GetChild(1).GetComponent<Text>().text = networkManager.roomMax[i];
+            //RoomListBtn[i].transform.GetChild(1).GetComponent<Text>().text = networkManager.roomMax[i];
         }
     }
     // 방 정보 갱신

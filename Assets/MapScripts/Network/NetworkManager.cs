@@ -12,7 +12,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public string networkState;             // 네트워크 상태
     public string lobbyInfo;                // 로비 정보
     public string userNickname="Player";    // 유저 닉네임
-    public string inputRoomName;            // 방 이름
+    public string inputRoomName;           // 방 이름
     public List<string> roomUser;           // 방 참가자 리스트
     public List<string> roomList;           // 방 목록
     public List<string> roomName;           // 방 이름 리스트
@@ -154,7 +154,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     // 방에 유저가 참가했을 때
     public override void OnPlayerEnteredRoom(Player newPlayer){
-        print(PhotonNetwork.PlayerList.Length);
         RefreshRoomInfo();
     }
     // 방 목록이 갱신 될 때
@@ -178,7 +177,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     // 방 목록 패널 새로고침
     void ServerRoomListRefresh(){
-        if(serverRoomList.Count!=0){
+        if(serverRoomList.Count!=0 && roomList.Count !=0){
             maxPage = (serverRoomList.Count % roomList.Count == 0)
             ? serverRoomList.Count / roomList.Count : serverRoomList.Count / roomList.Count + 1;
         }
@@ -186,15 +185,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         isNextBtnActive = (currentPage >= maxPage) ? false : true;
 
         multiple = (currentPage - 1) * roomList.Count;
+        if(roomList.Count==0) return;
         for(int i = 0; i < roomList.Count; i++){
-            roomListBtn[i] = (multiple + i < serverRoomList.Count)
-             ? true : false;
+            // roomListBtn[i] = (multiple + i < serverRoomList.Count)
+            //  ? true : false;
+            roomListBtn.Add((multiple + i < serverRoomList.Count) ? true : false);
+            // roomName[i] = (multiple + i < serverRoomList.Count)
+            //  ? serverRoomList[multiple + i].Name : "";
+            roomName.Add((multiple + i < serverRoomList.Count) ? serverRoomList[multiple + i].Name : "");
+            // roomMax[i] = (multiple + i < serverRoomList.Count)
+            //  ? serverRoomList[multiple + i].PlayerCount + "/" + serverRoomList[multiple + i].MaxPlayers : "";
+            roomMax.Add((multiple + i < serverRoomList.Count) ? serverRoomList[multiple + i].PlayerCount + "/" + serverRoomList[multiple + i].MaxPlayers : "");
 
-            roomName[i] = (multiple + i < serverRoomList.Count)
-             ? serverRoomList[multiple + i].Name : "";
-
-            roomMax[i] = (multiple + i < serverRoomList.Count)
-             ? serverRoomList[multiple + i].PlayerCount + "/" + serverRoomList[multiple + i].MaxPlayers : "";
         }
     }
 }
