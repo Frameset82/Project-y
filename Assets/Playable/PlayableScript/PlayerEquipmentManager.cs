@@ -26,6 +26,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     public Transform swordTr;
     public Transform meleeTr;
     public Transform spearTr;
+    GameObject particleObj;
 
     public void Interation()
     {
@@ -42,19 +43,24 @@ public class PlayerEquipmentManager : MonoBehaviour
         WeaponTr();
         if(mainWeapon == null)
         {
+            ParticleDelete();
             mainWeapon = nearObject.GetComponent<Weapon>();
             WeaponAnimChange(mainWeapon.wType);
             equipWeapon = mainWeapon;
             mainWeaponImg.sprite = mainWeapon.weaponSprite;
             equipCount = 1;
+            nearObject = null;
         }
         else if(subWeapon == null)
         {
+            ParticleDelete();
+            mainWeapon.gameObject.SetActive(false);
             subWeapon = nearObject.GetComponent<Weapon>();
             WeaponAnimChange(subWeapon.wType);
             equipWeapon = subWeapon;
             subWeaponImg.sprite = subWeapon.weaponSprite;
             equipCount = 2;
+            nearObject = null;
         }
         else
         {
@@ -63,6 +69,12 @@ public class PlayerEquipmentManager : MonoBehaviour
             changeImg2.sprite = subWeaponImg.sprite;
             PlayerKeyboardInput.isShoot = true;
         }
+    }
+
+    public void ParticleDelete()
+    { 
+        particleObj = nearObject.transform.GetChild(0).gameObject;
+        particleObj.SetActive(false);
     }
 
     public void WeaponTr()
@@ -109,55 +121,75 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
     }
 
-    public void Swap() //무기 변경
+    public void Swap(int count) //무기 변경
     {
-        if (equipCount == 1) //첫번째 무기를 들고 있을시
+        if (equipCount == 1 && count == 2) //첫번째 무기를 들고 있을시
         {
+            PlayerKeyboardInput.isSwap = true;
             WeaponAnimChange(subWeapon.wType);
             mainWeapon.gameObject.SetActive(false);
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
             equipWeapon = subWeapon;
-            subWeapon.gameObject.SetActive(false);
+            subWeapon.gameObject.SetActive(true);
             equipCount = 2;
         }
-        else if (equipCount == 2)
+        else if (equipCount == 2 && count == 1)
         {
+            PlayerKeyboardInput.isSwap = true;
             WeaponAnimChange(mainWeapon.wType);
             subWeapon.gameObject.SetActive(false);
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
             equipWeapon = mainWeapon;
-            mainWeapon.gameObject.SetActive(false);
-            equipCount = 2;
+            mainWeapon.gameObject.SetActive(true);
+            equipCount = 1;
         }
     }
 
     // 버튼에 들어갈 메인 웨펀과 서브웨펀
     public void ChangeMainWeapon()
     {
-        mainWeapon.gameObject.transform.SetParent(null);
+        // 들고있는 무기를 땅에 떨어트리는 과정
+        mainWeapon.gameObject.SetActive(true);
+        subWeapon.gameObject.SetActive(false);
+        ParticleDelete();
         mainWeapon.transform.position = nearObject.transform.position;
         mainWeapon.transform.rotation = nearObject.transform.rotation;
+        particleObj = mainWeapon.transform.GetChild(0).gameObject;
+        particleObj.SetActive(true);
+        mainWeapon.gameObject.transform.SetParent(null);
+        // 무기를 장착하는 과정
         mainWeapon = nearObject.GetComponent<Weapon>();
         equipWeapon = mainWeapon;
         mainWeaponImg.sprite = mainWeapon.weaponSprite;
         equipCount = 1;
-        changeEquipment.SetActive(false);
         WeaponTr();
         WeaponAnimChange(equipWeapon.wType);
-    } 
+        particleObj = mainWeapon.transform.GetChild(0).gameObject;
+        particleObj.SetActive(false);
+        changeEquipment.SetActive(false); // 패널 끄기
+    }
 
     public void ChangeSubWeapon()
     {
-        subWeapon.gameObject.transform.SetParent(null);
+        // 들고있는 무기를 땅에 떨어트리는 과정
+        subWeapon.gameObject.SetActive(true);
+        mainWeapon.gameObject.SetActive(false);
+        ParticleDelete();
         subWeapon.transform.position = nearObject.transform.position;
         subWeapon.transform.rotation = nearObject.transform.rotation;
+        particleObj = subWeapon.transform.GetChild(0).gameObject;
+        particleObj.SetActive(true);
+        subWeapon.gameObject.transform.SetParent(null);
+        // 무기를 장착하는 과정
         subWeapon = nearObject.GetComponent<Weapon>();
         equipWeapon = subWeapon;
         subWeaponImg.sprite = subWeapon.weaponSprite;
         equipCount = 2;
-        changeEquipment.SetActive(false);
         WeaponTr();
         WeaponAnimChange(subWeapon.wType);
+        particleObj = subWeapon.transform.GetChild(0).gameObject;
+        particleObj.SetActive(false);
+        changeEquipment.SetActive(false); // 패널 끄기
     }
 
     private void OnTriggerStay(Collider other) //착용가능한 무기와 충돌시

@@ -60,6 +60,7 @@ public class PlayerKeyboardInput : MonoBehaviour
         Interation();
         RightAttack();
         SwapInput();
+        SwapCheck();
         CcCheck();
     }
 
@@ -176,9 +177,18 @@ public class PlayerKeyboardInput : MonoBehaviour
         if (Input.GetButtonDown("Swap2") && (playerEquipmentManager.subWeapon == null || PlayerEquipmentManager.equipCount == 2))
             return;
 
-        if ((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2")) && PlayerKeyboardInput.isShoot == false && !PlayerKeyboardInput.isDodge && !PlayerKeyboardInput.isSwap)
+        if (PlayerKeyboardInput.isShoot == false && !PlayerKeyboardInput.isDodge && !PlayerKeyboardInput.isSwap)
         {
-            playerEquipmentManager.Swap();
+            if (Input.GetButtonDown("Swap1"))
+            {
+                playerEquipmentManager.Swap(1);
+                print("1입력");
+            }
+            else if (Input.GetButtonDown("Swap2"))
+            {
+                playerEquipmentManager.Swap(2);
+                print("2입력");
+            }
         }
     }
 
