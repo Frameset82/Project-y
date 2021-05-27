@@ -39,7 +39,6 @@ public class MeleeWeapon : Weapon
 
     public void CollisionCheck()
     {
-        print("체크중");
         isCollision = false;
         enemies = new List<GameObject>();
 

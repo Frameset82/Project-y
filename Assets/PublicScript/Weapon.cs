@@ -25,6 +25,7 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
     public bool isSpear;
     public bool isGun;
     public bool isRifle;
+    public Transform tr;
 
     public enum WeaponType // 플레이어 상태 리스트
     {

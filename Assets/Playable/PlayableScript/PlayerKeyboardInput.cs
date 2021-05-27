@@ -60,12 +60,13 @@ public class PlayerKeyboardInput : MonoBehaviour
         Interation();
         RightAttack();
         SwapInput();
+        SwapCheck();
         CcCheck();
     }
 
     public void InputMove()
     {
-        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC)
+        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight)
             return;
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
@@ -176,9 +177,18 @@ public class PlayerKeyboardInput : MonoBehaviour
         if (Input.GetButtonDown("Swap2") && (playerEquipmentManager.subWeapon == null || PlayerEquipmentManager.equipCount == 2))
             return;
 
-        if ((Input.GetButtonDown("Swap1") || Input.GetButtonDown("Swap2")) && PlayerKeyboardInput.isShoot == false && !PlayerKeyboardInput.isDodge && !PlayerKeyboardInput.isSwap)
+        if (PlayerKeyboardInput.isShoot == false && !PlayerKeyboardInput.isDodge && !PlayerKeyboardInput.isSwap)
         {
-            playerEquipmentManager.Swap();
+            if (Input.GetButtonDown("Swap1"))
+            {
+                playerEquipmentManager.Swap(1);
+                print("1입력");
+            }
+            else if (Input.GetButtonDown("Swap2"))
+            {
+                playerEquipmentManager.Swap(2);
+                print("2입력");
+            }
         }
     }
 
