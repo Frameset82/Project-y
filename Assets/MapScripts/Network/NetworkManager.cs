@@ -12,17 +12,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public string networkState;             // 네트워크 상태
     public string lobbyInfo;                // 로비 정보
     public string userNickname="Player";    // 유저 닉네임
-    public string inputRoomName;           // 방 이름
+    public string inputRoomName;            // 방 이름
     public List<string> roomUser;           // 방 참가자 리스트
-    // public List<string> roomList;           // 방 목록
     public List<string> roomName;           // 방 이름 리스트
     public List<string> roomMax;            // 방 인원 리스트
+    public bool isLocalPlayerMasterClient;  // 로컬 플레이어 상태
     List<RoomInfo> serverRoomList = new List<RoomInfo>();          // 방 목록 리스트
     
     int currentPage = 1, maxPage, multiple; // 페이지 관리 변수
     public bool isProviousBtnActive;        // 이전 버튼 활성화 여부
     public bool isNextBtnActive;            // 다음 버튼 활성화 여부
-    public List<bool> roomListBtn;              // 방 목록 버튼 활성화 여부
+    public List<bool> roomListBtn;          // 방 목록 버튼 활성화 여부
 
     public UnityEvent networkStateUpate;    // 네트워크 상태 갱신 이벤트
     public UnityEvent lobbyInfoRefresh;     // 로비 정보 새로고침 이벤트
@@ -118,7 +118,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         networkStateUpate.Invoke();
         isConnected.Invoke();
     }
-
     // 방 만들기 실패
     public override void OnCreateRoomFailed(short returnCode, string message){
         StateUpdate("방 만들기 실패");
@@ -139,21 +138,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     // 로비 정보 새로 고침
     public void RefreshLobbyInfo(){
-        lobbyInfo = (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms)
-         + "로비 / " + PhotonNetwork.CountOfPlayers + "접속";
+        lobbyInfo = "현재 "+PhotonNetwork.CountOfPlayers +"명 접속 중";
         ServerRoomListRefresh();
         lobbyInfoRefresh.Invoke();
     }
     // 방 정보 새로 고침
     public void RefreshRoomInfo(){
         inputRoomName = PhotonNetwork.CurrentRoom.Name;
+        roomUser.Clear();
         for(int i=0; i < PhotonNetwork.PlayerList.Length; i++){
             roomUser.Add(PhotonNetwork.PlayerList[i].NickName);
+        }
+        if(PhotonNetwork.LocalPlayer.IsMasterClient){
+            isLocalPlayerMasterClient = true;
+        } else {
+            isLocalPlayerMasterClient = false;
         }
         roomInfoRefresh.Invoke();
     }
     // 방에 유저가 참가했을 때
     public override void OnPlayerEnteredRoom(Player newPlayer){
+        RefreshRoomInfo();
+    }
+    // 방에 참가한 유저가 나갔을 때
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {   
         RefreshRoomInfo();
     }
     // 방 목록이 갱신 될 때
@@ -186,11 +195,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         multiple = (currentPage - 1) * serverRoomList.Count;
         
+        roomListBtn.Clear();
+        roomName.Clear();
+        roomMax.Clear();
         if(serverRoomList.Count==0) return;
         for(int i = 0; i < serverRoomList.Count; i++){
-            roomListBtn.Clear();
-            roomName.Clear();
-            roomMax.Clear();
             roomListBtn.Add((multiple + i < serverRoomList.Count) ? true : false);
             roomName.Add((multiple + i < serverRoomList.Count)
              ? serverRoomList[multiple + i].Name : "");

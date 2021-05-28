@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UINetworkManager : UserInterface
 {
@@ -21,6 +22,7 @@ public class UINetworkManager : UserInterface
     public Button LeaveRoomBtn;         // 방 나가기 버튼
     public Button PreviousBtn;          // 이전 버튼
     public Button NextBtn;              // 다음 버튼
+    public Button StartBtn;             // 시작 버튼
     public List<Button> RoomListBtn;    // 방 목록 버튼 리스트
 
     // 시작 시 모든 버튼 비활성화 후 서버 연결 시도
@@ -69,6 +71,9 @@ public class UINetworkManager : UserInterface
     // 방 목록 버튼 활성화 여부, 정보 갱신
     public void RoomListBtnUpdate(){
         for(int i=0; i < RoomListBtn.Count; i++){
+            RoomListBtn[i].interactable = false;
+            RoomListBtn[i].transform.GetChild(0).GetComponent<Text>().text = "";
+            RoomListBtn[i].transform.GetChild(1).GetComponent<Text>().text = "";
             if(i < networkManager.roomListBtn.Count){
                 RoomListBtn[i].interactable = networkManager.roomListBtn[i];
                 RoomListBtn[i].transform.GetChild(0).GetComponent<Text>().text = networkManager.roomName[i];
@@ -80,7 +85,16 @@ public class UINetworkManager : UserInterface
     public void RoomInfoUpdate(){
         RoomName.text = networkManager.inputRoomName;
         HostUser.text = networkManager.roomUser[0];
-        if(networkManager.roomUser.Count>1) RoomUser.text = networkManager.roomUser[1];
+        if(networkManager.roomUser.Count>1) {
+            RoomUser.text = networkManager.roomUser[1];
+        } else{
+            RoomUser.text = "";
+        }
+        if(networkManager.isLocalPlayerMasterClient){
+            StartBtn.interactable = true;
+        } else {
+            StartBtn.interactable = false;
+        }
     }
     // 네트워크 상태 갱신
     public void StateUpdate(){
@@ -134,6 +148,8 @@ public class UINetworkManager : UserInterface
     public void ClickNextBtn(){
         networkManager.ServerRoomListClick(-1);
     }
-    
-
+    // 방 목록 클릭
+    public void ClickRoomListBtn(){
+        roomInput.text = EventSystem.current.currentSelectedGameObject.transform.GetChild(0).GetComponent<Text>().text;
+    }
 }
