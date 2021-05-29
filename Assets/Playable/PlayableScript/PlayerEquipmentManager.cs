@@ -208,7 +208,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     void Awake()
     {
         playerAnimation = gameObject.GetComponent<PlayerAnimation>();
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand");
     }
 
     public IEnumerator SwapCoroutine()

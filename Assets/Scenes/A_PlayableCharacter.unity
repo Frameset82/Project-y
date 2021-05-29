@@ -451,7 +451,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854183837}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 783a8a0db42c5f9439c7f3ec95f362e7, type: 3}
   m_Name: 
@@ -486,7 +486,7 @@ MonoBehaviour:
   isSpear: 0
   isGun: 0
   isRifle: 0
-  tr: {fileID: 526882414}
+  tr: {fileID: 1742300493}
   attackRange: 5
   angle: 45
   enemyLayers:
@@ -14913,7 +14913,7 @@ GameObject:
   m_Component:
   - component: {fileID: 526882414}
   m_Layer: 8
-  m_Name: GameObject
+  m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14926,13 +14926,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 526882413}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.44533068, y: -0.39955562, z: -0.5454988, w: -0.58691317}
+  m_LocalPosition: {x: -0.001, y: 0.055, z: 0.012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 693242366}
   m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 253.46701, y: -183.394, z: 268.344}
 --- !u!1 &534517197 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4990402973033692420, guid: 53a68804edf27de46988c660eff01a88,
@@ -23494,7 +23494,7 @@ MonoBehaviour:
   isSpear: 0
   isGun: 0
   isRifle: 0
-  tr: {fileID: 0}
+  tr: {fileID: 526882414}
 --- !u!1 &1589885933
 GameObject:
   m_ObjectHideFlags: 0
@@ -23910,6 +23910,36 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1742300492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1742300493}
+  m_Layer: 8
+  m_Name: Spear
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1742300493
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742300492}
+  m_LocalRotation: {x: -0.011027637, y: -0.024424067, z: 0.50116575, w: 0.86493623}
+  m_LocalPosition: {x: -0.57, y: 0.381, z: -0.009}
+  m_LocalScale: {x: 20.000385, y: 20.00047, z: 20.000057}
+  m_Children: []
+  m_Father: {fileID: 693242366}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0.31, y: -3.0560002, z: 60.170002}
 --- !u!135 &1758292881
 SphereCollider:
   m_ObjectHideFlags: 0
