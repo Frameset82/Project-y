@@ -19,13 +19,7 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
     public GameObject player;
     public PlayerAnimation playerAnimation;
     public PlayerInfo playerInfo; //플레이어 스탯
-
-    public bool isMelee;
-    public bool isSword;
-    public bool isSpear;
-    public bool isGun;
-    public bool isRifle;
-    public Transform tr;
+    public Transform tr; // 무기가 들어갈 위치
 
     public enum WeaponType // 플레이어 상태 리스트
     {

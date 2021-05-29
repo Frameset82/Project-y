@@ -43,7 +43,7 @@ public class IKControl : MonoBehaviour
                  leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
                  rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
              }*/
-            if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
+/*            if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
             {
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
@@ -54,7 +54,7 @@ public class IKControl : MonoBehaviour
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
                 rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
-            }
+            }*/
         }
     }
 

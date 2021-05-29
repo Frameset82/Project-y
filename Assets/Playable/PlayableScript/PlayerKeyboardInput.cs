@@ -62,6 +62,7 @@ public class PlayerKeyboardInput : MonoBehaviour
         SwapInput();
         SwapCheck();
         CcCheck();
+        DodgeCheck();
     }
 
     public void InputMove()
@@ -225,6 +226,18 @@ public class PlayerKeyboardInput : MonoBehaviour
                 playerAnimation.playerAnimator.SetBool("OnCC", false);
                 playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
             }
+        }
+    }
+
+    public void DodgeCheck()
+    {
+        if (isDodge == true)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Dodge;
+        }
+        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge && PlayerKeyboardInput.isDodge == false)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
         }
     }
 

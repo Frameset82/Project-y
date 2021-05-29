@@ -98,38 +98,15 @@ public class PlayerKeyboardController : MonoBehaviour
             StartCoroutine(DodgeCoroutine(dir));
         }
     }
-    // 회피중 이동명령 예약
-    private bool willMove = false;
-    public void WillMove()
-    {
-        willMove = true;
-    }
+
     // 캐릭터 실제 회피
     public IEnumerator DodgeCoroutine(Vector3 dir)
     {
-        /*        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;*/
-        PlayerInfo.canDamage = false; // 무적으로 전환
-        pState = PlayerState.Dodge;
-        willMove = false;
-        /*        Vector3 power = (destination - transform.position).normalized * dodgePower;*/
         playerRigidbody.AddForce(dir.normalized * dodgePower);
         playerRigidbody.velocity = Vector3.zero;
         playerAnimation.DodgeAni();
         yield return new WaitForSeconds(0.5f); // 회피 지속시간
-        PlayerInfo.canDamage = true; // 비무적으로 전환
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
-        PlayerKeyboardInput.isDodge = false;
-/*        playerRigidbody.constraints = RigidbodyConstraints.None;*/
-
-        // 회피중 이동명령을 받았는지 체크
-        if (willMove)
-        {
-            pState = PlayerState.Movement;
-        }
-        else
-        {
-            pState = PlayerState.Idle;
-        }
     }
 
     public void Attack(Vector3 destination)
@@ -268,14 +245,14 @@ public class PlayerKeyboardController : MonoBehaviour
             PlayerKeyboardInput.isRight = false;
             pState = PlayerState.Idle;
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
+/*        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
         {
             playerAnimation.RightAttack();
             PlayerKeyboardInput.isRight = false;
             yield return new WaitForSeconds(1f);
             pState = PlayerState.Idle;
 
-        }
+        }*/
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
             playerAnimation.RightAttack();

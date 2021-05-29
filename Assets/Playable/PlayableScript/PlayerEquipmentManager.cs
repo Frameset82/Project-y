@@ -6,26 +6,38 @@ using UnityEngine.UI;
 public class PlayerEquipmentManager : MonoBehaviour
 {
     private string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
+    private GameObject playerWeaponRoot;
+    private GameObject player;
+    private PlayerAnimation playerAnimation; // 플레이어 애니메이션 관리 스크립트
+    public GameObject nearObject;//플레이어와 가까이 있는 무기 오브젝트
+
     [Header("착용 무기")]
     public Weapon mainWeapon = null; // 1번무기
     public Weapon subWeapon = null; // 2번무기
     public static int equipCount = 0; // main = 1 sub = 2
     public Weapon equipWeapon; // 현제 착용중인 무기
-    public GameObject nearObject;//플레이어와 가까이 있는 무기 오브젝트
 
-    [Header("이미지관련(할당필요)")]
+    [Header("무기 이미지관련(할당필요)")]
     public Image mainWeaponImg; //메인웨폰 이미지
     public Image subWeaponImg; // 서브웨폰 이미지
-    private PlayerAnimation playerAnimation; // 플레이어 애니메이션 관리 스크립트
     public GameObject changeEquipment; // Panel
     public Image changeImg1;
     public Image changeImg2;
 
-    private GameObject player;
-    public Transform rifleTr;
-    public Transform swordTr;
-    public Transform meleeTr;
-    public Transform spearTr;
+    [Header("아이템관련")]
+    public ActiveItem FirstItem = null;
+    public ActiveItem SecondItem = null;
+    public ActiveItem ThirdItem = null;
+
+    [Header("아이템 이미지관련(할당필요)")]
+    public Image FirstItemImg; // 첫번째 아이템
+    public Image SecondItemImg; // 두번째 아이템
+    public Image ThirdItemImg; // 세번째 아이템
+    public GameObject changeItem; // Panel
+    public Image iChangeImg1;
+    public Image iChangeImg2;
+    public Image iChangeImg3;
+
     GameObject particleObj;
 
     public void Interation()
@@ -34,6 +46,9 @@ public class PlayerEquipmentManager : MonoBehaviour
         {
             case "Weapon":
                 GetWeapon();
+                break;
+            case "Item":
+                GetItem();
                 break;
         }
     }
@@ -64,9 +79,50 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
         else
         {
-            changeEquipment.SetActive(true);
+            changeItem.SetActive(true);
             changeImg1.sprite = mainWeaponImg.sprite;
             changeImg2.sprite = subWeaponImg.sprite;
+            PlayerKeyboardInput.isShoot = true;
+        }
+    }
+
+    private Renderer rend; // 렌더러 끄기 용
+    public void GetItem()
+    {
+        nearObject.transform.SetParent(player.transform);
+        if(FirstItem == null)
+        {
+            ParticleDelete();
+            FirstItem = nearObject.GetComponent<ActiveItem>();
+            FirstItemImg.sprite = FirstItem.ItemSprite;
+            rend = nearObject.GetComponent<MeshRenderer>();
+            rend.enabled = false;
+            nearObject = null;
+        }
+        else if(SecondItem == null)
+        {
+            ParticleDelete();
+            SecondItem = nearObject.GetComponent<ActiveItem>();
+            SecondItemImg.sprite = SecondItem.ItemSprite;
+            rend = nearObject.GetComponent<MeshRenderer>();
+            rend.enabled = false;
+            nearObject = null;
+        }
+        else if(ThirdItem == null)
+        {
+            ParticleDelete();
+            ThirdItem = nearObject.GetComponent<ActiveItem>();
+            ThirdItemImg.sprite = ThirdItem.ItemSprite;
+            rend = nearObject.GetComponent<MeshRenderer>();
+            rend.enabled = false;
+            nearObject = null;
+        }
+        else
+        {
+            changeItem.SetActive(true);
+            iChangeImg1.sprite = FirstItemImg.sprite;
+            iChangeImg2.sprite = SecondItemImg.sprite;
+            iChangeImg3.sprite = ThirdItemImg.sprite;
             PlayerKeyboardInput.isShoot = true;
         }
     }
@@ -79,27 +135,8 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public void WeaponTr()
     {
-        nearObject.transform.SetParent(player.transform);
+        nearObject.transform.SetParent(playerWeaponRoot.transform);
         Weapon newWeapon = nearObject.GetComponent<Weapon>();
-        /*        switch (newWeapon.wType)
-                {
-                    case Weapon.WeaponType.Rifle:
-                        nearObject.transform.position = rifleTr.position;
-                        nearObject.transform.rotation = rifleTr.rotation;
-                        break;
-                    case Weapon.WeaponType.Melee:
-                        nearObject.transform.position = meleeTr.position;
-                        nearObject.transform.rotation = meleeTr.rotation;
-                        break;
-                    case Weapon.WeaponType.Sword:
-                        nearObject.transform.position = swordTr.position;
-                        nearObject.transform.rotation = swordTr.rotation;
-                        break;
-                    case Weapon.WeaponType.Spear:
-                        nearObject.transform.position = spearTr.position;
-                        nearObject.transform.rotation = spearTr.rotation;
-                        break;
-                }*/
         nearObject.transform.position = newWeapon.tr.position;
         nearObject.transform.rotation = newWeapon.tr.rotation;
     }
@@ -196,6 +233,66 @@ public class PlayerEquipmentManager : MonoBehaviour
         PlayerKeyboardInput.isShoot = false;
     }
 
+    public void ChangeFirstItem()
+    {
+        // 들고있는 아이템을 땅에 떨어트리는 과정
+        ParticleDelete();
+        particleObj = FirstItem.transform.GetChild(0).gameObject;
+        particleObj.SetActive(true);
+        rend = FirstItem.GetComponent<MeshRenderer>();
+        rend.enabled = true;
+        FirstItem.gameObject.transform.SetParent(null);
+        // 무기를 장착하는 과정
+        FirstItem = nearObject.GetComponent<ActiveItem>();
+        FirstItemImg.sprite = FirstItem.ItemSprite;
+        rend = FirstItem.GetComponent<MeshRenderer>();
+        rend.enabled = false;
+        particleObj = FirstItem.transform.GetChild(0).gameObject;
+        particleObj.SetActive(false);
+        changeItem.SetActive(false); // 패널 끄기
+        PlayerKeyboardInput.isShoot = false;
+    }
+
+    public void ChangeSecondItem()
+    {
+        // 들고있는 아이템을 땅에 떨어트리는 과정
+        ParticleDelete();
+        particleObj = SecondItem.transform.GetChild(0).gameObject;
+        particleObj.SetActive(true);
+        rend = SecondItem.GetComponent<MeshRenderer>();
+        rend.enabled = true;
+        SecondItem.gameObject.transform.SetParent(null);
+        // 무기를 장착하는 과정
+        SecondItem = nearObject.GetComponent<ActiveItem>();
+        SecondItemImg.sprite = SecondItem.ItemSprite;
+        rend = SecondItem.GetComponent<MeshRenderer>();
+        rend.enabled = false;
+        particleObj = FirstItem.transform.GetChild(0).gameObject;
+        particleObj.SetActive(false);
+        changeItem.SetActive(false); // 패널 끄기
+        PlayerKeyboardInput.isShoot = false;
+    }
+
+    public void ChangeThirdItem()
+    {
+        // 들고있는 아이템을 땅에 떨어트리는 과정
+        ParticleDelete();
+        particleObj = ThirdItem.transform.GetChild(0).gameObject;
+        particleObj.SetActive(true);
+        rend = ThirdItem.GetComponent<MeshRenderer>();
+        rend.enabled = true;
+        ThirdItem.gameObject.transform.SetParent(null);
+        // 무기를 장착하는 과정
+        ThirdItem = nearObject.GetComponent<ActiveItem>();
+        ThirdItemImg.sprite = ThirdItem.ItemSprite;
+        rend = ThirdItem.GetComponent<MeshRenderer>();
+        rend.enabled = false;
+        particleObj = ThirdItem.transform.GetChild(0).gameObject;
+        particleObj.SetActive(false);
+        changeItem.SetActive(false); // 패널 끄기
+        PlayerKeyboardInput.isShoot = false;
+    }
+
     private void OnTriggerStay(Collider other) //착용가능한 무기와 충돌시
     {
         nearObject = other.gameObject;
@@ -208,7 +305,8 @@ public class PlayerEquipmentManager : MonoBehaviour
     void Awake()
     {
         playerAnimation = gameObject.GetComponent<PlayerAnimation>();
-        player = GameObject.Find("Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand");
+        playerWeaponRoot = GameObject.Find(weaponRoot);
+        player = GameObject.Find("Player");
     }
 
     public IEnumerator SwapCoroutine()
