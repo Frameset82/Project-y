@@ -152,4 +152,9 @@ public class UINetworkManager : UserInterface
     public void ClickRoomListBtn(){
         roomInput.text = EventSystem.current.currentSelectedGameObject.transform.GetChild(0).GetComponent<Text>().text;
     }
+    // 시작 버튼 클릭
+    public void ClickStartBtn(){
+       networkManager.LoadScene();
+    }
+
 }

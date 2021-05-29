@@ -31,6 +31,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public UnityEvent isConnected;          // 서버 연결 이벤트
     public UnityEvent isJoinedRoom;         // 방 입장 이벤트
 
+    // 모든 클라이언트의 레벨 동기화
+    private void Awake() {
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
     // 네트워크 상태 갱신 메서드
     public void StateUpdate(string State){
         networkState = State;
@@ -178,7 +183,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
         ServerRoomListRefresh();
     }
-    // 방 목록 패널 버튼 클릭시
+    // 방 목록 패널 버튼 클릭 시
     public void ServerRoomListClick(int num){
         if(num == -2) --currentPage;
         else if(num == -1) ++currentPage;
@@ -207,4 +212,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
              ? serverRoomList[multiple + i].PlayerCount + "/" + serverRoomList[multiple + i].MaxPlayers : "");
         }
     }
+    
+    // 시작 버튼 클릭 시
+    public void LoadScene(){
+        // PhotonNetwork.LoadLevel("FirstStage");
+        PhotonView pv = PhotonView.Get(this);
+        pv.RPC("LoadSceneProcess", RpcTarget.All);
+    }
+    // 모든 유저 로딩 UI 프로세스 호출
+    [PunRPC]
+    public void LoadSceneProcess(){
+        LoadingSceneCtrl.Instance.LoadScene("FirstStage");
+    }
 }
+
