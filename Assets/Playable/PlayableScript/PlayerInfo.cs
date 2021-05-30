@@ -139,5 +139,10 @@ public class PlayerInfo : LivingEntity
                 RestoreHealth(5.0f);
             }
         }
+        if (other.tag == "Enemy")
+        {
+            GetComponent<LivingEntity>().OnDamage(damage);
+            return;
+        }
     }
 }

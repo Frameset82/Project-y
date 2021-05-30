@@ -33,6 +33,7 @@ public class PlayerKeyboardInput : MonoBehaviour
     public static bool onHit = false; // 맞는중
     public static bool onNuckBack = false; // 넉백(다운)중
     public static bool onStun = false; // 스턴중
+    public static bool isChange = false; // 무기 교체중
 
     public static float maxCcTime = 0f; // 시간 저장용
     private float ccTime = 0f;
@@ -63,11 +64,12 @@ public class PlayerKeyboardInput : MonoBehaviour
         SwapCheck();
         CcCheck();
         DodgeCheck();
+        RightAttackCheck();
     }
 
     public void InputMove()
     {
-        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight)
+        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight || isChange)
             return;
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
@@ -126,7 +128,6 @@ public class PlayerKeyboardInput : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !isShoot && playerKeyboardController.pState != PlayerKeyboardController.PlayerState.RIghtAttack && playerEquipmentManager.equipWeapon != null && isSwap == false)
         {
-            print("공격");
             RaycastHit hit;
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
@@ -141,7 +142,6 @@ public class PlayerKeyboardInput : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && !isRight && playerKeyboardController.pState != PlayerKeyboardController.PlayerState.Attack && playerEquipmentManager.equipWeapon != null && isSwap == false)
         {
-            print("공격");
             RaycastHit hit;
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
@@ -236,6 +236,18 @@ public class PlayerKeyboardInput : MonoBehaviour
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Dodge;
         }
         else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge && PlayerKeyboardInput.isDodge == false)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+        }
+    }
+
+    public void RightAttackCheck()
+    {
+        if (isRight == true)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.RIghtAttack;
+        }
+        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.RIghtAttack && PlayerKeyboardInput.isRight == false)
         {
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
         }

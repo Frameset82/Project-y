@@ -8,15 +8,25 @@ public class SpearWeapon : MeleeWeapon
 
     public override void OnActive()
     {
-        throw new System.NotImplementedException();
+        print("온액티브");
+        damage.dType = Damage.DamageType.NuckBack; //데미지 종류 설정
+        damage.ccTime = 2f;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            damage.hitPoint = enemies[i].GetComponent<Collider>().ClosestPoint(transform.position);
+            damage.hitNormal = transform.position - enemies[i].transform.position;
+            enemies[i].GetComponent<LivingEntity>().OnDamage(damage);
+        }
     }
 
     public override void OnAttack()
     {
+        damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
         for (int i = 0; i < enemies.Count; i++)
         {
-            //데미지 구조체 변경
-           // enemies[i].GetComponent<LivingEntity>().OnDamage(damage + playerInfo.damage, Vector3.forward, Vector3.forward);
+            damage.hitPoint = enemies[i].GetComponent<Collider>().ClosestPoint(transform.position);
+            damage.hitNormal = transform.position - enemies[i].transform.position;
+            enemies[i].GetComponent<LivingEntity>().OnDamage(damage);
         }
     }
     private void Awake()
@@ -28,7 +38,6 @@ public class SpearWeapon : MeleeWeapon
     private void OnEnable()
     {
         damage.dValue = 10f; //초기 데미지값 설정
-        damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
     }
 
     // Update is called once per frame

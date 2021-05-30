@@ -52,11 +52,11 @@ public class PlayerEquipmentManager : MonoBehaviour
                 break;
         }
     }
-     
+
     public void GetWeapon()
     {
         WeaponTr();
-        if(mainWeapon == null)
+        if (mainWeapon == null)
         {
             ParticleDelete();
             mainWeapon = nearObject.GetComponent<Weapon>();
@@ -66,7 +66,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             equipCount = 1;
             nearObject = null;
         }
-        else if(subWeapon == null)
+        else if (subWeapon == null)
         {
             ParticleDelete();
             mainWeapon.gameObject.SetActive(false);
@@ -79,7 +79,8 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
         else
         {
-            changeItem.SetActive(true);
+            PlayerKeyboardInput.isChange = true;
+            changeEquipment.SetActive(true);
             changeImg1.sprite = mainWeaponImg.sprite;
             changeImg2.sprite = subWeaponImg.sprite;
             PlayerKeyboardInput.isShoot = true;
@@ -90,7 +91,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     public void GetItem()
     {
         nearObject.transform.SetParent(player.transform);
-        if(FirstItem == null)
+        if (FirstItem == null)
         {
             ParticleDelete();
             FirstItem = nearObject.GetComponent<ActiveItem>();
@@ -99,7 +100,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             rend.enabled = false;
             nearObject = null;
         }
-        else if(SecondItem == null)
+        else if (SecondItem == null)
         {
             ParticleDelete();
             SecondItem = nearObject.GetComponent<ActiveItem>();
@@ -108,7 +109,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             rend.enabled = false;
             nearObject = null;
         }
-        else if(ThirdItem == null)
+        else if (ThirdItem == null)
         {
             ParticleDelete();
             ThirdItem = nearObject.GetComponent<ActiveItem>();
@@ -119,6 +120,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
         else
         {
+            PlayerKeyboardInput.isChange = true;
             changeItem.SetActive(true);
             iChangeImg1.sprite = FirstItemImg.sprite;
             iChangeImg2.sprite = SecondItemImg.sprite;
@@ -128,7 +130,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     }
 
     public void ParticleDelete()
-    { 
+    {
         particleObj = nearObject.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
     }
@@ -206,6 +208,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj = mainWeapon.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
         changeEquipment.SetActive(false); // 패널 끄기
+        StateReset();
         PlayerKeyboardInput.isShoot = false;
     }
 
@@ -230,6 +233,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj = subWeapon.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
         changeEquipment.SetActive(false); // 패널 끄기
+        StateReset();
         PlayerKeyboardInput.isShoot = false;
     }
 
@@ -250,6 +254,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj = FirstItem.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
         changeItem.SetActive(false); // 패널 끄기
+        StateReset();
         PlayerKeyboardInput.isShoot = false;
     }
 
@@ -270,6 +275,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj = FirstItem.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
         changeItem.SetActive(false); // 패널 끄기
+        StateReset();
         PlayerKeyboardInput.isShoot = false;
     }
 
@@ -290,12 +296,22 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj = ThirdItem.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
         changeItem.SetActive(false); // 패널 끄기
+        StateReset();
         PlayerKeyboardInput.isShoot = false;
+    }
+
+    public void StateReset()
+    {
+        PlayerKeyboardInput.isDodge = false;
+        PlayerKeyboardInput.isRight = false;
+        PlayerKeyboardInput.isSwap = false;
+        PlayerKeyboardInput.isChange = false;
     }
 
     private void OnTriggerStay(Collider other) //착용가능한 무기와 충돌시
     {
-        nearObject = other.gameObject;
+        if (other.tag == "Weapon" || other.tag == "Item")
+            nearObject = other.gameObject;
     }
     private void OnTriggerExit(Collider other)
     {

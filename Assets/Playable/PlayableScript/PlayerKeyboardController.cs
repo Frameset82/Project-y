@@ -229,8 +229,8 @@ public class PlayerKeyboardController : MonoBehaviour
 
     public IEnumerator RightAttackCoroutine(Vector3 destination)
     {
-        PlayerKeyboardInput.isRight = true;
-        pState = PlayerState.RIghtAttack;
+/*        PlayerKeyboardInput.isRight = true;
+        pState = PlayerState.RIghtAttack;*/
         gameObject.transform.LookAt(destination);
 
         if (playerEquipmentManager.equipWeapon == null)
@@ -241,9 +241,9 @@ public class PlayerKeyboardController : MonoBehaviour
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
         {
             playerAnimation.RightAttack();
-            yield return new WaitForSeconds(1); // 딜레이
+/*            yield return new WaitForSeconds(1); // 딜레이
             PlayerKeyboardInput.isRight = false;
-            pState = PlayerState.Idle;
+            pState = PlayerState.Idle;*/
         }
 /*        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
         {
@@ -256,24 +256,25 @@ public class PlayerKeyboardController : MonoBehaviour
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
             playerAnimation.RightAttack();
-            PlayerKeyboardInput.isRight = false;
+/*            PlayerKeyboardInput.isRight = false;
             yield return new WaitForSeconds(1);
-            pState = PlayerState.Idle;
+            pState = PlayerState.Idle;*/
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
             playerAnimation.RightAttack();
-            PlayerKeyboardInput.isRight = false;
+/*            PlayerKeyboardInput.isRight = false;
             yield return new WaitForSeconds(1f);
-            pState = PlayerState.Idle;
+            pState = PlayerState.Idle;*/
 
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         {
             playerAnimation.RightAttack();
-            PlayerKeyboardInput.isRight = false;
-            yield return new WaitForSeconds(1f);
-            pState = PlayerState.Idle;
+            /*            PlayerKeyboardInput.isRight = false;
+                        yield return new WaitForSeconds(1f);
+                        pState = PlayerState.Idle;*/
+            playerEquipmentManager.equipWeapon.OnActive();
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
