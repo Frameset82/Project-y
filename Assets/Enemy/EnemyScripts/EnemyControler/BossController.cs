@@ -108,9 +108,9 @@ public class BossController : LivingEntity
             //anim.SetTrigger("Shoot");
             //StartCoroutine(NormalAttack());
             //CreateBomobRobot();
-         // StartCoroutine(SnipingShot());
+            StartCoroutine(SnipingShot());
            // StartCoroutine(BackDash());
-            StartCoroutine(Enable());
+           // StartCoroutine(Enable());
         }
 
         sectorCheck();
@@ -286,12 +286,13 @@ public class BossController : LivingEntity
 
         nav.isStopped = true;
         anim.SetTrigger("Sniping");
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2.3f);
 
 
         for (int i=0; i < 3; i++)
         {
-            //yield return new WaitForSeconds(0.5f);   
+            DangerMaskerShoot(targetPos);
+            yield return new WaitForSeconds(0.1f);   
             transform.LookAt(targetPos);
             anim.SetTrigger("SnipingShoot");
            // yield return new WaitForSeconds(0.7f);
@@ -305,6 +306,13 @@ public class BossController : LivingEntity
         yield return new WaitForSeconds(0.1f);
         StartCoroutine(Think());
     } //스나이핑 샷
+
+    void DangerMaskerShoot(Vector3 endPos)
+    {
+        DangerLine line = ObjectPool.GetLine();
+        line.transform.position = this.transform.position;
+        line.EndPosition = endPos;      
+    }
 
     void SShot()
     {

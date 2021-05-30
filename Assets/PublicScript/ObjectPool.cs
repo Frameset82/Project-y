@@ -17,6 +17,8 @@ public class ObjectPool : MonoBehaviour
     private GameObject Bullet;
     [SerializeField]
     private GameObject SBullet;
+    [SerializeField]
+    private GameObject DangerLine;
 
     private Queue<BombRobotControl> RobotQueue = new Queue<BombRobotControl>(); //자폭로봇 큐
     private Queue<MeleeController> MeleeQueue = new Queue<MeleeController>();  //근접적 큐
@@ -24,6 +26,7 @@ public class ObjectPool : MonoBehaviour
     private Queue<RifleController> RifleQueue = new Queue<RifleController>();  // 라이플적 큐
     private Queue<EnemyBullet> BulletQueue = new Queue<EnemyBullet>();  //일반총알 
     private Queue<EnemyBullet> SBulletQueue = new Queue<EnemyBullet>();  //스나이핑 총알
+    private Queue<DangerLine> DLineQueue = new Queue<DangerLine>(); 
 
     void Start()
     {
@@ -37,6 +40,7 @@ public class ObjectPool : MonoBehaviour
         {
             RobotQueue.Enqueue(CreateNewBomb());
             BulletQueue.Enqueue(CreateNewBullet());
+            DLineQueue.Enqueue(CreateNewLine());
             SBulletQueue.Enqueue(CreateNewSBullet());
             //MeleeQueue.Enqueue(CreateNewMelee());
             //RogueQueue.Enqueue(CreateNewRogue());
@@ -51,6 +55,13 @@ public class ObjectPool : MonoBehaviour
         return newObj;
     }
 
+    private DangerLine CreateNewLine()
+    {
+
+        var newObj = Instantiate(DangerLine, transform).GetComponent<DangerLine>();
+        newObj.gameObject.SetActive(false);
+        return newObj;
+    }
 
     private RogueController CreateNewRogue() // 로그적생성 
     {
@@ -107,6 +118,33 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+
+    public static DangerLine GetLine()
+    {
+
+        if (Instance.DLineQueue.Count > 0) //0보다 많으면 큐에서 꺼내주기
+        {
+            var obj = Instance.DLineQueue.Dequeue();
+            obj.transform.SetParent(null);
+            obj.gameObject.SetActive(true);
+            return obj;
+        }
+
+        else // 0보다 적으면 새로 생성하기
+        {
+            var newObj = Instance.CreateNewLine();
+            newObj.transform.SetParent(null);
+            newObj.gameObject.SetActive(false);
+            return newObj;
+        }
+    }
+
+    public static void ReturnLine(DangerLine line)
+    {
+        line.gameObject.SetActive(false);
+        line.transform.SetParent(Instance.transform);
+        Instance.DLineQueue.Enqueue(line);
+    }
 
     public static void ReturnBombRobot(BombRobotControl bombr) //로봇 반환
     {

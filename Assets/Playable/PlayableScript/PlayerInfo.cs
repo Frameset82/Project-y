@@ -7,7 +7,7 @@ public class PlayerInfo : LivingEntity
 {
     [Header("체력 속성")]
    // public Material healthMaterial; // 체력 머테리얼
-    public GameObject healthBar; // 체력 바
+   // public GameObject healthBar; // 체력 바
     public Text healthText; // 체력 수치 텍스트
     [Header("플레이어 기본 속성들")]
     public float maxHealth; // 최대체력( 시작 시 기본체력 )
@@ -44,7 +44,7 @@ public class PlayerInfo : LivingEntity
     {
         // LivingEntity의 OnEnable() 실행 (상태 초기화)
         base.OnEnable();
-        healthBar.gameObject.SetActive(true);
+       // healthBar.gameObject.SetActive(true);
         CalculateHealthPoint();
     }
 
@@ -107,7 +107,7 @@ public class PlayerInfo : LivingEntity
 
     private void Update()
     {
-        healthText.text = health + " / " + maxHealth; // 체력 갱신
+        //healthText.text = health + " / " + maxHealth; // 체력 갱신
 
         if (!canDamage) // 무적시간 계산
         {
