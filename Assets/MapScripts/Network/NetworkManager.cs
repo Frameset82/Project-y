@@ -224,5 +224,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void LoadSceneProcess(){
         LoadingSceneCtrl.Instance.LoadScene("FirstStage");
     }
+
 }
 

@@ -12,6 +12,11 @@ TagManager:
   - Weapon
   - Wall
   - FxTemporaire
+  - Melee
+  - LongMelee
+  - Spear
+  - Rifle
+  - Gun
   layers:
   - Default
   - TransparentFX
@@ -25,7 +30,7 @@ TagManager:
   - Enemy
   - PostProcess
   - Weapon
-  - 
+  - DestroyedPiece
   - 
   - 
   - 

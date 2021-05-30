@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class PlayerInfo : LivingEntity
 {
-    [Header("체력바 관련")]
-    public Slider healthSlider; // 체력바
-    public GameObject healthText; // 체력 텍스트
+    [Header("체력 속성")]
+    public Material healthMaterial; // 체력 머테리얼
+    public GameObject healthBar; // 체력 바
+    public Text healthText; // 체력 수치 텍스트
     [Header("플레이어 기본 속성들")]
     public float maxHealth; // 최대체력( 시작 시 기본체력 )
     public float defaultDamage; // 기본 데미지
@@ -27,31 +28,37 @@ public class PlayerInfo : LivingEntity
 
     private void Awake()
     {
-        startingHealth = 1000.0f; // 시작체력
+        startingHealth = 100.0f; // 시작체력
         maxHealth = startingHealth;
+        health = startingHealth;
+
         playerAnimation = GetComponent<PlayerAnimation>();
         playerKeyboardController = GetComponent<PlayerKeyboardController>();
+
         damage.dValue = 10f; //초기 데미지값 설정(발판)
+        healthMaterial.shader = Shader.Find("Shader Graphs/UI Shader Graph");
+        CalculateHealthPoint();
     }
 
     protected override void OnEnable() // PlayerHealth 컴포넌트가 활성화될때마다 실행
     {
         // LivingEntity의 OnEnable() 실행 (상태 초기화)
         base.OnEnable();
-
-        healthSlider.gameObject.SetActive(true);
-        healthSlider.maxValue = startingHealth; // 초기체력으로 설정
-        healthSlider.value = health; // 현재 체력으로 설정
+        healthBar.gameObject.SetActive(true);
+        CalculateHealthPoint();
     }
 
     public override void RestoreHealth(float newHealth)
     {
         // LivingEntity의 RestoreHealth() 실행 (체력증가)
         base.RestoreHealth(newHealth);
-
-        healthSlider.value = health; // 갱신된 체력으로 슬라이더 갱신
+        CalculateHealthPoint(); // 체력 갱신
     }
 
+    // 체력 변동시 남은 체력의 퍼센트 계산 후 UI 적용
+    void CalculateHealthPoint(){
+        healthMaterial.SetFloat("_HeightPercent", health/maxHealth*100);
+    }
 
     public override void OnDamage(Damage dInfo)
     {
@@ -82,8 +89,8 @@ public class PlayerInfo : LivingEntity
 
         if (canDamage)
         {
-            health -= dInfo.dValue; //체력 감소
-            healthSlider.value = health;
+            health -= dInfo.dValue; // 체력 감소
+            CalculateHealthPoint(); // 체력 갱신
         }
         if (health <= 0 && !dead)
         {
@@ -96,12 +103,11 @@ public class PlayerInfo : LivingEntity
         base.Die();
         playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Death;
         playerAnimation.Dead();
-        healthSlider.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        healthText.GetComponent<Text>().text = healthSlider.value + " / " + maxHealth; // 체력 갱신
+        healthText.text = health + " / " + maxHealth; // 체력 갱신
 
         if (!canDamage) // 무적시간 계산
         {
