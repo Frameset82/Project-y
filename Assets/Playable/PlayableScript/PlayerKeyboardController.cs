@@ -105,12 +105,12 @@ public class PlayerKeyboardController : MonoBehaviour
         playerRigidbody.AddForce(dir.normalized * dodgePower);
         playerRigidbody.velocity = Vector3.zero;
         playerAnimation.DodgeAni();
-        yield return new WaitForSeconds(0.5f); // 회피 지속시간
+        yield return new WaitForSeconds(0.45f); // 회피 지속시간
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
     }
 
     public void Attack(Vector3 destination)
-    {
+    { 
         if (pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack)
         {
             StartCoroutine(AttackCoroutine(destination));

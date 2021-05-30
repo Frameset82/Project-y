@@ -42,6 +42,7 @@ public class PlayerAnimation : MonoBehaviour
     public void DodgeAni()
     {
         playerAnimator.SetTrigger("dodge");
+       
     }
     // 캐릭터 공격 애니메이션
     public void Attack()
