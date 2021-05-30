@@ -13,48 +13,24 @@ public class Fireball : MonoBehaviour {
     public GameObject explodeEffect;
 
     protected Rigidbody rgbd;
+    private Damage damage;
+    private float timer;
 
     public void Awake()
     {
         rgbd = GetComponent<Rigidbody>();
+        damage.dType = Damage.DamageType.Melee;
+        damage.dValue = 10f;
+
     }
 
     public void Start()
     {
-        if (pushOnAwake)
-        {
-            Push(startDirection, startMagnitude);
-        }
-    }
+        timer += Time.deltaTime;
 
-    public void Push(Vector3 direction, float magnitude)
-    {
-        Vector3 dir = direction.normalized;
-        rgbd.AddForce(dir * magnitude, forceMode);
-    }
-
-    public void OnCollisionEnter(Collision col)
-    {
-        rgbd.Sleep();
-        if (fieryEffect != null)
+       if(timer > 3f)
         {
-            StopParticleSystem(fieryEffect);
-        }
-        if (smokeEffect != null)
-        {
-            StopParticleSystem(smokeEffect);
-        }
-        if (explodeEffect != null)
-            explodeEffect.SetActive(true);
-    }
-
-    public void StopParticleSystem(GameObject g)
-    {
-        ParticleSystem[] par;
-        par = g.GetComponentsInChildren<ParticleSystem>();
-        foreach(ParticleSystem p in par)
-        {
-            p.Stop();
+            TrapPool.ReturnFireBall(this);
         }
     }
 
@@ -66,7 +42,66 @@ public class Fireball : MonoBehaviour {
             smokeEffect.SetActive(true);
         if (explodeEffect != null)
             explodeEffect.SetActive(false);
+
+        rgbd.velocity = this.transform.forward * 10f;
+       // rgbd.AddForce(transform.forward * 5f);
+        timer = 0f;
     }
+
+    public void Push(Vector3 direction, float magnitude)
+    {
+        Vector3 dir = direction.normalized;
+        rgbd.AddForce(dir * magnitude, forceMode);
+    }
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            //LivingEntity livingEntity = col.gameObject.GetComponent<LivingEntity>();
+            //livingEntity.OnDamage(damage);
+
+            StartCoroutine(ExplosionRoutine());
+        }
+
+    }
+
+    IEnumerator ExplosionRoutine()
+    {
+
+        rgbd.Sleep();
+        if (fieryEffect != null)
+        {
+            StopParticleSystem(fieryEffect);
+        }
+        if (smokeEffect != null)
+        {
+            StopParticleSystem(smokeEffect);
+        }
+        if (explodeEffect != null)
+            explodeEffect.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
+
+        TrapPool.ReturnFireBall(this);
+    }
+ 
+
+    public void StopParticleSystem(GameObject g)
+    {
+        ParticleSystem[] par;
+        par = g.GetComponentsInChildren<ParticleSystem>();
+        foreach(ParticleSystem p in par)
+        {
+            p.Stop();
+        }
+
+
+    }
+
+  
 }
 
 
