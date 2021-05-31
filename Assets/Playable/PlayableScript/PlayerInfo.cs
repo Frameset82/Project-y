@@ -66,6 +66,10 @@ public class PlayerInfo : LivingEntity
         {
             if (dInfo.dType == Damage.DamageType.NuckBack && !dead) // 넉백공격일때
             {
+                PlayerKeyboardInput.isShoot = false;
+                playerAnimation.playerAnimator.SetBool("isAttack", false);
+                PlayerKeyboardController.comboCnt = 0;
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
                 PlayerKeyboardInput.maxCcTime = dInfo.ccTime;
                 playerAnimation.OnNuckBack();
                 PlayerKeyboardInput.onNuckBack = true;
@@ -74,12 +78,20 @@ public class PlayerInfo : LivingEntity
             }
             else if((dInfo.dType == Damage.DamageType.Melee || dInfo.dType == Damage.DamageType.None) && !dead) // 일반공격일때
             {
+                PlayerKeyboardInput.isShoot = false;
+                playerAnimation.playerAnimator.SetBool("isAttack", false);
+                PlayerKeyboardController.comboCnt = 0;
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
                 canDamage = false;
                 PlayerKeyboardInput.onHit = true;
                 playerAnimation.OnHit();
             }
             else if(dInfo.dType == Damage.DamageType.Stun && !dead)
             {
+                PlayerKeyboardInput.isShoot = false;
+                playerAnimation.playerAnimator.SetBool("isAttack", false);
+                PlayerKeyboardController.comboCnt = 0;
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
                 PlayerKeyboardInput.maxCcTime = dInfo.ccTime;
                 playerAnimation.OnStun();
                 PlayerKeyboardInput.onStun = true;
@@ -107,7 +119,7 @@ public class PlayerInfo : LivingEntity
 
     private void Update()
     {
-        //healthText.text = health + " / " + maxHealth; // 체력 갱신
+        healthText.text = health + " / " + maxHealth; // 체력 갱신
 
         if (!canDamage) // 무적시간 계산
         {

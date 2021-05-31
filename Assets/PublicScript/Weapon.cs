@@ -25,7 +25,7 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
     {
         Melee = 0,
         Sword = 1,
-        Spear = 2,
+        Spear = 2,              
         Rifle = 3
     }
 

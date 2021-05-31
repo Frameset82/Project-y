@@ -227,6 +227,14 @@ public class PlayerKeyboardInput : MonoBehaviour
                 playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
             }
         }
+        if(onHit == true)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.onHit;
+        }
+        else if(playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onHit && onHit == false)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+        }
     }
 
     public void DodgeCheck()

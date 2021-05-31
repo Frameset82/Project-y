@@ -26,7 +26,7 @@ public class PlayerKeyboardController : MonoBehaviour
     public Transform FirePos2; // 총구 화염 위치
 
     public float currentAttackTime = 0.0f;
-    public int comboCnt = 0;
+    public static int comboCnt = 0;
 
     public GameObject effect; //총구 화염 이펙트
 
@@ -102,7 +102,7 @@ public class PlayerKeyboardController : MonoBehaviour
     // 캐릭터 실제 회피
     public IEnumerator DodgeCoroutine(Vector3 dir)
     {
-        playerRigidbody.AddForce(dir.normalized * dodgePower);
+        playerRigidbody.AddForce(dir.normalized * dodgePower, ForceMode.Impulse);
         playerRigidbody.velocity = Vector3.zero;
         playerAnimation.DodgeAni();
         yield return new WaitForSeconds(0.45f); // 회피 지속시간
@@ -290,13 +290,13 @@ public class PlayerKeyboardController : MonoBehaviour
 
     public void ComboMove()
     {
-        playerRigidbody.AddForce(transform.forward * 300f);
+        playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
         playerRigidbody.velocity = Vector3.zero;
     }
 
     public void NuckBackMove()
     {
-        playerRigidbody.AddForce(-transform.forward * 300f);
+        playerRigidbody.AddForce(-transform.forward * 7f, ForceMode.Impulse);
         playerRigidbody.velocity = Vector3.zero;
     }
 }

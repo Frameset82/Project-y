@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using UnityEngine;
 
 // 생명체로서 동작할 게임 오브젝트들을 위한 뼈대를 제공
