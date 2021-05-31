@@ -30,7 +30,7 @@ public class BoxOpen : MonoBehaviour
             isClosed = false;
             anim.SetTrigger("Open");
             Invoke("OpenBox", 1f);
-
+             
         }
 
     }

@@ -266,7 +266,7 @@ public class PlayerKeyboardController : MonoBehaviour
 /*            PlayerKeyboardInput.isRight = false;
             yield return new WaitForSeconds(1f);
             pState = PlayerState.Idle;*/
-
+             
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         {

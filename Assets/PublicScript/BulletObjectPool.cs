@@ -7,7 +7,7 @@ public class BulletObjectPool : MonoBehaviour
 
     private static BulletObjectPool Instance; // 싱글톤을 위한 static 변수
     public GameObject BulletObject; // 총알 원본 프리팹
-
+    private float time;
     private Queue<Bullet> BulletQueue = new Queue<Bullet>();
     // 생성한 총알이 들어갈 큐
 
@@ -65,6 +65,6 @@ public class BulletObjectPool : MonoBehaviour
         Instance.BulletQueue.Enqueue(bullet);
     }
 
+   
 
-    
 }

@@ -133,14 +133,14 @@ public class PlayerInfo : LivingEntity
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+   /* private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Enemy")
         {
             GetComponent<LivingEntity>().OnDamage(damage);
             return;
         }
-    }
+    }*/
 
     private void OnTriggerStay(Collider other)
     {
@@ -151,10 +151,10 @@ public class PlayerInfo : LivingEntity
                 RestoreHealth(5.0f);
             }
         }
-        if (other.tag == "Enemy")
+        /*if (other.tag == "Enemy")
         {
             GetComponent<LivingEntity>().OnDamage(damage);
             return;
-        }
+        }*/
     }
 }

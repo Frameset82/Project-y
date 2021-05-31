@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     {
         transform.Translate(this.transform.forward * -1f);
 
-        if(time > 1f)
+        if(time > 0.5f)
         {
             BulletObjectPool.ReturnBullet(this);
         }

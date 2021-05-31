@@ -58,7 +58,7 @@ public class Fireball : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && PlayerInfo.canDamage)
         {
             //LivingEntity livingEntity = col.gameObject.GetComponent<LivingEntity>();
             //livingEntity.OnDamage(damage);
