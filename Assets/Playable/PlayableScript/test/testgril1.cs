@@ -11,6 +11,7 @@ public class testgril1 : LivingEntity
     public override void OnDamage(Damage dInfo)
     {
         health -= dInfo.dValue; //체력 감소
+        print(health);
     }
 
     private void Start()
@@ -34,6 +35,6 @@ public class testgril1 : LivingEntity
 
     private void Update()
     {
-        print(health);
+        
     }
 }

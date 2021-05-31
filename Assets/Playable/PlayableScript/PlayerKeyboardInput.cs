@@ -37,6 +37,7 @@ public class PlayerKeyboardInput : MonoBehaviour
 
     public static float maxCcTime = 0f; // 시간 저장용
     private float ccTime = 0f;
+    public static float delay = 0.4f;
     //스턴 파티클
     public GameObject Stunps;
     void Start()
@@ -131,7 +132,7 @@ public class PlayerKeyboardInput : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
-                playerKeyboardController.Attack(destination);
+                playerKeyboardController.Attack(destination, delay);
             }
         }
     }

@@ -114,16 +114,16 @@ public class PlayerKeyboardController : MonoBehaviour
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
     }
 
-    public void Attack(Vector3 destination)
+    public void Attack(Vector3 destination, float delay)
     { 
         if (pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack)
         {
-            StartCoroutine(AttackCoroutine(destination));
+            StartCoroutine(AttackCoroutine(destination, delay));
         }
     }
 
     // 실제 공격
-    public IEnumerator AttackCoroutine(Vector3 destination)
+    public IEnumerator AttackCoroutine(Vector3 destination, float delay)
     {
         PlayerKeyboardInput.isShoot = true;
         pState = PlayerState.Attack;
@@ -171,12 +171,8 @@ public class PlayerKeyboardController : MonoBehaviour
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
-                if (comboCnt == 3)
-                {
-                    yield return new WaitForSeconds(0.2f);
-                }
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(delay * 0.5f);
             playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
         }
@@ -190,12 +186,8 @@ public class PlayerKeyboardController : MonoBehaviour
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3);  // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
-                if (comboCnt == 3) 
-                {
-                    yield return new WaitForSeconds(0.67f);
-                }   
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(delay);
             playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
             
@@ -210,12 +202,8 @@ public class PlayerKeyboardController : MonoBehaviour
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
-/*                if (comboCnt == 3)
-                {
-                    yield return new WaitForSeconds(0.67f);
-                }*/
             }
-/*            yield return new WaitForSeconds(0.4f);*/
+            yield return new WaitForSeconds(delay);
             playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
         }
