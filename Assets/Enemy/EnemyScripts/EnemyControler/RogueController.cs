@@ -47,13 +47,13 @@ public class RogueController : LivingEntity
 
     [Header("텔레포트 속성")]
     private float curTpTime; //최근 텔레포트한 시간
-    public float tpCooldown = 10f; //텔레포트 대기시간
+    private float tpCooldown = 17f; //텔레포트 대기시간
     private bool bTeleportation = true; // 텔레포트 가능 여부
 
     private Vector3 tpPos; //텔레포트에 사용할 좌표
+    private Vector3 lookAtPosition;
 
-
-    [Header("공격범위 속성")]
+  [Header("공격범위 속성")]
     public float angleRange = 45f;
     private bool isCollision = false;
     Color blue = new Color(0f, 0f, 1f, 0.2f);
@@ -100,7 +100,8 @@ public class RogueController : LivingEntity
                 MoveUpdate();
                 break;
             case RogueState.Attack:
-                AttackUpdate();
+                StartCoroutine(AttackUpdate());
+              
                 break;
             case RogueState.Teleport:
                 TeleportUpdate();
@@ -220,18 +221,19 @@ public class RogueController : LivingEntity
     }
 
     // 공격시
-    void AttackUpdate()
+    IEnumerator AttackUpdate()
     {
-       if (!isCollision) //공격범위보다 멀면
+        nav.isStopped = true; // 네비 멈추기        
+        nav.velocity = Vector3.zero; // 이동속도 줄이기
+        transform.LookAt(target.transform);
+
+        yield return new WaitForSeconds(0.7f);
+
+        if (!isCollision) //공격범위보다 멀면
         {
             rstate = RogueState.MoveTarget;
         }
-        else
-        {
-            nav.isStopped = true; // 네비 멈추기        
-            nav.velocity = Vector3.zero; // 이동속도 줄이기
-            transform.LookAt(target.transform);
-        }
+
     }
 
     //공격 적용

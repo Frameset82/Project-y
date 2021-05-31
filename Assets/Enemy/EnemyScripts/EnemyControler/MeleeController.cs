@@ -29,7 +29,7 @@ public class MeleeController : LivingEntity
 
     [SerializeField]
     private float attackRange = 2f; // 공격 사거리
-
+    Vector3 lookAtPosition; //회전방향
 
     [Header("공격범위 속성")]
     public float angleRange = 45f;
@@ -98,7 +98,8 @@ public class MeleeController : LivingEntity
             case MeleeState.NuckBack:
                 break;
             case MeleeState.Attack:
-                AttackUpdate();
+                StartCoroutine(AttackUpdate());
+               
                 break;
             case MeleeState.JumpAttack:
                 JumpAttackRoutine();
@@ -157,8 +158,6 @@ public class MeleeController : LivingEntity
     void MoveUpdate() //추적시에
     {
 
-        Vector3 lookAtPosition = Vector3.zero;
-
         if (hasTarget) //타겟이 있다면
         {
             targetPos = target.transform.position; //타겟의 위치 지정
@@ -192,29 +191,11 @@ public class MeleeController : LivingEntity
        StartCoroutine(JumpAttack(targetPos));
     }
 
-    /*
-    void JumpAttack(Vector3 tPos) //점프 공격
-    {
-
-        nav.SetDestination(tPos);
-
-        anim.SetBool("isFirstAttack", true); //공격실행
-        damage *= 2; // 점프공격시 데미지 2배 적용
-
-    
-
-        if (Vector3.Distance(this.transform.position, target.transform.position) <= 2f)
-        {
-            isFirstAttack = false;
-            anim.SetBool("isFirstAttack", false);// 공격 종료
-            mstate = MeleeState.Attack; // 공격상태로 변환
-            damage /= 2; //데미지 원상복귀
-        }
-    }*/
+   
     
     IEnumerator JumpAttack(Vector3 tPos)
     {
-        Vector3 lookAtPosition = Vector3.zero;
+
 
         lookAtPosition = new Vector3(tPos.x, this.transform.position.y, tPos.z);
 
@@ -227,14 +208,16 @@ public class MeleeController : LivingEntity
             anim.SetTrigger("JumpAttack"); //공격실행
             isFirstAttack = false;
         }
-       
 
         yield return new WaitForSeconds(0.89f);
+
+        nav.velocity = Vector3.zero;
         nav.isStopped = true;
 
         damage.dValue /= 2; //데미지 원상복귀
-       
-        if(isCollision)
+
+        yield return new WaitForSeconds(0.4f);
+        if (isCollision)
         {
             //yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
             mstate = MeleeState.Attack;
@@ -249,24 +232,28 @@ public class MeleeController : LivingEntity
     }
 
     // 공격시
-    void AttackUpdate()
+    IEnumerator AttackUpdate()
     {
-        if(!isCollision) //공격범위보다 멀면
-        {
+        nav.isStopped = true; // 네비 멈추기
+        nav.velocity = Vector3.zero;
+        transform.LookAt(target.transform);
+
+        yield return new WaitForSeconds(0.7f);
+        if (!isCollision) //공격범위보다 멀면
+        {          
             mstate = MeleeState.MoveTarget; //추적상태로 변환
         }
-        else
-        {
-            nav.isStopped = true; // 네비 멈추기
-            nav.velocity = Vector3.zero;
-            transform.LookAt(target.transform);
-        }      
+        //else
+        //{
+         
+        //}
+
     }
 
     //공격 적용
     public void OnAttackEvent()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
 
         LivingEntity enemytarget = target.GetComponent<LivingEntity>(); //타겟의 리빙엔티티 가져오기
 
