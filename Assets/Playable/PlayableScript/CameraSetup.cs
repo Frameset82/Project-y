@@ -11,7 +11,7 @@ public class CameraSetup : MonoBehaviourPun
     [SerializeField] float offsetZ = 7.0f;
 
     public float DelayTime = 5.0f;
-    
+
     void FixedUpdate()
     {
         Vector3 FixedPos =

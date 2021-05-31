@@ -13569,10 +13569,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6ba1a043982c444811bb1f2810b896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1914734361}
-  offsetX: 6
-  offsetY: 8
-  offsetZ: 6
+  mainCam: {fileID: 0}
+  target: {fileID: 0}
+  offsetX: 7
+  offsetY: 9
+  offsetZ: 7
   DelayTime: 5
 --- !u!1001 &448590707
 PrefabInstance:
@@ -44655,6 +44656,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4628764176223490534, guid: a487994ca786b4742afac3b8fa6a6478,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -3607542334017796443, guid: a487994ca786b4742afac3b8fa6a6478,
         type: 3}
       propertyPath: viewIdField
@@ -44789,6 +44795,22 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: offsetX
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: offsetY
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: offsetZ
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a487994ca786b4742afac3b8fa6a6478, type: 3}
@@ -53664,12 +53686,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 499240, guid: ef77650fcc7dfd64a8d614922d90c382,
     type: 3}
   m_PrefabInstance: {fileID: 1202561933}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1914734361 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1836470380058244112, guid: a487994ca786b4742afac3b8fa6a6478,
-    type: 3}
-  m_PrefabInstance: {fileID: 1594239281}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1915391230
 PrefabInstance:
