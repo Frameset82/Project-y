@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Chase : MonoBehaviour
+public class CameraSetup : MonoBehaviourPun
 {
     public GameObject target;
-
-    public float offsetX = 7.0f;
-    public float offsetY = 7.0f;
-    public float offsetZ = 7.0f;
+    [SerializeField] float offsetX = 7.0f;
+    [SerializeField] float offsetY = 9.0f;
+    [SerializeField] float offsetZ = 7.0f;
 
     public float DelayTime = 5.0f;
     

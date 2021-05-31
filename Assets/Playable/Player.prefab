@@ -51,18 +51,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49da8f8d2a06214c81d59ea230a4aa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: 
+  explain: 
+  weaponSprite: {fileID: 0}
   damageValue: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
-  isMelee: 1
-  isSword: 0
-  isSpear: 0
-  isGun: 0
-  isRifle: 0
+  wType: 0
   player: {fileID: 0}
   playerAnimation: {fileID: 0}
   playerInfo: {fileID: 0}
+  tr: {fileID: 0}
   attackRange: 5
   angle: 90
   enemyLayers:
@@ -1111,11 +1111,14 @@ GameObject:
   - component: {fileID: 1836470380058244117}
   - component: {fileID: 1836470380058244137}
   - component: {fileID: 1836470380058244116}
+  - component: {fileID: 4742817882778982200}
   - component: {fileID: 1836470380058244115}
   - component: {fileID: 1836470380058244113}
   - component: {fileID: 1836470380058244136}
   - component: {fileID: 1836470380058244138}
   - component: {fileID: 1836470380058244119}
+  - component: {fileID: -3607542334017796443}
+  - component: {fileID: -4628764176223490534}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1181,6 +1184,23 @@ CapsuleCollider:
   m_Height: 2.00968
   m_Direction: 1
   m_Center: {x: 0, y: 0.9951248, z: 0}
+--- !u!114 &4742817882778982200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836470380058244112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c6ba1a043982c444811bb1f2810b896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1836470380058244112}
+  offsetX: 7
+  offsetY: 9
+  offsetZ: 7
+  DelayTime: 5
 --- !u!114 &1836470380058244115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1193,7 +1213,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5588f2bd5f43b468d75143fcb63089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthSlider: {fileID: 0}
   healthText: {fileID: 0}
   maxHealth: 0
   defaultDamage: 0
@@ -1220,6 +1239,7 @@ MonoBehaviour:
   moveVec2: {x: 0, y: 0, z: 0}
   mainCamera: {fileID: 0}
   avater: {fileID: 1836470381595838417}
+  Stunps: {fileID: 0}
 --- !u!114 &1836470380058244136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1240,7 +1260,6 @@ MonoBehaviour:
   FirePos: {fileID: 1836470381584555718}
   FirePos2: {fileID: 1836470379588194136}
   currentAttackTime: 0
-  comboCnt: 0
   effect: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
 --- !u!114 &1836470380058244138
 MonoBehaviour:
@@ -1254,20 +1273,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f170117812ac24d8d11717f89a61b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nearObject: {fileID: 0}
   mainWeapon: {fileID: 0}
   subWeapon: {fileID: 0}
   equipWeapon: {fileID: 0}
-  nearObject: {fileID: 0}
   mainWeaponImg: {fileID: 0}
   subWeaponImg: {fileID: 0}
   changeEquipment: {fileID: 0}
   changeImg1: {fileID: 0}
   changeImg2: {fileID: 0}
-  dropWeapon1: {fileID: 0}
-  dropWeapon2: {fileID: 0}
-  mainWeaponScript: {fileID: 0}
-  subWeaponScript: {fileID: 0}
-  equipWeaponScript: {fileID: 0}
+  FirstItem: {fileID: 0}
+  SecondItem: {fileID: 0}
+  ThirdItem: {fileID: 0}
+  FirstItemImg: {fileID: 0}
+  SecondItemImg: {fileID: 0}
+  ThirdItemImg: {fileID: 0}
+  changeItem: {fileID: 0}
+  iChangeImg1: {fileID: 0}
+  iChangeImg2: {fileID: 0}
+  iChangeImg3: {fileID: 0}
 --- !u!114 &1836470380058244119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1281,6 +1305,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAnimator: {fileID: 1836470381595838417}
+  anim:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &-3607542334017796443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836470380058244112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: -4628764176223490534}
+  - {fileID: 7936021914123495810}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-4628764176223490534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836470380058244112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1836470380066096450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2915,18 +2984,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70017161356bf2e4d837d0aeb27d7ffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: 
+  explain: 
+  weaponSprite: {fileID: 0}
   damageValue: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
-  isMelee: 0
-  isSword: 1
-  isSpear: 0
-  isGun: 0
-  isRifle: 0
+  wType: 0
   player: {fileID: 0}
   playerAnimation: {fileID: 0}
   playerInfo: {fileID: 0}
+  tr: {fileID: 0}
   attackRange: 5
   angle: 90
   enemyLayers:
@@ -3022,18 +3091,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e11ed046f69e9f540a47ca28c62cf6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: 
+  explain: 
+  weaponSprite: {fileID: 0}
   damageValue: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
-  isMelee: 0
-  isSword: 0
-  isSpear: 1
-  isGun: 0
-  isRifle: 0
+  wType: 0
   player: {fileID: 0}
   playerAnimation: {fileID: 0}
   playerInfo: {fileID: 0}
+  tr: {fileID: 0}
   attackRange: 5
   angle: 90
   enemyLayers:
@@ -4576,18 +4645,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bd64ed39b386a46b542bbae7ded851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: 
+  explain: 
+  weaponSprite: {fileID: 0}
   damageValue: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
-  isMelee: 0
-  isSword: 0
-  isSpear: 0
-  isGun: 0
-  isRifle: 1
+  wType: 0
   player: {fileID: 0}
   playerAnimation: {fileID: 0}
   playerInfo: {fileID: 0}
+  tr: {fileID: 0}
 --- !u!1 &1836470381589897889
 GameObject:
   m_ObjectHideFlags: 0
@@ -4662,6 +4731,7 @@ GameObject:
   - component: {fileID: 1836470381595838417}
   - component: {fileID: 1836470381595838418}
   - component: {fileID: 1836470381595838419}
+  - component: {fileID: 7936021914123495810}
   m_Layer: 0
   m_Name: Male
   m_TagString: Untagged
@@ -4744,6 +4814,51 @@ MonoBehaviour:
   rightHandMount: {fileID: 0}
   playerAnimator: {fileID: 1836470381595838417}
   weaponName: 
+--- !u!114 &7936021914123495810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836470381595838431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: isMove
+  - Type: 9
+    SynchronizeType: 1
+    Name: isDeath
+  - Type: 9
+    SynchronizeType: 1
+    Name: dodge
+  - Type: 1
+    SynchronizeType: 1
+    Name: Up
+  - Type: 1
+    SynchronizeType: 1
+    Name: Speed
+  - Type: 9
+    SynchronizeType: 1
+    Name: OnHit
+  - Type: 9
+    SynchronizeType: 1
+    Name: OnNuckBack
+  - Type: 4
+    SynchronizeType: 1
+    Name: OnCC
+  - Type: 9
+    SynchronizeType: 1
+    Name: OnStun
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1 &1836470381597348427
 GameObject:
   m_ObjectHideFlags: 0
@@ -4863,18 +4978,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab276c61dfab6848add0a51bb396051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: 
+  explain: 
+  weaponSprite: {fileID: 0}
   damageValue: 0
   delay: 0
   attackSpeed: 1
   canAttack: 0
-  isMelee: 0
-  isSword: 0
-  isSpear: 0
-  isGun: 1
-  isRifle: 0
+  wType: 0
   player: {fileID: 0}
   playerAnimation: {fileID: 0}
   playerInfo: {fileID: 0}
+  tr: {fileID: 0}
 --- !u!1001 &1836470380748795962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5200,15 +5315,15 @@ PrefabInstance:
     - {fileID: 54333176588385812, guid: ebc8f1c90e252c646b165cc274829bf5, type: 3}
     - {fileID: 23444126801197092, guid: ebc8f1c90e252c646b165cc274829bf5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ebc8f1c90e252c646b165cc274829bf5, type: 3}
---- !u!4 &1832397064431954188 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4942850815452524, guid: ebc8f1c90e252c646b165cc274829bf5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1836470380863622240}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1835490018969952042 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1280271141671754, guid: ebc8f1c90e252c646b165cc274829bf5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1836470380863622240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1832397064431954188 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4942850815452524, guid: ebc8f1c90e252c646b165cc274829bf5,
     type: 3}
   m_PrefabInstance: {fileID: 1836470380863622240}
   m_PrefabAsset: {fileID: 0}
