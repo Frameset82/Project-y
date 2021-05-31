@@ -8,7 +8,6 @@ public class SpearWeapon : MeleeWeapon
 
     public override void OnActive()
     {
-        print("온액티브");
         damage.dType = Damage.DamageType.NuckBack; //데미지 종류 설정
         damage.ccTime = 2f;
         for (int i = 0; i < enemies.Count; i++)
@@ -29,12 +28,14 @@ public class SpearWeapon : MeleeWeapon
             enemies[i].GetComponent<LivingEntity>().OnDamage(damage);
         }
     }
+
     private void Awake()
     {
         player = GameObject.Find("Player");
         playerAnimation = player.GetComponent<PlayerAnimation>();
         playerInfo = player.GetComponent<PlayerInfo>();
     }
+
     private void OnEnable()
     {
         damage.dValue = 10f; //초기 데미지값 설정

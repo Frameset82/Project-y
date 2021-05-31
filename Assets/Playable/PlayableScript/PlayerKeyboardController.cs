@@ -83,7 +83,7 @@ public class PlayerKeyboardController : MonoBehaviour
     // 캐릭터 회피명령
     public void Dodge(Vector3 dir)
     {
-        if ((pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack || pState == PlayerState.onCC) && Time.time >= nextDodgeableTime)
+        if ((pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack || pState == PlayerState.onCC || pState == PlayerState.RIghtAttack) && Time.time >= nextDodgeableTime)
         {
             if(pState == PlayerState.Attack)
             {
@@ -91,6 +91,11 @@ public class PlayerKeyboardController : MonoBehaviour
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
                 comboCnt = 0;
                 PlayerKeyboardInput.isShoot = false;
+                playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            }
+            else if(pState == PlayerState.RIghtAttack)
+            {
+                PlayerKeyboardInput.isRight = false;
                 playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
             PlayerKeyboardInput.isDodge = true;
@@ -146,7 +151,7 @@ public class PlayerKeyboardController : MonoBehaviour
             PlayerKeyboardInput.isShoot = false;
             pState = PlayerState.Idle;
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
+/*        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
         {
             playerAnimation.Attack();
             CreateBullet(); //총알 생성하기
@@ -155,8 +160,7 @@ public class PlayerKeyboardController : MonoBehaviour
             PlayerKeyboardInput.isShoot = false;
             yield return new WaitForSeconds(0.3f);
             pState = PlayerState.Idle;
-            
-        }
+        }*/
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
             playerAnimation.playerAnimator.SetBool("isAttack", true);
@@ -206,13 +210,12 @@ public class PlayerKeyboardController : MonoBehaviour
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
-                if (comboCnt == 3)
+/*                if (comboCnt == 3)
                 {
                     yield return new WaitForSeconds(0.67f);
-                }
+                }*/
             }
-            yield return new WaitForSeconds(0.4f);
+/*            yield return new WaitForSeconds(0.4f);*/
             playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
         }
@@ -241,9 +244,10 @@ public class PlayerKeyboardController : MonoBehaviour
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
         {
             playerAnimation.RightAttack();
-/*            yield return new WaitForSeconds(1); // 딜레이
-            PlayerKeyboardInput.isRight = false;
-            pState = PlayerState.Idle;*/
+            /*            yield return new WaitForSeconds(1); // 딜레이
+                        PlayerKeyboardInput.isRight = false;
+                        pState = PlayerState.Idle;*/
+            playerEquipmentManager.equipWeapon.OnActive();
         }
 /*        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
         {
@@ -256,17 +260,18 @@ public class PlayerKeyboardController : MonoBehaviour
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
             playerAnimation.RightAttack();
-/*            PlayerKeyboardInput.isRight = false;
-            yield return new WaitForSeconds(1);
-            pState = PlayerState.Idle;*/
+            /*            PlayerKeyboardInput.isRight = false;
+                        yield return new WaitForSeconds(1);
+                        pState = PlayerState.Idle;*/
+            playerEquipmentManager.equipWeapon.OnActive();
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
             playerAnimation.RightAttack();
-/*            PlayerKeyboardInput.isRight = false;
-            yield return new WaitForSeconds(1f);
-            pState = PlayerState.Idle;*/
-             
+            /*            PlayerKeyboardInput.isRight = false;
+                        yield return new WaitForSeconds(1f);
+                        pState = PlayerState.Idle;*/
+            playerEquipmentManager.equipWeapon.OnActive();
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         {

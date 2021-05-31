@@ -61,10 +61,8 @@ public class PlayerKeyboardInput : MonoBehaviour
         Interation();
         RightAttack();
         SwapInput();
-        SwapCheck();
+        StateCheck();
         CcCheck();
-        DodgeCheck();
-        RightAttackCheck();
     }
 
     public void InputMove()
@@ -183,23 +181,39 @@ public class PlayerKeyboardInput : MonoBehaviour
             if (Input.GetButtonDown("Swap1"))
             {
                 playerEquipmentManager.Swap(1);
-                print("1입력");
             }
             else if (Input.GetButtonDown("Swap2"))
             {
                 playerEquipmentManager.Swap(2);
-                print("2입력");
             }
         }
     }
 
-    public void SwapCheck()
+    public void StateCheck()
     {
         if (PlayerKeyboardInput.isSwap == true)
         {
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Swap;
         }
         else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Swap && PlayerKeyboardInput.isSwap == false)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+        }
+
+        if (isDodge == true)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Dodge;
+        }
+        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge && PlayerKeyboardInput.isDodge == false)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+        }
+
+        if (isRight == true)
+        {
+            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.RIghtAttack;
+        }
+        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.RIghtAttack && PlayerKeyboardInput.isRight == false)
         {
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
         }
@@ -232,30 +246,6 @@ public class PlayerKeyboardInput : MonoBehaviour
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.onHit;
         }
         else if(playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onHit && onHit == false)
-        {
-            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
-        }
-    }
-
-    public void DodgeCheck()
-    {
-        if (isDodge == true)
-        {
-            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Dodge;
-        }
-        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge && PlayerKeyboardInput.isDodge == false)
-        {
-            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
-        }
-    }
-
-    public void RightAttackCheck()
-    {
-        if (isRight == true)
-        {
-            playerKeyboardController.pState = PlayerKeyboardController.PlayerState.RIghtAttack;
-        }
-        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.RIghtAttack && PlayerKeyboardInput.isRight == false)
         {
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
         }
