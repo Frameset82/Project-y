@@ -9,7 +9,7 @@ public class Respawn : MonoBehaviour
     [SerializeField] GameObject enemy; // private 변수를 inspector 로 접근가능하는게 [SerializeField], enemy 지정
     [SerializeField] Transform[] createnemy; // enemy가 나올 장소를 배열로 지정
     [SerializeField] float creat_time; // 젠 시간
-    [SerializeField] GameObject explosion;
+    [SerializeField] GameObject explosion; //폭팔물
     // Start is called before the first frame update
     void Start()
     {

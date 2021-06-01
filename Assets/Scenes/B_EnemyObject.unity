@@ -277,20 +277,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2626480825856293153, guid: 0c8306f512d83124c905fb34fd57db43,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2626480825856293153, guid: 0c8306f512d83124c905fb34fd57db43,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2626480825856293180, guid: 0c8306f512d83124c905fb34fd57db43,
         type: 3}
       propertyPath: m_Name
       value: RogueEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 6162936625098637361, guid: 0c8306f512d83124c905fb34fd57db43,
+    - target: {fileID: 2626480825856293180, guid: 0c8306f512d83124c905fb34fd57db43,
         type: 3}
-      propertyPath: m_AnchorMax.x
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6162936625098637361, guid: 0c8306f512d83124c905fb34fd57db43,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162936625098637361, guid: 0c8306f512d83124c905fb34fd57db43,
+        type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c8306f512d83124c905fb34fd57db43, type: 3}
@@ -511,7 +526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028c730b0d863844ba7fced15fe93b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theEnemy: {fileID: 0}
+  theEnemy: {fileID: 1144926799469199378, guid: ba7a9b0b6e46a624ead6455bfeef51dc,
+    type: 3}
   explosion: {fileID: 103688, guid: 61d06c6d35a503b47a23c676bb289e02, type: 3}
   xPos: 0
   zPos: 0
@@ -2787,6 +2803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f170117812ac24d8d11717f89a61b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerWeaponRoot: {fileID: 0}
   nearObject: {fileID: 0}
   mainWeapon: {fileID: 0}
   subWeapon: {fileID: 0}
@@ -2857,7 +2874,6 @@ MonoBehaviour:
   FirePos: {fileID: 1815684448}
   FirePos2: {fileID: 0}
   currentAttackTime: 0
-  comboCnt: -1
   effect: {fileID: 0}
 --- !u!114 &542035432
 MonoBehaviour:
@@ -2905,6 +2921,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5588f2bd5f43b468d75143fcb63089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthMaterial: {fileID: 0}
+  healthBar: {fileID: 0}
   healthText: {fileID: 0}
   maxHealth: 0
   defaultDamage: 0
@@ -3504,6 +3522,7 @@ Transform:
   - {fileID: 1623965692}
   - {fileID: 1618944724}
   - {fileID: 1387372793}
+  - {fileID: 1504107615}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4751,12 +4770,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4872269129bbd2740944b6a899b96e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 7262994449290341955, guid: 5908a24ac735ea748809cc23aed0e9d4, type: 3}
+  enemy: {fileID: 1144926799469199378, guid: ba7a9b0b6e46a624ead6455bfeef51dc, type: 3}
   createnemy:
   - {fileID: 1084292044}
   - {fileID: 1623965692}
   - {fileID: 1618944724}
   - {fileID: 1387372793}
+  - {fileID: 1504107615}
   creat_time: 1
   explosion: {fileID: 103688, guid: 61d06c6d35a503b47a23c676bb289e02, type: 3}
 --- !u!4 &823950516
@@ -8608,6 +8628,36 @@ Transform:
   m_Father: {fileID: 1827424567}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1504107614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1504107615}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1504107615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504107614}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -21.15, y: 0, z: 22.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 654360313}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1511314087
 GameObject:
   m_ObjectHideFlags: 0
@@ -11062,6 +11112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5588f2bd5f43b468d75143fcb63089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthMaterial: {fileID: 0}
+  healthBar: {fileID: 0}
   healthText: {fileID: 0}
   maxHealth: 0
   defaultDamage: 0

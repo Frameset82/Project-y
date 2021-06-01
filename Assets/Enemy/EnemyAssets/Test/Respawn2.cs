@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Respawn2 : MonoBehaviour
 {
-    public GameObject theEnemy;
-    public GameObject explosion;
+    public GameObject theEnemy; //적
+    public GameObject explosion; //폭팔물
     public int xPos; // x값
     public int zPos; // z값
     public int enemycount; // 적 추가
@@ -16,7 +16,7 @@ public class Respawn2 : MonoBehaviour
     }
     IEnumerator EnemmyDrop() //적 생성 코드
     {
-        while( enemycount <50) // 몇 마리 생성 할껀지
+        while( enemycount < 50) // 몇 마리 생성 할껀지
         {
             xPos = Random.Range(1, 35); // x값(1 ~35에 랜덤으로 리스폰)
             zPos = Random.Range(1, 31); //z값 (1~ 38에 랜덤으로 리스폰) (맵에 따라 따로 지정 필요)
