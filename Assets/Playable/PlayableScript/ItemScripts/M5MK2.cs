@@ -18,7 +18,11 @@ public class M5MK2 : ActiveItem
     }
     public override void OnActive() //아이템 사용시 구현할 함수
     {
-        var Grenade = Instantiate(GrenadePrefab, player.transform.position, Quaternion.identity);
+
+        Vector3 pos = player.transform.position;
+        pos.x += 0.5f;
+        pos.y += 1f;
+        var Grenade = Instantiate(GrenadePrefab, pos, Quaternion.identity);
 
         rigid = Grenade.GetComponent<Rigidbody>();
         rigid.AddForce(player.transform.forward * force, ForceMode.Impulse);
@@ -29,15 +33,7 @@ public class M5MK2 : ActiveItem
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Init();
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnActive();
-        }
+       
     }
 
    
