@@ -7,35 +7,42 @@ using Photon.Pun;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     // 싱글톤 접근용 프로퍼티
-    public static GameManager instance{
-        get{
-            if(m_instance){
-                m_instance = FindObjectOfType<GameManager>();
-            }
-            return m_instance;
-        }
-    }
-    // 싱글톤이 할당될 static 변수
-    private static GameManager m_instance;
+    public static GameManager instance;
+
     // 게임 오버 상태
     public bool isGameover{get; private set;}
     // 플레이어 프리팹
     public GameObject playerPrefab;
-    public Vector3 playerSpawn0;
-    public Vector3 playerSpawn1;
+    public Transform playerSpawn0;
+    public Transform playerSpawn1;
+    public bool isMulti{get; private set;} // 멀티플레이 환경 체크
 
     // 씬에 싱글톤 오브젝트가 된 다른 GameManager 오브젝트가 있다면 자신을 파괴
     private void Awake() {
-        if(instance != this){
-            Destroy(gameObject);
+        if(instance == null){
+            instance = this;
+        } else {
+            if(instance!=this){
+                Destroy(gameObject);
+            }
         }
     }
     
     private void Start() {
-        if(PhotonNetwork.IsMasterClient){
-            PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn0, Quaternion.identity);
+        if(PhotonNetwork.IsConnected){
+            isMulti = true;
         } else {
-            PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn1, Quaternion.identity);
+            isMulti = false;
+        }
+
+        if(isMulti){
+            if(PhotonNetwork.IsMasterClient){
+                PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn0.position, Quaternion.identity);
+            } else {
+                PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn1.position, Quaternion.identity);
+            }
+        } else {
+            Instantiate(playerPrefab, playerSpawn0.position, Quaternion.identity);
         }
     }
 

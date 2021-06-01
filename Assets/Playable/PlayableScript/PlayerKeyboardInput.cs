@@ -47,6 +47,7 @@ public class PlayerKeyboardInput : MonoBehaviour
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         playerAnimation = GetComponent<PlayerAnimation>();
         moveVec2 = transform.forward;
+        mainCamera = Camera.main;
     }
     void FixedUpdate()
     {
