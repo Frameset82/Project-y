@@ -248,6 +248,8 @@ public class PlayerKeyboardController : MonoBehaviour
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
             playerAnimation.RightAttack();
+            playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
+            playerRigidbody.velocity = Vector3.zero;
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1);
                         pState = PlayerState.Idle;*/
@@ -264,6 +266,8 @@ public class PlayerKeyboardController : MonoBehaviour
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         {
             playerAnimation.RightAttack();
+            playerRigidbody.AddForce(transform.forward * 5f, ForceMode.Impulse);
+            playerRigidbody.velocity = Vector3.zero;
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1f);
                         pState = PlayerState.Idle;*/

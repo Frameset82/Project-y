@@ -6,7 +6,7 @@ using Photon.Pun;
 public class CameraSetup : MonoBehaviourPun
 {
     GameObject[] players;
-    GameObject target;
+    [SerializeField] GameObject target;
 
     [SerializeField] float offsetX = 7.0f;
     [SerializeField] float offsetY = 9.0f;
