@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class M5MK2 : ActiveItem
 {
-
-
     public float force;
     public GameObject GrenadePrefab;
     private Rigidbody rigid;

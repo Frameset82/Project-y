@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ActiveItem : MonoBehaviour
 {
-    public GameObject player; // 플레이어 게임오브젝트
+    protected GameObject player; // 플레이어 게임오브젝트
     public string itemName; // 아이템 이름
     public string explain; // 아이템 설명
     public string option; //  아이템 설정
