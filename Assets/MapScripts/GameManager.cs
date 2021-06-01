@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Transform playerSpawn0;
     public Transform playerSpawn1;
     public bool isMulti{get; private set;} // 멀티플레이 환경 체크
+    public UnityEvent playerSpwan;
 
     // 씬에 싱글톤 오브젝트가 된 다른 GameManager 오브젝트가 있다면 자신을 파괴
     private void Awake() {
@@ -44,6 +46,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         } else {
             Instantiate(playerPrefab, playerSpawn0.position, Quaternion.identity);
         }
+        playerSpwan.Invoke();
     }
 
+    public void PlayerComponentSeting()
+    {
+        PlayerKeyboardInput.playerKeyboardController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerKeyboardController>();
+        PlayerKeyboardInput.playerEquipmentManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipmentManager>();
+        PlayerKeyboardInput.playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
+        PlayerKeyboardInput.playerKeyboardInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerKeyboardInput>();
+        PlayerKeyboardInput.player = GameObject.FindGameObjectWithTag("Player");
+        PlayerKeyboardInput.playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+    }
 }

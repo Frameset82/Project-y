@@ -42,12 +42,12 @@ public class MeleeWeapon : Weapon
         isCollision = false;
         enemies = new List<GameObject>();
 
-        Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, attackRange, enemyLayers);
+        Collider[] hitColliders = Physics.OverlapSphere(PlayerKeyboardInput.player.transform.position, attackRange, enemyLayers);
         foreach (Collider enemyCollider in hitColliders)
         {
             GameObject enemy = enemyCollider.gameObject;
-            Vector3 relativePos = enemy.transform.position - player.transform.position;
-            Vector3 forward = player.transform.forward;
+            Vector3 relativePos = enemy.transform.position - PlayerKeyboardInput.player.transform.position;
+            Vector3 forward = PlayerKeyboardInput.player.transform.forward;
             forward.y = 0.0f;
             relativePos.y = 0;
             if (Vector3.Dot(forward.normalized, relativePos.normalized) > Mathf.Cos(Mathf.Deg2Rad * angle / 2))

@@ -16,9 +16,6 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
     public WeaponType wType;
 
     [Header("플레이어")]
-    public GameObject player;
-    public PlayerAnimation playerAnimation;
-    public PlayerInfo playerInfo; //플레이어 스탯
     public Transform tr; // 무기가 들어갈 위치
 
     public enum WeaponType // 플레이어 상태 리스트

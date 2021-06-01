@@ -14,10 +14,7 @@ public class PlayerKeyboardController : MonoBehaviour
     public InteractionObj targetInterObj {get; private set;}
     public static bool isInteraction;
 
-    private PlayerKeyboardInput playerKeyboardInput; // 플레이어 입력 컴포넌트
-    private PlayerEquipmentManager playerEquipmentManager;
     public Rigidbody playerRigidbody; // 캐릭터 리지드바디
-    private PlayerAnimation playerAnimation;
     public GameObject playerAvatar;
 
     public PlayerState pState;
@@ -46,10 +43,7 @@ public class PlayerKeyboardController : MonoBehaviour
     // 사용할 컴포넌트 할당(애니메이터는 수동할당)
     private void Start()
     {
-        playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
-        playerAnimation = GetComponent<PlayerAnimation>();
         playerRigidbody = GetComponent<Rigidbody>();
-        playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
     }
 
     // 상호작용 범위에 들어갔을 때
@@ -87,8 +81,8 @@ public class PlayerKeyboardController : MonoBehaviour
         {
             if(pState == PlayerState.Attack)
             {
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
-                playerAnimation.playerAnimator.SetBool("isAttack", false);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", false);
                 comboCnt = 0;
                 PlayerKeyboardInput.isShoot = false;
                 playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -109,7 +103,7 @@ public class PlayerKeyboardController : MonoBehaviour
     {
         playerRigidbody.AddForce(dir.normalized * dodgePower, ForceMode.Impulse);
         playerRigidbody.velocity = Vector3.zero;
-        playerAnimation.DodgeAni();
+        PlayerKeyboardInput.playerAnimation.DodgeAni();
         yield return new WaitForSeconds(0.45f); // 회피 지속시간
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
     }
@@ -130,14 +124,14 @@ public class PlayerKeyboardController : MonoBehaviour
 
         gameObject.transform.LookAt(destination);
 
-        if (playerEquipmentManager.equipWeapon == null)
+        if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon == null)
         {
             Debug.Log("무기없음");
             yield return new WaitForSeconds(0.0f);
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
+        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
         {
-            playerAnimation.Attack();
+            PlayerKeyboardInput.playerAnimation.Attack();
             ps.Emit(1);
             
             for (int i = 0; i < 3; i++)
@@ -161,50 +155,50 @@ public class PlayerKeyboardController : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             pState = PlayerState.Idle;
         }*/
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
+        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
-            playerAnimation.playerAnimator.SetBool("isAttack", true);
+            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
             {
                 Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
             }
             yield return new WaitForSeconds(delay * 0.5f);
-            playerEquipmentManager.equipWeapon.OnAttack();
+            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
+        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
-            playerAnimation.playerAnimator.SetBool("isAttack", true);
+            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점 
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
             {
                 Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3);  // 0~3으로 제한
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
             }
             yield return new WaitForSeconds(delay);
-            playerEquipmentManager.equipWeapon.OnAttack();
+            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
             
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
-        { 
-            playerAnimation.playerAnimator.SetBool("isAttack", true);
+        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
+        {
+            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
             {
                 Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
             }
             yield return new WaitForSeconds(delay);
-            playerEquipmentManager.equipWeapon.OnAttack();
+            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -224,18 +218,18 @@ public class PlayerKeyboardController : MonoBehaviour
         pState = PlayerState.RIghtAttack;*/
         gameObject.transform.LookAt(destination);
 
-        if (playerEquipmentManager.equipWeapon == null)
+        if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon == null)
         {
             Debug.Log("무기없음");
             yield return new WaitForSeconds(0.0f);
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
+        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
         {
-            playerAnimation.RightAttack();
+            PlayerKeyboardInput.playerAnimation.RightAttack();
             /*            yield return new WaitForSeconds(1); // 딜레이
                         PlayerKeyboardInput.isRight = false;
                         pState = PlayerState.Idle;*/
-            playerEquipmentManager.equipWeapon.OnActive();
+            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnActive();
         }
 /*        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
         {
@@ -245,33 +239,33 @@ public class PlayerKeyboardController : MonoBehaviour
             pState = PlayerState.Idle;
 
         }*/
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
+        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
-            playerAnimation.RightAttack();
+            PlayerKeyboardInput.playerAnimation.RightAttack();
             playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
             playerRigidbody.velocity = Vector3.zero;
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1);
                         pState = PlayerState.Idle;*/
-            playerEquipmentManager.equipWeapon.OnActive();
+            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnActive();
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
+        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
-            playerAnimation.RightAttack();
+            PlayerKeyboardInput.playerAnimation.RightAttack();
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1f);
                         pState = PlayerState.Idle;*/
-            playerEquipmentManager.equipWeapon.OnActive();
+            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnActive();
         }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
+        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         {
-            playerAnimation.RightAttack();
+            PlayerKeyboardInput.playerAnimation.RightAttack();
             playerRigidbody.AddForce(transform.forward * 5f, ForceMode.Impulse);
             playerRigidbody.velocity = Vector3.zero;
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1f);
                         pState = PlayerState.Idle;*/
-            playerEquipmentManager.equipWeapon.OnActive();
+            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnActive();
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }

@@ -21,8 +21,6 @@ public class PlayerInfo : LivingEntity
 
     public static bool canDamage = true; // 데미지를 받을 수 있는 상태
 
-    private PlayerAnimation playerAnimation;
-    private PlayerKeyboardController playerKeyboardController;
     private Damage damage;
     public float timer = 0f;
 
@@ -32,8 +30,8 @@ public class PlayerInfo : LivingEntity
         maxHealth = startingHealth;
         health = startingHealth;
 
-        playerAnimation = GetComponent<PlayerAnimation>();
-        playerKeyboardController = GetComponent<PlayerKeyboardController>();
+        PlayerKeyboardInput.playerAnimation = GetComponent<PlayerAnimation>();
+        PlayerKeyboardInput.playerKeyboardController = GetComponent<PlayerKeyboardController>();
 
         damage.dValue = 10f; //초기 데미지값 설정(발판)
         healthMaterial.shader = Shader.Find("Shader Graphs/UI Shader Graph");
@@ -67,35 +65,35 @@ public class PlayerInfo : LivingEntity
             if (dInfo.dType == Damage.DamageType.NuckBack && !dead) // 넉백공격일때
             {
                 PlayerKeyboardInput.isShoot = false;
-                playerAnimation.playerAnimator.SetBool("isAttack", false);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", false);
                 PlayerKeyboardController.comboCnt = 0;
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
                 PlayerKeyboardInput.maxCcTime = dInfo.ccTime;
-                playerAnimation.OnNuckBack();
+                PlayerKeyboardInput.playerAnimation.OnNuckBack();
                 PlayerKeyboardInput.onNuckBack = true;
-                playerKeyboardController.pState = PlayerKeyboardController.PlayerState.onCC;
-                playerKeyboardController.NuckBackMove();
+                PlayerKeyboardInput.playerKeyboardController.pState = PlayerKeyboardController.PlayerState.onCC;
+                PlayerKeyboardInput.playerKeyboardController.NuckBackMove();
             }
             else if((dInfo.dType == Damage.DamageType.Melee || dInfo.dType == Damage.DamageType.None) && !dead) // 일반공격일때
             {
                 PlayerKeyboardInput.isShoot = false;
-                playerAnimation.playerAnimator.SetBool("isAttack", false);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", false);
                 PlayerKeyboardController.comboCnt = 0;
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
                 canDamage = false;
                 PlayerKeyboardInput.onHit = true;
-                playerAnimation.OnHit();
+                PlayerKeyboardInput.playerAnimation.OnHit();
             }
             else if(dInfo.dType == Damage.DamageType.Stun && !dead)
             {
                 PlayerKeyboardInput.isShoot = false;
-                playerAnimation.playerAnimator.SetBool("isAttack", false);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", false);
                 PlayerKeyboardController.comboCnt = 0;
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
+                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
                 PlayerKeyboardInput.maxCcTime = dInfo.ccTime;
-                playerAnimation.OnStun();
+                PlayerKeyboardInput.playerAnimation.OnStun();
                 PlayerKeyboardInput.onStun = true;
-                playerKeyboardController.pState = PlayerKeyboardController.PlayerState.onCC;
+                PlayerKeyboardInput.playerKeyboardController.pState = PlayerKeyboardController.PlayerState.onCC;
             }
         }
 
@@ -113,8 +111,8 @@ public class PlayerInfo : LivingEntity
     public override void Die()
     {
         base.Die();
-        playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Death;
-        playerAnimation.Dead();
+        PlayerKeyboardInput.playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Death;
+        PlayerKeyboardInput.playerAnimation.Dead();
     }
 
     private void Update()

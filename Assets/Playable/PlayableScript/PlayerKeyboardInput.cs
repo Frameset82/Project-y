@@ -18,9 +18,12 @@ public class PlayerKeyboardInput : MonoBehaviour
     public static Vector3 moveVec1; // 상태 초기화용 벡터
     public Vector3 moveVec2; // 구르기용 벡터
     private Rigidbody rigi;
-    private PlayerKeyboardController playerKeyboardController;
-    private PlayerEquipmentManager playerEquipmentManager;
-    private PlayerAnimation playerAnimation;
+    public static PlayerKeyboardController playerKeyboardController;
+    public static PlayerEquipmentManager playerEquipmentManager;
+    public static PlayerAnimation playerAnimation;
+    public static PlayerKeyboardInput playerKeyboardInput;
+    public static PlayerInfo playerInfo;
+    public static GameObject player;
     
     public Ray ray;
     public Camera mainCamera;
@@ -43,9 +46,6 @@ public class PlayerKeyboardInput : MonoBehaviour
     void Start()
     {
         rigi = GetComponent<Rigidbody>();
-        playerKeyboardController = GetComponent<PlayerKeyboardController>();
-        playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
-        playerAnimation = GetComponent<PlayerAnimation>();
         moveVec2 = transform.forward;
         mainCamera = Camera.main;
     }

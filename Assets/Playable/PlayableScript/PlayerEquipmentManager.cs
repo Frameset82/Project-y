@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class PlayerEquipmentManager : MonoBehaviour
 {
     private string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
-    private GameObject playerWeaponRoot;
-    private GameObject player;
-    private PlayerAnimation playerAnimation; // 플레이어 애니메이션 관리 스크립트
+    public GameObject playerWeaponRoot;
     public GameObject nearObject;//플레이어와 가까이 있는 무기 오브젝트
 
     [Header("착용 무기")]
@@ -90,7 +88,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     private Renderer rend; // 렌더러 끄기 용
     public void GetItem()
     {
-        nearObject.transform.SetParent(player.transform);
+        nearObject.transform.SetParent(PlayerKeyboardInput.player.transform);
         if (FirstItem == null)
         {
             ParticleDelete();
@@ -148,16 +146,16 @@ public class PlayerEquipmentManager : MonoBehaviour
         switch (wType)
         {
             case Weapon.WeaponType.Rifle:
-                playerAnimation.playerAnimator.runtimeAnimatorController = playerAnimation.anim[3];
+                PlayerKeyboardInput.playerAnimation.playerAnimator.runtimeAnimatorController = PlayerKeyboardInput.playerAnimation.anim[3];
                 break;
             case Weapon.WeaponType.Melee:
-                playerAnimation.playerAnimator.runtimeAnimatorController = playerAnimation.anim[0];
+                PlayerKeyboardInput.playerAnimation.playerAnimator.runtimeAnimatorController = PlayerKeyboardInput.playerAnimation.anim[0];
                 break;
             case Weapon.WeaponType.Sword:
-                playerAnimation.playerAnimator.runtimeAnimatorController = playerAnimation.anim[1];
+                PlayerKeyboardInput.playerAnimation.playerAnimator.runtimeAnimatorController = PlayerKeyboardInput.playerAnimation.anim[1];
                 break;
             case Weapon.WeaponType.Spear:
-                playerAnimation.playerAnimator.runtimeAnimatorController = playerAnimation.anim[2];
+                PlayerKeyboardInput.playerAnimation.playerAnimator.runtimeAnimatorController = PlayerKeyboardInput.playerAnimation.anim[2];
                 break;
         }
     }
@@ -320,9 +318,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     void Awake()
     {
-        playerAnimation = gameObject.GetComponent<PlayerAnimation>();
-        playerWeaponRoot = GameObject.Find(weaponRoot);
-        player = GameObject.Find("Player");
+/*        playerWeaponRoot = GameObject.Find("Player(Clone)/" + weaponRoot);*/
     }
 
     public IEnumerator SwapCoroutine()
@@ -330,7 +326,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         if (PlayerKeyboardInput.isDodge == false && PlayerKeyboardInput.isShoot == false)
         {
             yield return new WaitForSeconds(0.01f);
-            playerAnimation.Swap();
+            PlayerKeyboardInput.playerAnimation.Swap();
             yield return new WaitForSeconds(1f);
         }
     }

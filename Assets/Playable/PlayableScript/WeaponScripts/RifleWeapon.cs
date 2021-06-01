@@ -18,13 +18,6 @@ public class RifleWeapon : RangeWeapon
         throw new System.NotImplementedException();
     }
 
-    private void Awake()
-    {
-        player = GameObject.Find("Player");
-        playerAnimation = player.GetComponent<PlayerAnimation>();
-        playerInfo = player.GetComponent<PlayerInfo>();
-    }
-
     private void OnEnable()
     {
         damage.dValue = 10f; //초기 데미지값 설정

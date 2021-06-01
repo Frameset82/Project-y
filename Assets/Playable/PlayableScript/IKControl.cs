@@ -13,7 +13,7 @@ public class IKControl : MonoBehaviour
     public string weaponName;
     private string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
 
-    void Start()
+/*    void Start()
     {
         player = GameObject.Find("Player");
         playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
@@ -25,7 +25,7 @@ public class IKControl : MonoBehaviour
 
         if (playerEquipmentManager.equipWeapon != null)
         {
-            /*if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
+            *//*if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isSpear == true)
             {
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
@@ -54,9 +54,9 @@ public class IKControl : MonoBehaviour
                 weaponName = playerEquipmentManager.equipWeapon.name;
                 leftHandMount = GameObject.Find(weaponRoot + weaponName + "/left").transform;
                 rightHandMount = GameObject.Find(weaponRoot + weaponName + "/right").transform;
-            }*/
+            }*//*
         }
-    }
+    }*/
 
 /*    void OnAnimatorIK(int layerIndex)
     {

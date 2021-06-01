@@ -17,28 +17,34 @@ public class CameraSetup : MonoBehaviourPun
 
     public float DelayTime = 5.0f;
 
-    private void Start() {
-        gameManager = GameManager.instance;
-        if(gameManager.isMulti){
-            players = GameObject.FindGameObjectsWithTag("Player");
-            for(int i=0; i < players.Length; i++){
-                if(players[i].GetComponent<PhotonView>().IsMine){
-                    target = players[i];
-                }
-            }
-        } else {
-            target = GameObject.FindGameObjectWithTag("Player");
-        }
-    }
-
     void FixedUpdate()
     {
-        if(target==null) return;
+        if (target == null) return;
         Vector3 FixedPos =
             new Vector3(
             target.transform.position.x + offsetX,
             target.transform.position.y + offsetY,
             target.transform.position.z + offsetZ);
         transform.position = Vector3.Slerp(transform.position, FixedPos, Time.deltaTime * DelayTime);
+    }
+
+    public void Targeting()
+    {
+        gameManager = GameManager.instance;
+        if (gameManager.isMulti)
+        {
+            players = GameObject.FindGameObjectsWithTag("Player");
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (players[i].GetComponent<PhotonView>().IsMine)
+                {
+                    target = players[i];
+                }
+            }
+        }
+        else
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 }
