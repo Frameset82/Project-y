@@ -43,6 +43,12 @@ public class PlayerAnimation : MonoBehaviour
         playerAnimator.SetBool("isMove", false);
     }
 
+    public void Grenade()
+    {
+        playerAnimator.SetTrigger("Grenade");
+        playerAnimator.SetBool("isMove", false);
+    }
+
     public void RightAttack()
     {
         playerAnimator.SetTrigger("RightAttack");

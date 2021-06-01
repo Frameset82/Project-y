@@ -65,6 +65,7 @@ public class PlayerKeyboardInput : MonoBehaviour
         SwapInput();
         StateCheck();
         CcCheck();
+        Grenade();
     }
 
     public void InputMove()
@@ -266,4 +267,18 @@ public class PlayerKeyboardInput : MonoBehaviour
             }
         }
     }
+
+   /* public void Grenade()
+    {
+        if (Input.GetButtonDown("Grenade") && !isRight && playerKeyboardController.pState != PlayerKeyboardController.PlayerState.Attack && isSwap == false)
+        {
+            RaycastHit hit;
+            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
+                playerKeyboardController.Grenade(destination);
+            }
+        }
+    }*/
 }

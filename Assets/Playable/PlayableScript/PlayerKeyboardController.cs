@@ -37,7 +37,8 @@ public class PlayerKeyboardController : MonoBehaviour
         onHit, // 맞고있는 상태
         Death, // 사망한 상태
         Swap, // 스왑 상태
-        onCC // CC 상태
+        onCC, // CC 상태
+        Grenade // 수류탄 투척 상태
     }
 
     // 사용할 컴포넌트 할당(애니메이터는 수동할당)
@@ -115,6 +116,7 @@ public class PlayerKeyboardController : MonoBehaviour
             StartCoroutine(AttackCoroutine(destination, delay));
         }
     }
+
 
     // 실제 공격
     public IEnumerator AttackCoroutine(Vector3 destination, float delay)
@@ -203,6 +205,19 @@ public class PlayerKeyboardController : MonoBehaviour
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
+
+   /* public void Grenade(Vector3 destination)
+    {
+        if (pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack)
+        {
+            StartCoroutine(GrenadeCoroutine(destination));
+        }
+    }
+
+    public IEnumerator GrenadeCoroutine(Vector3 destination)
+    {
+           gameObject.transform.LookAt(destination);
+    }*/
 
     public void RightAttack(Vector3 destination)
     {
