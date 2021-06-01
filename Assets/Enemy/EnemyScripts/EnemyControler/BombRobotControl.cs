@@ -140,6 +140,8 @@ public class BombRobotControl : LivingEntity
     {
         while (true)
         {
+          
+
             foreach(MeshRenderer mesh in mesh)
             {
                 mesh.material.color = Color.red;
