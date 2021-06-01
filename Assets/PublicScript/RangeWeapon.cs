@@ -13,4 +13,9 @@ public class RangeWeapon : Weapon
     {
         throw new System.NotImplementedException();
     }
+
+    public override void TrChange()
+    {
+        throw new System.NotImplementedException();
+    }
 }

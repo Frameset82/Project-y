@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerEquipmentManager : MonoBehaviour
 {
-    private string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
+    public static string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
     public GameObject playerWeaponRoot;
     public GameObject nearObject;//플레이어와 가까이 있는 무기 오브젝트
 
@@ -311,6 +311,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         if (other.tag == "Weapon" || other.tag == "Item")
             nearObject = other.gameObject;
     }
+
     private void OnTriggerExit(Collider other)
     {
         nearObject = null;

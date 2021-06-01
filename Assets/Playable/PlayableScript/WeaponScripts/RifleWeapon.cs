@@ -17,6 +17,13 @@ public class RifleWeapon : RangeWeapon
     {
         throw new System.NotImplementedException();
     }
+    public override void TrChange()
+    {
+        if (PlayerKeyboardInput.playerEquipmentManager.nearObject != null)
+            trGameObject = GameObject.Find(PlayerKeyboardInput.player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
+        if (trGameObject != null)
+            tr = trGameObject.transform;
+    }
 
     private void OnEnable()
     {
@@ -27,6 +34,6 @@ public class RifleWeapon : RangeWeapon
     // Update is called once per frame
     void Update()
     {
-
+        TrChange();
     }
 }

@@ -14,7 +14,6 @@ public class testgril : LivingEntity
 
     private void Start()
     {
-        player = GameObject.Find("Player");
         damage.dType = Damage.DamageType.NuckBack;
         damage.dValue = 10f;
         damage.hitNormal = gameObject.transform.position;
@@ -25,7 +24,7 @@ public class testgril : LivingEntity
     {
         if(other.tag == "Player")
         {
-            player.GetComponent<LivingEntity>().OnDamage(damage);
+            PlayerKeyboardInput.player.GetComponent<LivingEntity>().OnDamage(damage);
         }
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class testgril1 : LivingEntity
 
 {
-    public GameObject player;
     private Damage damage;
 
     public override void OnDamage(Damage dInfo)
@@ -16,7 +15,6 @@ public class testgril1 : LivingEntity
 
     private void Start()
     {
-        player = GameObject.Find("Player");
         damage.dType = Damage.DamageType.Stun;
         damage.dValue = 10f;
         damage.hitNormal = gameObject.transform.position;
@@ -29,7 +27,7 @@ public class testgril1 : LivingEntity
     {
         if(other.tag == "Player")
         {
-            player.GetComponent<LivingEntity>().OnDamage(damage);
+            PlayerKeyboardInput.player.GetComponent<LivingEntity>().OnDamage(damage);
         }
     }
 

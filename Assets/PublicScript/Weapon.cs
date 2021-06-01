@@ -17,6 +17,7 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
 
     [Header("플레이어")]
     public Transform tr; // 무기가 들어갈 위치
+    public GameObject trGameObject;
 
     public enum WeaponType // 플레이어 상태 리스트
     {
@@ -28,4 +29,5 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
 
     public abstract void OnAttack();    // 공격 기능
     public abstract void OnActive();    // 무기 액티브 스킬 기능
+    public abstract void TrChange(); // 무기 위치 교체
 }

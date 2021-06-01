@@ -29,6 +29,14 @@ public class SpearWeapon : MeleeWeapon
         }
     }
 
+    public override void TrChange()
+    {
+        if(PlayerKeyboardInput.playerEquipmentManager.nearObject != null)
+            trGameObject = GameObject.Find(PlayerKeyboardInput.player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
+        if(trGameObject != null)
+            tr = trGameObject.transform;
+    }
+
     private void OnEnable()
     {
         damage.dValue = 10f; //초기 데미지값 설정
@@ -38,5 +46,6 @@ public class SpearWeapon : MeleeWeapon
     void Update()
     {
         CollisionCheck();
+        TrChange();
     }
 }

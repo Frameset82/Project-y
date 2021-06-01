@@ -58,12 +58,17 @@ public class MeleeWeapon : Weapon
         }
     }
 
-/*
-    private void OnDrawGizmos()
+    public override void TrChange()
     {
-        Handles.color = isCollision ? _red : _blue;
-        Handles.DrawSolidArc(player.transform.position, Vector3.up, player.transform.forward, angle / 2, attackRange);
-        Handles.DrawSolidArc(player.transform.position, Vector3.up, player.transform.forward, -angle / 2, attackRange);
-        Gizmos.DrawWireSphere(player.transform.position, attackRange);
-    }*/
+        throw new System.NotImplementedException();
+    }
+
+    /*
+        private void OnDrawGizmos()
+        {
+            Handles.color = isCollision ? _red : _blue;
+            Handles.DrawSolidArc(player.transform.position, Vector3.up, player.transform.forward, angle / 2, attackRange);
+            Handles.DrawSolidArc(player.transform.position, Vector3.up, player.transform.forward, -angle / 2, attackRange);
+            Gizmos.DrawWireSphere(player.transform.position, attackRange);
+        }*/
 }
