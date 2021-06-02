@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerKeyboardInput : MonoBehaviour
+public class PlayerKeyboardInput : MonoBehaviourPun
 {
     [Header("옵션창 활성화 여부")]
     [SerializeField] UISetting uiSetting;
@@ -18,6 +19,7 @@ public class PlayerKeyboardInput : MonoBehaviour
     public static Vector3 moveVec1; // 상태 초기화용 벡터
     public Vector3 moveVec2; // 구르기용 벡터
     private Rigidbody rigi;
+
     public static PlayerKeyboardController playerKeyboardController;
     public static PlayerEquipmentManager playerEquipmentManager;
     public static PlayerAnimation playerAnimation;
@@ -51,13 +53,15 @@ public class PlayerKeyboardInput : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if(PlayerKeyboardController.isInteraction){return;}
+        if(PlayerKeyboardController.isInteraction) return;
+        if(GameManager.isMulti && !photonView.IsMine) return;
         InputMove();
         InputDodge();
     }
 
     private void Update()
     {
+        if(GameManager.isMulti && !photonView.IsMine) return;
         InputEscape();
         Attack();
         Interation();
@@ -65,7 +69,7 @@ public class PlayerKeyboardInput : MonoBehaviour
         SwapInput();
         StateCheck();
         CcCheck();
-        Grenade();
+        //Grenade();
     }
 
     public void InputMove()

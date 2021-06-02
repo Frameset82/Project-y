@@ -31,7 +31,14 @@ public class M5MK2 : ActiveItem
 
     void Update()
     {
-       
+       if(Input.GetMouseButtonDown(0))
+       {
+           Init();
+       }
+       if(Input.GetMouseButtonDown(1))
+       {
+           OnActive();
+       }
     }
 
    

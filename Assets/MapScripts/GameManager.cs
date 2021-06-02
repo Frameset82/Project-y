@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject playerPrefab;
     public Transform playerSpawn0;
     public Transform playerSpawn1;
-    public bool isMulti{get; private set;} // 멀티플레이 환경 체크
     public UnityEvent playerSpwan;
+    public static bool isMulti{get; private set;} // 멀티플레이 환경 체크
 
     // 씬에 싱글톤 오브젝트가 된 다른 GameManager 오브젝트가 있다면 자신을 파괴
     private void Awake() {
@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         } else {
             Instantiate(playerPrefab, playerSpawn0.position, Quaternion.identity);
         }
+        PlayerKeyboardController.isInteraction=false;
         playerSpwan.Invoke();
     }
 

@@ -13,7 +13,6 @@ public class CameraSetup : MonoBehaviourPun
     [SerializeField] float offsetZ = 7.0f;
 
     PhotonView pv;
-    GameManager gameManager;
 
     public float DelayTime = 5.0f;
 
@@ -30,8 +29,7 @@ public class CameraSetup : MonoBehaviourPun
 
     public void Targeting()
     {
-        gameManager = GameManager.instance;
-        if (gameManager.isMulti)
+        if (GameManager.isMulti)
         {
             players = GameObject.FindGameObjectsWithTag("Player");
             for (int i = 0; i < players.Length; i++)
