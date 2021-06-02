@@ -49,16 +49,4 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerKeyboardController.isInteraction=false;
         playerSpwan.Invoke();
     }
-
-    public void PlayerComponentSeting()
-    {
-        PlayerKeyboardInput.playerKeyboardController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerKeyboardController>();
-        PlayerKeyboardInput.playerEquipmentManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipmentManager>();
-        PlayerKeyboardInput.playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimation>();
-        PlayerKeyboardInput.playerKeyboardInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerKeyboardInput>();
-        PlayerKeyboardInput.player = GameObject.FindGameObjectWithTag("Player");
-        PlayerKeyboardInput.playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
-        PlayerKeyboardInput.mainCamera = Camera.main;
-        PlayerKeyboardInput.playerRigidbody = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
-    }
 }

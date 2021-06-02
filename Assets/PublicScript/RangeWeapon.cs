@@ -18,4 +18,14 @@ public class RangeWeapon : Weapon
     {
         throw new System.NotImplementedException();
     }
+
+    public override void OnEquip()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void UnEquip()
+    {
+        throw new System.NotImplementedException();
+    }
 }

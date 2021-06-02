@@ -21,7 +21,7 @@ public class GunWeapon : RangeWeapon
     {
         damage.dValue = 10f; //초기 데미지값 설정
         damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
-        PlayerKeyboardInput.playerAnimation.playerAnimator.runtimeAnimatorController = Resources.Load("PlayerAnimator/Pistol") as RuntimeAnimatorController;
+/*        playerAnimation.playerAnimator.runtimeAnimatorController = Resources.Load("PlayerAnimator/Pistol") as RuntimeAnimatorController;*/
     }
 
     // Update is called once per frame

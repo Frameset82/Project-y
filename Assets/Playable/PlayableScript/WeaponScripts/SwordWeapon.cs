@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SwordWeapon : MeleeWeapon
 {
-    private Damage damage;
-
     public override void OnActive()
     {
         damage.dType = Damage.DamageType.NuckBack; //데미지 종류 설정
@@ -31,10 +29,22 @@ public class SwordWeapon : MeleeWeapon
 
     public override void TrChange()
     {
-        if (PlayerKeyboardInput.playerEquipmentManager.nearObject != null)
-            trGameObject = GameObject.Find(PlayerKeyboardInput.player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
+        if (player == null)
+            return;
+        if (playerEquipmentManager.nearObject != null)
+            trGameObject = GameObject.Find(player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
         if (trGameObject != null)
             tr = trGameObject.transform;
+    }
+
+    public override void OnEquip()
+    {
+        playerInfo.maxHealth += 50f;
+    }
+
+    public override void UnEquip()
+    {
+        playerInfo.maxHealth -= 50f;
     }
 
     private void OnEnable()

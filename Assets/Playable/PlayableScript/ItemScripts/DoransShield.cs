@@ -8,7 +8,7 @@ public class DoransShield : ActiveItem
 
     void Init()  //아이템 초기화 함수
     {
-        pInfo = PlayerKeyboardInput.playerInfo;
+        pInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
     }
 
     public override void OnActive() //아이템 사용시 구현할 함수

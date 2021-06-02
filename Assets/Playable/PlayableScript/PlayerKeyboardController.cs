@@ -30,6 +30,11 @@ public class PlayerKeyboardController : MonoBehaviourPun
     public static float vAxis;
     Vector3 moveVec; // 움직임 벡터
     public static Vector3 moveVec1; // 상태 초기화용 벡터
+    private Rigidbody playerRigidbody;
+
+    // 스크립트들
+    private PlayerEquipmentManager playerEquipmentManager;
+    private PlayerAnimation playerAnimation;
 
     public enum PlayerState // 플레이어 상태 리스트
     {
@@ -43,6 +48,13 @@ public class PlayerKeyboardController : MonoBehaviourPun
         Swap, // 스왑 상태
         onCC, // CC 상태
         Grenade // 수류탄 투척 상태
+    }
+
+    private void Start()
+    {
+        playerRigidbody = GetComponent<Rigidbody>();
+        playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
+        playerAnimation = GetComponent<PlayerAnimation>();
     }
 
     // 상호작용 범위에 들어갔을 때
@@ -78,20 +90,20 @@ public class PlayerKeyboardController : MonoBehaviourPun
         if (hAxis != 0 || vAxis != 0)
         {
             NowMove();
-            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isMove", true);
+            playerAnimation.playerAnimator.SetBool("isMove", true);
         }
         else
         {
             UnMove();
-            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isMove", false);
+            playerAnimation.playerAnimator.SetBool("isMove", false);
         }
 
         Vector3 heading = PlayerKeyboardInput.mainCamera.transform.localRotation * Vector3.forward;
         heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
-        moveVec = heading * Time.fixedDeltaTime * vAxis * PlayerInfo.MoveSpeed;
-        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * hAxis * PlayerInfo.MoveSpeed;
+        moveVec = heading * Time.deltaTime * vAxis * PlayerInfo.MoveSpeed;
+        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.deltaTime * hAxis * PlayerInfo.MoveSpeed;
 
-        PlayerKeyboardInput.playerRigidbody.MovePosition(PlayerKeyboardInput.playerRigidbody.position + moveVec);
+        playerRigidbody.MovePosition(playerRigidbody.position + moveVec);
         moveVec1 = moveVec;
         moveVec1.y = 0;
 
@@ -105,16 +117,16 @@ public class PlayerKeyboardController : MonoBehaviourPun
         {
             if(pState == PlayerState.Attack)
             {
-                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
-                PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", false);
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
+                playerAnimation.playerAnimator.SetBool("isAttack", false);
                 comboCnt = 0;
                 PlayerKeyboardInput.isShoot = false;
-                PlayerKeyboardInput.playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+                playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
             else if(pState == PlayerState.RIghtAttack)
             {
                 PlayerKeyboardInput.isRight = false;
-                PlayerKeyboardInput.playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+                playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
             PlayerKeyboardInput.isDodge = true;
             nextDodgeableTime = Time.time + timeBetDodge;
@@ -125,11 +137,11 @@ public class PlayerKeyboardController : MonoBehaviourPun
     // 캐릭터 실제 회피
     public IEnumerator DodgeCoroutine(Vector3 dir)
     {
-        PlayerKeyboardInput.playerRigidbody.AddForce(dir.normalized * dodgePower, ForceMode.Impulse);
-        PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero;
-        PlayerKeyboardInput.playerAnimation.DodgeAni();
+        playerRigidbody.AddForce(dir.normalized * dodgePower, ForceMode.Impulse);
+        playerRigidbody.velocity = Vector3.zero;
+        playerAnimation.DodgeAni();
         yield return new WaitForSeconds(0.45f); // 회피 지속시간
-        PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
+        playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
     }
 
     public void Attack(Vector3 destination, float delay)
@@ -149,14 +161,14 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
         gameObject.transform.LookAt(destination);
 
-        if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon == null)
+        if (playerEquipmentManager.equipWeapon == null)
         {
             Debug.Log("무기없음");
             yield return new WaitForSeconds(0.0f);
         }
-        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
         {
-            PlayerKeyboardInput.playerAnimation.Attack();
+            playerAnimation.Attack();
             ps.Emit(1);
             
             for (int i = 0; i < 3; i++)
@@ -180,53 +192,53 @@ public class PlayerKeyboardController : MonoBehaviourPun
             yield return new WaitForSeconds(0.3f);
             pState = PlayerState.Idle;
         }*/
-        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
-            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", true);
+            playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
             {
                 Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
-                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
             }
             yield return new WaitForSeconds(delay * 0.5f);
-            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnAttack();
+            playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
         }
-        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
-            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", true);
+            playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점 
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
             {
                 Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3);  // 0~3으로 제한
-                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
             }
             yield return new WaitForSeconds(delay);
-            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnAttack();
+            playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
             
         }
-        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         {
-            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", true);
+            playerAnimation.playerAnimator.SetBool("isAttack", true);
             currentAttackTime = Time.time; // 재생한 시점
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
             {
                 Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
-                PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
             }
             yield return new WaitForSeconds(delay);
-            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnAttack();
+            playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
         }
-        PlayerKeyboardInput.playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
    /* public void Grenade(Vector3 destination)
@@ -256,18 +268,18 @@ public class PlayerKeyboardController : MonoBehaviourPun
         pState = PlayerState.RIghtAttack;*/
         gameObject.transform.LookAt(destination);
 
-        if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon == null)
+        if (playerEquipmentManager.equipWeapon == null)
         {
             Debug.Log("무기없음");
             yield return new WaitForSeconds(0.0f);
         }
-        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
         {
-            PlayerKeyboardInput.playerAnimation.RightAttack();
+            playerAnimation.RightAttack();
             /*            yield return new WaitForSeconds(1); // 딜레이
                         PlayerKeyboardInput.isRight = false;
                         pState = PlayerState.Idle;*/
-            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnActive();
+            playerEquipmentManager.equipWeapon.OnActive();
         }
 /*        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
         {
@@ -277,55 +289,54 @@ public class PlayerKeyboardController : MonoBehaviourPun
             pState = PlayerState.Idle;
 
         }*/
-        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
-            PlayerKeyboardInput.playerAnimation.RightAttack();
-            PlayerKeyboardInput.playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
-            PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero;
+            playerAnimation.RightAttack();
+            playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
+            playerRigidbody.velocity = Vector3.zero;
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1);
                         pState = PlayerState.Idle;*/
-            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnActive();
+            playerEquipmentManager.equipWeapon.OnActive();
         }
-        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
-            PlayerKeyboardInput.playerAnimation.RightAttack();
+            playerAnimation.RightAttack();
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1f);
                         pState = PlayerState.Idle;*/
-            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnActive();
+            playerEquipmentManager.equipWeapon.OnActive();
         }
-        else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
+        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         {
-            PlayerKeyboardInput.playerAnimation.RightAttack();
-            PlayerKeyboardInput.playerRigidbody.AddForce(transform.forward * 5f, ForceMode.Impulse);
-            PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero;
+            playerAnimation.RightAttack();
+            playerRigidbody.AddForce(transform.forward * 5f, ForceMode.Impulse);
+            playerRigidbody.velocity = Vector3.zero;
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1f);
                         pState = PlayerState.Idle;*/
-            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnActive();
+            playerEquipmentManager.equipWeapon.OnActive();
         }
-        PlayerKeyboardInput.playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     //오브젝트풀에서 총알 가져와서 생성하기
     public void CreateBullet()
     {
-        var Bulletobj = BulletObjectPool.GetBullet(); // 오브젝트 풀에서 총알 가져오기
+        var Bulletobj = BulletObjectPool.GetBullet(playerEquipmentManager); // 오브젝트 풀에서 총알 가져오기
         Bulletobj.transform.position = FirePos.transform.position; //위치 지정
         Bulletobj.transform.rotation = FirePos.transform.rotation;// 회전 지정
-        
     }
 
     public void ComboMove()
     {
-        PlayerKeyboardInput.playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
-        PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero;
+        playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
+        playerRigidbody.velocity = Vector3.zero;
     }
 
     public void NuckBackMove()
     {
-        PlayerKeyboardInput.playerRigidbody.AddForce(-transform.forward * 7f, ForceMode.Impulse);
-        PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero;
+        playerRigidbody.AddForce(-transform.forward * 7f, ForceMode.Impulse);
+        playerRigidbody.velocity = Vector3.zero;
     }
 }

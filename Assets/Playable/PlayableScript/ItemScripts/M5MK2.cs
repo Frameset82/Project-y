@@ -11,7 +11,7 @@ public class M5MK2 : ActiveItem
 
     void Init()
     {
-        player = PlayerKeyboardInput.player;
+        player = GameObject.FindGameObjectWithTag("Player");
       
     }
     public override void OnActive() //아이템 사용시 구현할 함수

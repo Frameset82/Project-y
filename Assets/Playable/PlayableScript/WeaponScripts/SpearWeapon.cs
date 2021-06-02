@@ -31,8 +31,10 @@ public class SpearWeapon : MeleeWeapon
 
     public override void TrChange()
     {
-        if(PlayerKeyboardInput.playerEquipmentManager.nearObject != null)
-            trGameObject = GameObject.Find(PlayerKeyboardInput.player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
+        if (player == null)
+            return;
+        if(playerEquipmentManager.nearObject != null)
+            trGameObject = GameObject.Find(player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
         if(trGameObject != null)
             tr = trGameObject.transform;
     }
@@ -40,6 +42,16 @@ public class SpearWeapon : MeleeWeapon
     private void OnEnable()
     {
         damage.dValue = 10f; //초기 데미지값 설정
+    }
+
+    public override void OnEquip()
+    {
+        playerInfo.maxHealth += 50f;
+    }
+
+    public override void UnEquip()
+    {
+        playerInfo.maxHealth -= 50f;
     }
 
     // Update is called once per frame

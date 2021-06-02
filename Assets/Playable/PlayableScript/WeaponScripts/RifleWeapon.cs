@@ -19,8 +19,10 @@ public class RifleWeapon : RangeWeapon
     }
     public override void TrChange()
     {
-        if (PlayerKeyboardInput.playerEquipmentManager.nearObject != null)
-            trGameObject = GameObject.Find(PlayerKeyboardInput.player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
+        if (player == null)
+            return;
+        if (playerEquipmentManager.nearObject != null)
+            trGameObject = GameObject.Find(player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
         if (trGameObject != null)
             tr = trGameObject.transform;
     }
@@ -29,6 +31,16 @@ public class RifleWeapon : RangeWeapon
     {
         damage.dValue = 10f; //초기 데미지값 설정
         damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
+    }
+
+    public override void OnEquip()
+    {
+        return;
+    }
+
+    public override void UnEquip()
+    {
+        return;
     }
 
     // Update is called once per frame

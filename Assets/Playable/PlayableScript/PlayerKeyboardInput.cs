@@ -13,15 +13,10 @@ public class PlayerKeyboardInput : MonoBehaviourPun
 
     public Vector3 moveVec2; // 구르기용 벡터
     public static Camera mainCamera;
-    private Rigidbody rigi;
 
-    public static PlayerKeyboardController playerKeyboardController;
-    public static PlayerEquipmentManager playerEquipmentManager;
-    public static PlayerAnimation playerAnimation;
-    public static PlayerKeyboardInput playerKeyboardInput;
-    public static PlayerInfo playerInfo;
-    public static GameObject player;
-    public static Rigidbody playerRigidbody; // 캐릭터 리지드바디
+    public PlayerKeyboardController playerKeyboardController;
+    public PlayerEquipmentManager playerEquipmentManager;
+    public PlayerAnimation playerAnimation;
 
     public Ray ray;
     public Animator avater;
@@ -43,6 +38,9 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     
     private void Start()
     {
+        playerKeyboardController = gameObject.GetComponent<PlayerKeyboardController>();
+        playerEquipmentManager = gameObject.GetComponent<PlayerEquipmentManager>();
+        playerAnimation = gameObject.GetComponent<PlayerAnimation>();
         moveVec2 = transform.forward;
         mainCamera = Camera.main;
     }
@@ -51,7 +49,6 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     {
         if(PlayerKeyboardController.isInteraction) return;
         if(GameManager.isMulti && !photonView.IsMine) return;
-        InputMove();
         InputDodge();
     }
 
@@ -65,6 +62,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
         SwapInput();
         StateCheck();
         CcCheck();
+        InputMove();
         //Grenade();
     }
 
@@ -80,11 +78,8 @@ public class PlayerKeyboardInput : MonoBehaviourPun
 
     public void InputDodge()
     {
-        if (Input.GetButton(dodgeButtonName))
+        if (Input.GetButton(dodgeButtonName) && playerKeyboardController.pState != PlayerKeyboardController.PlayerState.Dodge)
         {
-            PlayerKeyboardController.hAxis = Input.GetAxisRaw("Horizontal");
-            PlayerKeyboardController.vAxis = Input.GetAxisRaw("Vertical");
-
             if (PlayerKeyboardController.hAxis != 0 || PlayerKeyboardController.vAxis != 0)
             {
                 Vector3 heading = mainCamera.transform.localRotation * Vector3.forward;

@@ -6,6 +6,7 @@ public class testgril1 : LivingEntity
 
 {
     private Damage damage;
+    private GameObject player;
 
     public override void OnDamage(Damage dInfo)
     {
@@ -21,13 +22,14 @@ public class testgril1 : LivingEntity
         damage.ccTime = 1.5f;
         startingHealth = 1000f;
         health = startingHealth;
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
-            PlayerKeyboardInput.player.GetComponent<LivingEntity>().OnDamage(damage);
+            player.GetComponent<LivingEntity>().OnDamage(damage);
         }
     }
 

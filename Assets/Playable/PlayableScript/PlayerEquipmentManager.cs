@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerEquipmentManager : MonoBehaviour
 {
+    private PlayerAnimation playerAnimation;
+    private GameObject player;
+
     public static string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
     public GameObject playerWeaponRoot;
     public GameObject nearObject;//플레이어와 가까이 있는 무기 오브젝트
@@ -38,6 +41,12 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     GameObject particleObj;
 
+    private void Start()
+    {
+        playerAnimation = GetComponent<PlayerAnimation>();
+        player = gameObject;
+    }
+
     public void Interation()
     {
         switch (nearObject.tag)
@@ -60,6 +69,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             mainWeapon = nearObject.GetComponent<Weapon>();
             WeaponAnimChange(mainWeapon.wType);
             equipWeapon = mainWeapon;
+            mainWeapon.OnEquip();
             mainWeaponImg.sprite = mainWeapon.weaponSprite;
             equipCount = 1;
             nearObject = null;
@@ -71,6 +81,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             subWeapon = nearObject.GetComponent<Weapon>();
             WeaponAnimChange(subWeapon.wType);
             equipWeapon = subWeapon;
+            subWeapon.OnEquip();
             subWeaponImg.sprite = subWeapon.weaponSprite;
             equipCount = 2;
             nearObject = null;
@@ -88,7 +99,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     private Renderer rend; // 렌더러 끄기 용
     public void GetItem()
     {
-        nearObject.transform.SetParent(PlayerKeyboardInput.player.transform);
+        nearObject.transform.SetParent(player.transform);
         if (FirstItem == null)
         {
             ParticleDelete();
@@ -146,16 +157,16 @@ public class PlayerEquipmentManager : MonoBehaviour
         switch (wType)
         {
             case Weapon.WeaponType.Rifle:
-                PlayerKeyboardInput.playerAnimation.playerAnimator.runtimeAnimatorController = PlayerKeyboardInput.playerAnimation.anim[3];
+                playerAnimation.playerAnimator.runtimeAnimatorController = playerAnimation.anim[3];
                 break;
             case Weapon.WeaponType.Melee:
-                PlayerKeyboardInput.playerAnimation.playerAnimator.runtimeAnimatorController = PlayerKeyboardInput.playerAnimation.anim[0];
+                playerAnimation.playerAnimator.runtimeAnimatorController = playerAnimation.anim[0];
                 break;
             case Weapon.WeaponType.Sword:
-                PlayerKeyboardInput.playerAnimation.playerAnimator.runtimeAnimatorController = PlayerKeyboardInput.playerAnimation.anim[1];
+                playerAnimation.playerAnimator.runtimeAnimatorController = playerAnimation.anim[1];
                 break;
             case Weapon.WeaponType.Spear:
-                PlayerKeyboardInput.playerAnimation.playerAnimator.runtimeAnimatorController = PlayerKeyboardInput.playerAnimation.anim[2];
+                playerAnimation.playerAnimator.runtimeAnimatorController = playerAnimation.anim[2];
                 break;
         }
     }
@@ -189,6 +200,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         // 들고있는 무기를 땅에 떨어트리는 과정
         mainWeapon.gameObject.SetActive(true);
+        mainWeapon.UnEquip();
         subWeapon.gameObject.SetActive(false);
         ParticleDelete();
         mainWeapon.transform.position = nearObject.transform.position;
@@ -199,6 +211,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         // 무기를 장착하는 과정
         mainWeapon = nearObject.GetComponent<Weapon>();
         equipWeapon = mainWeapon;
+        mainWeapon.OnEquip();
         mainWeaponImg.sprite = mainWeapon.weaponSprite;
         equipCount = 1;
         WeaponTr();
@@ -214,6 +227,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         // 들고있는 무기를 땅에 떨어트리는 과정
         subWeapon.gameObject.SetActive(true);
+        subWeapon.UnEquip();
         mainWeapon.gameObject.SetActive(false);
         ParticleDelete();
         subWeapon.transform.position = nearObject.transform.position;
@@ -224,6 +238,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         // 무기를 장착하는 과정
         subWeapon = nearObject.GetComponent<Weapon>();
         equipWeapon = subWeapon;
+        subWeapon.OnEquip();
         subWeaponImg.sprite = subWeapon.weaponSprite;
         equipCount = 2;
         WeaponTr();
@@ -309,7 +324,13 @@ public class PlayerEquipmentManager : MonoBehaviour
     private void OnTriggerStay(Collider other) //착용가능한 무기와 충돌시
     {
         if (other.tag == "Weapon" || other.tag == "Item")
+        {
             nearObject = other.gameObject;
+            if(other.tag == "Weapon")
+                nearObject.GetComponent<Weapon>().SetPlayer(player);
+            else if(other.tag == "Item")
+                nearObject.GetComponent<ActiveItem>().SetPlayer(player);
+        }   
     }
 
     private void OnTriggerExit(Collider other)
@@ -327,7 +348,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         if (PlayerKeyboardInput.isDodge == false && PlayerKeyboardInput.isShoot == false)
         {
             yield return new WaitForSeconds(0.01f);
-            PlayerKeyboardInput.playerAnimation.Swap();
+            playerAnimation.Swap();
             yield return new WaitForSeconds(1f);
         }
     }

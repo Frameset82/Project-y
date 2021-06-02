@@ -4,37 +4,45 @@ using UnityEngine;
 
 public class ComboManager : MonoBehaviour
 {
+    private PlayerKeyboardController playerKeyboardController;
+    private PlayerAnimation playerAnimation;
+
+    private void Start()
+    {
+        playerKeyboardController = this.GetComponentInParent<PlayerKeyboardController>();
+        playerAnimation = this.GetComponentInParent<PlayerAnimation>();
+    }
 
     public void Combo1Check()
     {
-        PlayerKeyboardInput.playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+        playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
         if (PlayerKeyboardController.comboCnt == 1)
         {
-            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", false);
+            playerAnimation.playerAnimator.SetBool("isAttack", false);
             PlayerKeyboardController.comboCnt = 0;
-            PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
+            playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
         }
     }
     public void Combo2Check()
     {
-        PlayerKeyboardInput.playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+        playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
         if (PlayerKeyboardController.comboCnt == 2)
         {
-            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", false);
+            playerAnimation.playerAnimator.SetBool("isAttack", false);
             PlayerKeyboardController.comboCnt = 0;
-            PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
+            playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
         }
     }
     public void Combo3Check()
     {
-        PlayerKeyboardInput.playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
-        PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", false);
+        playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+        playerAnimation.playerAnimator.SetBool("isAttack", false);
         PlayerKeyboardController.comboCnt = 0;
-        PlayerKeyboardInput.playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
+        playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
     }
 
     public void ComboMoveCheck()
     {
-        PlayerKeyboardInput.playerKeyboardController.ComboMove();
+        playerKeyboardController.ComboMove();
     }
 }

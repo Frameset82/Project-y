@@ -4,22 +4,24 @@ using UnityEngine;
 
 public abstract class ActiveItem : MonoBehaviour
 {
-    protected GameObject player; // 플레이어 게임오브젝트
     public string itemName; // 아이템 이름
     public string explain; // 아이템 설명
     public string option; //  아이템 설정
     public Sprite ItemSprite; // 아이템 스프라이트
     public float coolTime; //쿨타임
 
+    [HideInInspector] public GameObject player;
+    [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
+    [HideInInspector] public PlayerInfo playerInfo;
+
     public virtual void OnActive() //아이템 사용시 구현할 함수
     {
         throw new System.NotImplementedException();
     }
 
-  
-
-    void Start()
+    public void SetPlayer(GameObject player)
     {
-        
+        playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
+        playerInfo = player.GetComponent<PlayerInfo>();
     }
 }

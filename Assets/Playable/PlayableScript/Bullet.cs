@@ -6,13 +6,13 @@ public class Bullet : MonoBehaviour
 {
     public float time;
     public static GameObject rangeHitTarget;
+    public PlayerEquipmentManager playerEquipmentManager;
 
     private void OnEnable() // 활성화시  초기화
     {
         time = 0f; // 시간을 0으로 초기화
     }
-     
-    // Update is called once per frame
+
     void FixedUpdate()
     {
         transform.Translate(this.transform.forward * -1f);
@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             rangeHitTarget = other.gameObject;
-            PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().OnAttack();
+            playerEquipmentManager.equipWeapon.GetComponent<Weapon>().OnAttack();
         }
     }
 }

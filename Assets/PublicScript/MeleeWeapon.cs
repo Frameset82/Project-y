@@ -13,7 +13,6 @@ public class MeleeWeapon : Weapon
     public List<GameObject> enemies;
     public bool isCollision = false;
     
-
     Color _blue = new Color(0f, 0f, 1f, 0.2f);
     Color _red = new Color(1f, 0f, 0f, 0.2f);
 
@@ -27,11 +26,6 @@ public class MeleeWeapon : Weapon
         throw new System.NotImplementedException();
     }
 
-    private void Start()
-    {
-        
-    }
-
     void Update()
     {
         CollisionCheck();
@@ -42,23 +36,36 @@ public class MeleeWeapon : Weapon
         isCollision = false;
         enemies = new List<GameObject>();
 
-        Collider[] hitColliders = Physics.OverlapSphere(PlayerKeyboardInput.player.transform.position, attackRange, enemyLayers);
-        foreach (Collider enemyCollider in hitColliders)
+        if (player != null)
         {
-            GameObject enemy = enemyCollider.gameObject;
-            Vector3 relativePos = enemy.transform.position - PlayerKeyboardInput.player.transform.position;
-            Vector3 forward = PlayerKeyboardInput.player.transform.forward;
-            forward.y = 0.0f;
-            relativePos.y = 0;
-            if (Vector3.Dot(forward.normalized, relativePos.normalized) > Mathf.Cos(Mathf.Deg2Rad * angle / 2))
+            Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, attackRange, enemyLayers);
+            foreach (Collider enemyCollider in hitColliders)
             {
-                isCollision = true;
-                enemies.Add(enemy);
+                GameObject enemy = enemyCollider.gameObject;
+                Vector3 relativePos = enemy.transform.position - player.transform.position;
+                Vector3 forward = player.transform.forward;
+                forward.y = 0.0f;
+                relativePos.y = 0;
+                if (Vector3.Dot(forward.normalized, relativePos.normalized) > Mathf.Cos(Mathf.Deg2Rad * angle / 2))
+                {
+                    isCollision = true;
+                    enemies.Add(enemy);
+                }
             }
         }
     }
 
     public override void TrChange()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnEquip()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void UnEquip()
     {
         throw new System.NotImplementedException();
     }

@@ -9,7 +9,7 @@ public class HardTack : ActiveItem
 
     void Init()  //아이템 초기화 함수
     {
-        pInfo = PlayerKeyboardInput.playerInfo;
+        pInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
     }
     private void Update()
     {
@@ -21,7 +21,6 @@ public class HardTack : ActiveItem
         {
             OnActive();
         }
-
     }
     public override void OnActive() //아이템 사용시 구현할 함수
     {

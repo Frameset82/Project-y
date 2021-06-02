@@ -11,8 +11,6 @@ public class BulletObjectPool : MonoBehaviour
     private Queue<Bullet> BulletQueue = new Queue<Bullet>();
     // 생성한 총알이 들어갈 큐
 
-
-
     void Start()
     {
         Instance = this; // 자기자신 싱글톤화
@@ -34,18 +32,18 @@ public class BulletObjectPool : MonoBehaviour
         {
             BulletQueue.Enqueue(CreateNewObject());
         }
-      
     }
 
     // 오브젝트 풀 큐에서 불릿 꺼내오기
-    public static Bullet GetBullet()
+    public static Bullet GetBullet(PlayerEquipmentManager playerEquipmentManager)
     {
         // 큐에 있는 총알 갯수가 0보다 클경우 큐에서 총알 꺼내줌
         if(Instance.BulletQueue.Count > 0)
         {
             var obj = Instance.BulletQueue.Dequeue();
-            obj.transform.SetParent(null); 
+            obj.transform.SetParent(null);
             obj.gameObject.SetActive(true);
+            obj.playerEquipmentManager = playerEquipmentManager;
             return obj; 
         }
         else //큐에 있는 총알 갯수가 0보다 적으면 새로 생성해서 줌
@@ -53,6 +51,7 @@ public class BulletObjectPool : MonoBehaviour
             var newObj = Instance.CreateNewObject();
             newObj.transform.SetParent(null);
             newObj.gameObject.SetActive(false);
+            newObj.playerEquipmentManager = playerEquipmentManager;
             return newObj;
         }
     }
@@ -60,11 +59,9 @@ public class BulletObjectPool : MonoBehaviour
     //꺼내줬던 총알 다시 받아오기
     public static void ReturnBullet(Bullet bullet)
     {
+        bullet.playerEquipmentManager = null;
         bullet.gameObject.SetActive(false);
         bullet.transform.SetParent(Instance.transform);
         Instance.BulletQueue.Enqueue(bullet);
     }
-
-   
-
 }

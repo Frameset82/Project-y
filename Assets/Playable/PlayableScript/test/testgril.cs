@@ -24,7 +24,7 @@ public class testgril : LivingEntity
     {
         if(other.tag == "Player")
         {
-            PlayerKeyboardInput.player.GetComponent<LivingEntity>().OnDamage(damage);
+            player.GetComponent<LivingEntity>().OnDamage(damage);
         }
     }
 }

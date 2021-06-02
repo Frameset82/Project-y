@@ -10,10 +10,11 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Awake()
     {
-/*        anim[0] = Resources.Load("PlayerAnimator/TestSword") as RuntimeAnimatorController;
-        anim[1] = Resources.Load("PlayerAnimator/TestMelee") as RuntimeAnimatorController;
-        anim[2] = Resources.Load("PlayerAnimator/TestSpear") as RuntimeAnimatorController;
-        anim[3] = Resources.Load("PlayerAnimator/Rifle") as RuntimeAnimatorController;*/
+        /*        anim[0] = Resources.Load("PlayerAnimator/TestSword") as RuntimeAnimatorController;
+                anim[1] = Resources.Load("PlayerAnimator/TestMelee") as RuntimeAnimatorController;
+                anim[2] = Resources.Load("PlayerAnimator/TestSpear") as RuntimeAnimatorController;
+                anim[3] = Resources.Load("PlayerAnimator/Rifle") as RuntimeAnimatorController;*/
+        playerAnimator = gameObject.GetComponentInChildren<Animator>();
     }
     void Update()
     {

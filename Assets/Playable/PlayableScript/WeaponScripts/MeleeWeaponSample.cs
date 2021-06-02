@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeWeapon1 : MeleeWeapon
+public class MeleeWeaponSample : MeleeWeapon
 {
     private Damage damage;
     private RuntimeAnimatorController anim;
@@ -32,7 +32,9 @@ public class MeleeWeapon1 : MeleeWeapon
 
     public override void TrChange()
     {
-        trGameObject = GameObject.Find(PlayerKeyboardInput.player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
+        if (player == null)
+            return;
+        trGameObject = GameObject.Find(player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
         if (trGameObject != null)
             tr = trGameObject.transform;
     }
@@ -40,6 +42,16 @@ public class MeleeWeapon1 : MeleeWeapon
     private void OnEnable()
     {
         damage.dValue = 10f; //초기 데미지값 설정
+    }
+
+    public override void OnEquip()
+    {
+        playerInfo.maxHealth += 50f;
+    }
+
+    public override void UnEquip()
+    {
+        playerInfo.maxHealth -= 50f;
     }
 
     // Update is called once per frame
