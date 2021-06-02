@@ -58,5 +58,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerKeyboardInput.playerKeyboardInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerKeyboardInput>();
         PlayerKeyboardInput.player = GameObject.FindGameObjectWithTag("Player");
         PlayerKeyboardInput.playerInfo = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInfo>();
+        PlayerKeyboardInput.mainCamera = Camera.main;
+        PlayerKeyboardInput.playerRigidbody = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
     }
 }

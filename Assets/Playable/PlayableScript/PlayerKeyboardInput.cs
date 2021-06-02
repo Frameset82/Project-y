@@ -11,13 +11,8 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     // 입력 버튼 이름
     private string dodgeButtonName = "Jump";
 
-    public float speed = 3.0f;
-    float hAxis;
-    float vAxis;
-
-    Vector3 moveVec; // 움직임 벡터
-    public static Vector3 moveVec1; // 상태 초기화용 벡터
     public Vector3 moveVec2; // 구르기용 벡터
+    public static Camera mainCamera;
     private Rigidbody rigi;
 
     public static PlayerKeyboardController playerKeyboardController;
@@ -26,9 +21,9 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     public static PlayerKeyboardInput playerKeyboardInput;
     public static PlayerInfo playerInfo;
     public static GameObject player;
-    
+    public static Rigidbody playerRigidbody; // 캐릭터 리지드바디
+
     public Ray ray;
-    public Camera mainCamera;
     public Animator avater;
 
     public static bool isShoot = false; // 공격중
@@ -45,12 +40,13 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     public static float delay = 0.4f;
     //스턴 파티클
     public GameObject Stunps;
-    void Start()
+
+    private void Start()
     {
-        rigi = GetComponent<Rigidbody>();
         moveVec2 = transform.forward;
         mainCamera = Camera.main;
     }
+
     void FixedUpdate()
     {
         if(PlayerKeyboardController.isInteraction) return;
@@ -76,50 +72,28 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     {
         if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight || isChange)
             return;
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-        {
-            playerKeyboardController.Move();
-            avater.SetBool("isMove", true);
-        }
-        else
-        {
-            playerKeyboardController.unMove();
-            avater.SetBool("isMove", false);
-        }
 
-        hAxis = Input.GetAxisRaw("Horizontal");
-        vAxis = Input.GetAxisRaw("Vertical");
+        PlayerKeyboardController.hAxis = Input.GetAxisRaw("Horizontal");
+        PlayerKeyboardController.vAxis = Input.GetAxisRaw("Vertical");
 
-        Vector3 heading = mainCamera.transform.localRotation * Vector3.forward;
-        heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
-        moveVec = heading * Time.fixedDeltaTime * Input.GetAxisRaw("Vertical") * speed;
-        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * speed;
-
-        rigi.MovePosition(rigi.position + moveVec);
-        moveVec1 = moveVec;
-        moveVec1.y = 0;
-
-        transform.LookAt(transform.position + moveVec1);
-
-        avater.SetFloat("Up", vAxis);
-        avater.SetFloat("Speed", hAxis);
+        playerKeyboardController.Move();
     }
 
     public void InputDodge()
     {
         if (Input.GetButton(dodgeButtonName))
         {
-            hAxis = Input.GetAxisRaw("Horizontal");
-            vAxis = Input.GetAxisRaw("Vertical");
+            PlayerKeyboardController.hAxis = Input.GetAxisRaw("Horizontal");
+            PlayerKeyboardController.vAxis = Input.GetAxisRaw("Vertical");
 
-            if (hAxis != 0 || vAxis != 0)
+            if (PlayerKeyboardController.hAxis != 0 || PlayerKeyboardController.vAxis != 0)
             {
                 Vector3 heading = mainCamera.transform.localRotation * Vector3.forward;
                 heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
-                moveVec2 = heading * Time.fixedDeltaTime * Input.GetAxisRaw("Vertical") * speed;
-                moveVec2 += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * speed;
+                moveVec2 = heading * Time.fixedDeltaTime * Input.GetAxisRaw("Vertical") * PlayerInfo.MoveSpeed;
+                moveVec2 += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * PlayerInfo.MoveSpeed;
             }
-            else if (hAxis == 0 && vAxis == 0)
+            else if (PlayerKeyboardController.hAxis == 0 && PlayerKeyboardController.vAxis == 0)
             {
                 moveVec2 = transform.forward;
             }

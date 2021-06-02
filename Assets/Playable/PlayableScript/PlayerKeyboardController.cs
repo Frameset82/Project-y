@@ -13,8 +13,6 @@ public class PlayerKeyboardController : MonoBehaviour
 
     public InteractionObj targetInterObj {get; private set;}
     public static bool isInteraction;
-
-    public Rigidbody playerRigidbody; // 캐릭터 리지드바디
     public GameObject playerAvatar;
 
     public PlayerState pState;
@@ -26,6 +24,11 @@ public class PlayerKeyboardController : MonoBehaviour
     public static int comboCnt = 0;
 
     public GameObject effect; //총구 화염 이펙트
+
+    public static float hAxis;
+    public static float vAxis;
+    Vector3 moveVec; // 움직임 벡터
+    public static Vector3 moveVec1; // 상태 초기화용 벡터
 
     public enum PlayerState // 플레이어 상태 리스트
     {
@@ -41,12 +44,6 @@ public class PlayerKeyboardController : MonoBehaviour
         Grenade // 수류탄 투척 상태
     }
 
-    // 사용할 컴포넌트 할당(애니메이터는 수동할당)
-    private void Start()
-    {
-        playerRigidbody = GetComponent<Rigidbody>();
-    }
-
     // 상호작용 범위에 들어갔을 때
     public void OnInteractionEnter(InteractionObj interObj){
         targetInterObj = interObj;
@@ -56,9 +53,9 @@ public class PlayerKeyboardController : MonoBehaviour
         targetInterObj.InactiveUI();
         targetInterObj = null;
     }
-    
+
     // 캐릭터 이동명령
-    public void Move()
+    public void NowMove()
     {
         if (pState == PlayerState.Idle )
         {
@@ -67,12 +64,37 @@ public class PlayerKeyboardController : MonoBehaviour
                 pState = PlayerState.Idle;
         }
     }
-    public void unMove()
+    public void UnMove()
     {
         if (pState == PlayerState.Movement)
         {
             pState = PlayerState.Idle;
         }
+    }
+
+    public void Move()
+    {
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            NowMove();
+            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isMove", true);
+        }
+        else
+        {
+            UnMove();
+            PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isMove", false);
+        }
+
+        Vector3 heading = PlayerKeyboardInput.mainCamera.transform.localRotation * Vector3.forward;
+        heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
+        moveVec = heading * Time.fixedDeltaTime * Input.GetAxisRaw("Vertical") * PlayerInfo.MoveSpeed;
+        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * PlayerInfo.MoveSpeed;
+
+        PlayerKeyboardInput.playerRigidbody.MovePosition(PlayerKeyboardInput.playerRigidbody.position + moveVec);
+        moveVec1 = moveVec;
+        moveVec1.y = 0;
+
+        transform.LookAt(transform.position + moveVec1);
     }
 
     // 캐릭터 회피명령
@@ -86,12 +108,12 @@ public class PlayerKeyboardController : MonoBehaviour
                 PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isAttack", false);
                 comboCnt = 0;
                 PlayerKeyboardInput.isShoot = false;
-                playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+                PlayerKeyboardInput.playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
             else if(pState == PlayerState.RIghtAttack)
             {
                 PlayerKeyboardInput.isRight = false;
-                playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+                PlayerKeyboardInput.playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
             PlayerKeyboardInput.isDodge = true;
             nextDodgeableTime = Time.time + timeBetDodge;
@@ -102,11 +124,11 @@ public class PlayerKeyboardController : MonoBehaviour
     // 캐릭터 실제 회피
     public IEnumerator DodgeCoroutine(Vector3 dir)
     {
-        playerRigidbody.AddForce(dir.normalized * dodgePower, ForceMode.Impulse);
-        playerRigidbody.velocity = Vector3.zero;
+        PlayerKeyboardInput.playerRigidbody.AddForce(dir.normalized * dodgePower, ForceMode.Impulse);
+        PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero;
         PlayerKeyboardInput.playerAnimation.DodgeAni();
         yield return new WaitForSeconds(0.45f); // 회피 지속시간
-        playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
+        PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
     }
 
     public void Attack(Vector3 destination, float delay)
@@ -203,7 +225,7 @@ public class PlayerKeyboardController : MonoBehaviour
             PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnAttack();
             PlayerKeyboardInput.isShoot = false;
         }
-        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        PlayerKeyboardInput.playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
    /* public void Grenade(Vector3 destination)
@@ -257,8 +279,8 @@ public class PlayerKeyboardController : MonoBehaviour
         else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
             PlayerKeyboardInput.playerAnimation.RightAttack();
-            playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
-            playerRigidbody.velocity = Vector3.zero;
+            PlayerKeyboardInput.playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
+            PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero;
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1);
                         pState = PlayerState.Idle;*/
@@ -275,14 +297,14 @@ public class PlayerKeyboardController : MonoBehaviour
         else if (PlayerKeyboardInput.playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         {
             PlayerKeyboardInput.playerAnimation.RightAttack();
-            playerRigidbody.AddForce(transform.forward * 5f, ForceMode.Impulse);
-            playerRigidbody.velocity = Vector3.zero;
+            PlayerKeyboardInput.playerRigidbody.AddForce(transform.forward * 5f, ForceMode.Impulse);
+            PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero;
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1f);
                         pState = PlayerState.Idle;*/
             PlayerKeyboardInput.playerEquipmentManager.equipWeapon.OnActive();
         }
-        playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        PlayerKeyboardInput.playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     //오브젝트풀에서 총알 가져와서 생성하기
@@ -296,13 +318,13 @@ public class PlayerKeyboardController : MonoBehaviour
 
     public void ComboMove()
     {
-        playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
-        playerRigidbody.velocity = Vector3.zero;
+        PlayerKeyboardInput.playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
+        PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero;
     }
 
     public void NuckBackMove()
     {
-        playerRigidbody.AddForce(-transform.forward * 7f, ForceMode.Impulse);
-        playerRigidbody.velocity = Vector3.zero;
+        PlayerKeyboardInput.playerRigidbody.AddForce(-transform.forward * 7f, ForceMode.Impulse);
+        PlayerKeyboardInput.playerRigidbody.velocity = Vector3.zero;
     }
 }
