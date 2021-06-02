@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerKeyboardController : MonoBehaviour
+public class PlayerKeyboardController : MonoBehaviourPun
 {
     // 이동속도와 회전속도 회피속도
     public float dodgePower = 400f;
@@ -74,7 +75,7 @@ public class PlayerKeyboardController : MonoBehaviour
 
     public void Move()
     {
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        if (hAxis != 0 || vAxis != 0)
         {
             NowMove();
             PlayerKeyboardInput.playerAnimation.playerAnimator.SetBool("isMove", true);
@@ -87,8 +88,8 @@ public class PlayerKeyboardController : MonoBehaviour
 
         Vector3 heading = PlayerKeyboardInput.mainCamera.transform.localRotation * Vector3.forward;
         heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
-        moveVec = heading * Time.fixedDeltaTime * Input.GetAxisRaw("Vertical") * PlayerInfo.MoveSpeed;
-        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * PlayerInfo.MoveSpeed;
+        moveVec = heading * Time.fixedDeltaTime * vAxis * PlayerInfo.MoveSpeed;
+        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * hAxis * PlayerInfo.MoveSpeed;
 
         PlayerKeyboardInput.playerRigidbody.MovePosition(PlayerKeyboardInput.playerRigidbody.position + moveVec);
         moveVec1 = moveVec;

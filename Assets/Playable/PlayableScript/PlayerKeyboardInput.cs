@@ -40,7 +40,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     public static float delay = 0.4f;
     //스턴 파티클
     public GameObject Stunps;
-
+    
     private void Start()
     {
         moveVec2 = transform.forward;
@@ -72,7 +72,6 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     {
         if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight || isChange)
             return;
-
         PlayerKeyboardController.hAxis = Input.GetAxisRaw("Horizontal");
         PlayerKeyboardController.vAxis = Input.GetAxisRaw("Vertical");
 

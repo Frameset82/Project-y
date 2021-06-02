@@ -164,8 +164,6 @@ MonoBehaviour:
   healthText: {fileID: 8886824494234707486}
   maxHealth: 0
   defaultDamage: 0
-  AtkSpeed: 0
-  MoveSpeed: 0
   shield: 0
   criProbability: 0
   criDamage: 0
@@ -183,9 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiSetting: {fileID: 764773639740125163}
-  speed: 6
   moveVec2: {x: 0, y: 0, z: 0}
-  mainCamera: {fileID: 0}
   avater: {fileID: 4550360320781304407}
   Stunps: {fileID: 4550360319429652172}
 --- !u!114 &4550360319374782894
@@ -202,7 +198,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dodgePower: 28
   ps: {fileID: 4550360319611823332}
-  playerRigidbody: {fileID: 0}
   playerAvatar: {fileID: 4550360320781304409}
   pState: 0
   FirePos: {fileID: 4550360320801479488}
@@ -279,6 +274,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 1844513283938003868}
+  - {fileID: 0}
   - {fileID: 5221991306140838916}
   viewIdField: 0
   InstantiationId: 0
