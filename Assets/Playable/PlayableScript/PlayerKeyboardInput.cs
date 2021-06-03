@@ -14,24 +14,27 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     public Vector3 moveVec2; // 구르기용 벡터
     public static Camera mainCamera;
 
-    public PlayerKeyboardController playerKeyboardController;
-    public PlayerEquipmentManager playerEquipmentManager;
-    public PlayerAnimation playerAnimation;
+    private PlayerKeyboardController playerKeyboardController;
+    private PlayerEquipmentManager playerEquipmentManager;
+    private PlayerAnimation playerAnimation;
+    private PlayerInfo playerInfo;
+    private PlayerKeyboardInput playerKeyboardInput;
 
     public Ray ray;
+    public float moveSpeed = 7.0f;
 
-    public static bool isShoot = false; // 공격중
-    public static bool isRight = false; // 우클릭 공격중
-    public static bool isSwap = false; // 스왑중
-    public static bool isDodge = false; // 회피중
-    public static bool onHit = false; // 맞는중
-    public static bool onNuckBack = false; // 넉백(다운)중
-    public static bool onStun = false; // 스턴중
-    public static bool isChange = false; // 무기 교체중
+    public bool isShoot = false; // 공격중
+    public bool isRight = false; // 우클릭 공격중
+    public bool isSwap = false; // 스왑중
+    public bool isDodge = false; // 회피중
+    public bool onHit = false; // 맞는중
+    public bool onNuckBack = false; // 넉백(다운)중
+    public bool onStun = false; // 스턴중
+    public bool isChange = false; // 무기 교체중
 
-    public static float maxCcTime = 0f; // 시간 저장용
+    public float maxCcTime = 0f; // 시간 저장용
     private float ccTime = 0f;
-    public static float delay = 0.4f;
+    public float delay = 0.4f;
     //스턴 파티클
     public GameObject Stunps;
     
@@ -39,7 +42,9 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     {
         playerKeyboardController = gameObject.GetComponent<PlayerKeyboardController>();
         playerEquipmentManager = gameObject.GetComponent<PlayerEquipmentManager>();
+        playerInfo = gameObject.GetComponent<PlayerInfo>();
         playerAnimation = gameObject.GetComponent<PlayerAnimation>();
+        playerKeyboardInput = gameObject.GetComponent<PlayerKeyboardInput>();
         playerAnimation.ChangeAnimator();
         moveVec2 = transform.forward;
         mainCamera = Camera.main;
@@ -70,8 +75,8 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     {
         if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight || isChange)
             return;
-        PlayerKeyboardController.hAxis = Input.GetAxisRaw("Horizontal");
-        PlayerKeyboardController.vAxis = Input.GetAxisRaw("Vertical");
+        playerKeyboardController.hAxis = Input.GetAxisRaw("Horizontal");
+        playerKeyboardController.vAxis = Input.GetAxisRaw("Vertical");
 
         playerKeyboardController.Move();
     }
@@ -80,14 +85,14 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     {
         if (Input.GetButton(dodgeButtonName) && playerKeyboardController.pState != PlayerKeyboardController.PlayerState.Dodge)
         {
-            if (PlayerKeyboardController.hAxis != 0 || PlayerKeyboardController.vAxis != 0)
+            if (playerKeyboardController.hAxis != 0 || playerKeyboardController.vAxis != 0)
             {
                 Vector3 heading = mainCamera.transform.localRotation * Vector3.forward;
                 heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
-                moveVec2 = heading * Time.fixedDeltaTime * Input.GetAxisRaw("Vertical") * PlayerInfo.MoveSpeed;
-                moveVec2 += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * PlayerInfo.MoveSpeed;
+                moveVec2 = heading * Time.fixedDeltaTime * Input.GetAxisRaw("Vertical") * moveSpeed;
+                moveVec2 += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * moveSpeed;
             }
-            else if (PlayerKeyboardController.hAxis == 0 && PlayerKeyboardController.vAxis == 0)
+            else if (playerKeyboardController.hAxis == 0 && playerKeyboardController.vAxis == 0)
             {
                 moveVec2 = transform.forward;
             }
@@ -151,7 +156,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
         if (Input.GetButtonDown("Swap2") && (playerEquipmentManager.subWeapon == null || PlayerEquipmentManager.equipCount == 2))
             return;
 
-        if (PlayerKeyboardInput.isShoot == false && !PlayerKeyboardInput.isDodge && !PlayerKeyboardInput.isSwap)
+        if (playerKeyboardInput.isShoot == false && !playerKeyboardInput.isDodge && !playerKeyboardInput.isSwap)
         {
             if (Input.GetButtonDown("Swap1"))
             {
@@ -166,32 +171,27 @@ public class PlayerKeyboardInput : MonoBehaviourPun
 
     public void StateCheck()
     {
-        if (PlayerKeyboardInput.isSwap == true)
-        {
+        if (playerKeyboardInput.isSwap == true)
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Swap;
-        }
-        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Swap && PlayerKeyboardInput.isSwap == false)
-        {
+        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Swap && playerKeyboardInput.isSwap == false)
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
-        }
 
         if (isDodge == true)
         {
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Dodge;
+            playerInfo.canDamage = false;
         }
-        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge && PlayerKeyboardInput.isDodge == false)
+        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge && playerKeyboardInput.isDodge == false)
         {
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+            playerInfo.canDamage = true;
         }
 
         if (isRight == true)
-        {
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.RIghtAttack;
-        }
-        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.RIghtAttack && PlayerKeyboardInput.isRight == false)
-        {
+        else if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.RIghtAttack && playerKeyboardInput.isRight == false)
             playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
-        }
+     
     }
 
     public void CcCheck()

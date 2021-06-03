@@ -13,7 +13,7 @@ public class KoreanSpicyNoodle : ActiveItem
 
     public override void OnActive() //아이템 사용시 구현할 함수
     {
-        prevAttack = PlayerInfo.AtkSpeed;
+        prevAttack = playerInfo.AtkSpeed;
     
 
         StartCoroutine(NoodleUpdate());
@@ -21,12 +21,12 @@ public class KoreanSpicyNoodle : ActiveItem
 
     IEnumerator NoodleUpdate() 
     {
-        PlayerInfo.AtkSpeed += (prevAttack * 10) / 100;
+        playerInfo.AtkSpeed += (prevAttack * 10) / 100;
 
 
         yield return new WaitForSeconds(8f);
 
-        PlayerInfo.AtkSpeed = prevAttack;
+        playerInfo.AtkSpeed = prevAttack;
      
 
     }

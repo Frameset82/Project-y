@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class PlayerEquipmentManager : MonoBehaviour
 {
     private PlayerAnimation playerAnimation;
+    private PlayerInfo playerInfo;
+    private PlayerKeyboardInput playerKeyboardInput;
     private GameObject player;
 
-    public static string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
+    public string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
     public GameObject playerWeaponRoot;
     public GameObject nearObject;//플레이어와 가까이 있는 무기 오브젝트
 
@@ -90,11 +92,11 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
         else
         {
-            PlayerKeyboardInput.isChange = true;
+            playerKeyboardInput.isChange = true;
             changeEquipment.SetActive(true);
             changeImg1.sprite = mainWeaponImg.sprite;
             changeImg2.sprite = subWeaponImg.sprite;
-            PlayerKeyboardInput.isShoot = true;
+            playerKeyboardInput.isShoot = true;
         }
     }
 
@@ -131,12 +133,12 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
         else
         {
-            PlayerKeyboardInput.isChange = true;
+            playerKeyboardInput.isChange = true;
             changeItem.SetActive(true);
             iChangeImg1.sprite = FirstItemImg.sprite;
             iChangeImg2.sprite = SecondItemImg.sprite;
             iChangeImg3.sprite = ThirdItemImg.sprite;
-            PlayerKeyboardInput.isShoot = true;
+            playerKeyboardInput.isShoot = true;
         }
     }
 
@@ -177,7 +179,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         if (equipCount == 1 && count == 2) //첫번째 무기를 들고 있을시
         {
-            PlayerKeyboardInput.isSwap = true;
+            playerKeyboardInput.isSwap = true;
             WeaponAnimChange(subWeapon.wType);
             mainWeapon.gameObject.SetActive(false);
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
@@ -188,7 +190,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
         else if (equipCount == 2 && count == 1)
         {
-            PlayerKeyboardInput.isSwap = true;
+            playerKeyboardInput.isSwap = true;
             WeaponAnimChange(mainWeapon.wType);
             subWeapon.gameObject.SetActive(false);
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
@@ -225,7 +227,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         playerAnimation.ChangeAnimator();
         changeEquipment.SetActive(false); // 패널 끄기
         StateReset();
-        PlayerKeyboardInput.isShoot = false;
+        playerKeyboardInput.isShoot = false;
     }
 
     public void ChangeSubWeapon()
@@ -253,7 +255,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         playerAnimation.ChangeAnimator();
         changeEquipment.SetActive(false); // 패널 끄기
         StateReset();
-        PlayerKeyboardInput.isShoot = false;
+        playerKeyboardInput.isShoot = false;
     }
 
     public void ChangeFirstItem()
@@ -274,7 +276,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj.SetActive(false);
         changeItem.SetActive(false); // 패널 끄기
         StateReset();
-        PlayerKeyboardInput.isShoot = false;
+        playerKeyboardInput.isShoot = false;
     }
 
     public void ChangeSecondItem()
@@ -295,7 +297,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj.SetActive(false);
         changeItem.SetActive(false); // 패널 끄기
         StateReset();
-        PlayerKeyboardInput.isShoot = false;
+        playerKeyboardInput.isShoot = false;
     }
 
     public void ChangeThirdItem()
@@ -316,15 +318,15 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj.SetActive(false);
         changeItem.SetActive(false); // 패널 끄기
         StateReset();
-        PlayerKeyboardInput.isShoot = false;
+        playerKeyboardInput.isShoot = false;
     }
 
     public void StateReset()
     {
-        PlayerKeyboardInput.isDodge = false;
-        PlayerKeyboardInput.isRight = false;
-        PlayerKeyboardInput.isSwap = false;
-        PlayerKeyboardInput.isChange = false;
+        playerKeyboardInput.isDodge = false;
+        playerKeyboardInput.isRight = false;
+        playerKeyboardInput.isSwap = false;
+        playerKeyboardInput.isChange = false;
     }
 
     private void OnTriggerStay(Collider other) //착용가능한 무기와 충돌시
@@ -346,12 +348,12 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     void Awake()
     {
-/*        playerWeaponRoot = GameObject.Find("Player(Clone)/" + weaponRoot);*/
+        
     }
 
     public IEnumerator SwapCoroutine()
     {
-        if (PlayerKeyboardInput.isDodge == false && PlayerKeyboardInput.isShoot == false)
+        if (playerKeyboardInput.isDodge == false && playerKeyboardInput.isShoot == false)
         {
             yield return new WaitForSeconds(0.01f);
             playerAnimation.Swap();

@@ -1039,6 +1039,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8007210702372504429, guid: 98f0c92db2e39c845a1d63cc4239a148,
+        type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 24627815, guid: 98f0c92db2e39c845a1d63cc4239a148, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -33498,6 +33503,11 @@ PrefabInstance:
       objectReference: {fileID: 142682745}
     - target: {fileID: 6078831854119405865, guid: aa4e2032389ba3e448fd45e23b45a8cd,
         type: 3}
+      propertyPath: playerSpwan.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6078831854119405865, guid: aa4e2032389ba3e448fd45e23b45a8cd,
+        type: 3}
       propertyPath: playerSpwan.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 286148428}
@@ -52102,7 +52112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &522575119311317546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53033,7 +53043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &7979182750036822937
 CapsuleCollider:
   m_ObjectHideFlags: 0
