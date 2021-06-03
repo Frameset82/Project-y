@@ -16,7 +16,7 @@ public class PlayerInfo : LivingEntity
     public float maxHealth; // 최대체력( 시작 시 기본체력 )
     public float defaultDamage; // 기본 데미지
     public static float AtkSpeed ; // 공격속도
-    public static float MoveSpeed = 10.0f ; // 이동속도
+    public static float MoveSpeed = 7.0f ; // 이동속도
     [Header("플레이어 추가 속성들")]
     public float shield; // 보호막
     public float criProbability; // 치명타 확률

@@ -820,7 +820,6 @@ MonoBehaviour:
   playerKeyboardController: {fileID: 0}
   playerEquipmentManager: {fileID: 0}
   playerAnimation: {fileID: 0}
-  avater: {fileID: 2185464556219643250}
   Stunps: {fileID: 2185464555188869609}
 --- !u!114 &2185464555214440075
 MonoBehaviour:
@@ -2373,7 +2372,7 @@ Animator:
   m_GameObject: {fileID: 2185464556219643260}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cb5c9cedca12e1a4aa282ae7b53f42ab, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9f5288919dfe28441b72ef63a9752219, type: 2}
+  m_Controller: {fileID: 9100000, guid: c5dd4bdf7092a5845bac22e6f89912b5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2441,17 +2440,17 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Speed
   - Type: 9
-    SynchronizeType: 1
-    Name: OnHit
+    SynchronizeType: 0
+    Name: Attack
   - Type: 9
-    SynchronizeType: 1
-    Name: OnNuckBack
+    SynchronizeType: 0
+    Name: Swap
   - Type: 4
-    SynchronizeType: 1
-    Name: OnCC
-  - Type: 9
-    SynchronizeType: 1
-    Name: OnStun
+    SynchronizeType: 0
+    Name: isAttack
+  - Type: 3
+    SynchronizeType: 0
+    Name: ComboCnt
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
