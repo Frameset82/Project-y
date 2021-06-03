@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class DodgeReturn : StateMachineBehaviour
 {
+    private PlayerKeyboardInput playerKeyboardInput;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        PlayerInfo.canDamage = false; // 무적으로 전환
+        playerKeyboardInput = animator.GetComponentInParent<PlayerKeyboardInput>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -16,11 +18,10 @@ public class DodgeReturn : StateMachineBehaviour
     //    
     //}
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+        // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        PlayerInfo.canDamage = true; // 비무적으로 전환
-        PlayerKeyboardInput.isDodge = false;
+        playerKeyboardInput.isDodge = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

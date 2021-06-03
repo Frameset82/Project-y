@@ -58,14 +58,16 @@ public class Fireball : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && PlayerInfo.canDamage)
+        PlayerInfo playerInfo;
+        playerInfo = other.GetComponent<PlayerInfo>();
+
+        if (other.gameObject.CompareTag("Player") && playerInfo.canDamage)
         {
             //LivingEntity livingEntity = col.gameObject.GetComponent<LivingEntity>();
             //livingEntity.OnDamage(damage);
 
             StartCoroutine(ExplosionRoutine());
         }
-
     }
 
     IEnumerator ExplosionRoutine()

@@ -16,20 +16,20 @@ public class ComboManager : MonoBehaviour
     public void Combo1Check()
     {
         playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
-        if (PlayerKeyboardController.comboCnt == 1)
+        if (playerKeyboardController.comboCnt == 1)
         {
             playerAnimation.playerAnimator.SetBool("isAttack", false);
-            PlayerKeyboardController.comboCnt = 0;
+            playerKeyboardController.comboCnt = 0;
             playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
         }
     }
     public void Combo2Check()
     {
         playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
-        if (PlayerKeyboardController.comboCnt == 2)
+        if (playerKeyboardController.comboCnt == 2)
         {
             playerAnimation.playerAnimator.SetBool("isAttack", false);
-            PlayerKeyboardController.comboCnt = 0;
+            playerKeyboardController.comboCnt = 0;
             playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
         }
     }
@@ -37,7 +37,7 @@ public class ComboManager : MonoBehaviour
     {
         playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
         playerAnimation.playerAnimator.SetBool("isAttack", false);
-        PlayerKeyboardController.comboCnt = 0;
+        playerKeyboardController.comboCnt = 0;
         playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
     }
 

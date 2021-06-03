@@ -13,7 +13,7 @@ public class HermesBoots : ActiveItem
 
     public override void OnActive() //아이템 사용시 구현할 함수
     {
-        prevMove = PlayerInfo.MoveSpeed;
+        prevMove = playerInfo.MoveSpeed;
 
         StartCoroutine(BootsUpdate());
     }
@@ -21,11 +21,11 @@ public class HermesBoots : ActiveItem
     IEnumerator BootsUpdate() //10초동안 이속 상승
     {
 
-        PlayerInfo.MoveSpeed += (prevMove * 10) / 100;
+        playerInfo.MoveSpeed += (prevMove * 10) / 100;
 
         yield return new WaitForSeconds(10f);
 
-        PlayerInfo.MoveSpeed = prevMove;
+        playerInfo.MoveSpeed = prevMove;
 
     }
 

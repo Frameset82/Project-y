@@ -22,19 +22,20 @@ public class PlayerKeyboardController : MonoBehaviourPun
     public Transform FirePos2; // 총구 화염 위치
 
     public float currentAttackTime = 0.0f;
-    public static int comboCnt = 0;
+    public int comboCnt = 0;
 
     public GameObject effect; //총구 화염 이펙트
 
-    public static float hAxis;
-    public static float vAxis;
+    public float hAxis;
+    public float vAxis;
     Vector3 moveVec; // 움직임 벡터
-    public static Vector3 moveVec1; // 상태 초기화용 벡터
+    public Vector3 moveVec1; // 상태 초기화용 벡터
     private Rigidbody playerRigidbody;
 
     // 스크립트들
     private PlayerEquipmentManager playerEquipmentManager;
     private PlayerAnimation playerAnimation;
+    private PlayerKeyboardInput playerKeyboardInput;
 
     private bool onceUpdate = true; // 한번만업데이트
 
@@ -57,6 +58,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
         playerRigidbody = GetComponent<Rigidbody>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
     }
 
     // 상호작용 범위에 들어갔을 때
@@ -75,7 +77,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
         if (pState == PlayerState.Idle )
         {
             pState = PlayerState.Movement;
-            if (PlayerKeyboardInput.isSwap)
+            if (playerKeyboardInput.isSwap)
                 pState = PlayerState.Idle;
         }
     }
@@ -91,6 +93,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
     {
         if (onceUpdate)
         {
+            playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
             playerAnimation = GetComponent<PlayerAnimation>();
             playerRigidbody = GetComponent<Rigidbody>();
             onceUpdate = false;
@@ -109,8 +112,8 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
         Vector3 heading = PlayerKeyboardInput.mainCamera.transform.localRotation * Vector3.forward;
         heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
-        moveVec = heading * Time.fixedDeltaTime * vAxis * PlayerInfo.MoveSpeed;
-        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * hAxis * PlayerInfo.MoveSpeed;
+        moveVec = heading * Time.fixedDeltaTime * vAxis * playerKeyboardInput.moveSpeed;
+        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * hAxis * playerKeyboardInput.moveSpeed;
 
         playerRigidbody.MovePosition(playerRigidbody.position + moveVec);
         moveVec1 = moveVec;
@@ -129,15 +132,15 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
                 comboCnt = 0;
-                PlayerKeyboardInput.isShoot = false;
+                playerKeyboardInput.isShoot = false;
                 playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
             else if(pState == PlayerState.RIghtAttack)
             {
-                PlayerKeyboardInput.isRight = false;
+                playerKeyboardInput.isRight = false;
                 playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
-            PlayerKeyboardInput.isDodge = true;
+            playerKeyboardInput.isDodge = true;
             nextDodgeableTime = Time.time + timeBetDodge;
             StartCoroutine(DodgeCoroutine(dir));
         }
@@ -165,7 +168,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
     // 실제 공격
     public IEnumerator AttackCoroutine(Vector3 destination, float delay)
     {
-        PlayerKeyboardInput.isShoot = true;
+        playerKeyboardInput.isShoot = true;
         pState = PlayerState.Attack;
 
         gameObject.transform.LookAt(destination);
@@ -188,7 +191,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             
             yield return new WaitForSeconds(0.2f); // 딜레이
 
-            PlayerKeyboardInput.isShoot = false;
+            playerKeyboardInput.isShoot = false;
             pState = PlayerState.Idle;
         }
 /*        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
@@ -214,7 +217,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             }
             yield return new WaitForSeconds(delay * 0.5f);
             playerEquipmentManager.equipWeapon.OnAttack();
-            PlayerKeyboardInput.isShoot = false;
+            playerKeyboardInput.isShoot = false;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
@@ -229,7 +232,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             }
             yield return new WaitForSeconds(delay);
             playerEquipmentManager.equipWeapon.OnAttack();
-            PlayerKeyboardInput.isShoot = false;
+            playerKeyboardInput.isShoot = false;
             
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
@@ -245,7 +248,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             }
             yield return new WaitForSeconds(delay);
             playerEquipmentManager.equipWeapon.OnAttack();
-            PlayerKeyboardInput.isShoot = false;
+            playerKeyboardInput.isShoot = false;
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }

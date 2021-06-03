@@ -7,6 +7,7 @@ public class PlayerInfo : LivingEntity
 {
     private PlayerAnimation playerAnimation;
     private PlayerKeyboardController playerKeyboardController;
+    private PlayerKeyboardInput playerKeyboardInput; 
 
     [Header("체력 속성")]
     public Material healthMaterial; // 체력 머테리얼
@@ -15,14 +16,14 @@ public class PlayerInfo : LivingEntity
     [Header("플레이어 기본 속성들")]
     public float maxHealth; // 최대체력( 시작 시 기본체력 )
     public float defaultDamage; // 기본 데미지
-    public static float AtkSpeed ; // 공격속도
-    public static float MoveSpeed = 7.0f ; // 이동속도
+    public float AtkSpeed ; // 공격속도
+    public float MoveSpeed = 7.0f ; // 추가 이동속도
     [Header("플레이어 추가 속성들")]
     public float shield; // 보호막
     public float criProbability; // 치명타 확률
     public float criDamage; // 치명타 데미지
 
-    public static bool canDamage = true; // 데미지를 받을 수 있는 상태
+    public bool canDamage = true; // 데미지를 받을 수 있는 상태
 
     private Damage damage;
     public float timer = 0f;
@@ -35,6 +36,7 @@ public class PlayerInfo : LivingEntity
 
         playerAnimation = GetComponent<PlayerAnimation>();
         playerKeyboardController = GetComponent<PlayerKeyboardController>();
+        playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
 
         damage.dValue = 10f; //초기 데미지값 설정(발판)
         healthMaterial.shader = Shader.Find("Shader Graphs/UI Shader Graph");
@@ -67,35 +69,35 @@ public class PlayerInfo : LivingEntity
         {
             if (dInfo.dType == Damage.DamageType.NuckBack && !dead) // 넉백공격일때
             {
-                PlayerKeyboardInput.isShoot = false;
+                playerKeyboardInput.isShoot = false;
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
-                PlayerKeyboardController.comboCnt = 0;
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
-                PlayerKeyboardInput.maxCcTime = dInfo.ccTime;
+                playerKeyboardController.comboCnt = 0;
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", playerKeyboardController.comboCnt);
+                playerKeyboardInput.maxCcTime = dInfo.ccTime;
                 playerAnimation.OnNuckBack();
-                PlayerKeyboardInput.onNuckBack = true;
+                playerKeyboardInput.onNuckBack = true;
                 playerKeyboardController.pState = PlayerKeyboardController.PlayerState.onCC;
                 playerKeyboardController.NuckBackMove();
             }
             else if((dInfo.dType == Damage.DamageType.Melee || dInfo.dType == Damage.DamageType.None) && !dead) // 일반공격일때
             {
-                PlayerKeyboardInput.isShoot = false;
+                playerKeyboardInput.isShoot = false;
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
-                PlayerKeyboardController.comboCnt = 0;
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
+                playerKeyboardController.comboCnt = 0;
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", playerKeyboardController.comboCnt);
                 canDamage = false;
-                PlayerKeyboardInput.onHit = true;
+                playerKeyboardInput.onHit = true;
                 playerAnimation.OnHit();
             }
             else if(dInfo.dType == Damage.DamageType.Stun && !dead)
             {
-                PlayerKeyboardInput.isShoot = false;
+                playerKeyboardInput.isShoot = false;
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
-                PlayerKeyboardController.comboCnt = 0;
-                playerAnimation.playerAnimator.SetInteger("ComboCnt", PlayerKeyboardController.comboCnt);
-                PlayerKeyboardInput.maxCcTime = dInfo.ccTime;
+                playerKeyboardController.comboCnt = 0;
+                playerAnimation.playerAnimator.SetInteger("ComboCnt", playerKeyboardController.comboCnt);
+                playerKeyboardInput.maxCcTime = dInfo.ccTime;
                 playerAnimation.OnStun();
-                PlayerKeyboardInput.onStun = true;
+                playerKeyboardInput.onStun = true;
                 playerKeyboardController.pState = PlayerKeyboardController.PlayerState.onCC;
             }
         }
@@ -129,7 +131,7 @@ public class PlayerInfo : LivingEntity
         if (timer >= 1.5f)
         {
             canDamage = true;
-            PlayerKeyboardInput.onHit = false;
+            playerKeyboardInput.onHit = false;
             timer = 0.0f;
         }
     }

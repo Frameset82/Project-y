@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class SwapReturn : StateMachineBehaviour
 {
+    private PlayerKeyboardInput playerKeyboardInput;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        playerKeyboardInput = animator.GetComponentInParent<PlayerKeyboardInput>();
+    }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -16,10 +18,10 @@ public class SwapReturn : StateMachineBehaviour
     //    
     //}
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+        // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        PlayerKeyboardInput.isSwap = false;
+        playerKeyboardInput.isSwap = false;
      }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
