@@ -47,12 +47,9 @@ public class EnemyGun : MonoBehaviour
     public void Fire(Damage damage, float fireDistance)
     {
         StartCoroutine(ShotEffect());
-
-        
-        bullet = ObjectPool.GetBullet();
-   
        
-
+        bullet = ObjectPool.GetBullet();
+      
         bullet.damage = damage;
 
         bullet.transform.position = fireTransform.position;

@@ -1039,6 +1039,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8007210702372504429, guid: 98f0c92db2e39c845a1d63cc4239a148,
+        type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 24627815, guid: 98f0c92db2e39c845a1d63cc4239a148, type: 3}
       propertyPath: m_Layer
       value: 8
