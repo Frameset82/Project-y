@@ -16992,6 +16992,9 @@ MonoBehaviour:
   option: 
   ItemSprite: {fileID: 21300000, guid: a456d7bdd0d26274cad6db2f14e46b99, type: 3}
   coolTime: 0
+  player: {fileID: 0}
+  playerEquipmentManager: {fileID: 0}
+  playerInfo: {fileID: 0}
 --- !u!135 &734236749
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -28008,6 +28011,9 @@ MonoBehaviour:
   option: 
   ItemSprite: {fileID: 21300000, guid: a456d7bdd0d26274cad6db2f14e46b99, type: 3}
   coolTime: 0
+  player: {fileID: 0}
+  playerEquipmentManager: {fileID: 0}
+  playerInfo: {fileID: 0}
 --- !u!135 &957570271
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -45660,6 +45666,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1535377072 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2185464556219643250, guid: 1923b29739f7ae44c833b868ff92d2c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 2185464556313318251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1540730558 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3319187881620028653, guid: 9d5c97896cd546844aef08817b7f0fc9,
@@ -52108,6 +52120,9 @@ MonoBehaviour:
   option: 
   ItemSprite: {fileID: 21300000, guid: ab91094d27be8fb449d9f720119c8e46, type: 3}
   coolTime: 0
+  player: {fileID: 0}
+  playerEquipmentManager: {fileID: 0}
+  playerInfo: {fileID: 0}
 --- !u!136 &522575119311317547
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -52538,6 +52553,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2185464555214440116, guid: 1923b29739f7ae44c833b868ff92d2c5,
+        type: 3}
+      propertyPath: playerAnimator
+      value: 
+      objectReference: {fileID: 1535377072}
     - target: {fileID: 2185464555214440117, guid: 1923b29739f7ae44c833b868ff92d2c5,
         type: 3}
       propertyPath: m_RootOrder
@@ -52658,7 +52678,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -930
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2185464555199049968, guid: 1923b29739f7ae44c833b868ff92d2c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1923b29739f7ae44c833b868ff92d2c5, type: 3}
 --- !u!1001 &3319187880926745171
 PrefabInstance:
@@ -53044,6 +53065,9 @@ MonoBehaviour:
   option: 
   ItemSprite: {fileID: 21300000, guid: 4697b4624c37cf94f9358c28710ab328, type: 3}
   coolTime: 0
+  player: {fileID: 0}
+  playerEquipmentManager: {fileID: 0}
+  playerInfo: {fileID: 0}
 --- !u!4 &8276457973518926081
 Transform:
   m_ObjectHideFlags: 0

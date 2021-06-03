@@ -36,6 +36,8 @@ public class PlayerKeyboardController : MonoBehaviourPun
     private PlayerEquipmentManager playerEquipmentManager;
     private PlayerAnimation playerAnimation;
 
+    private bool onceUpdate = true; // 한번만업데이트
+
     public enum PlayerState // 플레이어 상태 리스트
     {
         Idle, // 가만히 서있는 상태
@@ -87,6 +89,13 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
     public void Move()
     {
+        if (onceUpdate)
+        {
+            playerAnimation = GetComponent<PlayerAnimation>();
+            playerRigidbody = GetComponent<Rigidbody>();
+            onceUpdate = false;
+        }
+        
         if (hAxis != 0 || vAxis != 0)
         {
             NowMove();
@@ -100,8 +109,8 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
         Vector3 heading = PlayerKeyboardInput.mainCamera.transform.localRotation * Vector3.forward;
         heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
-        moveVec = heading * Time.deltaTime * vAxis * PlayerInfo.MoveSpeed;
-        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.deltaTime * hAxis * PlayerInfo.MoveSpeed;
+        moveVec = heading * Time.fixedDeltaTime * vAxis * PlayerInfo.MoveSpeed;
+        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * hAxis * PlayerInfo.MoveSpeed;
 
         playerRigidbody.MovePosition(playerRigidbody.position + moveVec);
         moveVec1 = moveVec;

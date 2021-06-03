@@ -19,7 +19,6 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     public PlayerAnimation playerAnimation;
 
     public Ray ray;
-    public Animator avater;
 
     public static bool isShoot = false; // 공격중
     public static bool isRight = false; // 우클릭 공격중
@@ -41,6 +40,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
         playerKeyboardController = gameObject.GetComponent<PlayerKeyboardController>();
         playerEquipmentManager = gameObject.GetComponent<PlayerEquipmentManager>();
         playerAnimation = gameObject.GetComponent<PlayerAnimation>();
+        playerAnimation.ChangeAnimator();
         moveVec2 = transform.forward;
         mainCamera = Camera.main;
     }
@@ -50,6 +50,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
         if(PlayerKeyboardController.isInteraction) return;
         if(GameManager.isMulti && !photonView.IsMine) return;
         InputDodge();
+        InputMove();
     }
 
     private void Update()
@@ -62,7 +63,6 @@ public class PlayerKeyboardInput : MonoBehaviourPun
         SwapInput();
         StateCheck();
         CcCheck();
-        InputMove();
         //Grenade();
     }
 

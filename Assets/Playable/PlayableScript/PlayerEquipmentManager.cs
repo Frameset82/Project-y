@@ -72,6 +72,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             mainWeapon.OnEquip();
             mainWeaponImg.sprite = mainWeapon.weaponSprite;
             equipCount = 1;
+            playerAnimation.ChangeAnimator();
             nearObject = null;
         }
         else if (subWeapon == null)
@@ -84,6 +85,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             subWeapon.OnEquip();
             subWeaponImg.sprite = subWeapon.weaponSprite;
             equipCount = 2;
+            playerAnimation.ChangeAnimator();
             nearObject = null;
         }
         else
@@ -181,6 +183,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
             equipWeapon = subWeapon;
             subWeapon.gameObject.SetActive(true);
+            playerAnimation.ChangeAnimator();
             equipCount = 2;
         }
         else if (equipCount == 2 && count == 1)
@@ -191,6 +194,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
             equipWeapon = mainWeapon;
             mainWeapon.gameObject.SetActive(true);
+            playerAnimation.ChangeAnimator();
             equipCount = 1;
         }
     }
@@ -218,6 +222,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         WeaponAnimChange(equipWeapon.wType);
         particleObj = mainWeapon.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
+        playerAnimation.ChangeAnimator();
         changeEquipment.SetActive(false); // 패널 끄기
         StateReset();
         PlayerKeyboardInput.isShoot = false;
@@ -245,6 +250,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         WeaponAnimChange(subWeapon.wType);
         particleObj = subWeapon.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
+        playerAnimation.ChangeAnimator();
         changeEquipment.SetActive(false); // 패널 끄기
         StateReset();
         PlayerKeyboardInput.isShoot = false;
