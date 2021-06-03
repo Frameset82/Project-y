@@ -799,9 +799,12 @@ MonoBehaviour:
   healthText: {fileID: 6495918262235681083}
   maxHealth: 0
   defaultDamage: 0
+  AtkSpeed: 0
+  MoveSpeed: 7
   shield: 0
   criProbability: 0
   criDamage: 0
+  canDamage: 1
   timer: 0
 --- !u!114 &2185464555214440114
 MonoBehaviour:
@@ -817,9 +820,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiSetting: {fileID: 3165873753965238478}
   moveVec2: {x: 0, y: 0, z: 0}
-  playerKeyboardController: {fileID: 0}
-  playerEquipmentManager: {fileID: 0}
-  playerAnimation: {fileID: 0}
+  moveSpeed: 7
+  isShoot: 0
+  isRight: 0
+  isSwap: 0
+  isDodge: 0
+  onHit: 0
+  onNuckBack: 0
+  onStun: 0
+  isChange: 0
+  maxCcTime: 0
+  delay: 0.4
   Stunps: {fileID: 2185464555188869609}
 --- !u!114 &2185464555214440075
 MonoBehaviour:
@@ -840,7 +851,11 @@ MonoBehaviour:
   FirePos: {fileID: 2185464556241415269}
   FirePos2: {fileID: 2185464555818712571}
   currentAttackTime: 0
+  comboCnt: 0
   effect: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+  hAxis: 0
+  vAxis: 0
+  moveVec1: {x: 0, y: 0, z: 0}
 --- !u!114 &2185464555214440073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -853,6 +868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f170117812ac24d8d11717f89a61b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponRoot: Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/
   playerWeaponRoot: {fileID: 2185464554993603001}
   nearObject: {fileID: 0}
   mainWeapon: {fileID: 0}

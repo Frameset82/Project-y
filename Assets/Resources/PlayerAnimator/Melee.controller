@@ -704,7 +704,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Standing Walk Forward
-  m_Speed: 1
+  m_Speed: 1.2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7716317201464686354}
@@ -717,7 +717,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 5cb6c6d06a15ca147b4435bf4eb50a5d,
+  m_Motion: {fileID: 7917067124390492931, guid: c6ad686e55afb5b4abb4b4d827ea076d,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -1019,7 +1019,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Melee Standing Idle
-  m_Speed: 1.5
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 815528305325775138}
@@ -1032,7 +1032,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 0a3d559ccc52ada48a37281a81cf0bcc,
+  m_Motion: {fileID: -2534459808150090181, guid: b8b3188da66614742b6173d631fd9b44,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
