@@ -8,24 +8,11 @@ public class PlayerAnimation : MonoBehaviour
     public Animator playerAnimator; // 캐릭터 애니메이터
     public RuntimeAnimatorController[] anim = new RuntimeAnimatorController[4]; // 0 검 1 밀리 2 창 3 라이플
 
-    private void Awake()
-    {
-        /*        anim[0] = Resources.Load("PlayerAnimator/TestSword") as RuntimeAnimatorController;
-                anim[1] = Resources.Load("PlayerAnimator/TestMelee") as RuntimeAnimatorController;
-                anim[2] = Resources.Load("PlayerAnimator/TestSpear") as RuntimeAnimatorController;
-                anim[3] = Resources.Load("PlayerAnimator/Rifle") as RuntimeAnimatorController;*/
-        playerAnimator = gameObject.GetComponentInChildren<Animator>();
-    }
-    void Update()
+    public void ChangeAnimator()
     {
         playerAnimator = gameObject.GetComponentInChildren<Animator>();
     }
 
-    // 캐릭터 선자세 애니메이션
-    public void IdleAni()
-    {
-
-    }
     // 캐릭터 이동 애니메이션
     public void MoveAni(bool isMove)
     {
