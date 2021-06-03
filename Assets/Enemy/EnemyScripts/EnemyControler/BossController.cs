@@ -223,8 +223,8 @@ public class BossController : LivingEntity
         {
             transform.LookAt(targetPos);
              anim.SetTrigger("Shoot");    
-        //yield return new WaitForSeconds(0.1f);
-        //bGun.StartFiring(nDamage);
+            yield return new WaitForSeconds(0.1f);
+            bGun.StartFiring(nDamage);
 
         yield return new WaitForSeconds(0.5f);
         }
