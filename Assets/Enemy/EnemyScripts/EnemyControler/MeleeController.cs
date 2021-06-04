@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.AI;
 
-//using UnityEditor;
+
 
 public class MeleeController : LivingEntity, IPunObservable
 {
@@ -105,8 +105,7 @@ public class MeleeController : LivingEntity, IPunObservable
             case MeleeState.NuckBack:
                 break;
             case MeleeState.Attack:
-                StartCoroutine(AttackUpdate());
-               
+                StartCoroutine(AttackUpdate());              
                 break;
             case MeleeState.JumpAttack:
                 JumpAttackRoutine();
@@ -242,7 +241,8 @@ public class MeleeController : LivingEntity, IPunObservable
         nav.velocity = Vector3.zero;
         transform.LookAt(target.transform);
 
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.5f);
+
         if (!isCollision) //공격범위보다 멀면
         {          
             mstate = MeleeState.MoveTarget; //추적상태로 변환
@@ -510,12 +510,12 @@ public class MeleeController : LivingEntity, IPunObservable
 
 
 
-    /*
-    private void OnDrawGizmos() // 범위 그리기
-    {
-        Handles.color = isCollision ? red : blue;
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
 
-    }*/
+    //private void OnDrawGizmos() // 범위 그리기
+    //{
+    //    Handles.color = isCollision ? red : blue;
+    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
+    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
+
+    //}
 }

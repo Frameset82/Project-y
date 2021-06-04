@@ -89,7 +89,7 @@ public class LoadingSceneCtrl : MonoBehaviour
             canvasGroup.alpha = isFadeIn ? Mathf.Lerp(0f, 1f, fadeTimer) : Mathf.Lerp(1f, 0f, fadeTimer);
             Debug.Log(fadeTimer);
         }
-        if(false){
+        if(!isFadeIn){
             gameObject.SetActive(false);
         }
     }

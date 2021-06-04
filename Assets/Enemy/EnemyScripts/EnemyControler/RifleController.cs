@@ -383,6 +383,9 @@ public class RifleController : LivingEntity, IPunObservable
 
     private void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        { return; }
+
         if (hasTarget) //타겟이 있다면
         {
             sectorCheck();//공격범위 체크
@@ -420,12 +423,12 @@ public class RifleController : LivingEntity, IPunObservable
         if(stream.IsWriting)
         {
             stream.SendNext(rstate);
-            stream.SendNext(target);
+      
         }
         else
         {
             rstate = (RifleState)stream.ReceiveNext();
-            target = (GameObject)stream.ReceiveNext();
+  
         }
      
     }

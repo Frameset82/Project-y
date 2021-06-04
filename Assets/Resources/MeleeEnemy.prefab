@@ -324,14 +324,14 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  observableSearch: 0
+  observableSearch: 2
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
+  - {fileID: 2233739336527722860}
   - {fileID: 5740963373715495604}
   - {fileID: 107114890576204682}
   - {fileID: 504732260038289047}
-  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -385,7 +385,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: isHit
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: isDead
   - Type: 9
     SynchronizeType: 1

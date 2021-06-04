@@ -3649,6 +3649,7 @@ GameObject:
   - component: {fileID: 1443022721}
   - component: {fileID: 1443022722}
   - component: {fileID: 1443022723}
+  - component: {fileID: 420746525}
   m_Layer: 9
   m_Name: RogueEnemy
   m_TagString: Enemy
@@ -3785,6 +3786,7 @@ MonoBehaviour:
   - {fileID: 2626480825856293159}
   - {fileID: 1443022722}
   - {fileID: 1443022723}
+  - {fileID: 420746525}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -3813,7 +3815,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Attack
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: isDead
   - Type: 3
     SynchronizeType: 1
@@ -3849,6 +3851,22 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &420746525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2626480825856293180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &5086601943692843162
 GameObject:
   m_ObjectHideFlags: 0

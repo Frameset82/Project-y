@@ -105,8 +105,7 @@ public class RogueController : LivingEntity, IPunObservable
                 MoveUpdate();
                 break;
             case RogueState.Attack:
-                StartCoroutine(AttackUpdate());
-              
+                StartCoroutine(AttackUpdate());              
                 break;
             case RogueState.Teleport:
                 TeleportUpdate();
@@ -435,6 +434,9 @@ public class RogueController : LivingEntity, IPunObservable
 
     private void Update()
     {
+        if(!PhotonNetwork.IsMasterClient)
+        { return; }
+
         if (hasTarget) //타겟이 있다면
         {
             sectorCheck();
@@ -473,12 +475,12 @@ public class RogueController : LivingEntity, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(rstate);
-            stream.SendNext(target);
+           
         }
         else
         {
             rstate = (RogueState)stream.ReceiveNext();
-            target = (GameObject)stream.ReceiveNext();
+           
         }
     }
 
