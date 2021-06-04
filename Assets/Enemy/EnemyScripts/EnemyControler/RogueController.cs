@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 //using UnityEditor;
 using UnityEngine.AI;
 
-public class RogueController : LivingEntity
+public class RogueController : LivingEntity, IPunObservable
 {
     public enum RogueState { None, Idle, MoveTarget, Teleport, KnockBack, Stun, Attack, Die };
 
@@ -15,6 +16,7 @@ public class RogueController : LivingEntity
     public GameObject target; // 공격 대상
     public int Idlestate;
 
+    private PhotonView pv;
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
     private Rigidbody rigid;
@@ -38,9 +40,7 @@ public class RogueController : LivingEntity
     }
 
     [Header("전투 속성")]
-    public Damage damage; // 공격속성
-
-    private Vector3 dist; // 공격 대상과의 거리                              
+    public Damage damage; // 공격속성           
 
     private float attackRange = 2f; // 공격 사거리
 
@@ -65,10 +65,14 @@ public class RogueController : LivingEntity
     private void Awake()
     {
         // 컴포넌트 불러오기
+        pv = GetComponent<PhotonView>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
         nav.updateRotation = false; // 네비의회전 기능 비활성화
+
+        pv.ObservedComponents[0] = this;
+        pv.Synchronization = ViewSynchronization.UnreliableOnChange;
     }
 
     protected override void OnEnable()
@@ -80,6 +84,7 @@ public class RogueController : LivingEntity
         base.OnEnable();
     }
 
+    [PunRPC]
     public void Init(float _damage, float _speed, float _startHealth = 50f) //초기 설정 메소드
     {
         nav.speed = _speed; //이동속도 설정
@@ -256,9 +261,10 @@ public class RogueController : LivingEntity
         }
     }
 
-  
+
 
     // 공격을 당했을때
+    [PunRPC]
     public override void OnDamage(Damage dInfo)
     {
         if (dead) return;
@@ -382,7 +388,7 @@ public class RogueController : LivingEntity
 
     void OnSetTarget(GameObject _target) //타겟설정
     {
-        if (hasTarget) //이미 타겟이 있다면
+        if (hasTarget || !PhotonNetwork.IsMasterClient) //이미 타겟이 있다면
         {
             return;
         }
@@ -444,7 +450,6 @@ public class RogueController : LivingEntity
     }
     
 
- 
 
     void sectorCheck() // 부챗꼴 범위 충돌
     {
@@ -461,6 +466,20 @@ public class RogueController : LivingEntity
         }
         else
             isCollision = false;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(rstate);
+            stream.SendNext(target);
+        }
+        else
+        {
+            rstate = (RogueState)stream.ReceiveNext();
+            target = (GameObject)stream.ReceiveNext();
+        }
     }
 
     /*

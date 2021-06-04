@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class EnemyGun : MonoBehaviour
 {
@@ -8,14 +9,14 @@ public class EnemyGun : MonoBehaviour
     public GameObject muzzleFlashEffect; // 총구 화염 효과
     EnemyBullet bullet;
 
-    protected LineRenderer bulletLineRenderer; // 라인렌더러
+  
 
     private void Awake()
     {
         muzzleFlashEffect.SetActive(false);
-        bulletLineRenderer = GetComponent<LineRenderer>();
-        bulletLineRenderer.positionCount = 2;
-        bulletLineRenderer.enabled = false;
+        //bulletLineRenderer = GetComponent<LineRenderer>();
+        //bulletLineRenderer.positionCount = 2;
+        //bulletLineRenderer.enabled = false;
     }
 
 
@@ -44,6 +45,7 @@ public class EnemyGun : MonoBehaviour
     //        StartCoroutine(ShotEffect(hitPosition));
     //    }
     //}
+
     public void Fire(Damage damage, float fireDistance)
     {
         StartCoroutine(ShotEffect());

@@ -296,4 +296,6 @@ public class ObjectPool : MonoBehaviour
         bl.transform.SetParent(Instance.transform); //오브젝트 풀의 자식으로 설정
         Instance.SBulletQueue.Enqueue(bl); //다시 큐에 넣기
     }
+
+    
 }

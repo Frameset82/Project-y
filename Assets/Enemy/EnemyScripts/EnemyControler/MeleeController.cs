@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 using UnityEngine.AI;
+
 //using UnityEditor;
 
-public class MeleeController : LivingEntity
+public class MeleeController : LivingEntity, IPunObservable
 {
     public enum MeleeState {None, Idle, MoveTarget, JumpAttack, NuckBack, Stun, Attack, Die};
    
@@ -22,10 +24,10 @@ public class MeleeController : LivingEntity
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
     private Rigidbody rigid;
+    private PhotonView pv;
     [SerializeField]
     private Healthbar healthbar;
 
- 
 
     [SerializeField]
     private float attackRange = 2f; // 공격 사거리
@@ -59,10 +61,15 @@ public class MeleeController : LivingEntity
     private void Awake()
     {
         // 컴포넌트 불러오기
+        pv = GetComponent<PhotonView>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody>();
         nav.updateRotation = false; // 네비의회전 기능 비활성화
+
+        pv.ObservedComponents[0] = this;
+        pv.Synchronization = ViewSynchronization.UnreliableOnChange;
+
     }
 
     protected override void OnEnable()
@@ -74,7 +81,7 @@ public class MeleeController : LivingEntity
         base.OnEnable(); 
     }
 
-
+    [PunRPC]
     public void Init(float _damage, float _speed, float _startHealth = 50f) //초기 설정 메소드
     {
         nav.speed = _speed; //이동속도 설정
@@ -187,7 +194,6 @@ public class MeleeController : LivingEntity
 
     void JumpAttackRoutine()
     {
-
        StartCoroutine(JumpAttack(targetPos));
     }
 
@@ -195,8 +201,6 @@ public class MeleeController : LivingEntity
     
     IEnumerator JumpAttack(Vector3 tPos)
     {
-
-
         lookAtPosition = new Vector3(tPos.x, this.transform.position.y, tPos.z);
 
         nav.SetDestination(lookAtPosition); //목적지 설정
@@ -243,16 +247,18 @@ public class MeleeController : LivingEntity
         {          
             mstate = MeleeState.MoveTarget; //추적상태로 변환
         }
-        //else
-        //{
-         
-        //}
+        
 
     }
 
     //공격 적용
     public void OnAttackEvent()
-    {
+    { 
+        // 호스트가 아니라면 공격 실행 불가
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         //StopAllCoroutines();
 
         LivingEntity enemytarget = target.GetComponent<LivingEntity>(); //타겟의 리빙엔티티 가져오기
@@ -271,12 +277,12 @@ public class MeleeController : LivingEntity
 
     void OnSetTarget(GameObject _target)
     {
-        if (hasTarget) //이미 타겟이 있다면
+        if (hasTarget || !PhotonNetwork.IsMasterClient) //이미 타겟이 있거나 마스터 클라이언트가 아니라면
         {
             return;
         }
 
-        
+
         target = _target;
         targetPos = target.transform.position;
         //타겟을 향해 이동하는 상태로 전환
@@ -284,6 +290,7 @@ public class MeleeController : LivingEntity
     }
 
     // 공격을 당했을때
+    [PunRPC]
     public override void OnDamage(Damage dInfo)
     {
         if (dead) return;
@@ -293,7 +300,7 @@ public class MeleeController : LivingEntity
 
         if (health <= 0 && !dead && this.gameObject.activeInHierarchy) // 체력이 0보다 작고 사망상태가 아닐때
         {
-            StartCoroutine(Die());
+           Die();
         }
         else
         {
@@ -407,8 +414,14 @@ public class MeleeController : LivingEntity
         }
     }
 
+    public override void Die()
+    {
+        base.Die();
+        StartCoroutine(Death());
+    }
+
     //죽었을때
-    public IEnumerator Die()
+    public IEnumerator Death()
     {
 
         rigid.isKinematic = true;
@@ -446,8 +459,13 @@ public class MeleeController : LivingEntity
     }
 
     private void Update()
-    {   
-        if(hasTarget) //타겟이 있다면
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
+        if (hasTarget) //타겟이 있다면
         {
             sectorCheck();//공격범위 체크
         }
@@ -476,10 +494,22 @@ public class MeleeController : LivingEntity
             isCollision = false;
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(mstate);
+        }
+        else
+        {
+            mstate = (MeleeState)stream.ReceiveNext();
+        }
+    }
 
 
 
-   
+
+
     /*
     private void OnDrawGizmos() // 범위 그리기
     {

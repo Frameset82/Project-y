@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 //using UnityEditor;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.AI;
 
-public class RifleController : LivingEntity
+public class RifleController : LivingEntity, IPunObservable
 {
     public enum RifleState { None, Idle, MoveTarget, KnockBack, Stun, Attack, Die };
 
@@ -14,8 +15,9 @@ public class RifleController : LivingEntity
     public float MoveSpeed = 3.5f; //이동 속도
     public Vector3 targetPos; //공격 대상 위치
     public GameObject target; // 공격 대상
-    public int Idlestate; 
+    public int Idlestate;
 
+    private PhotonView pv;
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Rigidbody rigid; 
     private Animator anim; // 애니메이터 컴포넌트
@@ -57,10 +59,14 @@ public class RifleController : LivingEntity
     private void Awake()
     {
         // 컴포넌트 불러오기
+        pv = GetComponent<PhotonView>();
         nav = GetComponent<NavMeshAgent>();
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
         nav.updateRotation = false; // 네비의회전 기능 비활성화
+
+        pv.ObservedComponents[0] = this;
+        pv.Synchronization = ViewSynchronization.UnreliableOnChange;
     }
 
     protected override void OnEnable()
@@ -72,6 +78,7 @@ public class RifleController : LivingEntity
         base.OnEnable();
     }
 
+    [PunRPC]
     public void Init(float _damage, float _speed, float _startHealth = 50f) //초기 설정 메소드
     {
         nav.speed = _speed; //이동속도 설정
@@ -80,7 +87,7 @@ public class RifleController : LivingEntity
         this.startingHealth = _startHealth; //초기 HP값 설정
     }
 
-    // 근접 적 상태 체크
+    
     void CheckState()
     {
         switch (rstate)
@@ -164,13 +171,9 @@ public class RifleController : LivingEntity
                 transform.LookAt(lookAtPosition);
                 nav.SetDestination(lookAtPosition); // 목적지 설정
              
-            }
-            
-        }
-
-     
+            }          
+        }   
     }
-
 
     // 공격시
     void AttackUpdate()
@@ -191,6 +194,7 @@ public class RifleController : LivingEntity
     //공격 적용
     public void OnAttackEvent()
     {
+
         StopAllCoroutines();
         eGun.Fire(damage,attackRange);
 
@@ -198,6 +202,8 @@ public class RifleController : LivingEntity
     }
 
     // 공격을 당했을때
+   
+    [PunRPC]
     public override void OnDamage(Damage dInfo)
     {
         if (dead) return;
@@ -210,7 +216,8 @@ public class RifleController : LivingEntity
 
         if (health <= 0 && this.gameObject.activeInHierarchy && !dead) // 체력이 0보다 작고 사망상태가 아닐때
         {
-            StartCoroutine(Die());
+            Die();
+            //StartCoroutine(Die());
         }
         else
         {
@@ -323,7 +330,7 @@ public class RifleController : LivingEntity
 
     void OnSetTarget(GameObject _target) //타겟설정
     {
-        if (hasTarget) //이미 타겟이 있다면
+        if (hasTarget || !PhotonNetwork.IsMasterClient) //이미 타겟이 있거나 마스터 클라이언트가 아니라면
         {
             return;
         }
@@ -332,10 +339,16 @@ public class RifleController : LivingEntity
         rstate = RifleState.MoveTarget;
     }
 
+    public override void Die()
+    {
+        base.Die();
+        StartCoroutine(Death());
+    }
 
     //죽었을때
-    public IEnumerator Die()
+    public IEnumerator Death()
     {
+       
         rigid.isKinematic = true;
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
@@ -400,6 +413,21 @@ public class RifleController : LivingEntity
         }
         else
             isCollision = false;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.IsWriting)
+        {
+            stream.SendNext(rstate);
+            stream.SendNext(target);
+        }
+        else
+        {
+            rstate = (RifleState)stream.ReceiveNext();
+            target = (GameObject)stream.ReceiveNext();
+        }
+     
     }
 
     /*

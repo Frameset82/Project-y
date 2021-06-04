@@ -11,7 +11,7 @@ public class DummyPlayerController : LivingEntity
     Damage damage;
     Damage damage1;
 
-    public GameObject target;
+    public GameObject[] target;
 
     private void Awake()
     {
@@ -39,8 +39,14 @@ public class DummyPlayerController : LivingEntity
 
         if (Input.GetMouseButtonDown(0)) //마우스클릭시 데미지 입히기(테스트용)
         {
+            for(int i = 0; i< target.Length; i++)
+            {
+                LivingEntity enemytarget = target[i].GetComponent<LivingEntity>();
+                enemytarget.OnDamage(damage);
+
+            }
             //OnDamage(10f);
-            LivingEntity enemytarget = target.GetComponent<LivingEntity>();
+         
 
             //Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
 
@@ -50,15 +56,21 @@ public class DummyPlayerController : LivingEntity
            // Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
             //hitNormal = hitNormal.normalized;
             //hitNormal.y = 1;
-            enemytarget.OnDamage(damage);
+          
             //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
             // Debug.Log(Damage.DamageType.Melee);
 
         }
         if (Input.GetMouseButtonDown(1)) //마우스클릭시 데미지 입히기(테스트용)
         {
+            for (int i = 0; i < target.Length; i++)
+            {
+                LivingEntity enemytarget = target[i].GetComponent<LivingEntity>();
+                enemytarget.OnDamage(damage1);
+
+            }
             //OnDamage(10f);
-            LivingEntity enemytarget = target.GetComponent<LivingEntity>();
+     
 
             //Vector3 hitPoint = target.GetComponent<Collider>().ClosestPoint(transform.position);
 
@@ -68,7 +80,7 @@ public class DummyPlayerController : LivingEntity
             // Rigidbody rigid = enemytarget.GetComponent<Rigidbody>();
             //hitNormal = hitNormal.normalized;
             //hitNormal.y = 1;
-            enemytarget.OnDamage(damage1);
+   
             //rigid.AddForce(hitNormal * 20f * -1f, ForceMode.Impulse);
             // Debug.Log(Damage.DamageType.Melee);
 

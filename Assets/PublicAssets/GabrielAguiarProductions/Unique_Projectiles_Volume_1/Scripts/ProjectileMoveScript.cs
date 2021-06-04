@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
+
 
 public class ProjectileMoveScript : MonoBehaviour {
 
 	public float speed;
 	[Tooltip("From 0% to 100%")]
-	public float accuracy;
+	public float accuracy; //정확도?
 	public float fireRate;
 	public GameObject muzzlePrefab;
 	public GameObject hitPrefab;
