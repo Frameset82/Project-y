@@ -267,7 +267,7 @@ MonoBehaviour:
   Idlestate: 0
   healthbar: {fileID: 6162936625405454046}
   attackRange: 2.3
-  angleRange: 48
+  angleRange: 360
 --- !u!195 &2103348281
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -373,31 +373,31 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: isAttack
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isFirstAttack
   - Type: 3
     SynchronizeType: 1
     Name: IdleCheck
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isStun
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isHit
   - Type: 9
     SynchronizeType: 0
     Name: isDead
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Lying
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: wakeUp
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isKnockBack
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: JumpAttack
   m_SynchronizeLayers:
   - SynchronizeType: 2
@@ -4189,7 +4189,7 @@ GameObject:
   - component: {fileID: 7247678137300738402}
   m_Layer: 9
   m_Name: MeleeEnemyAnimation
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

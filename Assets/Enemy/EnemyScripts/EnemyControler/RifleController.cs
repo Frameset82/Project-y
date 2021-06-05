@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-//using UnityEditor;
+using UnityEditor;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.AI;
 
@@ -74,6 +74,8 @@ public class RifleController : LivingEntity, IPunObservable
         //대기 상태로 설정
         rstate = RifleState.Idle;
         this.startingHealth = 50f; //테스트용 설정
+        damage.dValue = 10f; //초기 데미지값 설정
+        damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
         healthbar.SetMaxHealth((int)startingHealth);
         base.OnEnable();
     }
@@ -158,8 +160,9 @@ public class RifleController : LivingEntity, IPunObservable
         if(hasTarget)
         {
             targetPos = target.transform.position;
+            sectorCheck();//공격범위 체크
 
-            if(isCollision)
+            if (isCollision)
             {
                 rstate = RifleState.Attack;
             }
@@ -178,7 +181,7 @@ public class RifleController : LivingEntity, IPunObservable
     // 공격시
     void AttackUpdate()
     {
-      
+        sectorCheck();//공격범위 체크
         if (!isCollision)
         {
             rstate = RifleState.MoveTarget;        
@@ -196,50 +199,54 @@ public class RifleController : LivingEntity, IPunObservable
     {
 
         StopAllCoroutines();
-        eGun.Fire(damage,attackRange);
+        eGun.Fire(damage);
 
-       // attackTarget.OnDamage(damage, hitPoint, hitNormal);
+     
     }
 
     // 공격을 당했을때
    
-    [PunRPC]
+ 
     public override void OnDamage(Damage dInfo)
     {
         if (dead) return;
 
-        StopAllCoroutines();
-
-
-        health -= dInfo.dValue; // 체력 감소
-
-
-        if (health <= 0 && this.gameObject.activeInHierarchy && !dead) // 체력이 0보다 작고 사망상태가 아닐때
+        else if (PhotonNetwork.IsMasterClient)
         {
-            Die();
-            //StartCoroutine(Die());
-        }
-        else
-        {
-            switch (dInfo.dType)
+            health -= dInfo.dValue; //체력 감소      
+            if (health <= 0 && !dead && this.gameObject.activeInHierarchy) // 체력이 0보다 작고 사망상태가 아닐때
             {
-                case Damage.DamageType.Melee:
-                    StartCoroutine(NormalDamageRoutine());//일반 공격일시
-                    break;
+                Die();
+                pv.RPC("Die", RpcTarget.Others);
+            }
+            else
+            {
+                StopAllCoroutines();
 
-                case Damage.DamageType.NuckBack:
-                    rstate = RifleState.KnockBack;
-                    StartCoroutine(NuckBackDamageRoutine(dInfo.ccTime));
-                    break;
-                case Damage.DamageType.Stun:
-                    rstate = RifleState.Stun;
-                    StartCoroutine(StunRoutine(dInfo.ccTime));
-                    break;
+                DamageEvent((int)dInfo.dType, dInfo.ccTime);
+               
             }
         }
+    }
 
-        healthbar.SetHealth((int)health);
-        Debug.Log(health);
+    void DamageEvent(int dType, float ccTime)
+    {     
+        switch (dType)
+        {
+            case 1:
+                StartCoroutine(NormalDamageRoutine());//일반 공격일시
+                break;
+            case 2:
+                rstate = RifleState.Stun;
+                StartCoroutine(StunRoutine(ccTime));
+                break;
+            case 3:
+                rstate = RifleState.KnockBack;
+                StartCoroutine(NuckBackDamageRoutine(ccTime));
+                break;
+           
+        }
+
     }
 
     IEnumerator NormalDamageRoutine()
@@ -378,17 +385,19 @@ public class RifleController : LivingEntity, IPunObservable
 
         yield return new WaitForSeconds(1f); // 1초 대기
 
-        //ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
+        ObjectPool.ReturnRifle(this); //다시 오브젝트 풀에 반납
     }
 
     private void Update()
     {
+
+        healthbar.SetHealth((int)health);
         if (!PhotonNetwork.IsMasterClient)
         { return; }
 
         if (hasTarget) //타겟이 있다면
         {
-            sectorCheck();//공격범위 체크
+           
         }
 
 
@@ -422,24 +431,25 @@ public class RifleController : LivingEntity, IPunObservable
     {
         if(stream.IsWriting)
         {
-            stream.SendNext(rstate);
-      
+          
+            stream.SendNext(health);
         }
         else
         {
-            rstate = (RifleState)stream.ReceiveNext();
-  
+       
+            health = (float)stream.ReceiveNext();
         }
      
     }
 
-    /*
-    private void OnDrawGizmos() // 범위 그리기
-    {
 
-        Handles.color = isCollision ? red : blue;
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
+    //private void OnDrawGizmos() // 범위 그리기
+    //{
 
-    }*/
+    //    Handles.color = isCollision ? red : blue;
+    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
+    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
+
+    //}
 }
+

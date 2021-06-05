@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBullet2 : MonoBehaviour
+public class OldEnemyBullet : MonoBehaviour
 {
     private Rigidbody rigid;
     private float time;
