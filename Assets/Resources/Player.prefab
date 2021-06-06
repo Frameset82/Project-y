@@ -857,6 +857,9 @@ MonoBehaviour:
   hAxis: 0
   vAxis: 0
   moveVec1: {x: 0, y: 0, z: 0}
+  footStepSound:
+  - {fileID: 8300000, guid: b4bb3cc57903b6c44bb51503ab073be1, type: 3}
+  footStepTemp: 0
 --- !u!114 &2185464555214440073
 MonoBehaviour:
   m_ObjectHideFlags: 0

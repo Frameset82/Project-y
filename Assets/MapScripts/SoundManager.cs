@@ -1,10 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
+    public AudioMixer audioMixer;
+    public AudioSource bgSound;
+    public AudioSource enviroSound;
+    public AudioClip[] bgList;
+    public AudioClip enviroClip;
+
+    // public float bgmVol;
+    // public float environmentVol;
+    // public float effectVol;
+
+    int bgNum=-1;
 
     // 사운드 매니저 싱글톤
     private void Awake() {
@@ -16,12 +28,57 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
+
+    // public void SetVolume(float setBgmVol, float setEnvironmentVol, float setEffectVol){
+    //     bgmVol = setBgmVol;
+    //     environmentVol = setEnvironmentVol;
+    //     effectVol = setEffectVol;
+
+    //     bgSound.volume = bgmVol;
+    //     enviroSound.volume = environmentVol;
+    // }
+    
     // 효과음 재생
     public void SFXPlay(string sfxName, AudioClip clip){
         GameObject go = new GameObject(sfxName + "Sound");
         AudioSource audioSource = go.AddComponent<AudioSource>();
         audioSource.clip = clip;
+        // audioSource.volume = effectVol;
         audioSource.Play();
         Destroy(go,clip.length);
+    }
+
+    // 환경음 재생
+    public void EnviroPlay(){
+        EnviroStop();
+        if(enviroClip!=null){
+            enviroSound.clip = enviroClip;
+            enviroSound.loop = true;
+            enviroSound.Play();
+        }
+    }
+    // 환경음 정지
+    public void EnviroStop(){
+        if(enviroSound!=null) return;
+        enviroSound.Stop();
+        enviroSound.clip = null;
+    }
+
+    // 배경음 재생
+    public void BgmPlay(){
+        BgmStop();
+        if(bgList[bgNum+1]!=null){
+            bgNum++;
+            bgSound.clip = bgList[bgNum];
+            bgSound.loop = true;
+            bgSound.Play();
+        }
+    }
+    
+    // 배경음 정지
+    public void BgmStop(){
+        if(bgSound!=null) return;
+        bgSound.Stop();
+        bgSound.clip = null;
     }
 }

@@ -32,6 +32,9 @@ public class PlayerKeyboardController : MonoBehaviourPun
     public Vector3 moveVec1; // 상태 초기화용 벡터
     private Rigidbody playerRigidbody;
 
+    public AudioClip[] footStepSound;
+    public int footStepTemp;
+
     // 스크립트들
     private PlayerEquipmentManager playerEquipmentManager;
     private PlayerAnimation playerAnimation;

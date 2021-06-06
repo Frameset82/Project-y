@@ -1,19 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class UISetting : UserInterface
 {
+    public AudioMixer audioMixer;                           // 오디오 믹서
+    public Slider masterSlider;                             // 마스터 볼륨
+    public Slider bgmSlider;                                // 배경음 볼륨
+    public Slider enviroSlider;                             // 환경음 볼륨
+    public Slider effectSlider;                             // 효과음 볼륨
 
-    FullScreenMode screenMode;
-    // 드롭 다운
-    public Dropdown resolutionDropdown;
-    // 전체 화면 토글 버튼
-    public Toggle fullscreenBtn;
-    // 해상도 배열
-    List<Resolution> resolutions = new List<Resolution>();
-    // 드롭다운 항목 값
+    FullScreenMode screenMode;                              // 드롭 다운
+    public Dropdown resolutionDropdown;                     // 전체 화면 토글 버튼
+    public Toggle fullscreenBtn;                            // 해상도 배열
+    List<Resolution> resolutions = new List<Resolution>();  // 드롭다운 항목 값
     [SerializeField] int resolutionNum;
 
     void Start(){
@@ -66,12 +68,34 @@ public class UISetting : UserInterface
         ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
     }
 
+    // 오디오 볼륨 컨트롤
+    public void AudioControl(){
+        float masterSound = masterSlider.value;
+        float bgmSound = bgmSlider.value;
+        float enviroSound = enviroSlider.value;
+        float effectSound = effectSlider.value;
+
+        if(masterSound == -40f) audioMixer.SetFloat("Master", -80);
+        else audioMixer.SetFloat("Master", masterSound);
+        if(bgmSound == -40f) audioMixer.SetFloat("BGM", -80);
+        else audioMixer.SetFloat("BGM", bgmSound);
+        if(enviroSound == -40f) audioMixer.SetFloat("Enviro", -80);
+        else audioMixer.SetFloat("Enviro", enviroSound);
+        if(effectSound == -40f) audioMixer.SetFloat("SFX", -80);
+        else audioMixer.SetFloat("SFX", effectSound);
+    }
+
+    public void ToggleAudioVolume(){
+        
+    }
+
     // 확인 버튼
     public void OkBtnClick(){
         Screen.SetResolution(
             resolutions[resolutionNum].width,
             resolutions[resolutionNum].height,
             screenMode);
+        // SoundManager.instance.SetVolume(bgmVol.value, enviroVol.value, effectVol.value);
     }
 
     // x 버튼
