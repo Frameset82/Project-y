@@ -16,15 +16,16 @@ public class TestDamage : MonoBehaviour
     {
         damage.dType = Damage.DamageType.Melee;
         damage.dValue = 10f;
+        damage.ccTime = 1f;
 
         ndamage.dType = Damage.DamageType.NuckBack;
-        damage.dValue = 1f;
-        damage.ccTime = 1f;
+        ndamage.dValue = 1f;
+        ndamage.ccTime = 1f;
 
 
         sdamage.dType = Damage.DamageType.Stun;
-        damage.dValue = 1f;
-        damage.ccTime = 3f;
+        sdamage.dValue = 1f;
+        sdamage.ccTime = 10f;
     }
 
     private void Start()
