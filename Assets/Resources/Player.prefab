@@ -748,7 +748,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2185464555214440115}
   serializedVersion: 2
-  m_Mass: 1.5
+  m_Mass: 2.5
   m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -780,9 +780,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
-  m_Height: 2.00968
+  m_Height: 2.437284
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9951248, z: 0}
+  m_Center: {x: 0, y: 1.2187393, z: 0}
 --- !u!114 &2185464555214440112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,7 +846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd0344fae65408847897260799f07273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dodgePower: 28
+  dodgePower: 56
   ps: {fileID: 2185464554981462977}
   playerAvatar: {fileID: 2185464556219643260}
   pState: 0
@@ -879,8 +879,8 @@ MonoBehaviour:
   mainWeapon: {fileID: 0}
   subWeapon: {fileID: 0}
   equipWeapon: {fileID: 0}
-  mainWeaponImg: {fileID: 7182717553105439957}
-  subWeaponImg: {fileID: 7182717554634759425}
+  mainWeaponImg: {fileID: 7182717554634759425}
+  subWeaponImg: {fileID: 7182717553105439957}
   changeEquipment: {fileID: 7182717554021608108}
   changeImg1: {fileID: 7182717553445462384}
   changeImg2: {fileID: 7182717554056652321}
@@ -4662,9 +4662,9 @@ PrefabInstance:
       objectReference: {fileID: 2185464555214440073}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d5c97896cd546844aef08817b7f0fc9, type: 3}
---- !u!114 &7182717554634759425 stripped
+--- !u!114 &7182717553105439957 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6736792980642483929, guid: 9d5c97896cd546844aef08817b7f0fc9,
+  m_CorrespondingSourceObject: {fileID: 6736792979822731021, guid: 9d5c97896cd546844aef08817b7f0fc9,
     type: 3}
   m_PrefabInstance: {fileID: 4527179799734375384}
   m_PrefabAsset: {fileID: 0}
@@ -4812,9 +4812,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da694e63356cc34b99060ba5c0e9486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7182717553105439957 stripped
+--- !u!114 &7182717554634759425 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6736792979822731021, guid: 9d5c97896cd546844aef08817b7f0fc9,
+  m_CorrespondingSourceObject: {fileID: 6736792980642483929, guid: 9d5c97896cd546844aef08817b7f0fc9,
     type: 3}
   m_PrefabInstance: {fileID: 4527179799734375384}
   m_PrefabAsset: {fileID: 0}

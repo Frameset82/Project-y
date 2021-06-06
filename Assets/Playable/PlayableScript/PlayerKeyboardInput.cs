@@ -110,7 +110,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
+                Vector3 destination = new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z);
                 playerKeyboardController.Attack(destination, delay, animSpeed);
             }
         }
@@ -124,7 +124,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
+                Vector3 destination = new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z);
                 playerKeyboardController.RightAttack(destination);
             }
         }

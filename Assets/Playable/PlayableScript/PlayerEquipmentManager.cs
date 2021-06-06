@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class PlayerEquipmentManager : MonoBehaviour
 {
@@ -42,11 +44,12 @@ public class PlayerEquipmentManager : MonoBehaviour
     public Image iChangeImg3;
 
     GameObject particleObj;
-
+    private PhotonView pv = null;
     private void Start()
     {
         playerAnimation = GetComponent<PlayerAnimation>();
         playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
+        pv = GetComponent<PhotonView>();
         player = gameObject;
     }
 
@@ -70,7 +73,8 @@ public class PlayerEquipmentManager : MonoBehaviour
         {
             ParticleDelete();
             mainWeapon = nearObject.GetComponent<Weapon>();
-            WeaponAnimChange(mainWeapon.wType);
+            pv.RPC("WeaponAnimChange", RpcTarget.All, mainWeapon.wType);
+/*            WeaponAnimChange(mainWeapon.wType);*/
             equipWeapon = mainWeapon;
             mainWeapon.OnEquip();
             mainWeaponImg.sprite = mainWeapon.weaponSprite;
@@ -160,6 +164,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         nearObject.transform.rotation = newWeapon.tr.rotation;
     }
 
+    [PunRPC]
     public void WeaponAnimChange(Weapon.WeaponType wType)
     {
         switch (wType)
@@ -354,11 +359,6 @@ public class PlayerEquipmentManager : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         nearObject = null;
-    }
-
-    void Awake()
-    {
-        
     }
 
     public IEnumerator SwapCoroutine()

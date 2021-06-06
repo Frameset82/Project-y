@@ -59,7 +59,7 @@ public class PlayerInfo : LivingEntity
     }
 
     // 체력 변동시 남은 체력의 퍼센트 계산 후 UI 적용
-    void CalculateHealthPoint(){
+    public void CalculateHealthPoint(){
         healthMaterial.SetFloat("_HeightPercent", health/maxHealth*100);
     }
 
