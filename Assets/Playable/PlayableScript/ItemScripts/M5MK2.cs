@@ -28,7 +28,6 @@ public class M5MK2 : ActiveItem
     
     }
 
-
     void Update()
     {
        if(Input.GetMouseButtonDown(0))
@@ -41,7 +40,13 @@ public class M5MK2 : ActiveItem
        }
     }
 
-   
+    public override void OnEquip()
+    {
+        throw new System.NotImplementedException();
+    }
 
-   
+    public override void UnEquip()
+    {
+        throw new System.NotImplementedException();
+    }
 }

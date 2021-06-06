@@ -13,15 +13,23 @@ public abstract class ActiveItem : MonoBehaviour
     [HideInInspector] public GameObject player;
     [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector] public PlayerInfo playerInfo;
+    [HideInInspector] public PlayerAnimation playerAnimation;
+    [HideInInspector] public PlayerKeyboardInput playerKeyboardInput;
 
     public virtual void OnActive() //아이템 사용시 구현할 함수
     {
         throw new System.NotImplementedException();
     }
 
-    public void SetPlayer(GameObject player)
+    public void SetPlayer(GameObject playerObj)
     {
+        player = playerObj;
         playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
         playerInfo = player.GetComponent<PlayerInfo>();
+        playerAnimation = player.GetComponent<PlayerAnimation>();
+        playerKeyboardInput = player.GetComponent<PlayerKeyboardInput>();
     }
+
+    public abstract void OnEquip(); // 무기 장착
+    public abstract void UnEquip(); // 무기 해제
 }

@@ -26,10 +26,10 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
     public GameObject effect; //총구 화염 이펙트
 
-    public float hAxis;
-    public float vAxis;
-    Vector3 moveVec; // 움직임 벡터
-    public Vector3 moveVec1; // 상태 초기화용 벡터
+    [HideInInspector] public float hAxis;
+    [HideInInspector] public float vAxis;
+    [HideInInspector] Vector3 moveVec; // 움직임 벡터
+    [HideInInspector] public Vector3 moveVec1; // 상태 초기화용 벡터
     private Rigidbody playerRigidbody;
 
     public AudioClip[] footStepSound;
@@ -159,17 +159,17 @@ public class PlayerKeyboardController : MonoBehaviourPun
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
     }
 
-    public void Attack(Vector3 destination, float delay)
+    public void Attack(Vector3 destination, float delay, float animSpeed)
     { 
         if (pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack)
         {
-            StartCoroutine(AttackCoroutine(destination, delay));
+            StartCoroutine(AttackCoroutine(destination, delay, animSpeed));
         }
     }
 
 
     // 실제 공격
-    public IEnumerator AttackCoroutine(Vector3 destination, float delay)
+    public IEnumerator AttackCoroutine(Vector3 destination, float delay, float animSpeed)
     {
         playerKeyboardInput.isShoot = true;
         pState = PlayerState.Attack;
