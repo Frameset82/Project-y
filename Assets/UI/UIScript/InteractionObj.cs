@@ -44,5 +44,6 @@ public class InteractionObj : MonoBehaviour
     }
     public void ChageCanvas(UserInterface ui) {
         userInterface = ui;
+        userInterface.interactionObj = this;
     }
 }

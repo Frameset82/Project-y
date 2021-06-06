@@ -134,7 +134,8 @@ public class UINetworkManager : UserInterface
     }
     // ESC 버튼 클릭
     public void ClickEscapeBtn(){
-        CloseUI();
+        // CloseUI();
+        interactionObj.InactiveUI();
     }
     // 로비정보 새로고침 버튼 클릭
     public void ClickRefreshBtn(){
