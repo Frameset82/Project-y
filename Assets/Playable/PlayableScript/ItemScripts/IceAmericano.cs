@@ -33,4 +33,14 @@ public class IceAmericano : ActiveItem
         playerInfo.MoveSpeed = prevMove;
   
     }
+
+    public override void OnEquip()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void UnEquip()
+    {
+        throw new System.NotImplementedException();
+    }
 }

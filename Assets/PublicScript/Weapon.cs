@@ -12,16 +12,20 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
     public float delay; // 딜레이
     public float attackSpeed = 1.0f; //공격속도
     public bool canAttack; //공격가능 유무
+    [HideInInspector]public float prevDamage; // 변동 전 데미지
     protected Damage damage;
     [Header("장착 무기 타입")]
     public WeaponType wType;
 
     [Header("플레이어")]
     public Transform tr; // 무기가 들어갈 위치
-    public GameObject trGameObject;
+    [HideInInspector]public GameObject trGameObject;
+    [HideInInspector]public bool weaponTrChanged = false;
     [HideInInspector]public GameObject player;
     [HideInInspector]public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector]public PlayerInfo playerInfo;
+    [HideInInspector]public PlayerKeyboardInput playerKeyboardInput;
+    [HideInInspector]public PlayerAnimation playerAnimation;
 
     public enum WeaponType // 플레이어 상태 리스트
     {
@@ -36,6 +40,8 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
         player = playerObj;
         playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
         playerInfo = player.GetComponent<PlayerInfo>();
+        playerKeyboardInput = player.GetComponent<PlayerKeyboardInput>();
+        playerAnimation = player.GetComponent<PlayerAnimation>();
     }
 
     public abstract void OnAttack(); // 공격 기능

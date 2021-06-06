@@ -29,4 +29,13 @@ public class HermesBoots : ActiveItem
 
     }
 
+    public override void OnEquip()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void UnEquip()
+    {
+        throw new System.NotImplementedException();
+    }
 }

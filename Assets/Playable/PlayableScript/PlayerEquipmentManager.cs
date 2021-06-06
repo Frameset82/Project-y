@@ -46,6 +46,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     private void Start()
     {
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
         player = gameObject;
     }
 
@@ -109,6 +110,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             ParticleDelete();
             FirstItem = nearObject.GetComponent<ActiveItem>();
             FirstItemImg.sprite = FirstItem.ItemSprite;
+            FirstItem.OnEquip();
             rend = nearObject.GetComponent<MeshRenderer>();
             rend.enabled = false;
             nearObject = null;
@@ -117,6 +119,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         {
             ParticleDelete();
             SecondItem = nearObject.GetComponent<ActiveItem>();
+            SecondItem.OnEquip();
             SecondItemImg.sprite = SecondItem.ItemSprite;
             rend = nearObject.GetComponent<MeshRenderer>();
             rend.enabled = false;
@@ -126,6 +129,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         {
             ParticleDelete();
             ThirdItem = nearObject.GetComponent<ActiveItem>();
+            ThirdItem.OnEquip();
             ThirdItemImg.sprite = ThirdItem.ItemSprite;
             rend = nearObject.GetComponent<MeshRenderer>();
             rend.enabled = false;
@@ -262,6 +266,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         // 들고있는 아이템을 땅에 떨어트리는 과정
         ParticleDelete();
+        FirstItem.UnEquip();
         particleObj = FirstItem.transform.GetChild(0).gameObject;
         particleObj.SetActive(true);
         rend = FirstItem.GetComponent<MeshRenderer>();
@@ -269,6 +274,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         FirstItem.gameObject.transform.SetParent(null);
         // 무기를 장착하는 과정
         FirstItem = nearObject.GetComponent<ActiveItem>();
+        FirstItem.OnEquip();
         FirstItemImg.sprite = FirstItem.ItemSprite;
         rend = FirstItem.GetComponent<MeshRenderer>();
         rend.enabled = false;
@@ -283,6 +289,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         // 들고있는 아이템을 땅에 떨어트리는 과정
         ParticleDelete();
+        SecondItem.UnEquip();
         particleObj = SecondItem.transform.GetChild(0).gameObject;
         particleObj.SetActive(true);
         rend = SecondItem.GetComponent<MeshRenderer>();
@@ -290,6 +297,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         SecondItem.gameObject.transform.SetParent(null);
         // 무기를 장착하는 과정
         SecondItem = nearObject.GetComponent<ActiveItem>();
+        SecondItem.OnEquip();
         SecondItemImg.sprite = SecondItem.ItemSprite;
         rend = SecondItem.GetComponent<MeshRenderer>();
         rend.enabled = false;
@@ -304,6 +312,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         // 들고있는 아이템을 땅에 떨어트리는 과정
         ParticleDelete();
+        ThirdItem.UnEquip();
         particleObj = ThirdItem.transform.GetChild(0).gameObject;
         particleObj.SetActive(true);
         rend = ThirdItem.GetComponent<MeshRenderer>();
@@ -311,6 +320,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         ThirdItem.gameObject.transform.SetParent(null);
         // 무기를 장착하는 과정
         ThirdItem = nearObject.GetComponent<ActiveItem>();
+        ThirdItem.OnEquip();
         ThirdItemImg.sprite = ThirdItem.ItemSprite;
         rend = ThirdItem.GetComponent<MeshRenderer>();
         rend.enabled = false;

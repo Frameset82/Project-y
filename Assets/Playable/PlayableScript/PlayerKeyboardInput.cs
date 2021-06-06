@@ -34,7 +34,8 @@ public class PlayerKeyboardInput : MonoBehaviourPun
 
     public float maxCcTime = 0f; // 시간 저장용
     private float ccTime = 0f;
-    public float delay = 0.4f;
+    public float delay = 0.4f; // 어택코루틴 딜레이
+    public float animSpeed = 1.0f; // 애니메이터 스피드
     //스턴 파티클
     public GameObject Stunps;
     
@@ -60,7 +61,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
 
     private void Update()
     {
-        if(GameManager.isMulti && !photonView.IsMine) return;
+        if (GameManager.isMulti && !photonView.IsMine) return;
         InputEscape();
         Attack();
         Interation();
@@ -96,9 +97,8 @@ public class PlayerKeyboardInput : MonoBehaviourPun
             {
                 moveVec2 = transform.forward;
             }
-
-            playerKeyboardController.Dodge(moveVec2);
             transform.LookAt(transform.position + moveVec2);
+            playerKeyboardController.Dodge(moveVec2);
         }
     }
 
@@ -111,7 +111,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
             if (Physics.Raycast(ray, out hit))
             {
                 Vector3 destination = new Vector3(hit.point.x, 0, hit.point.z);
-                playerKeyboardController.Attack(destination, delay);
+                playerKeyboardController.Attack(destination, delay, animSpeed);
             }
         }
     }

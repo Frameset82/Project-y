@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoransSword : MeleeWeapon
+public class SwordGram : MeleeWeapon
 {
     private Damage damage;
 
@@ -23,7 +23,6 @@ public class DoransSword : MeleeWeapon
         damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
         for (int i = 0; i < enemies.Count; i++)
         {
-            playerInfo.RestoreHealth(1f);
             damage.hitPoint = enemies[i].GetComponent<Collider>().ClosestPoint(transform.position);
             damage.hitNormal = transform.position - enemies[i].transform.position;
             enemies[i].GetComponent<LivingEntity>().OnDamage(damage);
@@ -42,17 +41,17 @@ public class DoransSword : MeleeWeapon
 
     public override void OnEquip()
     {
-        damageValue = 10f;
+        damageValue = 30f;
         prevDamage = damageValue + playerInfo.defaultDamage;
         damage.dValue = prevDamage; //초기 데미지값 설정
         weaponTrChanged = true;
-        playerInfo.maxHealth += 20f;
+        playerInfo.maxHealth += 50f;
     }
 
     public override void UnEquip()
     {
         weaponTrChanged = false;
-        playerInfo.maxHealth -= 20f;
+        playerInfo.maxHealth -= 50f;
     }
 
     // Update is called once per frame

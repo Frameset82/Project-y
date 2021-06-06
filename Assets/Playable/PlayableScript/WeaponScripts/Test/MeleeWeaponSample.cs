@@ -5,7 +5,6 @@ using UnityEngine;
 public class MeleeWeaponSample : MeleeWeapon
 {
     private Damage damage;
-    private RuntimeAnimatorController anim;
 
     public override void OnActive()
     {
@@ -47,6 +46,8 @@ public class MeleeWeaponSample : MeleeWeapon
     public override void OnEquip()
     {
         playerInfo.maxHealth += 50f;
+        playerKeyboardInput.animSpeed += 0.1f;
+        playerAnimation.playerAnimator.SetFloat("AttackSpeed", playerKeyboardInput.animSpeed);
     }
 
     public override void UnEquip()
