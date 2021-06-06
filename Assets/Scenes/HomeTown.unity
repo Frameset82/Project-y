@@ -7445,6 +7445,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiCanvas: {fileID: 256365228}
   interactionObj: {fileID: 0}
+  hoverBtnClip: {fileID: 8300000, guid: b2dfa6d3816db4742aeeec994793339a, type: 3}
+  clickBtnClip: {fileID: 8300000, guid: a56632e5e766db64c878a544235a46a9, type: 3}
+  closeBtnClip: {fileID: 0}
   networkManager: {fileID: 359360136}
   StatusText: {fileID: 1708060514}
   LobbyInfoText: {fileID: 122313790}
@@ -13531,6 +13534,7 @@ GameObject:
   - component: {fileID: 455736429}
   - component: {fileID: 455736428}
   - component: {fileID: 455736427}
+  - component: {fileID: 455736430}
   m_Layer: 0
   m_Name: EscapeBtn
   m_TagString: Untagged
@@ -13612,6 +13616,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1513702555}
+        m_MethodName: PlayCloseBtnClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &455736428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13649,6 +13664,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 455736425}
   m_CullTransparentMesh: 0
+--- !u!114 &455736430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455736425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1513702555}
+          m_MethodName: PlayHoverBtnClip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &460052058
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16307,6 +16350,7 @@ GameObject:
   - component: {fileID: 596882840}
   - component: {fileID: 596882839}
   - component: {fileID: 596882838}
+  - component: {fileID: 596882841}
   m_Layer: 0
   m_Name: SoloModeBtn
   m_TagString: Untagged
@@ -16388,6 +16432,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1513702555}
+        m_MethodName: PlayClickBtnClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &596882839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16425,6 +16480,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596882836}
   m_CullTransparentMesh: 0
+--- !u!114 &596882841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596882836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1513702555}
+          m_MethodName: PlayHoverBtnClip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &597248860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17586,6 +17669,7 @@ GameObject:
   - component: {fileID: 634779865}
   - component: {fileID: 634779864}
   - component: {fileID: 634779863}
+  - component: {fileID: 634779866}
   m_Layer: 0
   m_Name: MultiModeBtn
   m_TagString: Untagged
@@ -17667,6 +17751,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1513702555}
+        m_MethodName: PlayClickBtnClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &634779864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17704,6 +17799,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 634779861}
   m_CullTransparentMesh: 0
+--- !u!114 &634779866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634779861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1513702555}
+          m_MethodName: PlayHoverBtnClip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &635499569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40384,6 +40507,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiCanvas: {fileID: 1513702550}
   interactionObj: {fileID: 0}
+  hoverBtnClip: {fileID: 8300000, guid: b2dfa6d3816db4742aeeec994793339a, type: 3}
+  clickBtnClip: {fileID: 8300000, guid: a56632e5e766db64c878a544235a46a9, type: 3}
+  closeBtnClip: {fileID: 8300000, guid: e1b8edff06d28e34d996c56087ac62bc, type: 3}
   soloModeBtn: {fileID: 596882838}
   multiModeBtn: {fileID: 634779863}
   escapeBtn: {fileID: 455736427}
@@ -58546,3 +58672,72 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa4e2032389ba3e448fd45e23b45a8cd, type: 3}
+--- !u!1001 &7868640254960278476
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7868640255752265048, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2be92709dddcc2c4380528ab8e3d4950, type: 3}

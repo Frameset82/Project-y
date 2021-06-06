@@ -8,6 +8,10 @@ public abstract class UserInterface : MonoBehaviour
 {
     public GameObject uiCanvas; // UI 할당
     public InteractionObj interactionObj;
+    public AudioClip hoverBtnClip;
+    public AudioClip clickBtnClip;
+    public AudioClip closeBtnClip;
+    
     // UI 활성화
     public void OpenUI(){
         if(PlayerKeyboardController.isInteraction == true) return;
@@ -25,4 +29,17 @@ public abstract class UserInterface : MonoBehaviour
             interactionObj.ChageCanvas(ui);
         }
     }
+    // 마우스 호버 클립 재생
+    public void PlayHoverBtnClip(){
+        SoundManager.instance.SFXPlay("Hover", hoverBtnClip);
+    }
+    // 마우스 클릭 클립 재생
+    public void PlayClickBtnClip(){
+        SoundManager.instance.SFXPlay("Click", clickBtnClip);
+    }
+    // UI 닫기 클립 재생
+    public void PlayCloseBtnClip(){
+        SoundManager.instance.SFXPlay("Close", closeBtnClip);
+    }
+
 }
