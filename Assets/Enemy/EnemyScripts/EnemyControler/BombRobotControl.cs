@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class BombRobotControl : LivingEntity
+public class BombRobotControl : LivingEntity, IPunObservable
 {
     public enum BombState { None, Idle, MoveTarget, Exploding, KnockBack, Stun, Die };
 
@@ -23,12 +24,14 @@ public class BombRobotControl : LivingEntity
     private NavMeshAgent nav;
     private Animator anim;
     private Rigidbody rigid;
+    private PhotonView pv;
 
     [SerializeField]
     private Healthbar healthbar;
 
     void Awake()
     {
+        pv = GetComponent<PhotonView>();
         mesh = GetComponentsInChildren<MeshRenderer>(); //메쉬 가져오기
         nav = GetComponent<NavMeshAgent>(); //네비게이션 가져오기
         anim = GetComponentInChildren<Animator>(); //애니메이터 가져오기 
@@ -38,6 +41,9 @@ public class BombRobotControl : LivingEntity
         damage.ccTime = 1f;
         damage.dValue = 50f;
         startingHealth = 30f;
+
+        pv.ObservedComponents[0] = this;
+        pv.Synchronization = ViewSynchronization.UnreliableOnChange;
     }
 
     public void SetTarget(GameObject _target) //타겟 설정
@@ -271,6 +277,11 @@ public class BombRobotControl : LivingEntity
         yield return new WaitForSeconds(1f);
         Explosion.SetActive(false);
         ObjectPool.ReturnBombRobot(this);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
     }
 }
     

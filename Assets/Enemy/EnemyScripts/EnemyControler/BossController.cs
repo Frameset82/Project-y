@@ -4,8 +4,9 @@ using UnityEngine;
 //using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class BossController : LivingEntity
+public class BossController : LivingEntity, IPunObservable
 {
    public enum BossState { None, MoveTarget, NormalAttack, SpawnRobot, AmimingShot, BackDash, Dash, Stun,Die}; //보스 상태
 
@@ -492,7 +493,8 @@ public class BossController : LivingEntity
         //Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
     }
 
-
-  
-
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
 }
