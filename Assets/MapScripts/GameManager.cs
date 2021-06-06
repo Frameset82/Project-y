@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject playerEffect;               // 플레이어 스폰 효과
     public Transform playerSpawn0;                // 플레이어 스폰 위치 0번
     public Transform playerSpawn1;                // 플레이어 스폰 위치 1번
-    public UnityEvent playerSpwan;                // 플레이어 스폰 이벤트
+    public UnityEvent playerSpawn;                // 플레이어 스폰 이벤트
+    public AudioClip playerSpawnClip;             // 플레이어 스폰 클립
+
     public static bool isMulti{get; private set;} // 멀티플레이 환경 체크
 
     // 씬에 싱글톤 오브젝트가 된 다른 GameManager 오브젝트가 있다면 자신을 파괴
@@ -38,16 +40,19 @@ public class GameManager : MonoBehaviourPunCallbacks
             if(PhotonNetwork.IsMasterClient){
                 PhotonNetwork.Instantiate(playerEffect.name, playerSpawn0.position, Quaternion.identity);
                 PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn0.position, Quaternion.identity);
+                SoundManager.instance.SFXPlay(playerSpawnClip, gameObject);
             } else {
                 PhotonNetwork.Instantiate(playerEffect.name, playerSpawn1.position, Quaternion.identity);
                 PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn1.position, Quaternion.identity);
+                SoundManager.instance.SFXPlay(playerSpawnClip, gameObject);
             }
         } else {
             Instantiate(playerEffect, playerSpawn0.position, Quaternion.identity);
             Instantiate(playerPrefab, playerSpawn0.position, Quaternion.identity);
+            SoundManager.instance.SFXPlay(playerSpawnClip, gameObject);
         }
         PlayerKeyboardController.isInteraction=false;
-        playerSpwan.Invoke();
+        playerSpawn.Invoke();
         SoundManager.instance.BgmPlay();
     }
 

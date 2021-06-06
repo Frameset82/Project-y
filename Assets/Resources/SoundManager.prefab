@@ -44,12 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e59960ea145104e84cb670f9af2102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgSound: {fileID: 0}
-  bgList:
-  - {fileID: 8300000, guid: 3a321d5010884144cb9e4a94fe2f4486, type: 3}
-  - {fileID: 8300000, guid: e7368875b03720e41aebbdacece53187, type: 3}
-  - {fileID: 8300000, guid: 0477d9618a144a549a5f3524329052f7, type: 3}
-  - {fileID: 8300000, guid: fcf41eab87eabfe48ad1dba0860a1450, type: 3}
+  audioMixer: {fileID: 0}
+  bgSound: {fileID: 70495400}
+  enviroSound: {fileID: 0}
+  bgList: []
+  enviroClip: {fileID: 0}
 --- !u!82 &70495400
 AudioSource:
   m_ObjectHideFlags: 0
@@ -59,7 +58,8 @@ AudioSource:
   m_GameObject: {fileID: 7868640255752265048}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3943428867619917966, guid: e65ab534e4437c34cb832a8f2059072f,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1

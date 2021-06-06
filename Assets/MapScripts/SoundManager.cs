@@ -29,23 +29,12 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // public void SetVolume(float setBgmVol, float setEnvironmentVol, float setEffectVol){
-    //     bgmVol = setBgmVol;
-    //     environmentVol = setEnvironmentVol;
-    //     effectVol = setEffectVol;
-
-    //     bgSound.volume = bgmVol;
-    //     enviroSound.volume = environmentVol;
-    // }
-    
     // 효과음 재생
-    public void SFXPlay(string sfxName, AudioClip clip){
-        GameObject go = new GameObject(sfxName + "Sound");
-        AudioSource audioSource = go.AddComponent<AudioSource>();
+    public void SFXPlay(AudioClip clip, GameObject obj){
+        if(obj==null || clip==null) return;
+        AudioSource audioSource = obj.GetComponent<AudioSource>();
         audioSource.clip = clip;
-        // audioSource.volume = effectVol;
         audioSource.Play();
-        Destroy(go,clip.length);
     }
 
     // 환경음 재생
