@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordGram : MeleeWeapon
+public class Gungnir : MeleeWeapon
 {
     private Damage damage;
 
@@ -44,15 +44,11 @@ public class SwordGram : MeleeWeapon
         prevDamage = damageValue + playerInfo.defaultDamage;
         damage.dValue = prevDamage; //초기 데미지값 설정
         weaponTrChanged = true;
-        playerInfo.maxHealth += 50f;
-        playerInfo.CalculateHealthPoint(); // 체력바 동기화
     }
 
     public override void UnEquip()
     {
         weaponTrChanged = false;
-        playerInfo.maxHealth -= 50f;
-        playerInfo.CalculateHealthPoint(); // 체력바 동기화
     }
 
     // Update is called once per frame

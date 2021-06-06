@@ -73,9 +73,11 @@ public class PlayerEquipmentManager : MonoBehaviour
         {
             ParticleDelete();
             mainWeapon = nearObject.GetComponent<Weapon>();
-            pv.RPC("WeaponAnimChange", RpcTarget.All, mainWeapon.wType);
-/*            WeaponAnimChange(mainWeapon.wType);*/
             equipWeapon = mainWeapon;
+            if (GameManager.isMulti == true)
+                pv.RPC("WeaponAnimChange", RpcTarget.All, mainWeapon.wType);
+            else
+                WeaponAnimChange(mainWeapon.wType);
             mainWeapon.OnEquip();
             mainWeaponImg.sprite = mainWeapon.weaponSprite;
             equipCount = 1;
@@ -87,8 +89,11 @@ public class PlayerEquipmentManager : MonoBehaviour
             ParticleDelete();
             mainWeapon.gameObject.SetActive(false);
             subWeapon = nearObject.GetComponent<Weapon>();
-            WeaponAnimChange(subWeapon.wType);
             equipWeapon = subWeapon;
+            if (GameManager.isMulti == true)
+                pv.RPC("WeaponAnimChange", RpcTarget.All, subWeapon.wType);
+            else
+                WeaponAnimChange(subWeapon.wType);
             subWeapon.OnEquip();
             subWeaponImg.sprite = subWeapon.weaponSprite;
             equipCount = 2;
@@ -230,7 +235,10 @@ public class PlayerEquipmentManager : MonoBehaviour
         mainWeaponImg.sprite = mainWeapon.weaponSprite;
         equipCount = 1;
         WeaponTr();
-        WeaponAnimChange(equipWeapon.wType);
+        if (GameManager.isMulti == true)
+            pv.RPC("WeaponAnimChange", RpcTarget.All, mainWeapon.wType);
+        else
+            WeaponAnimChange(mainWeapon.wType);
         particleObj = mainWeapon.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
         playerAnimation.ChangeAnimator();
@@ -258,7 +266,10 @@ public class PlayerEquipmentManager : MonoBehaviour
         subWeaponImg.sprite = subWeapon.weaponSprite;
         equipCount = 2;
         WeaponTr();
-        WeaponAnimChange(subWeapon.wType);
+        if (GameManager.isMulti == true)
+            pv.RPC("WeaponAnimChange", RpcTarget.All, subWeapon.wType);
+        else
+            WeaponAnimChange(subWeapon.wType);
         particleObj = subWeapon.transform.GetChild(0).gameObject;
         particleObj.SetActive(false);
         playerAnimation.ChangeAnimator();

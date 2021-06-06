@@ -53,6 +53,7 @@ public class DoransSword : MeleeWeapon
     {
         weaponTrChanged = false;
         playerInfo.maxHealth -= 20f;
+        playerInfo.CalculateHealthPoint(); // 체력바 동기화
     }
 
     // Update is called once per frame
