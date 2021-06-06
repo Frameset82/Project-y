@@ -89,7 +89,8 @@ public class DummyPlayerController : LivingEntity
 
     public override void OnDamage(Damage dInfo)  // 데미지를 입는 기능
     {
-      
+
+        Debug.Log("Damage");
         //base.OnDamage(damage, hitPoint, hitNormal);
         animator.SetTrigger("IsHit");
  

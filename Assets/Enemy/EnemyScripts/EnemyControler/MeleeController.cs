@@ -155,8 +155,7 @@ public class MeleeController : LivingEntity, IPunObservable
 
     [PunRPC]
     void ShowAnimation(int a)
-    {
-      
+    {    
         switch (a)
         {
             case 1:               
@@ -170,7 +169,6 @@ public class MeleeController : LivingEntity, IPunObservable
                 break;
             case 4:
                 anim.SetTrigger("isStun");
-  
                 break;
             case 5:
                 anim.SetTrigger("isHit");
@@ -182,8 +180,6 @@ public class MeleeController : LivingEntity, IPunObservable
                 anim.SetTrigger("isDead");
                 break;
         }
-   
-
     }
 
     // 대기 상태일때의 동작
@@ -539,7 +535,7 @@ public class MeleeController : LivingEntity, IPunObservable
 
     
 
-        yield return new WaitForSeconds(1f); // 1초 대기
+        yield return new WaitForSeconds(2f); // 1초 대기
 
         ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
 
