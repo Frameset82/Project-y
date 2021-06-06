@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-//using UnityEditor;
+using UnityEditor;
 using UnityEngine.AI;
 
 public class RogueController : LivingEntity, IPunObservable
@@ -111,7 +111,7 @@ public class RogueController : LivingEntity, IPunObservable
                 TeleportUpdate();
                 break;
             case RogueState.Die:
-                Die();
+          
                 break;
         }
     }
@@ -142,6 +142,34 @@ public class RogueController : LivingEntity, IPunObservable
         }
     }
 
+    [PunRPC]
+    void ShowAnimation(int a)
+    {
+        switch (a)
+        {
+            case 1:
+                anim.SetTrigger("isKnockBack");
+                break;
+            case 2:
+                anim.SetTrigger("wakeUp");
+                break;
+            case 3:
+                anim.SetTrigger("isStun");               
+                break;
+            case 4:
+                anim.SetTrigger("isHit");
+                break;
+            case 5:
+                anim.SetTrigger("Lying");
+                break;
+            case 6:
+                anim.SetTrigger("isDead");
+                break;
+        }
+
+
+    }
+
     // 대기 상태일때의 동작
     void IdleUpdate()
     {
@@ -160,11 +188,12 @@ public class RogueController : LivingEntity, IPunObservable
    
     void MoveUpdate()
     {
-        Vector3 lookAtPosition = Vector3.zero;
-
+     
         if (hasTarget)
         {
             targetPos = target.transform.position;
+
+            sectorCheck();
 
             if (bTeleportation)//텔레포트가 가능하면
             {
@@ -204,6 +233,7 @@ public class RogueController : LivingEntity, IPunObservable
             //순간이동 가능 여부 false로 변경
             bTeleportation = false;
 
+            sectorCheck();
             if (isCollision) //타겟과 충돌시
             {
                 rstate = RogueState.Attack; //공격으로 상태 전환
@@ -231,8 +261,9 @@ public class RogueController : LivingEntity, IPunObservable
         nav.velocity = Vector3.zero; // 이동속도 줄이기
         transform.LookAt(target.transform);
 
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(2f);
 
+        sectorCheck();
         if (!isCollision) //공격범위보다 멀면
         {
             rstate = RogueState.MoveTarget;
@@ -243,7 +274,8 @@ public class RogueController : LivingEntity, IPunObservable
     //공격 적용
     public void OnAttackEvent()
     {
-        StopAllCoroutines();
+        if (!PhotonNetwork.IsMasterClient)
+        { return; }
 
         LivingEntity attackTarget = target.GetComponent<LivingEntity>();
 
@@ -252,57 +284,72 @@ public class RogueController : LivingEntity, IPunObservable
 
         damage.hitNormal = transform.position - target.transform.position;
 
-       // attackTarget.OnDamage(damage, hitPoint, hitNormal);
+        sectorCheck();
 
-        if(isCollision)
+        if (isCollision)
         {
             attackTarget.OnDamage(damage);
         }
     }
 
-
+    void OnSetTarget(GameObject _target) //타겟설정
+    {
+        if (hasTarget || !PhotonNetwork.IsMasterClient) //이미 타겟이 있다면
+        {
+            return;
+        }
+        target = _target;
+        //타겟을 향해 이동하는 상태로 전환
+        rstate = RogueState.MoveTarget;
+    }
 
     // 공격을 당했을때
-    [PunRPC]
     public override void OnDamage(Damage dInfo)
     {
         if (dead) return;
 
-        health -= dInfo.dValue; //체력 감소
-
-        StopAllCoroutines();
-
-        if (health <= 0 && this.gameObject.activeInHierarchy && !dead) // 체력이 0보다 작고 사망상태가 아닐때
+        else if (PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(Die());
-        }
-     
-        else
-        {
-            switch (dInfo.dType)
+            health -= dInfo.dValue; //체력 감소      
+            if (health <= 0 && !dead && this.gameObject.activeInHierarchy) // 체력이 0보다 작고 사망상태가 아닐때
             {
-                case Damage.DamageType.Melee:     
-                 StartCoroutine(NormalDamageRoutine());//일반 공격일시
-                 break;
+                Die();             
+            }
+            else
+            {
+                StopAllCoroutines();
 
-                case Damage.DamageType.NuckBack:
-                    rstate = RogueState.KnockBack;
-                    StartCoroutine(NuckBackDamageRoutine(dInfo.ccTime));
-                    break;
-                case Damage.DamageType.Stun:
-                    rstate = RogueState.Stun;
-                    StartCoroutine(StunRoutine(dInfo.ccTime));
-                    break;
+                DamageEvent((int)dInfo.dType, dInfo.ccTime);
+             
             }
         }
-        healthbar.SetHealth((int)health);
     }
 
+    void DamageEvent(int dType, float ccTime)
+    {
+        
+        switch (dType)
+        {
+            case 1:
+                StartCoroutine(NormalDamageRoutine());//일반 공격일시
+                break;
+            case 2:
+                rstate = RogueState.Stun;
+                StartCoroutine(StunRoutine(ccTime));
+                break;
+            case 3:
+                rstate = RogueState.KnockBack;
+                StartCoroutine(NuckBackDamageRoutine(ccTime));
+                break;
+
+        }
+ 
+    }
 
     IEnumerator NormalDamageRoutine()
     {
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { anim.SetTrigger("isHit"); } // 트리거 실행}
+        { pv.RPC("ShowAnimation", RpcTarget.All, 4); } // 트리거 실행}
 
 
         float startTime = Time.time; //시간체크
@@ -314,6 +361,17 @@ public class RogueController : LivingEntity, IPunObservable
             nav.velocity = Vector3.zero;
             yield return null;
         }
+
+        sectorCheck();
+
+        if (isCollision)
+        {
+            rstate = RogueState.Attack;
+        }
+        else
+        {
+            rstate = RogueState.MoveTarget;
+        }
     }
 
     IEnumerator NuckBackDamageRoutine(float nuckTime) //넉백시
@@ -321,8 +379,8 @@ public class RogueController : LivingEntity, IPunObservable
 
         nav.velocity = Vector3.zero;
 
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))     
-        { anim.SetTrigger("isKnockBack"); }// 트리거 실행
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+        { pv.RPC("ShowAnimation", RpcTarget.All, 1); }// 트리거 실행
 
         float startTime = Time.time;
 
@@ -334,15 +392,16 @@ public class RogueController : LivingEntity, IPunObservable
         }
 
         startTime = Time.time;
-        anim.SetTrigger("wakeUp");
+        pv.RPC("ShowAnimation", RpcTarget.All, 2);
 
         while (Time.time < startTime + 3.8f)
         {
-            rigid.angularVelocity = Vector3.zero;
-           
+            rigid.angularVelocity = Vector3.zero;          
             yield return null;
         }
 
+
+        sectorCheck();
         if (isCollision)
         {
             rstate = RogueState.Attack;
@@ -357,8 +416,8 @@ public class RogueController : LivingEntity, IPunObservable
     {
         nav.velocity = Vector3.zero;
 
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { anim.SetTrigger("isStun"); } // 트리거 실행
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack") )
+        { pv.RPC("ShowAnimation", RpcTarget.All, 3); } // 트리거 실행
 
         float startTime = Time.time;
 
@@ -370,10 +429,11 @@ public class RogueController : LivingEntity, IPunObservable
         }
 
 
-        anim.SetTrigger("wakeUp");
+        pv.RPC("ShowAnimation", RpcTarget.All, 2);
 
         yield return new WaitForSeconds(0.2f);
 
+        sectorCheck();
         if (isCollision)
         {
             rstate = RogueState.Attack;
@@ -385,30 +445,34 @@ public class RogueController : LivingEntity, IPunObservable
     }
 
 
-    void OnSetTarget(GameObject _target) //타겟설정
+
+    [PunRPC]
+    public override void Die()
     {
-        if (hasTarget || !PhotonNetwork.IsMasterClient) //이미 타겟이 있다면
+        if (PhotonNetwork.IsMasterClient)
         {
-            return;
+            pv.RPC("Die", RpcTarget.Others);
         }
-        target = _target;
-        //타겟을 향해 이동하는 상태로 전환
-        rstate = RogueState.MoveTarget;
+
+        base.Die();
+        StopAllCoroutines();
+        StartCoroutine(Death());
+
     }
 
-
     //죽었을때
-    public IEnumerator Die()
+    public IEnumerator Death()
     {
         rigid.isKinematic = true;
+    
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
         {
-            anim.SetTrigger("Lying");
+            ShowAnimation(5);
         }
         else
         {
-            anim.SetTrigger("isDead"); // 트리거 활성화
+            ShowAnimation(6);
         }
 
 
@@ -429,17 +493,19 @@ public class RogueController : LivingEntity, IPunObservable
 
         yield return new WaitForSeconds(1f); // 1초 대기
 
-        //ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
+        ObjectPool.ReturnRogue(this); //다시 오브젝트 풀에 반납
     }
 
     private void Update()
     {
-        if(!PhotonNetwork.IsMasterClient)
+        healthbar.SetHealth((int)health);
+
+        if (!PhotonNetwork.IsMasterClient)
         { return; }
 
         if (hasTarget) //타겟이 있다면
         {
-            sectorCheck();
+            targetPos = target.transform.position;
         }
 
         CheckState(); //상태 체크
@@ -474,22 +540,20 @@ public class RogueController : LivingEntity, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(rstate);
-           
+            stream.SendNext(health);
         }
         else
-        {
-            rstate = (RogueState)stream.ReceiveNext();
-           
+        {  
+            health = (float)stream.ReceiveNext();
         }
     }
 
-    /*
-    private void OnDrawGizmos() // 범위 그리기
-    {
-        Handles.color = isCollision ? red : blue;
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
-    
-    }*/
+
+    //private void OnDrawGizmos() // 범위 그리기
+    //{
+    //    Handles.color = isCollision ? red : blue;
+    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angleRange / 2, attackRange);
+    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -angleRange / 2, attackRange);
+
+    //}
 }

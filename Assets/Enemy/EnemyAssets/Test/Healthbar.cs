@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class Healthbar: MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Healthbar: MonoBehaviour
 		cam = Camera.main.transform;
 	}
 
-	// Update is called once per frame
+	
 	void Update()
 	{
 		transform.LookAt(transform.position + cam.rotation * Vector3.forward, cam.rotation * Vector3.up);
@@ -28,6 +29,7 @@ public class Healthbar: MonoBehaviour
 
 		fill.color = gradient.Evaluate(1f);
 	}
+
 
 	public void SetHealth(int health)
 	{

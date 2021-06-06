@@ -8,8 +8,9 @@ public class EnemyGun : MonoBehaviour
     public Transform fireTransform; // 총알 생성 위치
     public GameObject muzzleFlashEffect; // 총구 화염 효과
     EnemyBullet bullet;
+    Damage damage;
 
-  
+
 
     private void Awake()
     {
@@ -46,7 +47,7 @@ public class EnemyGun : MonoBehaviour
     //    }
     //}
 
-    public void Fire(Damage damage, float fireDistance)
+    public void Fire(Damage damage)
     {
         StartCoroutine(ShotEffect());
        

@@ -39,7 +39,7 @@ public class PlayerInfo : LivingEntity
         playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
 
         damage.dValue = 10f; //초기 데미지값 설정(발판)
-        healthMaterial.shader = Shader.Find("Shader Graphs/UI Shader Graph");
+        
         CalculateHealthPoint();
     }
 
