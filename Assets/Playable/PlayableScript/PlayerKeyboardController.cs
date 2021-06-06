@@ -136,13 +136,12 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
                 comboCnt = 0;
                 playerKeyboardInput.isShoot = false;
-                playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
             else if(pState == PlayerState.RIghtAttack)
             {
                 playerKeyboardInput.isRight = false;
-                playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             }
+/*            playerRigidbody.constraints = RigidbodyConstraints.FreezePositionY;*/
             playerKeyboardInput.isDodge = true;
             nextDodgeableTime = Time.time + timeBetDodge;
             StartCoroutine(DodgeCoroutine(dir));
@@ -213,7 +212,6 @@ public class PlayerKeyboardController : MonoBehaviourPun
             currentAttackTime = Time.time; // 재생한 시점
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
             {
-                Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
@@ -228,7 +226,6 @@ public class PlayerKeyboardController : MonoBehaviourPun
             currentAttackTime = Time.time; // 재생한 시점 
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
             {
-                Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3);  // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
@@ -244,7 +241,6 @@ public class PlayerKeyboardController : MonoBehaviourPun
             currentAttackTime = Time.time; // 재생한 시점
             if (Time.time - currentAttackTime < 2f) // 공격 애니메이션 재생 후 1초가 지나지 않았다면
             {
-                Debug.Log(Time.time - currentAttackTime + " 콤보 이어짐");
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);

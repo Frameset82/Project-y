@@ -32,7 +32,6 @@ public class DoransSword : MeleeWeapon
 
     public override void TrChange()
     {
-        print("체크중");
         if (player == null)
             return;
         trGameObject = GameObject.Find(player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
@@ -47,6 +46,7 @@ public class DoransSword : MeleeWeapon
         damage.dValue = prevDamage; //초기 데미지값 설정
         weaponTrChanged = true;
         playerInfo.maxHealth += 20f;
+        playerInfo.CalculateHealthPoint(); // 체력바 동기화
     }
 
     public override void UnEquip()
