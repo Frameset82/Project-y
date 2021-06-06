@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using Photon.Pun;
 using UnityEngine.AI;
+
 
 
 
@@ -168,6 +170,7 @@ public class MeleeController : LivingEntity, IPunObservable
         {
             targetPos = target.transform.position; //타겟의 위치 지정
 
+            sectorCheck();//공격범위 체크
 
             // 타겟이 공격 사거리에 들어오고 첫번쨰 공격이라면
             if (Vector3.Distance(this.transform.position, target.transform.position) < 4f && isFirstAttack)
@@ -191,24 +194,28 @@ public class MeleeController : LivingEntity, IPunObservable
         }
     }
 
+
     void JumpAttackRoutine()
     {
-       StartCoroutine(JumpAttack(targetPos));
+         StartCoroutine(JumpAttack());
     }
 
-   
-    
-    IEnumerator JumpAttack(Vector3 tPos)
+
+    IEnumerator JumpAttack()
     {
-        lookAtPosition = new Vector3(tPos.x, this.transform.position.y, tPos.z);
+        
+        lookAtPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
 
         nav.SetDestination(lookAtPosition); //목적지 설정
         damage.dValue *= 2; // 점프공격시 데미지 2배 적용
-        //this.transform.LookAt(lookAtPosition);
+        
+        this.transform.LookAt(lookAtPosition);
 
+     
         if(isFirstAttack)
         {
             anim.SetTrigger("JumpAttack"); //공격실행
+            pv.RPC("ShowAnimation", RpcTarget.Others, 1);
             isFirstAttack = false;
         }
 
@@ -220,6 +227,8 @@ public class MeleeController : LivingEntity, IPunObservable
         damage.dValue /= 2; //데미지 원상복귀
 
         yield return new WaitForSeconds(0.4f);
+
+        sectorCheck();//공격범위 체크
         if (isCollision)
         {
             //yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
@@ -234,15 +243,41 @@ public class MeleeController : LivingEntity, IPunObservable
      
     }
 
+    [PunRPC]
+    void ShowAnimation(int a)
+    {
+        switch(a)
+        {
+            case 1:
+                anim.SetTrigger("JumpAttack"); //공격실행
+                break;
+            case 2:
+                anim.SetTrigger("isKnockBack");
+                break;
+            case 3:
+                anim.SetTrigger("wakeUp");
+                break;
+            case 4:
+                anim.SetTrigger("isStun");
+                break;
+            case 5:
+                anim.SetTrigger("isSHit");
+                break;
+        }
+    }
+
+
     // 공격시
     IEnumerator AttackUpdate()
     {
+    
         nav.isStopped = true; // 네비 멈추기
         nav.velocity = Vector3.zero;
         transform.LookAt(target.transform);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(3f);
 
+        sectorCheck();//공격범위 체크
         if (!isCollision) //공격범위보다 멀면
         {          
             mstate = MeleeState.MoveTarget; //추적상태로 변환
@@ -294,44 +329,52 @@ public class MeleeController : LivingEntity, IPunObservable
     public override void OnDamage(Damage dInfo)
     {
         if (dead) return;
-        health -= dInfo.dValue; //체력 감소
 
-        StopAllCoroutines();
-
-        if (health <= 0 && !dead && this.gameObject.activeInHierarchy) // 체력이 0보다 작고 사망상태가 아닐때
+        else if(PhotonNetwork.IsMasterClient)
         {
-           Die();
-        }
-        else
-        {
-            switch(dInfo.dType)
+            health -= dInfo.dValue; //체력 감소      
+            if (health <= 0 && !dead && this.gameObject.activeInHierarchy) // 체력이 0보다 작고 사망상태가 아닐때
             {
-                case Damage.DamageType.Melee:
-                    if (mstate == MeleeState.JumpAttack)
-                      { mstate = MeleeState.NuckBack;  StartCoroutine(NuckBackDamageRoutine(dInfo.ccTime));  }
-                    else
-                      { StartCoroutine(NormalDamageRoutine()); }//일반 공격일시
-                    break;
-
-                case Damage.DamageType.NuckBack:
-                    mstate = MeleeState.NuckBack;
-                    StartCoroutine(NuckBackDamageRoutine(dInfo.ccTime));
-                    break;
-                case Damage.DamageType.Stun:
-                    mstate = MeleeState.Stun;
-                    StartCoroutine(StunRoutine(dInfo.ccTime));
-                    break;
+                Die();              
             }
-
+            else
+            {
+                StopAllCoroutines();        
+                DamageEvent((int)dInfo.dType, dInfo.ccTime);              
+            }
         }
-        healthbar.SetHealth((int)health);
 
+ 
     }
     
+    void DamageEvent(int dType, float ccTime)
+    {
+        switch (dType)
+        {
+            case 1:
+                if (mstate == MeleeState.JumpAttack)
+                { mstate = MeleeState.NuckBack; StartCoroutine(NuckBackDamageRoutine(ccTime)); }
+                else
+                { StartCoroutine(NormalDamageRoutine()); }//일반 공격일시
+                break;
+            case 2:
+                mstate = MeleeState.Stun;
+                StartCoroutine(StunRoutine(ccTime));
+                break;
+
+            case 3:
+                mstate = MeleeState.NuckBack;
+                StartCoroutine(NuckBackDamageRoutine(ccTime));
+                break;
+               
+        }        
+    
+    }
+
     IEnumerator NormalDamageRoutine()
     {
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { anim.SetTrigger("isHit"); }// 트리거 실행
+        { anim.SetTrigger("isHit"); pv.RPC("ShowAnimation", RpcTarget.Others, 5); }// 트리거 실행
         
       
         float startTime = Time.time; //시간체크
@@ -353,7 +396,7 @@ public class MeleeController : LivingEntity, IPunObservable
         nav.velocity = Vector3.zero;
 
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { anim.SetTrigger("isKnockBack"); }// 트리거 실행
+        { anim.SetTrigger("isKnockBack"); pv.RPC("ShowAnimation", RpcTarget.Others, 2); }// 트리거 실행
 
         float startTime = Time.time;
 
@@ -388,7 +431,7 @@ public class MeleeController : LivingEntity, IPunObservable
     {
         nav.velocity = Vector3.zero;
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { anim.SetTrigger("isStun"); } // 트리거 실행
+        { anim.SetTrigger("isStun"); pv.RPC("ShowAnimation", RpcTarget.Others, 4); } // 트리거 실행
 
         float startTime = Time.time;
 
@@ -416,6 +459,7 @@ public class MeleeController : LivingEntity, IPunObservable
 
     public override void Die()
     {
+        pv.RPC("Die", RpcTarget.Others);
         base.Die();
         StartCoroutine(Death());
     }
@@ -423,7 +467,7 @@ public class MeleeController : LivingEntity, IPunObservable
     //죽었을때
     public IEnumerator Death()
     {
-
+    
         rigid.isKinematic = true;
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
@@ -454,12 +498,15 @@ public class MeleeController : LivingEntity, IPunObservable
 
         yield return new WaitForSeconds(1f); // 1초 대기
 
-        //ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
+        ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
 
     }
 
     private void Update()
     {
+
+        healthbar.SetHealth((int)health);
+
         if (!PhotonNetwork.IsMasterClient)
         {
             return;
@@ -467,7 +514,7 @@ public class MeleeController : LivingEntity, IPunObservable
 
         if (hasTarget) //타겟이 있다면
         {
-            sectorCheck();//공격범위 체크
+           
         }
 
         CheckState(); //상태 체크
@@ -497,12 +544,12 @@ public class MeleeController : LivingEntity, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
-        {
-            stream.SendNext(mstate);
+        {           
+            stream.SendNext(health);         
         }
         else
-        {
-            mstate = (MeleeState)stream.ReceiveNext();
+        {         
+            health = (float)stream.ReceiveNext();   
         }
     }
 

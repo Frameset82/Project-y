@@ -15,7 +15,6 @@ public class EnemyBullet : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-
     }
 
     private void OnEnable()
@@ -27,7 +26,7 @@ public class EnemyBullet : MonoBehaviour
 
     void Update()
     {
-        if (time > 4f)
+        if (time >= 3f)
         {
             ReturnToPool();
         }
@@ -45,19 +44,20 @@ public class EnemyBullet : MonoBehaviour
                 enemytarget.OnDamage(damage);
             }
 
-            if (trails.Count > 0)
-            {
-                for (int i = 0; i < trails.Count; i++)
-                {
-                    trails[i].transform.parent = null;
-                    var ps = trails[i].GetComponent<ParticleSystem>();
-                    if (ps != null)
-                    {
-                        ps.Stop();
-                        Destroy(ps.gameObject, ps.main.duration + ps.main.startLifetime.constantMax);
-                    }
-                }
-            }
+            //if (trails.Count > 0)
+            //{
+            //    for (int i = 0; i < trails.Count; i++)
+            //    {
+            //        trails[i].transform.parent = null;
+            //        var ps = trails[i].GetComponent<ParticleSystem>();
+            //        if (ps != null)
+            //        {
+            //            ps.Stop();
+            //            //ps.gameObject.SetActive(false);
+            //            trails[i].transform.parent = this.transform;
+            //        }
+            //    }
+            //}
 
          
             
@@ -71,6 +71,7 @@ public class EnemyBullet : MonoBehaviour
                 if (ps == null)
                 {
                     var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
+                
                     Destroy(hitVFX, psChild.main.duration);
                 }
                 else
@@ -148,14 +149,16 @@ public class EnemyBullet : MonoBehaviour
         }
 
         yield return new WaitForSeconds(waitTime);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        ReturnToPool();
     }
 
     private void ReturnToPool() //탄환 반납
     {
+      
         switch (damage.dType)
         {
-            case Damage.DamageType.Melee:
+            case Damage.DamageType.Melee:             
                 ObjectPool.ReturnBullet(this);
                 break;
             case Damage.DamageType.Stun:

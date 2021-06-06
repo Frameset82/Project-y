@@ -3744,7 +3744,7 @@ MonoBehaviour:
   target: {fileID: 0}
   Idlestate: 0
   healthbar: {fileID: 6162936624905242994}
-  angleRange: 100
+  angleRange: 360
 --- !u!95 &951015470
 Animator:
   serializedVersion: 3
@@ -3806,7 +3806,7 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isHit
   - Type: 4
     SynchronizeType: 1
@@ -3815,25 +3815,25 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Attack
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isDead
   - Type: 3
     SynchronizeType: 1
     Name: IdleCheck
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isStun
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: wakeUp
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isKnockBack
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Lying
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 0
 --- !u!114 &1443022723
 MonoBehaviour:

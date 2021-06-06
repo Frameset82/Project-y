@@ -1099,7 +1099,7 @@ MonoBehaviour:
   eGun: {fileID: 389989834287997440}
   healthbar: {fileID: 7741471601333209669}
   attackRange: 8
-  angleRange: 100
+  angleRange: 360
 --- !u!95 &4532905265514827506
 Animator:
   serializedVersion: 3
@@ -1199,25 +1199,25 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: isAttack
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isHit
   - Type: 3
     SynchronizeType: 1
     Name: Idlestate
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isDead
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isStun
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isKnockBack
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: wakeUp
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Lying
   m_SynchronizeLayers:
   - SynchronizeType: 2
