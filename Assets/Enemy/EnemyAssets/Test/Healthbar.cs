@@ -16,7 +16,7 @@ public class Healthbar: MonoBehaviour
 		cam = Camera.main.transform;
 	}
 
-	// Update is called once per frame
+	
 	void Update()
 	{
 		transform.LookAt(transform.position + cam.rotation * Vector3.forward, cam.rotation * Vector3.up);

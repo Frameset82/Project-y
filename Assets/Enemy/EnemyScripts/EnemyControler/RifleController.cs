@@ -23,12 +23,13 @@ public class RifleController : LivingEntity, IPunObservable
     private Animator anim; // 애니메이터 컴포넌트
     public EnemyGun eGun; 
 
+
     [SerializeField]
     private Healthbar healthbar;
 
     private bool move = false; //움직임 관련 bool값
     private bool attack = false; // 공격 관련 bool값
-  
+    private Vector3 lookAtPosition;
 
     private bool hasTarget
     {
@@ -104,7 +105,7 @@ public class RifleController : LivingEntity, IPunObservable
                 AttackUpdate();
                 break;
             case RifleState.Die:
-                Die();
+       
                 break;
         }
     }
@@ -136,6 +137,35 @@ public class RifleController : LivingEntity, IPunObservable
         }
     }
 
+
+    [PunRPC]
+    void ShowAnimation(int a)
+    {
+        switch (a)
+        {
+            case 1:
+                anim.SetTrigger("isKnockBack");
+                break;
+            case 2:
+                anim.SetTrigger("wakeUp");
+                break;
+            case 3:
+                anim.SetTrigger("isStun");
+                break;
+            case 4:
+                anim.SetTrigger("isHit");
+                break;
+            case 5:
+                anim.SetTrigger("Lying");
+                break;
+            case 6:
+                anim.SetTrigger("isDead");
+                break;
+        }
+
+
+    }
+
     // 대기 상태일때의 동작
     void IdleUpdate()
     {
@@ -155,11 +185,11 @@ public class RifleController : LivingEntity, IPunObservable
 
     void MoveUpdate()
     {
-        Vector3 lookAtPosition = Vector3.zero;
 
         if(hasTarget)
         {
             targetPos = target.transform.position;
+
             sectorCheck();//공격범위 체크
 
             if (isCollision)
@@ -181,27 +211,23 @@ public class RifleController : LivingEntity, IPunObservable
     // 공격시
     void AttackUpdate()
     {
+        nav.isStopped = true; // 네비 멈추기
+        nav.velocity = Vector3.zero;
+        transform.LookAt(target.transform);
+
         sectorCheck();//공격범위 체크
         if (!isCollision)
         {
             rstate = RifleState.MoveTarget;        
         }
-        else
-        {
-            nav.isStopped = true; // 네비 멈추기
-            nav.velocity = Vector3.zero;
-            transform.LookAt(target.transform);
-        }
+       
     }
 
     //공격 적용
     public void OnAttackEvent()
     {
-
         StopAllCoroutines();
-        eGun.Fire(damage);
-
-     
+        eGun.Fire(damage);    
     }
 
     // 공격을 당했을때
@@ -217,7 +243,7 @@ public class RifleController : LivingEntity, IPunObservable
             if (health <= 0 && !dead && this.gameObject.activeInHierarchy) // 체력이 0보다 작고 사망상태가 아닐때
             {
                 Die();
-                pv.RPC("Die", RpcTarget.Others);
+          
             }
             else
             {
@@ -252,7 +278,7 @@ public class RifleController : LivingEntity, IPunObservable
     IEnumerator NormalDamageRoutine()
     {
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { anim.SetTrigger("isHit"); } // 트리거 실행}
+        { pv.RPC("ShowAnimation", RpcTarget.All, 4); } // 트리거 실행}
 
 
         float startTime = Time.time; //시간체크
@@ -264,6 +290,17 @@ public class RifleController : LivingEntity, IPunObservable
             nav.velocity = Vector3.zero;
             yield return null;
         }
+
+        sectorCheck();
+
+        if (isCollision)
+        {
+            rstate = RifleState.Attack;
+        }
+        else
+        {
+            rstate = RifleState.MoveTarget;
+        }
     }
 
     IEnumerator NuckBackDamageRoutine(float nuckTime) //넉백시
@@ -272,7 +309,7 @@ public class RifleController : LivingEntity, IPunObservable
         nav.velocity = Vector3.zero;
 
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { anim.SetTrigger("isKnockBack"); }// 트리거 실행
+        { pv.RPC("ShowAnimation", RpcTarget.All, 1); }// 트리거 실행
 
         float startTime = Time.time;
 
@@ -284,7 +321,7 @@ public class RifleController : LivingEntity, IPunObservable
         }
 
         startTime = Time.time;
-        anim.SetTrigger("wakeUp");
+        pv.RPC("ShowAnimation", RpcTarget.All, 2);
 
         while (Time.time < startTime + 3.8f)
         {
@@ -293,6 +330,7 @@ public class RifleController : LivingEntity, IPunObservable
             yield return null;
         }
 
+        sectorCheck();
         if (isCollision)
         {
             rstate = RifleState.Attack;
@@ -308,7 +346,7 @@ public class RifleController : LivingEntity, IPunObservable
         nav.velocity = Vector3.zero;
 
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { anim.SetTrigger("isStun"); } // 트리거 실행
+        { pv.RPC("ShowAnimation", RpcTarget.All, 3); } // 트리거 실행
 
         float startTime = Time.time;
 
@@ -320,10 +358,11 @@ public class RifleController : LivingEntity, IPunObservable
         }
 
 
-        anim.SetTrigger("wakeUp");
+        pv.RPC("ShowAnimation", RpcTarget.All, 2);
 
         yield return new WaitForSeconds(0.2f);
 
+        sectorCheck();
         if (isCollision)
         {
             rstate = RifleState.Attack;
@@ -346,9 +385,16 @@ public class RifleController : LivingEntity, IPunObservable
         rstate = RifleState.MoveTarget;
     }
 
+    [PunRPC]
     public override void Die()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            pv.RPC("Die", RpcTarget.Others);
+        }
+
         base.Die();
+        StopAllCoroutines();
         StartCoroutine(Death());
     }
 
@@ -360,11 +406,11 @@ public class RifleController : LivingEntity, IPunObservable
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
         {
-            anim.SetTrigger("Lying");
+            ShowAnimation(5);
         }
         else
         {
-            anim.SetTrigger("isDead"); // 트리거 활성화
+            ShowAnimation(6);
         }
 
 
@@ -397,7 +443,7 @@ public class RifleController : LivingEntity, IPunObservable
 
         if (hasTarget) //타겟이 있다면
         {
-           
+            targetPos = target.transform.position;
         }
 
 
@@ -430,13 +476,11 @@ public class RifleController : LivingEntity, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if(stream.IsWriting)
-        {
-          
+        {  
             stream.SendNext(health);
         }
         else
-        {
-       
+        {        
             health = (float)stream.ReceiveNext();
         }
      
