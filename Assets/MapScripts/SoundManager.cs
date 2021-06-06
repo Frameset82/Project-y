@@ -12,10 +12,6 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] bgList;
     public AudioClip enviroClip;
 
-    // public float bgmVol;
-    // public float environmentVol;
-    // public float effectVol;
-
     int bgNum=-1;
 
     // 사운드 매니저 싱글톤
@@ -34,7 +30,7 @@ public class SoundManager : MonoBehaviour
         if(obj==null || clip==null) return;
         AudioSource audioSource = obj.GetComponent<AudioSource>();
         audioSource.clip = clip;
-        audioSource.Play();
+        audioSource.PlayOneShot(clip);
     }
 
     // 환경음 재생
