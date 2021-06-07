@@ -19,10 +19,13 @@ public class BombRobotControl : LivingEntity, IPunObservable
     private bool isWalk;
   
     private MeshRenderer[] mesh;
+    private MeshRenderer[] Defaultmesh;
+
     private NavMeshAgent nav;
     private Animator anim;
     private Rigidbody rigid;
     private PhotonView pv;
+    private Vector3 targetPos;
 
     [SerializeField]
     private Healthbar healthbar;
@@ -31,6 +34,7 @@ public class BombRobotControl : LivingEntity, IPunObservable
     {
         pv = GetComponent<PhotonView>();
         mesh = this.transform.GetChild(2).GetComponentsInChildren<MeshRenderer>();  
+        Defaultmesh = this.transform.GetChild(2).GetComponentsInChildren<MeshRenderer>();
         nav = GetComponent<NavMeshAgent>(); //네비게이션 가져오기
         anim = GetComponentInChildren<Animator>(); //애니메이터 가져오기 
         rigid = GetComponent<Rigidbody>(); //리지드 바디
@@ -60,21 +64,23 @@ public class BombRobotControl : LivingEntity, IPunObservable
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
         target = _target;
-      
+         
+         bstate = BombState.MoveTarget;
     }
 
     void Update()
     {
-
         healthbar.SetHealth((int)health);
 
         if (!PhotonNetwork.IsMasterClient) { return; }
 
-        if (target!= null && bstate != BombState.Exploding) //타겟이 있을때만
-        {
-            nav.SetDestination(target.transform.position); //네비게이션 경로 설정
-            bstate = BombState.MoveTarget;
+        if (target!= null && bstate != BombState.Exploding && gameObject.activeSelf) //타겟이 있을때만
+        { 
+            targetPos = target.transform.position;
         } 
+
+        if(target.GetComponent<LivingEntity>().dead)
+        { Die();  }
      
         CheckState(); //상태 체크
         anim.SetBool("isWalk", isWalk); //걷기 관련 애니메이션 
@@ -87,6 +93,7 @@ public class BombRobotControl : LivingEntity, IPunObservable
         switch(bstate)
         {
             case BombState.MoveTarget:
+                Move();
                 isWalk = true;
                 break;
             case BombState.Exploding:
@@ -97,22 +104,26 @@ public class BombRobotControl : LivingEntity, IPunObservable
         }
     }
 
+    void Move()
+    {
+        if(!dead)
+        nav.SetDestination(targetPos); //네비게이션 경로 설정
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
-        if (other.gameObject.layer == 8 && bstate != BombState.Exploding)//충돌한 상대가 플레어 일때
-        {
-            Debug.Log("ssbc");
+        else if (other.gameObject.layer == 8 && bstate != BombState.Exploding)//충돌한 상대가 플레어 일때
+        {           
             bstate = BombState.Exploding;
-            StartExplosion();
+            pv.RPC("StartExplosion", RpcTarget.All);
         }
 
     }
 
+    [PunRPC]
     void StartExplosion()
     {
-        pv.RPC("StartExplosion", RpcTarget.Others);
         StartCoroutine(Explode()); //폭발 코루틴 실행
         StartCoroutine(ExplosionEffect()); // 폭발 진행 이펙트 루틴 실행
     }
@@ -302,13 +313,9 @@ public class BombRobotControl : LivingEntity, IPunObservable
         bstate = BombState.MoveTarget;
     }
 
-    [PunRPC]
+    
     public override void Die()
     {
-        if(PhotonNetwork.IsMasterClient)
-        {
-            pv.RPC("Die", RpcTarget.Others);
-        }
         base.Die();
         StopAllCoroutines();
         StartCoroutine(Death());
@@ -325,7 +332,19 @@ public class BombRobotControl : LivingEntity, IPunObservable
         yield return new WaitForSeconds(1f);
 
         Explosion.SetActive(false);
-        ObjectPool.ReturnBombRobot(this);
+
+        for(int i = 0; i< Defaultmesh.Length; i++)
+        {
+            mesh[i].material.color = Defaultmesh[i].material.color;
+        }
+
+     
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ObjectPool.ReturnBombRobot(this);
+        }
+       
     }
 
 

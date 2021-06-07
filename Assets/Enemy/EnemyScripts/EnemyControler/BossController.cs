@@ -16,7 +16,10 @@ public class BossController : LivingEntity, IPunObservable
     public LivingEntity[] players;//플레이어들 
     public LivingEntity target; // 공격대상
     public Vector3 targetPos; // 공격 대상 위치 
-    private float timer;
+    public GameObject StunEffect; //스턴
+    public Transform Stuntrans;
+
+    private float timer; //타이머
     private int randState;
 
     private NavMeshAgent nav; // NavMesh 컴포넌트
@@ -118,8 +121,12 @@ public class BossController : LivingEntity, IPunObservable
 
     private void FixedUpdate()
     {
-        targetPos = target.gameObject.transform.position;
-        timer += Time.deltaTime;
+        if(target != null)
+        {
+            targetPos = target.gameObject.transform.position;
+            timer += Time.deltaTime;
+        }
+      
     }
 
     private void Update()
@@ -127,24 +134,31 @@ public class BossController : LivingEntity, IPunObservable
         if (!PhotonNetwork.IsMasterClient)
         { return; }
 
-        else if (timer >= 10f || target.dead)
-        { ChangeTarget(); }
 
+        else if (target != null && timer >= 10f && target.dead)
+        { ChangeTarget();  }
 
+        if (target != null)
+        { sectorCheck(); }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+           
+
             //StartCoroutine(NormalAttack());
             //anim.SetTrigger("Shoot");
             //StartCoroutine(NormalAttack());
             //CreateBomobRobot();
-           // StartCoroutine(SnipingShot());
-           // StartCoroutine(Dash());
+            // StartCoroutine(SnipingShot());
+            // StartCoroutine(Dash());
             // StartCoroutine(BackDash());
-            // StartCoroutine(Enable());
+             StartCoroutine(Enable());
+           // StartCoroutine(Stun());
         }
+     
+            
 
-        sectorCheck();
+
         CheckState();
     }
 
@@ -199,18 +213,24 @@ public class BossController : LivingEntity, IPunObservable
                 anim.SetTrigger("Spawn");
                 break;
             case (int)BossState.AmimingShot:
-                anim.SetTrigger("Sniping");
+                anim.SetTrigger("Sniping");            
                 break;
             case (int)BossState.BackDash:
                 anim.SetTrigger("BackDash");
                 break;
+
             case (int)BossState.Dash:
                 anim.SetTrigger("Dash");
                 break;
+
             case (int)BossState.Stun:
                 anim.SetTrigger("isStun");
+                var stun = Instantiate(StunEffect, Stuntrans.position, Stuntrans.rotation);
+                Destroy(stun, 3f);
                 break;
-            case (int)BossState.Die:              
+
+            case (int)BossState.Die:
+                anim.SetTrigger("isDead"); // 트리거 활성화
                 break;
 
             case 9:
@@ -314,8 +334,8 @@ public class BossController : LivingEntity, IPunObservable
             spawnPos.z = spawnPos.y + this.transform.position.z;
             spawnPos.y = this.transform.position.y;
 
-            pv.RPC("ShowAnimation", RpcTarget.All, spawnPos);
-
+            pv.RPC("SpawnRobot", RpcTarget.All, spawnPos);
+            SpawnRobot(spawnPos);
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(0.5f);
@@ -388,7 +408,9 @@ public class BossController : LivingEntity, IPunObservable
     void DangerMaskerShoot(Vector3 endPos)
     {
         DangerLine line = ObjectPool.GetLine();
-        line.transform.position = this.transform.position;
+        Vector3 pos = this.transform.position;
+        pos.y += 0.5f;
+        line.transform.position = pos;
         line.EndPosition = endPos;      
     }
 
@@ -470,9 +492,6 @@ public class BossController : LivingEntity, IPunObservable
     {
         if (dead) return;
 
-        //StopAllCoroutines();
-
-
         health -= dInfo.dValue; // 체력 감소
 
         diff -= (int)((dInfo.dValue * dInfo.inCapValue) / 100); //총공격력에서 무력화수치 퍼센트만큼 방어도 감소
@@ -490,7 +509,7 @@ public class BossController : LivingEntity, IPunObservable
         if (health <= 0 && this.gameObject.activeInHierarchy && !dead) // 체력이 0보다 작고 사망상태가 아닐때
         {
             StopAllCoroutines();
-            StartCoroutine(Die());
+            Die();
         }
         
     }
@@ -500,8 +519,7 @@ public class BossController : LivingEntity, IPunObservable
         bState = BossState.Stun;
 
         pv.RPC("ShowAnimation", RpcTarget.All, (int)BossState.Stun);
-
-
+     
         yield return new WaitForSeconds(3f);
 
         diff = 50f;
@@ -509,21 +527,23 @@ public class BossController : LivingEntity, IPunObservable
         StartCoroutine(Think());
     }
 
+    public override void Die()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            pv.RPC("Die", RpcTarget.Others);
+        }
+
+        base.Die();
+        StartCoroutine(Death());
+    }
 
     //죽었을때
-    public new IEnumerator Die()
+    public IEnumerator Death()
     {
         rigid.isKinematic = true;
-
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        {
-            anim.SetTrigger("Lying");
-        }
-        else
-        {
-            anim.SetTrigger("isDead"); // 트리거 활성화
-        }
-
+        ShowAnimation((int)BossState.Die);
+       
 
         bState = BossState.Die; // 죽음상태로 변경
 
@@ -547,6 +567,7 @@ public class BossController : LivingEntity, IPunObservable
 
     void sectorCheck() // 부챗꼴 범위 충돌
     {
+        
         dotValue = Mathf.Cos(Mathf.Deg2Rad * (angleRange / 2));
         direction = target.transform.position - transform.position;
         if (direction.magnitude <= attackRange)
@@ -572,6 +593,15 @@ public class BossController : LivingEntity, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        throw new System.NotImplementedException();
+        if (stream.IsWriting)
+        {
+            stream.SendNext(health);
+            stream.SendNext(diff);
+        }
+        else
+        {
+            health = (float)stream.ReceiveNext();
+            diff = (float)stream.ReceiveNext();
+        }
     }
 }
