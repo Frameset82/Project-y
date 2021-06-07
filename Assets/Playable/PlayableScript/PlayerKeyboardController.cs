@@ -115,8 +115,8 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
         Vector3 heading = PlayerKeyboardInput.mainCamera.transform.localRotation * Vector3.forward;
         heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
-        moveVec = heading * Time.fixedDeltaTime * vAxis * playerKeyboardInput.moveSpeed;
-        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * hAxis * playerKeyboardInput.moveSpeed;
+        moveVec = (vAxis * heading + Quaternion.Euler(0, 90, 0) * heading * hAxis).normalized;
+        moveVec = Time.fixedDeltaTime * moveVec * playerKeyboardInput.moveSpeed;
 
         playerRigidbody.MovePosition(playerRigidbody.position + moveVec);
         moveVec1 = moveVec;
@@ -151,10 +151,32 @@ public class PlayerKeyboardController : MonoBehaviourPun
     // 캐릭터 실제 회피
     public IEnumerator DodgeCoroutine(Vector3 dir)
     {
+        playerRigidbody.useGravity = false;
         playerRigidbody.AddForce(dir.normalized * dodgePower, ForceMode.Impulse);
         playerRigidbody.velocity = Vector3.zero;
         playerAnimation.DodgeAni();
-        yield return new WaitForSeconds(0.45f); // 회피 지속시간
+        for (float t = 0f; t < 0.45f; t += Time.fixedDeltaTime)
+        {
+            Physics.queriesHitBackfaces = true;
+            RaycastHit hit;
+            RaycastHit[] hits;
+            int layerMask = 1 << LayerMask.NameToLayer("Ground");
+            hits = Physics.RaycastAll(transform.position, Vector3.up, 10, layerMask);
+            if (hits.Length > 0)
+            {
+                hit = hits[hits.Length - 1];
+                gameObject.transform.position = hit.point + Vector3.up * 0.15f;
+            }
+            else if (Physics.Raycast(transform.position, Vector3.down, out hit, 10, layerMask))
+            {
+                gameObject.transform.position = hit.point + Vector3.up * 0.15f;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        Physics.queriesHitBackfaces = false;
+
+        playerRigidbody.useGravity = true;
+
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
     }
 

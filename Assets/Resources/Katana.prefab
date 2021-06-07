@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1586059830049978951}
   - component: {fileID: 1654252802901956173}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 1590489311113135353}
   - component: {fileID: 1590489311113135359}
   - component: {fileID: 1590489311113135358}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4809,7 +4809,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1590489312734944922}
   - component: {fileID: 1590489312734944923}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4901,7 +4901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1593492948649487099}
   - component: {fileID: 1655795170706440753}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4945,7 +4945,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1586061409761441105}
   - component: {fileID: 1654291855042516121}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4989,7 +4989,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1586298251755186409}
   - component: {fileID: 1655718968669381433}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5037,7 +5037,7 @@ GameObject:
   - component: {fileID: 1590489312079127619}
   - component: {fileID: 1590489312079127616}
   - component: {fileID: 1590489312079127623}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Katana
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -5159,11 +5159,16 @@ MonoBehaviour:
   delay: 0
   attackSpeed: 1
   canAttack: 0
+  prevDamage: 0
   wType: 0
-  player: {fileID: 0}
-  playerAnimation: {fileID: 0}
-  playerInfo: {fileID: 0}
   tr: {fileID: 0}
+  trGameObject: {fileID: 0}
+  weaponTrChanged: 0
+  player: {fileID: 0}
+  playerEquipmentManager: {fileID: 0}
+  playerInfo: {fileID: 0}
+  playerKeyboardInput: {fileID: 0}
+  playerAnimation: {fileID: 0}
   attackRange: 5
   angle: 45
   enemyLayers:
@@ -5181,7 +5186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1586037652716977859}
   - component: {fileID: 1654454959785656865}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5225,7 +5230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1593158699818174299}
   - component: {fileID: 1655316511000919737}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5269,7 +5274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1593175458033170749}
   - component: {fileID: 1725167485779692407}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

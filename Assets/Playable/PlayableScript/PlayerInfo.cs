@@ -45,8 +45,8 @@ public class PlayerInfo : LivingEntity
         pv = GetComponent<PhotonView>();
         damage.dValue = 10f; //초기 데미지값 설정(발판)
 
-        if (GameManager.isMulti && pv.IsMine)
-            playerUI.SetActive(true);
+        if (GameManager.isMulti)
+            playerUI.SetActive(pv.IsMine);
         else
             playerUI.SetActive(true);
         CalculateHealthPoint();
