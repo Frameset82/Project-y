@@ -16,7 +16,7 @@ public class RifleController : LivingEntity, IPunObservable
     public Vector3 targetPos; //공격 대상 위치
     public GameObject target; // 공격 대상
     public int Idlestate;
-
+    
     private PhotonView pv;
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Rigidbody rigid; 

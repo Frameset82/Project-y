@@ -6863,12 +6863,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1187803557}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1142340786 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6662435580121344131, guid: a40f63df08e95724386af689cd428421,
-    type: 3}
-  m_PrefabInstance: {fileID: 539225016}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1177370035
 GameObject:
   m_ObjectHideFlags: 0
@@ -8760,7 +8754,7 @@ PrefabInstance:
         type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 1142340786}
+      objectReference: {fileID: 0}
     - target: {fileID: 7001558400815877033, guid: 376a2dadf736d724b8a55e54ccd6c7e1,
         type: 3}
       propertyPath: m_RootOrder
@@ -8818,6 +8812,133 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 376a2dadf736d724b8a55e54ccd6c7e1, type: 3}
+--- !u!1 &1521677983 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6301047829756295610, guid: 376a2dadf736d724b8a55e54ccd6c7e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1521677982}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1521677984 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6301047829756295615, guid: 376a2dadf736d724b8a55e54ccd6c7e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1521677982}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d57e5b457836f946ba7b36f66f00597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1521677985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 1521677984}
+  - {fileID: 1521677987}
+  - {fileID: 1521677986}
+  - {fileID: 1521677988}
+  viewIdField: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1521677986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 1
+  m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &1521677987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1521677988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521677983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 0
+    Name: Shoot
+  - Type: 9
+    SynchronizeType: 0
+    Name: Spawn
+  - Type: 9
+    SynchronizeType: 0
+    Name: SnipingShoot
+  - Type: 9
+    SynchronizeType: 0
+    Name: Sniping
+  - Type: 9
+    SynchronizeType: 0
+    Name: SnipingEnd
+  - Type: 9
+    SynchronizeType: 0
+    Name: Dash
+  - Type: 4
+    SynchronizeType: 2
+    Name: isRun
+  - Type: 9
+    SynchronizeType: 0
+    Name: BackDash
+  - Type: 4
+    SynchronizeType: 2
+    Name: isDead
+  - Type: 9
+    SynchronizeType: 0
+    Name: Enable
+  - Type: 9
+    SynchronizeType: 0
+    Name: isStun
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1 &1522859427
 GameObject:
   m_ObjectHideFlags: 0
