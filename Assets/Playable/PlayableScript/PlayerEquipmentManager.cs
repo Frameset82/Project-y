@@ -199,7 +199,10 @@ public class PlayerEquipmentManager : MonoBehaviour
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
             equipWeapon = subWeapon;
             subWeapon.gameObject.SetActive(true);
-            playerAnimation.ChangeAnimator();
+            if (GameManager.isMulti == true)
+                pv.RPC("WeaponAnimChange", RpcTarget.All, subWeapon.wType);
+            else
+                WeaponAnimChange(subWeapon.wType);
             equipCount = 2;
         }
         else if (equipCount == 2 && count == 1)
@@ -210,7 +213,10 @@ public class PlayerEquipmentManager : MonoBehaviour
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
             equipWeapon = mainWeapon;
             mainWeapon.gameObject.SetActive(true);
-            playerAnimation.ChangeAnimator();
+            if (GameManager.isMulti == true)
+                pv.RPC("WeaponAnimChange", RpcTarget.All, mainWeapon.wType);
+            else
+                WeaponAnimChange(mainWeapon.wType);
             equipCount = 1;
         }
     }

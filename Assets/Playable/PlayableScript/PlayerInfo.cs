@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class PlayerInfo : LivingEntity
 {
@@ -13,6 +15,7 @@ public class PlayerInfo : LivingEntity
     public Material healthMaterial; // 체력 머테리얼
     public GameObject healthBar; // 체력 바
     public Text healthText; // 체력 수치 텍스트
+    public GameObject playerUI; // 하단 UI
     [Header("플레이어 기본 속성들")]
     public float maxHealth; // 최대체력( 시작 시 기본체력 )
     public float defaultDamage; // 기본 데미지
@@ -27,6 +30,7 @@ public class PlayerInfo : LivingEntity
 
     private Damage damage;
     public float timer = 0f;
+    public PhotonView pv = null;
 
     private void Awake()
     {
@@ -37,9 +41,11 @@ public class PlayerInfo : LivingEntity
         playerAnimation = GetComponent<PlayerAnimation>();
         playerKeyboardController = GetComponent<PlayerKeyboardController>();
         playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
-
+        pv = GetComponent<PhotonView>();
         damage.dValue = 10f; //초기 데미지값 설정(발판)
-        
+
+        if (GameManager.isMulti && pv.IsMine)
+            playerUI.SetActive(true);
         CalculateHealthPoint();
     }
 
@@ -61,6 +67,7 @@ public class PlayerInfo : LivingEntity
     // 체력 변동시 남은 체력의 퍼센트 계산 후 UI 적용
     public void CalculateHealthPoint(){
         healthMaterial.SetFloat("_HeightPercent", health/maxHealth*100);
+        healthText.text = health + " / " + maxHealth; // 체력 갱신
     }
 
     public override void OnDamage(Damage dInfo)
@@ -122,8 +129,6 @@ public class PlayerInfo : LivingEntity
 
     private void Update()
     {
-        healthText.text = health + " / " + maxHealth; // 체력 갱신
-
         if (!canDamage) // 무적시간 계산
         {
             timer += Time.deltaTime;
