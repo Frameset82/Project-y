@@ -78,6 +78,30 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
         var instance = Instantiate(Effects[EffectNumber].Effect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
 
+<<<<<<< Updated upstream
+=======
+    public EffectInfo[] Effects;
+
+    [System.Serializable]
+
+    public class EffectInfo
+    {
+        public GameObject Effect;// 이펙트
+        public Transform StartPositionRotation;
+        public float DestroyAfter = 10; // 이펙트 지속시간
+        public bool UseLocalPosition = true;
+    }
+
+    void InstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].Effect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+>>>>>>> Stashed changes
         if (Effects[EffectNumber].UseLocalPosition)
         {
             instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
@@ -282,6 +306,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3);  // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                InstantiateEffect(comboCnt);
             }
             yield return new WaitForSeconds(delay);
             playerEquipmentManager.equipWeapon.OnAttack();
@@ -362,6 +387,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                         yield return new WaitForSeconds(1);
                         pState = PlayerState.Idle;*/
             playerEquipmentManager.equipWeapon.OnActive();
+            
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {

@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4955400794138918
 Transform:
   m_ObjectHideFlags: 0
@@ -4822,7 +4822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4673061110187000}
   m_Layer: 0
-  m_Name: Eff1_Right
+  m_Name: Eff1_Right(1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4873,21 +4873,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471532546853156}
-<<<<<<< Updated upstream
-  m_LocalRotation: {x: -0.18301274, y: 0.6830127, z: 0.6830127, w: 0.18301274}
-=======
   m_LocalRotation: {x: -0.4055798, y: 0.579228, z: 0.579228, w: 0.4055798}
->>>>>>> Stashed changes
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 4673061110187000}
   m_RootOrder: 1
-<<<<<<< Updated upstream
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 150}
-=======
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 110}
->>>>>>> Stashed changes
 --- !u!198 &198434675800694178
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4911,7 +4903,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0.1
+    scalar: 0.3
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -4971,11 +4963,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-<<<<<<< Updated upstream
-      scalar: 0.3
-=======
       scalar: 0.4
->>>>>>> Stashed changes
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -9689,7 +9677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4075155415005048
 Transform:
   m_ObjectHideFlags: 0
@@ -19321,21 +19309,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1842568851571020}
-<<<<<<< Updated upstream
-  m_LocalRotation: {x: -0.18301274, y: 0.6830127, z: 0.6830127, w: 0.18301274}
-=======
   m_LocalRotation: {x: -0.4055798, y: 0.579228, z: 0.579228, w: 0.4055798}
->>>>>>> Stashed changes
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4673061110187000}
   m_RootOrder: 0
-<<<<<<< Updated upstream
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 150}
-=======
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 110}
->>>>>>> Stashed changes
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 110}
 --- !u!198 &198538831707365924
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -19359,7 +19339,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0.1
+    scalar: 0.3
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -19419,11 +19399,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-<<<<<<< Updated upstream
-      scalar: 0.3
-=======
       scalar: 0.4
->>>>>>> Stashed changes
       minScalar: 5
       maxCurve:
         serializedVersion: 2
