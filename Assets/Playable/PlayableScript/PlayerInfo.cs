@@ -16,6 +16,7 @@ public class PlayerInfo : LivingEntity
     public GameObject healthBar; // 체력 바
     public Text healthText; // 체력 수치 텍스트
     public GameObject playerUI; // 하단 UI
+    [HideInInspector]public bool playerUIEnable = false;
     [Header("플레이어 기본 속성들")]
     public float maxHealth; // 최대체력( 시작 시 기본체력 )
     public float defaultDamage; // 기본 데미지
@@ -45,6 +46,8 @@ public class PlayerInfo : LivingEntity
         damage.dValue = 10f; //초기 데미지값 설정(발판)
 
         if (GameManager.isMulti && pv.IsMine)
+            playerUI.SetActive(true);
+        else
             playerUI.SetActive(true);
         CalculateHealthPoint();
     }

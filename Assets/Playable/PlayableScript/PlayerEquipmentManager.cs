@@ -49,6 +49,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         playerAnimation = GetComponent<PlayerAnimation>();
         playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
+        playerInfo = GetComponent<PlayerInfo>();
         pv = GetComponent<PhotonView>();
         player = gameObject;
     }
@@ -106,6 +107,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             changeEquipment.SetActive(true);
             changeImg1.sprite = mainWeaponImg.sprite;
             changeImg2.sprite = subWeaponImg.sprite;
+            playerInfo.playerUIEnable = true;
             playerKeyboardInput.isShoot = true;
         }
     }
@@ -151,6 +153,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             iChangeImg1.sprite = FirstItemImg.sprite;
             iChangeImg2.sprite = SecondItemImg.sprite;
             iChangeImg3.sprite = ThirdItemImg.sprite;
+            playerInfo.playerUIEnable = true;
             playerKeyboardInput.isShoot = true;
         }
     }
@@ -229,8 +232,10 @@ public class PlayerEquipmentManager : MonoBehaviour
         mainWeapon.UnEquip();
         subWeapon.gameObject.SetActive(false);
         ParticleDelete();
-        mainWeapon.transform.position = nearObject.transform.position;
-        mainWeapon.transform.rotation = nearObject.transform.rotation;
+        /*        mainWeapon.transform.position = nearObject.transform.position;
+                mainWeapon.transform.rotation = nearObject.transform.rotation;*/
+        mainWeapon.transform.position = player.transform.position + Vector3.up;
+        mainWeapon.transform.rotation = player.transform.rotation;
         particleObj = mainWeapon.transform.GetChild(0).gameObject;
         particleObj.SetActive(true);
         mainWeapon.gameObject.transform.SetParent(null);
@@ -251,6 +256,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         changeEquipment.SetActive(false); // 패널 끄기
         StateReset();
         playerKeyboardInput.isShoot = false;
+        playerInfo.playerUIEnable = false;
     }
 
     public void ChangeSubWeapon()
@@ -260,8 +266,8 @@ public class PlayerEquipmentManager : MonoBehaviour
         subWeapon.UnEquip();
         mainWeapon.gameObject.SetActive(false);
         ParticleDelete();
-        subWeapon.transform.position = nearObject.transform.position;
-        subWeapon.transform.rotation = nearObject.transform.rotation;
+        mainWeapon.transform.position = player.transform.position + Vector3.up;
+        mainWeapon.transform.rotation = player.transform.rotation;
         particleObj = subWeapon.transform.GetChild(0).gameObject;
         particleObj.SetActive(true);
         subWeapon.gameObject.transform.SetParent(null);
@@ -282,6 +288,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         changeEquipment.SetActive(false); // 패널 끄기
         StateReset();
         playerKeyboardInput.isShoot = false;
+        playerInfo.playerUIEnable = false;
     }
 
     public void ChangeFirstItem()
@@ -305,6 +312,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         changeItem.SetActive(false); // 패널 끄기
         StateReset();
         playerKeyboardInput.isShoot = false;
+        playerInfo.playerUIEnable = false;
     }
 
     public void ChangeSecondItem()
@@ -328,6 +336,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         changeItem.SetActive(false); // 패널 끄기
         StateReset();
         playerKeyboardInput.isShoot = false;
+        playerInfo.playerUIEnable = false;
     }
 
     public void ChangeThirdItem()
@@ -351,6 +360,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         changeItem.SetActive(false); // 패널 끄기
         StateReset();
         playerKeyboardInput.isShoot = false;
+        playerInfo.playerUIEnable = false;
     }
 
     public void StateReset()

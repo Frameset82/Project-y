@@ -341,7 +341,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
     public void ComboMove()
     {
-        playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
+        playerRigidbody.AddForce(transform.forward * 24f, ForceMode.Impulse);
         playerRigidbody.velocity = Vector3.zero;
     }
 

@@ -74,7 +74,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
 
     public void InputMove()
     {
-        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight || isChange)
+        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight || isChange || playerInfo.playerUIEnable)
             return;
         playerKeyboardController.hAxis = Input.GetAxisRaw("Horizontal");
         playerKeyboardController.vAxis = Input.GetAxisRaw("Vertical");
@@ -84,7 +84,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
 
     public void InputDodge()
     {
-        if (Input.GetButton(dodgeButtonName) && playerKeyboardController.pState != PlayerKeyboardController.PlayerState.Dodge)
+        if (Input.GetButton(dodgeButtonName) && playerKeyboardController.pState != PlayerKeyboardController.PlayerState.Dodge && !playerInfo.playerUIEnable)
         {
             if (playerKeyboardController.hAxis != 0 || playerKeyboardController.vAxis != 0)
             {
