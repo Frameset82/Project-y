@@ -11,13 +11,28 @@ public class DestroyedPiece : MonoBehaviour
         parent.breakDelegate += BreakObject;
     }
 
-    void BreakObject(Damage dType) {
+    void BreakObject(float power) {
         GetComponent<Rigidbody>().isKinematic = false;
-        // GetComponent<Rigidbody>().AddForce((transform.position - attackerPosition).normalized * power);
-        Invoke("DeleteObj", 3f);
+        DeleteObj();
     }
-    
+
     void DeleteObj(){
-        Destroy(gameObject);
+        StartCoroutine(FadeOut(1.5f));
+    }
+    IEnumerator FadeOut(float transition) {
+        yield return new WaitForSeconds(1.5f);
+        float coef = 0;
+
+        Material material = GetComponent<Renderer>().material;
+        GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        material.SetInt("_Outline_Width", 0);
+        material.SetInt("_TransparentEnabled", 1);
+        material.renderQueue = 3000;
+        
+        while(coef < transition) {
+            coef += Time.unscaledDeltaTime;
+            material.SetFloat("_Tweak_transparency", Mathf.Max(-1, Mathf.Lerp(0, -1, coef / transition)));
+            yield return null;
+        }
     }
 }
