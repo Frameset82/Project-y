@@ -42,6 +42,8 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
     private bool onceUpdate = true; // 한번만업데이트
 
+
+
     public enum PlayerState // 플레이어 상태 리스트
     {
         Idle, // 가만히 서있는 상태
@@ -55,7 +57,35 @@ public class PlayerKeyboardController : MonoBehaviourPun
         onCC, // CC 상태
         Grenade // 수류탄 투척 상태
     }
+    public EffectInfo[] Effects;
 
+    [System.Serializable]
+
+    public class EffectInfo
+    {
+        public GameObject Effect;
+        public Transform StartPositionRotation;
+        public float DestroyAfter = 10;
+        public bool UseLocalPosition = true;
+    }
+
+    void InstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].Effect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
     private void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -237,6 +267,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                InstantiateEffect(comboCnt);
             }
             yield return new WaitForSeconds(delay * 0.5f);
             playerEquipmentManager.equipWeapon.OnAttack();
