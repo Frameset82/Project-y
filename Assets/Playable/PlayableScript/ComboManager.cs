@@ -35,10 +35,11 @@ public class ComboManager : MonoBehaviour
     }
     public void Combo3Check()
     {
-        playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
-        playerAnimation.playerAnimator.SetBool("isAttack", false);
         playerKeyboardController.comboCnt = 0;
         playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
+        playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
+        playerAnimation.playerAnimator.SetBool("isAttack", false);
+        
     }
 
     public void ComboMoveCheck()
