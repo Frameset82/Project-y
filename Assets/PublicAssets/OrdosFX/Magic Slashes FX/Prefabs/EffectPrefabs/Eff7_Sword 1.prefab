@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4378335577050476}
   m_Layer: 0
-  m_Name: Eff7_Sword
+  m_Name: Eff7_Sword 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,13 +56,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405485665852824}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.06544553, z: -0, w: 0.99785614}
   m_LocalPosition: {x: 0.47, y: 0, z: 0.09}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 4378335577050476}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -7.5050006, z: 0}
 --- !u!198 &198026074139486362
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -86,7 +86,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0.5
+    scalar: 0.3
     minScalar: 0
     maxCurve:
       serializedVersion: 2

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7899432412565083339}
   - component: {fileID: 7899432412565083340}
   m_Layer: 0
-  m_Name: Pirate_knife_Prefab
+  m_Name: doransword
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7899432413716682641}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.88, y: 1.23, z: 1.2968127}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 7899432413716908981}
   - {fileID: 7899432413716908979}
