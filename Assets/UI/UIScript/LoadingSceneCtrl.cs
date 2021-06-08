@@ -81,13 +81,11 @@ public class LoadingSceneCtrl : MonoBehaviour
     
     // 로딩 UI Fade
     IEnumerator Fade(bool isFadeIn){
-        Debug.Log("Fade");
         float fadeTimer = 0f;
         while(fadeTimer <= 1f){
             yield return null;
-            fadeTimer += Time.unscaledDeltaTime * 3f;
+            fadeTimer += Time.unscaledDeltaTime * 1.5f;
             canvasGroup.alpha = isFadeIn ? Mathf.Lerp(0f, 1f, fadeTimer) : Mathf.Lerp(1f, 0f, fadeTimer);
-            Debug.Log(fadeTimer);
         }
         if(!isFadeIn){
             gameObject.SetActive(false);
