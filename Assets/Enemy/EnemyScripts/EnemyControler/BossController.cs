@@ -91,6 +91,38 @@ public class BossController : LivingEntity, IPunObservable
         base.OnEnable();
     }
 
+    public EffectInfo[] Effects; // 이펙트 들
+    [System.Serializable]
+
+    public class EffectInfo
+    {
+        public GameObject Effecta;// 이펙트
+        public Transform StartPositionRotation;
+        public float DestroyAfter = 10; // 이펙트 지속시간
+        public bool UseLocalPosition = true;
+    }
+
+    // 대쉬 이펙트 설정
+    [PunRPC]
+    void InstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].Effecta, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
+
+
     [PunRPC]
     public void Init(float _nDamage, float _sDamage, float _speed, float _diff, float _startHealth = 50f) //초기 설정 메소드
     {
@@ -438,7 +470,8 @@ public class BossController : LivingEntity, IPunObservable
 
         float startTime = Time.time;
         Vector3 lookPosition = Vector3.zero;
-
+        pv.RPC("InstantiateEffect", RpcTarget.All, 0); // 이펙트를 전체로 뿌림
+        //InstantiateEffect(0);
         //Time.time < startTime + dashTime
         while (!isCollision)
         {
