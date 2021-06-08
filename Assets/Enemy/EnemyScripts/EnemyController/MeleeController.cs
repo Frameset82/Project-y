@@ -21,7 +21,7 @@ public class MeleeController : LivingEntity, IPunObservable
     public Vector3 targetPos; //공격 대상 위치
     public GameObject target; // 공격 대상
     public int Idlestate; // 아이들 상태
-
+    public Transform pTr;
 
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
@@ -71,7 +71,7 @@ public class MeleeController : LivingEntity, IPunObservable
 
         pv.ObservedComponents[0] = this;
         pv.Synchronization = ViewSynchronization.UnreliableOnChange;
-
+   
     }
 
     protected override void OnEnable()
@@ -82,6 +82,13 @@ public class MeleeController : LivingEntity, IPunObservable
         this.startingHealth = 50f; //스포너에 들어갈시 삭제
         healthbar.SetMaxHealth((int)startingHealth);
         base.OnEnable(); 
+    }
+
+
+    private void Start()
+    {
+        this.transform.parent = ObjectPool.objectTrans;
+        this.gameObject.SetActive(false);
     }
 
     [PunRPC]
@@ -592,6 +599,17 @@ public class MeleeController : LivingEntity, IPunObservable
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && PhotonNetwork.IsMasterClient)
+        { rigid.isKinematic = true; }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && PhotonNetwork.IsMasterClient)
+        { rigid.isKinematic = false; }
+    }
 
     //private void OnDrawGizmos() // 범위 그리기
     //{

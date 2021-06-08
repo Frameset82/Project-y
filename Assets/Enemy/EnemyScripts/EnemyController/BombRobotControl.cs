@@ -15,6 +15,7 @@ public class BombRobotControl : LivingEntity, IPunObservable
     public GameObject target; // 공격 대상
     public GameObject DangerRange;
 
+
     private Damage damage;
     private bool isWalk;
   
@@ -41,11 +42,13 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
         damage.dType = Damage.DamageType.NuckBack;
         damage.ccTime = 1f;
-        damage.dValue = 50f;
+        damage.dValue = 1f;
         startingHealth = 30f;
 
         pv.ObservedComponents[0] = this;
         pv.Synchronization = ViewSynchronization.UnreliableOnChange;
+
+       
     }
 
     protected override void OnEnable()
@@ -58,6 +61,13 @@ public class BombRobotControl : LivingEntity, IPunObservable
         health = startingHealth;
         healthbar.SetMaxHealth((int)startingHealth);
     }
+
+    private void Start()
+    {
+        this.transform.parent = ObjectPool.objectTrans;
+        this.gameObject.SetActive(false);
+    }
+
 
 
     public void SetTarget(GameObject _target) //타겟 설정
@@ -77,15 +87,14 @@ public class BombRobotControl : LivingEntity, IPunObservable
         if (target!= null && bstate != BombState.Exploding && gameObject.activeSelf) //타겟이 있을때만
         { 
             targetPos = target.transform.position;
-        } 
 
-        if(target.GetComponent<LivingEntity>().dead)
-        { Die();  }
-     
+            if (target.GetComponent<LivingEntity>().dead)
+            { Die(); }
+        } 
+    
         CheckState(); //상태 체크
         anim.SetBool("isWalk", isWalk); //걷기 관련 애니메이션 
-       
-
+      
     }
 
     void CheckState()
@@ -131,7 +140,7 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
     private IEnumerator Explode()
     {
-        nav.isStopped = true; //네비 멈추기
+        //nav.isStopped = true; //네비 멈추기
         nav.velocity = Vector3.zero; //네비 속도 0으로 맞추기
         DangerRange.SetActive(true);
 

@@ -77,10 +77,10 @@ public class BossController : LivingEntity, IPunObservable
 
     protected override void OnEnable()
     {
-        nDamage.dValue = 50f; //초기 데미지값 설정
+        nDamage.dValue = 1f; //초기 데미지값 설정
         nDamage.dType = Damage.DamageType.Melee; //데미지 종류 설정
 
-        sDamage.dValue = 60f;
+        sDamage.dValue = 1f;
         sDamage.dType = Damage.DamageType.Stun;
         sDamage.ccTime = 0.5f;
 
@@ -470,7 +470,7 @@ public class BossController : LivingEntity, IPunObservable
 
         float startTime = Time.time;
         Vector3 lookPosition = Vector3.zero;
-        pv.RPC("InstantiateEffect", RpcTarget.All, 0); // 이펙트를 전체로 뿌림
+       // pv.RPC("InstantiateEffect", RpcTarget.All, 0); // 이펙트를 전체로 뿌림
         //InstantiateEffect(0);
         //Time.time < startTime + dashTime
         while (!isCollision)

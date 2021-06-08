@@ -43,9 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3e7c6ade355994abf3770cf8799bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BombRobot: {fileID: 4302171039993932412, guid: 8652e512c02358b4987be7e69075b270,
+  BombRobot: {fileID: 288760134833005078, guid: 8652e512c02358b4987be7e69075b270,
     type: 3}
   MeeleEnemy: {fileID: 2233739336527722866, guid: 98f0c92db2e39c845a1d63cc4239a148,
     type: 3}
+  RogueEnemy: {fileID: 2626480825856293180, guid: 0c8306f512d83124c905fb34fd57db43,
+    type: 3}
+  RifeEnemy: {fileID: 4532905265514827504, guid: 4cc4e7a3d524fe14da2d0b14a6e11106,
+    type: 3}
   Bullet: {fileID: 4246535277670249501, guid: 66b259a833f88be4cbb278a87644167c, type: 3}
   SBullet: {fileID: 4246535277670249501, guid: e2070226b7ab03b489ba387f14919bcf, type: 3}
+  DangerLine: {fileID: 5096835186524517751, guid: d1ab30c9435752f4ba0ab6f9a6c4418a,
+    type: 3}
+  Potal: {fileID: 0}

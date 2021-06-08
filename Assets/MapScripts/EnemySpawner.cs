@@ -4,6 +4,7 @@ using Photon.Pun;
 using UnityEngine;
 
 
+
 public class EnemySpawner : MonoBehaviour, IPunObservable
 {
     public enum enemyType {None, Melee, Rogue, Rifle, End};
@@ -12,21 +13,34 @@ public class EnemySpawner : MonoBehaviour, IPunObservable
     private List<LivingEntity> enemis = new List<LivingEntity>();
     private List<Vector3> sPos = new List<Vector3>();
 
+    public int wave;
+    private bool isEnter;
     public Transform boxScale;
-    public int waveCount; 
-    public GameObject Wall;
+    public GameObject[] Walls;
     private PhotonView pv;
+    private int count = 0;
 
 
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        throw new System.NotImplementedException();
+        if (stream.IsWriting)
+        {
+            stream.SendNext(wave);  //웨이브 동기화
+            stream.SendNext(count);
+        }
+        else
+        {
+            wave = (int)stream.ReceiveNext();
+            count = (int)stream.ReceiveNext();          
+        }
     }
 
     void Start()
     {
+        isEnter = false;
         pv = GetComponent<PhotonView>();
+        wave = 0;
     }
 
     void Update()
@@ -36,74 +50,89 @@ public class EnemySpawner : MonoBehaviour, IPunObservable
            
         }
 
-        if(enemis.Count <= 0 && PhotonNetwork.IsMasterClient)
+       /* if(enemis.Count <= 0 && PhotonNetwork.IsMasterClient)
         {
             pv.RPC("AfterWave", RpcTarget.All);
-        }
+        }*/
     }
 
+    [PunRPC]
     void AfterWave()
     {
-
+        Walls[wave].SetActive(false); //현재 웨이브 벽 비활성화
+        wave++; //웨이브 카운트
     }
 
 
-    void SetSpawn()
+    void SetSpawn() // 몹 스폰할 지점 설정
     {
-        for (int i = 0; i < eTypes.Length; i++)
+        for (int i = 0; i < 3; i++)
         {
             Vector3 spawnPos;
             spawnPos.x = Random.Range((boxScale.position.x - boxScale.localScale.x / 2), (boxScale.position.x + boxScale.localScale.x / 2)); 
             spawnPos.z = Random.Range((boxScale.position.z - boxScale.localScale.z / 2), (boxScale.position.z + boxScale.localScale.z / 2));
-            spawnPos.y = this.transform.position.y;
+            spawnPos.y = 10f;
             sPos.Add(spawnPos);
+
+            pv.RPC("SpawnEnemy", RpcTarget.All, spawnPos);
+            //SpawnEnemy(spawnPos);
+            count++;
         }
-        pv.RPC("SpawnEnemy", RpcTarget.All, sPos);
+      
     }
 
     [PunRPC]
-    void SpawnEnemy(List<Vector3> spawnPos)
+    void SpawnEnemy(Vector3 spawnPos) //몹 스폰
     {
-        Wall.SetActive(true);
+       StartCoroutine(ShowRoutine(spawnPos));
 
-        for (int i = 0; i < eTypes.Length; i++)
-        {
-            switch (eTypes[i])
-            { 
-
+        switch (eTypes[count])
+        { 
             case enemyType.Melee:
-                MeleeController mcon = ObjectPool.GetMelee();
-                mcon.transform.position = spawnPos[i];
-                mcon.gameObject.SetActive(true);
+                MeleeController mcon = ObjectPool.GetMelee();       
+                mcon.gameObject.transform.position = spawnPos; 
                 enemis.Add(mcon);
                 mcon.onDeath += () => enemis.Remove(mcon);
                 break;
 
             case enemyType.Rifle:
                 RogueController rcon = ObjectPool.GetRogue();
-                rcon.transform.position = spawnPos[i];
-                rcon.gameObject.SetActive(true);
+                rcon.gameObject.transform.position = spawnPos;          
                 enemis.Add(rcon);
                 rcon.onDeath += () => enemis.Remove(rcon);
                 break;
 
             case enemyType.Rogue:
                 RifleController ricon = ObjectPool.GetRifle();
-                ricon.transform.position = spawnPos[i];
-                ricon.gameObject.SetActive(true);
+           
+                ricon.gameObject.transform.position = spawnPos;
                 enemis.Add(ricon);
                 ricon.onDeath += () => enemis.Remove(ricon);
                 break;
-            }
+             
         }
+    
     }
 
 
+    IEnumerator ShowRoutine(Vector3 spawnPos)
+    {    
+          GameObject  potal = ObjectPool.GetPotal();
+          potal.transform.position = spawnPos;
+          potal.gameObject.SetActive(true);
+        
+          yield return new WaitForSeconds(6f);
+      
+          ObjectPool.ReturnPotal(potal);
+       
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player") && PhotonNetwork.IsMasterClient) //플레이어와 충돌하고 마스터 클라이언트일 경우
-        {
-            SetSpawn();          
+        if(other.gameObject.CompareTag("Player") && PhotonNetwork.IsMasterClient && !isEnter) //플레이어와 충돌하고 마스터 클라이언트일 경우
+        {         
+            SetSpawn();
+            isEnter = true;
         }
     }
 
