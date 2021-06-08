@@ -624,7 +624,19 @@ public class BossController : LivingEntity, IPunObservable
             isCollision = false;
     }
 
-    
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Player") && PhotonNetwork.IsMasterClient)
+        { rigid.isKinematic = true; }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && PhotonNetwork.IsMasterClient)
+        { rigid.isKinematic = false; }
+    }
+
     private void OnDrawGizmos() // 범위 그리기
     {
         //Handles.color = isCollision ? red : blue;
