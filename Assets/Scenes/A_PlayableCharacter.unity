@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 75d566e096df73943891aa2f139c4303,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -23634,6 +23634,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -411427865539226732, guid: aa4e2032389ba3e448fd45e23b45a8cd,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -411427865539226732, guid: aa4e2032389ba3e448fd45e23b45a8cd,
+        type: 3}
       propertyPath: BypassEffects
       value: 0
       objectReference: {fileID: 0}
@@ -40881,6 +40886,11 @@ PrefabInstance:
         type: 3}
       propertyPath: viewIdField
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5596894035996697343, guid: 1923b29739f7ae44c833b868ff92d2c5,
+        type: 3}
+      propertyPath: viewIdField
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7182717552923390548, guid: 1923b29739f7ae44c833b868ff92d2c5,
         type: 3}

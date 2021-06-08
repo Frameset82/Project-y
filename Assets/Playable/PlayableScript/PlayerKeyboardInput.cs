@@ -55,8 +55,8 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     {
         if(PlayerKeyboardController.isInteraction) return;
         if(GameManager.isMulti && !photonView.IsMine) return;
-        InputDodge();
         InputMove();
+        InputDodge();
     }
 
     private void Update()

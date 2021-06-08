@@ -42,6 +42,8 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
     private bool onceUpdate = true; // 한번만업데이트
 
+
+
     public enum PlayerState // 플레이어 상태 리스트
     {
         Idle, // 가만히 서있는 상태
@@ -55,7 +57,89 @@ public class PlayerKeyboardController : MonoBehaviourPun
         onCC, // CC 상태
         Grenade // 수류탄 투척 상태
     }
+    public EffectInfo[] Effects;
 
+    [System.Serializable]
+
+    public class EffectInfo
+    {
+        public GameObject MeleeEffect;// 한손검이펙트
+        public GameObject SwordEffect;// 대검이펙트
+        public GameObject SpearEffect;// 창이펙트
+        public GameObject DashEffect;// 대쉬이펙트
+        public Transform StartPositionRotation;
+        public float DestroyAfter = 10; // 이펙트 지속시간
+        public bool UseLocalPosition = true;
+    }
+
+    void MeleeInstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].MeleeEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
+    void SwordInstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].SwordEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
+    void SpearInstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].SpearEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
+    void DashInstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].DashEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
     private void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -115,8 +199,8 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
         Vector3 heading = PlayerKeyboardInput.mainCamera.transform.localRotation * Vector3.forward;
         heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
-        moveVec = heading * Time.fixedDeltaTime * vAxis * playerKeyboardInput.moveSpeed;
-        moveVec += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * hAxis * playerKeyboardInput.moveSpeed;
+        moveVec = (vAxis * heading + Quaternion.Euler(0, 90, 0) * heading * hAxis).normalized;
+        moveVec = Time.fixedDeltaTime * moveVec * playerKeyboardInput.moveSpeed;
 
         playerRigidbody.MovePosition(playerRigidbody.position + moveVec);
         moveVec1 = moveVec;
@@ -151,10 +235,33 @@ public class PlayerKeyboardController : MonoBehaviourPun
     // 캐릭터 실제 회피
     public IEnumerator DodgeCoroutine(Vector3 dir)
     {
+        DashInstantiateEffect(0);
+        playerRigidbody.useGravity = false;
         playerRigidbody.AddForce(dir.normalized * dodgePower, ForceMode.Impulse);
         playerRigidbody.velocity = Vector3.zero;
         playerAnimation.DodgeAni();
-        yield return new WaitForSeconds(0.45f); // 회피 지속시간
+        for (float t = 0f; t < 0.45f; t += Time.fixedDeltaTime)
+        {
+            Physics.queriesHitBackfaces = true;
+            RaycastHit hit;
+            RaycastHit[] hits;
+            int layerMask = 1 << LayerMask.NameToLayer("Ground");
+            hits = Physics.RaycastAll(transform.position, Vector3.up, 10, layerMask);
+            if (hits.Length > 0)
+            {
+                hit = hits[hits.Length - 1];
+                gameObject.transform.position = hit.point + Vector3.up * 0.15f;
+            }
+            else if (Physics.Raycast(transform.position, Vector3.down, out hit, 10, layerMask))
+            {
+                gameObject.transform.position = hit.point + Vector3.up * 0.15f;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        Physics.queriesHitBackfaces = false;
+
+        playerRigidbody.useGravity = true;
+
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
     }
 
@@ -215,6 +322,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                MeleeInstantiateEffect(comboCnt);
             }
             yield return new WaitForSeconds(delay * 0.5f);
             playerEquipmentManager.equipWeapon.OnAttack();
@@ -229,6 +337,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3);  // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                SwordInstantiateEffect(comboCnt);
             }
             yield return new WaitForSeconds(delay);
             playerEquipmentManager.equipWeapon.OnAttack();
@@ -244,6 +353,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                SpearInstantiateEffect(comboCnt);
             }
             yield return new WaitForSeconds(delay);
             playerEquipmentManager.equipWeapon.OnAttack();
@@ -309,6 +419,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                         yield return new WaitForSeconds(1);
                         pState = PlayerState.Idle;*/
             playerEquipmentManager.equipWeapon.OnActive();
+            
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
