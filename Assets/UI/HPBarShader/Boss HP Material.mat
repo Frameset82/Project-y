@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Boss HP Material
+  m_Shader: {fileID: -6465566751694194690, guid: f0449c520b7137a46adc1d492dcbb397,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_C0886A83:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: b04399e366d850c4dba829691b5b5eff, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_E15C455A_Out_0:
+        m_Texture: {fileID: 2800000, guid: e703b092a67e85c49938e613a1d52f02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_E6F531E9_Out_0:
+        m_Texture: {fileID: 2800000, guid: 9c6fc5e89730dda4fb8fdd7edb718177, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Percent: 100
+    - Vector1_1ADD5A43: 616
+    - Vector1_4BC6E94E: 83.3
+    - Vector1_6CDE42CF: 112
+    - Vector1_7A45703: 757
+    - _HeightPercent: 100
+    m_Colors:
+    - Color_955B0254: {r: 0.4433962, g: 0, b: 0, a: 1}
+    - Color_C277A880: {r: 0.8584906, g: 0.3025249, b: 0, a: 1}
