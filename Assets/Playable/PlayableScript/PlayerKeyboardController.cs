@@ -368,7 +368,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                     yield return new WaitForSeconds(1f);
                 }
             }
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay * 2f);
             playerEquipmentManager.equipWeapon.OnAttack();
             playerKeyboardInput.isShoot = false;
             
