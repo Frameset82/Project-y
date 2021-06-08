@@ -391,7 +391,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 if (comboCnt == 3)
                     comboCnt = 0;
             }
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay * 1.2f);
             playerEquipmentManager.equipWeapon.OnAttack();
             playerKeyboardInput.isShoot = false;
         }
