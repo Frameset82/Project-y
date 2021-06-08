@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1287615269741148751}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.64, z: 0}
+  m_LocalPosition: {x: 0.29, y: 1.64, z: -1.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2185464555214440117}
@@ -884,19 +884,43 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b4bb3cc57903b6c44bb51503ab073be1, type: 3}
   footStepTemp: 0
   Effects:
-  - Effect: {fileID: 1819066416490906, guid: f71e64e1ba018eb419bd5e9e3ca8a65c, type: 3}
+  - MeleeEffect: {fileID: 1819066416490906, guid: f71e64e1ba018eb419bd5e9e3ca8a65c,
+      type: 3}
+    SwordEffect: {fileID: 1935082409722074, guid: d2910e4d9472c8843a387bdd9a51d879,
+      type: 3}
+    SpearEffect: {fileID: 0}
+    DashEffect: {fileID: 1556941434285710, guid: 85e46505a60994b408c543541ef8505a,
+      type: 3}
     StartPositionRotation: {fileID: 3648800873894650709}
     DestroyAfter: 2
     UseLocalPosition: 0
-  - Effect: {fileID: 1819066416490906, guid: f71e64e1ba018eb419bd5e9e3ca8a65c, type: 3}
+  - MeleeEffect: {fileID: 1819066416490906, guid: f71e64e1ba018eb419bd5e9e3ca8a65c,
+      type: 3}
+    SwordEffect: {fileID: 1935082409722074, guid: d2910e4d9472c8843a387bdd9a51d879,
+      type: 3}
+    SpearEffect: {fileID: 0}
+    DashEffect: {fileID: 1556941434285710, guid: 85e46505a60994b408c543541ef8505a,
+      type: 3}
     StartPositionRotation: {fileID: 3648800873894650709}
     DestroyAfter: 2
     UseLocalPosition: 0
-  - Effect: {fileID: 1107296871017770, guid: 82a583916db5b7842a722df7756825eb, type: 3}
+  - MeleeEffect: {fileID: 1107296871017770, guid: 82a583916db5b7842a722df7756825eb,
+      type: 3}
+    SwordEffect: {fileID: 1935082409722074, guid: 73c5905a45ba2d841a54b3c5468d23a6,
+      type: 3}
+    SpearEffect: {fileID: 0}
+    DashEffect: {fileID: 1556941434285710, guid: 85e46505a60994b408c543541ef8505a,
+      type: 3}
     StartPositionRotation: {fileID: 1590562116677809732}
     DestroyAfter: 2
     UseLocalPosition: 0
-  - Effect: {fileID: 1107296871017770, guid: 2b5ab71d1d3edb54cb268f64eb42a407, type: 3}
+  - MeleeEffect: {fileID: 1107296871017770, guid: 2b5ab71d1d3edb54cb268f64eb42a407,
+      type: 3}
+    SwordEffect: {fileID: 1935082409722074, guid: cddc11f8f892ac544be85c5e629c76b0,
+      type: 3}
+    SpearEffect: {fileID: 0}
+    DashEffect: {fileID: 1556941434285710, guid: 85e46505a60994b408c543541ef8505a,
+      type: 3}
     StartPositionRotation: {fileID: 8433156872182441264}
     DestroyAfter: 2
     UseLocalPosition: 0
