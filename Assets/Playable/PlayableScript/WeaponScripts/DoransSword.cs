@@ -8,7 +8,9 @@ public class DoransSword : MeleeWeapon
 {
     private Damage damage;
     private PhotonView pv = null;
-    public GameObject abc;
+
+    private Vector3 currPos = Vector3.zero;
+    private Quaternion currRot = Quaternion.identity;
 
     public override void OnActive()
     {
@@ -40,7 +42,6 @@ public class DoransSword : MeleeWeapon
         if (player == null)
             return;
         trGameObject = GameObject.Find(player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
-        abc = GameObject.Find(player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/");
         if (trGameObject != null)
             tr = trGameObject.transform;
     }

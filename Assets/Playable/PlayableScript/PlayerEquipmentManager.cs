@@ -12,7 +12,6 @@ public class PlayerEquipmentManager : MonoBehaviour
     private PlayerKeyboardInput playerKeyboardInput;
     private GameObject player;
 
-    public string weaponRoot = "Player/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
     public GameObject playerWeaponRoot;
     public GameObject nearObject;//플레이어와 가까이 있는 무기 오브젝트
 
@@ -166,19 +165,37 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public void WeaponTr()
     {
-        GameObject nearDummy = nearObject;
+        Weapon newWeapon = nearObject.GetComponent<Weapon>();
+
         if (GameManager.isMulti)
         {
-            if (GameManager.players[0].GetComponent<PhotonView>().IsMine == true)
+            if (PhotonNetwork.IsMasterClient)
+            {
+                pv.RPC("sex", RpcTarget.Others, null);
                 nearObject.transform.SetParent(playerWeaponRoot.transform);
-            else
-                nearDummy.transform.SetParent(playerWeaponRoot.transform);
+                if (pv.IsMine) 
+                {
+                    nearObject.transform.position = newWeapon.tr.position;
+                    nearObject.transform.rotation = newWeapon.tr.rotation;
+                }
+            }
         }
         else
+        {
             nearObject.transform.SetParent(playerWeaponRoot.transform);
-        Weapon newWeapon = nearObject.GetComponent<Weapon>();
-        nearObject.transform.position = newWeapon.tr.position;
-        nearObject.transform.rotation = newWeapon.tr.rotation;
+            nearObject.transform.position = newWeapon.tr.position;
+            nearObject.transform.rotation = newWeapon.tr.rotation;
+        }
+    }
+
+    [PunRPC]
+    public void sex()
+    {
+        /*        abc.transform.SetParent(abcc.transform);
+                abc.transform.position = newWeapon.tr.position;
+                abc.transform.rotation = newWeapon.tr.rotation;*/
+        print(GameManager.players[0].GetComponent<PlayerEquipmentManager>().equipWeapon.trGameObject);
+        GameManager.players[0].GetComponent<PlayerEquipmentManager>().equipWeapon.trGameObject.SetActive(true);
     }
 
     [PunRPC]
