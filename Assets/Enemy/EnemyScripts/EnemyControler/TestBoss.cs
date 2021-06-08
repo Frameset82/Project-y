@@ -105,19 +105,7 @@ public class TestBoss : LivingEntity
         this.startingHealth = _startHealth; //초기 HP값 설정
     }
 
-    void ChangeTarget()
-    {
-        if (players[0].Equals(target) && !players[1].dead)
-        {
-            target = players[1];
-        }
-        else if (players[1].Equals(target) && !players[0].dead)
-        {
-            target = players[0];
-        }
-        timer = 0;
-    }
-
+   
     private void FixedUpdate()
     {
         if (target != null)
@@ -130,15 +118,9 @@ public class TestBoss : LivingEntity
 
     private void Update()
     {
-        if (!PhotonNetwork.IsMasterClient)
-        { return; }
 
-
-        else if (target != null && timer >= 10f && target.dead)
-        { ChangeTarget(); }
-
-        if (target != null)
-        { sectorCheck(); }
+   
+        sectorCheck(); 
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -148,21 +130,12 @@ public class TestBoss : LivingEntity
             //StartCoroutine(NormalAttack());
             //CreateBomobRobot();
             // StartCoroutine(SnipingShot());
-            // StartCoroutine(Dash());
+             StartCoroutine(Dash());
             // StartCoroutine(BackDash());
-            StartCoroutine(Enable());
+            //StartCoroutine(Enable());
             // StartCoroutine(Stun());
         }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            TestPlayers = GameObject.FindGameObjectsWithTag("Player");
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            players[0] = TestPlayers[0].GetComponent<LivingEntity>();
-            players[1] = TestPlayers[1].GetComponent<LivingEntity>();
-            target = players[0];
-        }
+      
 
 
         CheckState();
@@ -202,7 +175,6 @@ public class TestBoss : LivingEntity
         }
     }
 
-    [PunRPC]
     void ShowAnimation(int state)
     {
         switch (state)
@@ -410,7 +382,7 @@ public class TestBoss : LivingEntity
         StartCoroutine(Think());
     } //스나이핑 샷
 
-    [PunRPC]
+
     void DangerMaskerShoot(Vector3 endPos)
     {
         DangerLine line = ObjectPool.GetLine();
@@ -437,8 +409,8 @@ public class TestBoss : LivingEntity
         float startTime = Time.time;
         Vector3 lookPosition = Vector3.zero;
 
-        //Time.time < startTime + dashTime
-        while (!isCollision)
+        //
+        while (Time.time < startTime + dashTime)
         {
             lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
             nav.SetDestination(lookPosition);
