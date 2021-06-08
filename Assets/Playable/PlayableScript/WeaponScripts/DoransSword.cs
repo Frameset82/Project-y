@@ -7,6 +7,8 @@ using Photon.Realtime;
 public class DoransSword : MeleeWeapon
 {
     private Damage damage;
+    private PhotonView pv = null;
+    public GameObject abc;
 
     public override void OnActive()
     {
@@ -32,17 +34,20 @@ public class DoransSword : MeleeWeapon
         }
     }
 
+    [PunRPC]
     public override void TrChange()
     {
         if (player == null)
             return;
         trGameObject = GameObject.Find(player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + gameObject.name);
+        abc = GameObject.Find(player.name + "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/");
         if (trGameObject != null)
             tr = trGameObject.transform;
     }
 
     public override void OnEquip()
     {
+        pv = GetComponent<PhotonView>();
         damageValue = 10f;
         prevDamage = damageValue + playerInfo.defaultDamage;
         damage.dValue = prevDamage; //초기 데미지값 설정
@@ -53,12 +58,12 @@ public class DoransSword : MeleeWeapon
 
     public override void UnEquip()
     {
+        pv = null;
         weaponTrChanged = false;
         playerInfo.maxHealth -= 20f;
         playerInfo.CalculateHealthPoint(); // 체력바 동기화
     }
 
-    // Update is called once per frame
     void Update()
     {
         CollisionCheck();
