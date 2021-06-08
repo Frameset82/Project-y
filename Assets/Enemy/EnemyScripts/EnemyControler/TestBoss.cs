@@ -73,6 +73,37 @@ public class TestBoss : LivingEntity
 
     }
 
+
+    public EffectInfo[] Effects; // 이펙트 들
+    [System.Serializable]
+
+    public class EffectInfo
+    {
+        public GameObject Effecta;// 이펙트
+        public Transform StartPositionRotation;
+        public float DestroyAfter = 10; // 이펙트 지속시간
+        public bool UseLocalPosition = true;
+    }
+
+    void InstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].Effecta, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
+
+
     protected override void OnEnable()
     {
         nDamage.dValue = 50f; //초기 데미지값 설정
@@ -409,7 +440,7 @@ public class TestBoss : LivingEntity
         float startTime = Time.time;
         Vector3 lookPosition = Vector3.zero;
 
-        //
+        InstantiateEffect(0);
         while (Time.time < startTime + dashTime)
         {
             lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
@@ -418,11 +449,12 @@ public class TestBoss : LivingEntity
             nav.isStopped = false;
             nav.acceleration = dashSpeed;
             transform.LookAt(lookPosition);
+      
             anim.SetTrigger("Dash");
 
             yield return null;
         }
-
+       
         nav.velocity = Vector3.zero;
         nav.isStopped = true;
         nav.acceleration = 8f;
