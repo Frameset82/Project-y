@@ -215,15 +215,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     
     // 시작 버튼 클릭 시
     public void LoadScene(){
-        // PhotonNetwork.LoadLevel("FirstStage");
-        PhotonView pv = PhotonView.Get(this);
-        pv.RPC("LoadSceneProcess", RpcTarget.All);
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.LoadLevel("FirstStage");
+        // PhotonView pv = PhotonView.Get(this);
+        // pv.RPC("LoadSceneProcess", RpcTarget.All);
     }
-    // 모든 유저 로딩 UI 프로세스 호출
-    [PunRPC]
-    public void LoadSceneProcess(){
-        LoadingSceneCtrl.Instance.LoadScene("FirstStage");
-    }
+    // // 모든 유저 로딩 UI 프로세스 호출
+    // [PunRPC]
+    // public void LoadSceneProcess(){
+    //     LoadingSceneCtrl.Instance.LoadScene("FirstStage");
+    // }
 
 }
 

@@ -14,7 +14,8 @@ public class UIStageEnter : UserInterface
     // 버튼 클릭 메서드
     // 솔로 모드 버튼 클릭
     public void OnSoloMode(){
-        networkManager.LoadSceneProcess();
+        // networkManager.LoadSceneProcess();
+        Debug.Log("OnSoloMode()");
     }
     // 멀티 모드 버튼 클릭
     public void OnMultiMode(){
