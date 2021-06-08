@@ -35,6 +35,26 @@ public class PlayerInfo : LivingEntity
 
     private void Awake()
     {
+        pv = GetComponent<PhotonView>();
+
+        if (GameManager.isMulti)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (pv.IsMine)
+                    gameObject.name = "ServerPlayer";
+                else
+                    gameObject.name = "ClientPlayer";
+            }
+            else
+            {
+                if (pv.IsMine)
+                    gameObject.name = "ClientPlayer";
+                else
+                    gameObject.name = "ServerPlayer";
+            }
+        }
+
         startingHealth = 100.0f; // 시작체력
         maxHealth = startingHealth;
         health = startingHealth;
@@ -42,7 +62,6 @@ public class PlayerInfo : LivingEntity
         playerAnimation = GetComponent<PlayerAnimation>();
         playerKeyboardController = GetComponent<PlayerKeyboardController>();
         playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
-        pv = GetComponent<PhotonView>();
         damage.dValue = 10f; //초기 데미지값 설정(발판)
 
         if (GameManager.isMulti)

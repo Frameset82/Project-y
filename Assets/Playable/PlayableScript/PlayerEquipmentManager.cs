@@ -11,7 +11,8 @@ public class PlayerEquipmentManager : MonoBehaviour
     private PlayerInfo playerInfo;
     private PlayerKeyboardInput playerKeyboardInput;
     private GameObject player;
-
+    private GameManager GM;
+    public string weaponRoot = "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
     public GameObject playerWeaponRoot;
     public GameObject nearObject;//플레이어와 가까이 있는 무기 오브젝트
 
@@ -75,7 +76,13 @@ public class PlayerEquipmentManager : MonoBehaviour
             mainWeapon = nearObject.GetComponent<Weapon>();
             equipWeapon = mainWeapon;
             if (GameManager.isMulti == true)
+            {
                 pv.RPC("WeaponAnimChange", RpcTarget.All, mainWeapon.wType);
+                if (PhotonNetwork.IsMasterClient)
+                    pv.RPC("WeaponSyn1", RpcTarget.Others, dummyStr);
+                else
+                    pv.RPC("WeaponSyn2", RpcTarget.MasterClient, dummyStr);
+            }
             else
                 WeaponAnimChange(mainWeapon.wType);
             mainWeapon.OnEquip();
@@ -86,14 +93,33 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
         else if (subWeapon == null)
         {
+            if(GameManager.isMulti == true)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                    pv.RPC("WeaponOff1", RpcTarget.Others, equipWeapon.name);
+                else
+                    pv.RPC("WeaponOff2", RpcTarget.MasterClient, equipWeapon.name);
+            }
             ParticleDelete();
             mainWeapon.gameObject.SetActive(false);
             subWeapon = nearObject.GetComponent<Weapon>();
             equipWeapon = subWeapon;
             if (GameManager.isMulti == true)
+            {
                 pv.RPC("WeaponAnimChange", RpcTarget.All, subWeapon.wType);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    pv.RPC("WeaponOff1", RpcTarget.Others, equipWeapon.name);
+                    pv.RPC("WeaponSyn1", RpcTarget.Others, dummyStr);
+                }
+                else
+                {
+                    pv.RPC("WeaponOff2", RpcTarget.MasterClient, equipWeapon.name);
+                    pv.RPC("WeaponSyn2", RpcTarget.MasterClient, dummyStr);
+                }
+            }
             else
-                WeaponAnimChange(subWeapon.wType);
+                WeaponAnimChange(mainWeapon.wType);
             subWeapon.OnEquip();
             subWeaponImg.sprite = subWeapon.weaponSprite;
             equipCount = 2;
@@ -163,17 +189,27 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj.SetActive(false);
     }
 
+    private string dummyStr;
     public void WeaponTr()
     {
         Weapon newWeapon = nearObject.GetComponent<Weapon>();
+        dummyStr = newWeapon.gameObject.name;
 
         if (GameManager.isMulti)
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                pv.RPC("sex", RpcTarget.Others, null);
                 nearObject.transform.SetParent(playerWeaponRoot.transform);
                 if (pv.IsMine) 
+                {
+                    nearObject.transform.position = newWeapon.tr.position;
+                    nearObject.transform.rotation = newWeapon.tr.rotation;
+                }
+            }
+            else
+            {
+                nearObject.transform.SetParent(playerWeaponRoot.transform);
+                if (pv.IsMine)
                 {
                     nearObject.transform.position = newWeapon.tr.position;
                     nearObject.transform.rotation = newWeapon.tr.rotation;
@@ -189,13 +225,35 @@ public class PlayerEquipmentManager : MonoBehaviour
     }
 
     [PunRPC]
-    public void sex()
+    public void WeaponSyn1(string Str)
     {
-        /*        abc.transform.SetParent(abcc.transform);
-                abc.transform.position = newWeapon.tr.position;
-                abc.transform.rotation = newWeapon.tr.rotation;*/
-        print(GameManager.players[0].GetComponent<PlayerEquipmentManager>().equipWeapon.trGameObject);
-        GameManager.players[0].GetComponent<PlayerEquipmentManager>().equipWeapon.trGameObject.SetActive(true);
+        GameObject dummyobj;
+        dummyobj = GameObject.Find("ServerPlayer/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + Str);
+        dummyobj.SetActive(true);
+    }
+
+    [PunRPC]
+    public void WeaponSyn2(string Str)
+    {
+        GameObject dummyobj;
+        dummyobj = GameObject.Find("ClientPlayer/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + Str);
+        dummyobj.SetActive(true);
+    }
+
+    [PunRPC]
+    public void WeaponOff1(string Str)
+    {
+        GameObject dummyobj;
+        dummyobj = GameObject.Find("ServerPlayer/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + Str);
+        dummyobj.SetActive(false);
+    }
+
+    [PunRPC]
+    public void WeaponOff2(string Str)
+    {
+        GameObject dummyobj;
+        dummyobj = GameObject.Find("ClientPlayer/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/" + Str);
+        dummyobj.SetActive(false);
     }
 
     [PunRPC]
@@ -225,9 +283,23 @@ public class PlayerEquipmentManager : MonoBehaviour
             playerKeyboardInput.isSwap = true;
             WeaponAnimChange(subWeapon.wType);
             mainWeapon.gameObject.SetActive(false);
+            if(GameManager.isMulti == true)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                    pv.RPC("WeaponOff1", RpcTarget.Others, mainWeapon.name);
+                else
+                    pv.RPC("WeaponOff2", RpcTarget.MasterClient, mainWeapon.name);
+            }
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
             equipWeapon = subWeapon;
             subWeapon.gameObject.SetActive(true);
+            if (GameManager.isMulti == true)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                    pv.RPC("WeaponSyn1", RpcTarget.Others, subWeapon.name);
+                else
+                    pv.RPC("WeaponSyn2", RpcTarget.MasterClient, subWeapon.name);
+            }
             if (GameManager.isMulti == true)
                 pv.RPC("WeaponAnimChange", RpcTarget.All, subWeapon.wType);
             else
@@ -239,9 +311,23 @@ public class PlayerEquipmentManager : MonoBehaviour
             playerKeyboardInput.isSwap = true;
             WeaponAnimChange(mainWeapon.wType);
             subWeapon.gameObject.SetActive(false);
+            if (GameManager.isMulti == true)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                    pv.RPC("WeaponOff1", RpcTarget.Others, subWeapon.name);
+                else
+                    pv.RPC("WeaponOff2", RpcTarget.MasterClient, subWeapon.name);
+            }
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
             equipWeapon = mainWeapon;
             mainWeapon.gameObject.SetActive(true);
+            if (GameManager.isMulti == true)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                    pv.RPC("WeaponSyn1", RpcTarget.Others, mainWeapon.name);
+                else
+                    pv.RPC("WeaponSyn2", RpcTarget.MasterClient, mainWeapon.name);
+            }
             if (GameManager.isMulti == true)
                 pv.RPC("WeaponAnimChange", RpcTarget.All, mainWeapon.wType);
             else
