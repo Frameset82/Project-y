@@ -14,6 +14,7 @@ public class BossController : LivingEntity, IPunObservable
     public BossState bState = BossState.None; // 보스 상태 변수
     public float MoveSpeed; // 이동속도
     public LivingEntity[] players;//플레이어들 
+    public GameObject[] TestPlayers;//플레이어들 
     public LivingEntity target; // 공격대상
     public Vector3 targetPos; // 공격 대상 위치 
     public GameObject StunEffect; //스턴
@@ -143,8 +144,7 @@ public class BossController : LivingEntity, IPunObservable
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-           
-
+         
             //StartCoroutine(NormalAttack());
             //anim.SetTrigger("Shoot");
             //StartCoroutine(NormalAttack());
@@ -155,8 +155,16 @@ public class BossController : LivingEntity, IPunObservable
              StartCoroutine(Enable());
            // StartCoroutine(Stun());
         }
-     
-            
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            TestPlayers = GameObject.FindGameObjectsWithTag("Player");
+        }
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            players[0] = TestPlayers[0].GetComponent<LivingEntity>();
+            players[1] = TestPlayers[1].GetComponent<LivingEntity>();
+            target = players[0];
+        }
 
 
         CheckState();

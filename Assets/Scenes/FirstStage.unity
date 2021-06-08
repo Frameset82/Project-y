@@ -31400,7 +31400,7 @@ Transform:
   m_Children:
   - {fileID: 752879882}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1390057022
 GameObject:
@@ -34366,7 +34366,7 @@ Transform:
   m_Children:
   - {fileID: 229893889}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1511159437
 PrefabInstance:
@@ -36821,6 +36821,11 @@ PrefabInstance:
         type: 3}
       propertyPath: players.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076390738332456778, guid: 08e74df7448dd2a4587abc653facafa3,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[8].SynchronizeType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9076390738332456783, guid: 08e74df7448dd2a4587abc653facafa3,
         type: 3}
