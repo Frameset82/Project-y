@@ -338,13 +338,13 @@ public class BombRobotControl : LivingEntity, IPunObservable
             mesh[i].material.color = Defaultmesh[i].material.color;
         }
 
-     
+        ObjectPool.ReturnBombRobot(this);
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            ObjectPool.ReturnBombRobot(this);
-        }
-       
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    ObjectPool.ReturnBombRobot(this);
+        //}
+
     }
 
 

@@ -42,18 +42,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             if(PhotonNetwork.IsMasterClient){
                 PhotonNetwork.Instantiate(playerEffect.name, playerSpawn0.position, Quaternion.identity);
                 players[0] =  PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn0.position, Quaternion.identity);
-                Debug.Log("Host Spawn");
                 SoundManager.instance.SFXPlay(playerSpawnClip, gameObject);
             } else {
                 PhotonNetwork.Instantiate(playerEffect.name, playerSpawn1.position, Quaternion.identity);
                 players[1] =  PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn1.position, Quaternion.identity);
-                Debug.Log("Guest Spawn");
                 SoundManager.instance.SFXPlay(playerSpawnClip, gameObject);
             }
         } else {
             Instantiate(playerEffect, playerSpawn0.position, Quaternion.identity);
             Instantiate(playerPrefab, playerSpawn0.position, Quaternion.identity);
-            Debug.Log("Solo Spawn");
             SoundManager.instance.SFXPlay(playerSpawnClip, gameObject);
         }
         PlayerKeyboardController.isInteraction=false;
