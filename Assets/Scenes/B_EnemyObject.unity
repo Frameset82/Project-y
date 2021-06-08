@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: d7451eb2e67c91146b98c71eb0f35d87,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5522,6 +5522,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &942444026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 942444027}
+  m_Layer: 9
+  m_Name: Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &942444027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942444026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.04, y: 0.46, z: -2.54}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8005749470412180324}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &945373436
 GameObject:
   m_ObjectHideFlags: 0
@@ -37328,32 +37358,6 @@ MonoBehaviour:
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
---- !u!114 &6431557407174195570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6431557407174195575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d57e5b457836f946ba7b36f66f00597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bState: 0
-  MoveSpeed: 10
-  players: []
-  TestPlayers: []
-  target: {fileID: 359617090}
-  targetPos: {x: 0, y: 0, z: 0}
-  StunEffect: {fileID: 100000, guid: 352304b7fbe11f445970df6ae36e6227, type: 3}
-  Stuntrans: {fileID: 1022505128065466883}
-  bGun: {fileID: 1271755191080645373}
-  attackRange: 7
-  diff: 0
-  dashSpeed: 80
-  dashTime: 0.5
-  angleRange: 45
 --- !u!1 &6431557407174195575
 GameObject:
   m_ObjectHideFlags: 0
@@ -37368,7 +37372,7 @@ GameObject:
   - component: {fileID: 8547617772013515608}
   - component: {fileID: 8547617772013515614}
   - component: {fileID: 6431557407174195569}
-  - component: {fileID: 6431557407174195570}
+  - component: {fileID: 6431557407174195576}
   m_Layer: 9
   m_Name: Stage1Boss (2)
   m_TagString: Enemy
@@ -37376,6 +37380,37 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6431557407174195576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6431557407174195575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceaef27ce29f5e249a13bbd5a3d8a6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bState: 0
+  MoveSpeed: 0
+  players: []
+  TestPlayers: []
+  target: {fileID: 359617090}
+  targetPos: {x: 0, y: 0, z: 0}
+  StunEffect: {fileID: 0}
+  Stuntrans: {fileID: 0}
+  bGun: {fileID: 0}
+  attackRange: 7
+  diff: 0
+  dashSpeed: 30
+  dashTime: 0.5
+  angleRange: 45
+  Effects:
+  - Effecta: {fileID: 1934977346563538, guid: 8c2a99d5d9b4d4a4d973ce3412f51745, type: 3}
+    StartPositionRotation: {fileID: 942444027}
+    DestroyAfter: 5
+    UseLocalPosition: 0
 --- !u!4 &6546782894298325985
 Transform:
   m_ObjectHideFlags: 0
@@ -37630,7 +37665,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6431557407174195575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -15.7, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 5883402312432036769}
@@ -37638,6 +37673,7 @@ Transform:
   - {fileID: 8547617772966083252}
   - {fileID: 8547617772885808085}
   - {fileID: 1022505128065466883}
+  - {fileID: 942444027}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
