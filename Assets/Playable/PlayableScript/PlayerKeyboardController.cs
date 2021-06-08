@@ -63,20 +63,74 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
     public class EffectInfo
     {
-        public GameObject Effect;// 이펙트
+        public GameObject MeleeEffect;// 한손검이펙트
+        public GameObject SwordEffect;// 대검이펙트
+        public GameObject SpearEffect;// 창이펙트
+        public GameObject DashEffect;// 대쉬이펙트
         public Transform StartPositionRotation;
         public float DestroyAfter = 10; // 이펙트 지속시간
         public bool UseLocalPosition = true;
     }
 
-    void InstantiateEffect(int EffectNumber)
+    void MeleeInstantiateEffect(int EffectNumber)
     {
         if (Effects == null || Effects.Length <= EffectNumber)
         {
             Debug.LogError("Incorrect effect number or effect is null");
         }
 
-        var instance = Instantiate(Effects[EffectNumber].Effect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+        var instance = Instantiate(Effects[EffectNumber].MeleeEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
+    void SwordInstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].SwordEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
+    void SpearInstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].SpearEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
+    void DashInstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].DashEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
 
         if (Effects[EffectNumber].UseLocalPosition)
         {
@@ -181,6 +235,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
     // 캐릭터 실제 회피
     public IEnumerator DodgeCoroutine(Vector3 dir)
     {
+        DashInstantiateEffect(0);
         playerRigidbody.useGravity = false;
         playerRigidbody.AddForce(dir.normalized * dodgePower, ForceMode.Impulse);
         playerRigidbody.velocity = Vector3.zero;
@@ -267,7 +322,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
-                InstantiateEffect(comboCnt);
+                MeleeInstantiateEffect(comboCnt);
             }
             yield return new WaitForSeconds(delay * 0.5f);
             playerEquipmentManager.equipWeapon.OnAttack();
@@ -282,7 +337,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3);  // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
-                InstantiateEffect(comboCnt);
+                SwordInstantiateEffect(comboCnt);
             }
             yield return new WaitForSeconds(delay);
             playerEquipmentManager.equipWeapon.OnAttack();
@@ -298,6 +353,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                SpearInstantiateEffect(comboCnt);
             }
             yield return new WaitForSeconds(delay);
             playerEquipmentManager.equipWeapon.OnAttack();
