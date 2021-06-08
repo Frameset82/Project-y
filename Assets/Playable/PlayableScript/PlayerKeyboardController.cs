@@ -67,7 +67,9 @@ public class PlayerKeyboardController : MonoBehaviourPun
         public GameObject SwordEffect;// 대검이펙트
         public GameObject SpearEffect;// 창이펙트
         public GameObject DashEffect;// 대쉬이펙트
-        public Transform StartPositionRotation;
+        public GameObject RightEffect; // 한손검 우클릭 이펙트
+        public Transform StartPositionRotation; //이펙트 시작지점
+        public Transform StartPositionRotation1; //우클릭 시작지점
         public float DestroyAfter = 10; // 이펙트 지속시간
         public bool UseLocalPosition = true;
     }
@@ -114,6 +116,23 @@ public class PlayerKeyboardController : MonoBehaviourPun
         }
 
         var instance = Instantiate(Effects[EffectNumber].SpearEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+
+        if (Effects[EffectNumber].UseLocalPosition)
+        {
+            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = new Quaternion();
+        }
+        Destroy(instance, Effects[EffectNumber].DestroyAfter);
+    }
+    void RightmeleeInstantiateEffect(int EffectNumber)
+    {
+        if (Effects == null || Effects.Length <= EffectNumber)
+        {
+            Debug.LogError("Incorrect effect number or effect is null");
+        }
+
+        var instance = Instantiate(Effects[EffectNumber].RightEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
 
         if (Effects[EffectNumber].UseLocalPosition)
         {
@@ -323,8 +342,13 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
                 MeleeInstantiateEffect(comboCnt);
+                if (comboCnt == 3)
+                {
+                    comboCnt = 0;
+                    yield return new WaitForSeconds(0.7f);
+                }
             }
-            yield return new WaitForSeconds(delay * 0.5f);
+            yield return new WaitForSeconds(delay * 0.7f);
             playerEquipmentManager.equipWeapon.OnAttack();
             playerKeyboardInput.isShoot = false;
         }
@@ -338,8 +362,13 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3);  // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
                 SwordInstantiateEffect(comboCnt);
+                if (comboCnt == 3)
+                {
+                    comboCnt = 0;
+                    yield return new WaitForSeconds(1f);
+                }
             }
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay * 2f);
             playerEquipmentManager.equipWeapon.OnAttack();
             playerKeyboardInput.isShoot = false;
             
@@ -354,6 +383,8 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
                 SpearInstantiateEffect(comboCnt);
+                if (comboCnt == 3)
+                    comboCnt = 0;
             }
             yield return new WaitForSeconds(delay);
             playerEquipmentManager.equipWeapon.OnAttack();
@@ -412,6 +443,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
         }*/
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
+            RightmeleeInstantiateEffect(1);
             playerAnimation.RightAttack();
             playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
             playerRigidbody.velocity = Vector3.zero;

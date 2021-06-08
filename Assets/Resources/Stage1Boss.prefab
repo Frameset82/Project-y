@@ -1885,14 +1885,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bState: 0
   MoveSpeed: 10
+  players: []
+  TestPlayers: []
   target: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
+  StunEffect: {fileID: 0}
+  Stuntrans: {fileID: 0}
   bGun: {fileID: 2276152229396623920}
   attackRange: 7
   diff: 0
   dashSpeed: 80
   dashTime: 0.5
   angleRange: 45
+  Effects:
+  - Effecta: {fileID: 1934977346563538, guid: 8c2a99d5d9b4d4a4d973ce3412f51745, type: 3}
+    StartPositionRotation: {fileID: 0}
+    DestroyAfter: 2
+    UseLocalPosition: 0
 --- !u!1 &6382891788653367163
 GameObject:
   m_ObjectHideFlags: 0
