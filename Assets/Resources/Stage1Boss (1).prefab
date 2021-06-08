@@ -1076,6 +1076,7 @@ MonoBehaviour:
   bState: 0
   MoveSpeed: 10
   players: []
+  TestPlayers: []
   target: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   StunEffect: {fileID: 100000, guid: 352304b7fbe11f445970df6ae36e6227, type: 3}
@@ -1184,7 +1185,7 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: BackDash
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: isDead
   - Type: 9
     SynchronizeType: 0
