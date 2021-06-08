@@ -166,7 +166,16 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public void WeaponTr()
     {
-        nearObject.transform.SetParent(playerWeaponRoot.transform);
+        GameObject nearDummy = nearObject;
+        if (GameManager.isMulti)
+        {
+            if (GameManager.players[0].GetComponent<PhotonView>().IsMine == true)
+                nearObject.transform.SetParent(playerWeaponRoot.transform);
+            else
+                nearDummy.transform.SetParent(playerWeaponRoot.transform);
+        }
+        else
+            nearObject.transform.SetParent(playerWeaponRoot.transform);
         Weapon newWeapon = nearObject.GetComponent<Weapon>();
         nearObject.transform.position = newWeapon.tr.position;
         nearObject.transform.rotation = newWeapon.tr.rotation;
