@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class ObjectPool : MonoBehaviour
 {
@@ -36,14 +37,17 @@ public class ObjectPool : MonoBehaviour
     void Start()
     {
         Instance = this;
-        Initialize(20);
+        Initialize(10);
     }
 
     void Initialize(int count) // 초기 설정
     {
         for (int i = 0; i < count; i++)
         {
-            RobotQueue.Enqueue(CreateNewBomb());
+            if (PhotonNetwork.IsMasterClient)
+            {
+                RobotQueue.Enqueue(CreateNewBomb());
+            }
             BulletQueue.Enqueue(CreateNewBullet());
             DLineQueue.Enqueue(CreateNewLine());
             SBulletQueue.Enqueue(CreateNewSBullet());
@@ -70,7 +74,6 @@ public class ObjectPool : MonoBehaviour
 
     private DangerLine CreateNewLine()
     {
-
         var newObj = Instantiate(DangerLine, transform).GetComponent<DangerLine>();
         newObj.gameObject.SetActive(false);
         return newObj;
@@ -86,7 +89,9 @@ public class ObjectPool : MonoBehaviour
 
     private BombRobotControl CreateNewBomb() // 로봇생성 
     {
-        var newObj = Instantiate(BombRobot, transform).GetComponent<BombRobotControl>();
+
+        var newObj = PhotonNetwork.Instantiate("BombRobot", transform.position, Quaternion.identity).GetComponent<BombRobotControl>();
+        newObj.gameObject.transform.parent = this.transform;
         newObj.gameObject.SetActive(false);
         return newObj;
     }
