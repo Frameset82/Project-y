@@ -11,6 +11,7 @@ public class BombRobotControl : LivingEntity, IPunObservable
     public BombState bstate;
     public float Speed = 50.0f;
 
+    public AudioClip clip;
     public GameObject Explosion;// 폭발 이펙트
     public GameObject target; // 공격 대상
     public GameObject DangerRange;
@@ -18,6 +19,7 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
     private Damage damage;
     private bool isWalk;
+    private float timer;
   
     private MeshRenderer[] mesh;
     private MeshRenderer[] Defaultmesh;
@@ -54,7 +56,8 @@ public class BombRobotControl : LivingEntity, IPunObservable
     protected override void OnEnable()
     {
         DangerRange.SetActive(false);
-       
+
+        timer = 0f;
         Explosion.SetActive(false); //폭발 프리팹 비활성화
         bstate = BombState.Idle; //기본 상태를 유휴 상태로 변경
         this.startingHealth = 100f; //테스트용 설정
@@ -64,8 +67,8 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
     private void Start()
     {
-        this.transform.parent = ObjectPool.objectTrans;
-        this.gameObject.SetActive(false);
+        //this.transform.parent = ObjectPool.objectTrans;
+        //this.gameObject.SetActive(false);
     }
 
 
@@ -84,12 +87,18 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
         if (!PhotonNetwork.IsMasterClient) { return; }
 
+        timer += Time.deltaTime;
+
         if (target!= null && bstate != BombState.Exploding && gameObject.activeSelf) //타겟이 있을때만
         { 
             targetPos = target.transform.position;
 
             if (target.GetComponent<LivingEntity>().dead)
             { Die(); }
+            if(timer >= 2f)
+            {
+                Die();
+            }
         } 
     
         CheckState(); //상태 체크
@@ -161,7 +170,8 @@ public class BombRobotControl : LivingEntity, IPunObservable
         Explosion.transform.position = this.transform.position;
         Explosion.transform.rotation = this.transform.rotation;
         Explosion.SetActive(true);
-     
+
+        SoundManager.instance.SFXPlay(clip, this.gameObject);
         yield return new WaitForSeconds(0.8f); // 1초간 정지후 실행       
         
         Die();

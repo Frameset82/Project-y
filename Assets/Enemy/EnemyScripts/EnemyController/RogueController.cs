@@ -16,7 +16,7 @@ public class RogueController : LivingEntity, IPunObservable
     public GameObject target; // 공격 대상
     public int Idlestate;
     public Transform pTr;
-
+    public AudioClip clip;
     private PhotonView pv;
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
@@ -333,7 +333,7 @@ public class RogueController : LivingEntity, IPunObservable
                 StopAllCoroutines();
 
                 DamageEvent((int)dInfo.dType, dInfo.ccTime);
-             
+                SoundManager.instance.SFXPlay(clip, this.gameObject);
             }
         }
     }

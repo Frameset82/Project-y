@@ -7,7 +7,7 @@ public class CameraSetup : MonoBehaviourPun
 {
     GameObject[] players;
     [SerializeField] GameObject target;
-
+    [SerializeField] GameObject Boss;
     [SerializeField] float offsetX = 7.0f;
     [SerializeField] float offsetY = 9.0f;
     [SerializeField] float offsetZ = 7.0f;
@@ -44,5 +44,10 @@ public class CameraSetup : MonoBehaviourPun
         {
             target = GameObject.FindGameObjectWithTag("Player");
         }
+    }
+
+    public void BossTargeting()
+    {
+        target = Boss;
     }
 }

@@ -11,6 +11,7 @@ public class BossController : LivingEntity, IPunObservable
     public enum BossState { None = 0, MoveTarget= 1, NormalAttack = 2, SpawnRobot =3, AmimingShot=4, BackDash =5, Dash = 6, Stun =7, Die=8 }; //보스 상태
 
 
+    public AudioClip[] clips;
     public BossState bState = BossState.None; // 보스 상태 변수
     public float MoveSpeed; // 이동속도
     public LivingEntity[] players;//플레이어들 
@@ -178,9 +179,7 @@ public class BossController : LivingEntity, IPunObservable
     }
 
     private void Update()
-    {
-      
-
+    {     
         HpUI.RefreshUI(this.health);
         DiffUI.RefreshUI(this.diff);
 
@@ -208,19 +207,27 @@ public class BossController : LivingEntity, IPunObservable
              StartCoroutine(Enable());
            // StartCoroutine(Stun());
         }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            TestPlayers = GameObject.FindGameObjectsWithTag("Player");
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            players[0] = TestPlayers[0].GetComponent<LivingEntity>();
-            players[1] = TestPlayers[1].GetComponent<LivingEntity>();
-            target = players[0];
-        }
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    TestPlayers = GameObject.FindGameObjectsWithTag("Player");
+        //}
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    players[0] = TestPlayers[0].GetComponent<LivingEntity>();
+        //    players[1] = TestPlayers[1].GetComponent<LivingEntity>();
+        //    target = players[0];
+        //}
 
 
         CheckState();
+    }
+
+    public void startRoutine()
+    {
+        players[0] = GameManager.instance.serverP.GetComponent<LivingEntity>();
+        // players[1] = GameManager.instance.clientP.GetComponent<LivingEntity>();
+        target = players[0];
+        StartCoroutine(Enable());
     }
 
     // 근접 적 상태 체크
@@ -308,10 +315,17 @@ public class BossController : LivingEntity, IPunObservable
 
     IEnumerator Enable() //처음 실행되는 모션
     {
+        yield return new WaitForSeconds(0.5f);
+
+
         pv.RPC("ShowAnimation", RpcTarget.All, (int)BossState.None);
-       // players[0] = GameManager.instance.serverP.GetComponent<LivingEntity>();
-        //players[1] = GameManager.instance.clientP.GetComponent<LivingEntity>();
-        //target = players[0];
+
+
+     
+        BossUI.SetActive(true);
+
+        yield return new WaitForSeconds(0.3f);
+        SoundManager.instance.SFXPlay(clips[1], this.gameObject);
 
         yield return new WaitForSeconds(6.8f);
 
@@ -332,15 +346,16 @@ public class BossController : LivingEntity, IPunObservable
             {
                 case 0:
                 case 1:
+                case 3:
                 case 4:
+                
                 case 5:
                     if (!WallCheck())
                     { StartCoroutine(BackDash()); }
                     else
                     { StartCoroutine(NormalAttack()); }
                     break;
-                case 2:
-                case 3:
+                case 2:           
                 case 6:
                     StartCoroutine(CreateBomobRobot());
                     break;
@@ -376,7 +391,7 @@ public class BossController : LivingEntity, IPunObservable
         {
             transform.LookAt(targetPos);
             pv.RPC("ShowAnimation", RpcTarget.All, (int)BossState.NormalAttack);
-        
+            SoundManager.instance.SFXPlay(clips[0], this.gameObject);
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -390,7 +405,7 @@ public class BossController : LivingEntity, IPunObservable
 
         pv.RPC("ShowAnimation", RpcTarget.All, (int)BossState.SpawnRobot);
 
-        for (int i= 0; i< 3; i++)
+        for (int i= 0; i< 2; i++)
         {        
             Vector3 spawnPos = Random.insideUnitCircle * 4f; ;
             spawnPos.x += this.transform.position.x;
@@ -411,6 +426,7 @@ public class BossController : LivingEntity, IPunObservable
     {
         BombRobotControl BombRobot = ObjectPool.GetRobot();
         BombRobot.transform.position = spawnPos;
+        BombRobot.gameObject.SetActive(true);
         if (PhotonNetwork.IsMasterClient)
         { BombRobot.SetTarget(target.gameObject); }
        
@@ -455,7 +471,9 @@ public class BossController : LivingEntity, IPunObservable
             yield return new WaitForSeconds(0.1f);   
             transform.LookAt(targetPos);
             pv.RPC("ShowAnimation", RpcTarget.All, 9); //sinping shoot;
-            // yield return new WaitForSeconds(0.7f); 
+
+            yield return new WaitForSeconds(0.3f); 
+            SoundManager.instance.SFXPlay(clips[1], this.gameObject);
             yield return new WaitForSeconds(2f);
         }
 
@@ -493,7 +511,7 @@ public class BossController : LivingEntity, IPunObservable
 
         float startTime = Time.time;
         Vector3 lookPosition = Vector3.zero;
-       // pv.RPC("InstantiateEffect", RpcTarget.All, 0); // 이펙트를 전체로 뿌림
+        pv.RPC("InstantiateEffect", RpcTarget.All, 0); // 이펙트를 전체로 뿌림
         //InstantiateEffect(0);
         //Time.time < startTime + dashTime
         while (!isCollision)
@@ -558,7 +576,7 @@ public class BossController : LivingEntity, IPunObservable
 
         health -= dInfo.dValue; // 체력 감소
 
-        diff -= (int)((dInfo.dValue * dInfo.inCapValue) / 100); //총공격력에서 무력화수치 퍼센트만큼 방어도 감소
+        diff -= 6;  /* (int)((dInfo.dValue * dInfo.inCapValue) / 100)*/ //총공격력에서 무력화수치 퍼센트만큼 방어도 감소
 
         if (diff <= 0 && bState != BossState.Stun)
         {          
