@@ -135,7 +135,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
     public void Interation()
     {
         if(Input.GetButtonDown("Interation")){
-            if(playerEquipmentManager.nearObject != null && isSwap == false){
+            if(playerEquipmentManager.nearObject != null && isSwap == false && isDodge == false){
                 playerEquipmentManager.Interation();
             }
             if(playerKeyboardController.targetInterObj != null){
