@@ -18,7 +18,11 @@ public class BossController : LivingEntity, IPunObservable
     public LivingEntity target; // 공격대상
     public Vector3 targetPos; // 공격 대상 위치 
     public GameObject StunEffect; //스턴
-    public Transform Stuntrans;
+    public Transform Stuntrans; //스턴 이펙트가 나올 트랜스폼 변수
+
+    public GameObject BossUI;
+    public BossHpBar HpUI;
+    public BossHpBar DiffUI;
 
     private float timer; //타이머
     private int randState;
@@ -28,6 +32,7 @@ public class BossController : LivingEntity, IPunObservable
     private Rigidbody rigid;
     private Animator anim; // 애니메이터 컴포넌트                         
     public BossGun bGun; //보스 총 컴포넌트
+    private GameManager gm;
 
     private bool hasTarget
     {
@@ -77,18 +82,28 @@ public class BossController : LivingEntity, IPunObservable
 
     protected override void OnEnable()
     {
-        nDamage.dValue = 1f; //초기 데미지값 설정
+        nDamage.dValue = 5f; //초기 데미지값 설정
         nDamage.dType = Damage.DamageType.Melee; //데미지 종류 설정
 
-        sDamage.dValue = 1f;
+        sDamage.dValue = 10f;
         sDamage.dType = Damage.DamageType.Stun;
         sDamage.ccTime = 0.5f;
 
         bState = BossState.None;
-        this.startingHealth = 10000f; //테스트용 설정
+        this.startingHealth = 300f; //테스트용 설정
         this.diff = 50f;
 
         base.OnEnable();
+    }
+
+    private void Start()
+    {
+       
+        HpUI.maxPoint = this.health;
+        HpUI.currentPoint = this.health;
+
+        DiffUI.maxPoint = this.diff;
+        DiffUI.currentPoint = this.diff;
     }
 
     public EffectInfo[] Effects; // 이펙트 들
@@ -164,12 +179,17 @@ public class BossController : LivingEntity, IPunObservable
 
     private void Update()
     {
+      
+
+        HpUI.RefreshUI(this.health);
+        DiffUI.RefreshUI(this.diff);
+
         if (!PhotonNetwork.IsMasterClient)
         { return; }
 
 
-        else if (target != null && timer >= 10f && target.dead)
-        { ChangeTarget();  }
+        //else if (target != null && timer >= 10f && target.dead)
+        //{ ChangeTarget();  }
 
         if (target != null)
         { sectorCheck(); }
@@ -180,18 +200,19 @@ public class BossController : LivingEntity, IPunObservable
             //StartCoroutine(NormalAttack());
             //anim.SetTrigger("Shoot");
             //StartCoroutine(NormalAttack());
-            //CreateBomobRobot();
+           // CreateBomobRobot();
+            
             // StartCoroutine(SnipingShot());
             // StartCoroutine(Dash());
             // StartCoroutine(BackDash());
              StartCoroutine(Enable());
            // StartCoroutine(Stun());
         }
-        if(Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             TestPlayers = GameObject.FindGameObjectsWithTag("Player");
         }
-        if(Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             players[0] = TestPlayers[0].GetComponent<LivingEntity>();
             players[1] = TestPlayers[1].GetComponent<LivingEntity>();
@@ -288,7 +309,9 @@ public class BossController : LivingEntity, IPunObservable
     IEnumerator Enable() //처음 실행되는 모션
     {
         pv.RPC("ShowAnimation", RpcTarget.All, (int)BossState.None);
-
+       // players[0] = GameManager.instance.serverP.GetComponent<LivingEntity>();
+        //players[1] = GameManager.instance.clientP.GetComponent<LivingEntity>();
+        //target = players[0];
 
         yield return new WaitForSeconds(6.8f);
 

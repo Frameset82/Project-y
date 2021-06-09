@@ -91,8 +91,8 @@ public class RogueController : LivingEntity, IPunObservable
 
     private void Start()
     {
-        this.transform.parent = ObjectPool.objectTrans;
-        this.gameObject.SetActive(false);
+        //this.transform.parent = ObjectPool.objectTrans;
+        //this.gameObject.SetActive(false);
     }
 
     [PunRPC]

@@ -87,8 +87,8 @@ public class MeleeController : LivingEntity, IPunObservable
 
     private void Start()
     {
-        this.transform.parent = ObjectPool.objectTrans;
-        this.gameObject.SetActive(false);
+       // this.transform.parent = ObjectPool.objectTrans;
+        //this.gameObject.SetActive(false);
     }
 
     [PunRPC]
@@ -448,7 +448,8 @@ public class MeleeController : LivingEntity, IPunObservable
         while (Time.time < startTime + 2.8f)
         {
             rigid.angularVelocity = Vector3.zero;
-           // nav.isStopped = true;
+            nav.isStopped = true;
+            // nav.isStopped = true;
             yield return null;
         }
 

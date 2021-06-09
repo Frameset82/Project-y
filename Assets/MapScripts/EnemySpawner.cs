@@ -10,8 +10,8 @@ public class EnemySpawner : MonoBehaviour, IPunObservable
     public enum enemyType {None, Melee, Rogue, Rifle, End};
 
     public enemyType[] eTypes;
-    private List<LivingEntity> enemis = new List<LivingEntity>();
-    private List<Vector3> sPos = new List<Vector3>();
+    private static List<LivingEntity> enemis = new List<LivingEntity>();
+    private  List<Vector3> sPos = new List<Vector3>();
 
     public int wave;
     private bool isEnter;
@@ -71,10 +71,12 @@ public class EnemySpawner : MonoBehaviour, IPunObservable
             Vector3 spawnPos;
             spawnPos.x = Random.Range((boxScale.position.x - boxScale.localScale.x / 2), (boxScale.position.x + boxScale.localScale.x / 2)); 
             spawnPos.z = Random.Range((boxScale.position.z - boxScale.localScale.z / 2), (boxScale.position.z + boxScale.localScale.z / 2));
-            spawnPos.y = 10f;
+            spawnPos.y = boxScale.position.y;
             sPos.Add(spawnPos);
 
-            pv.RPC("SpawnEnemy", RpcTarget.All, spawnPos);
+            // pv.RPC("SpawnEnemy", RpcTarget.All, spawnPos, count);
+            SpawnEnemy(spawnPos, count);
+            pv.RPC("enemyActive", RpcTarget.Others, spawnPos, count);
             //SpawnEnemy(spawnPos);
             count++;
         }
@@ -82,11 +84,11 @@ public class EnemySpawner : MonoBehaviour, IPunObservable
     }
 
     [PunRPC]
-    void SpawnEnemy(Vector3 spawnPos) //몹 스폰
+    void SpawnEnemy(Vector3 spawnPos, int _count) //몹 스폰
     {
        StartCoroutine(ShowRoutine(spawnPos));
 
-        switch (eTypes[count])
+        switch (eTypes[_count])
         { 
             case enemyType.Melee:
                 MeleeController mcon = ObjectPool.GetMelee();       
@@ -103,16 +105,23 @@ public class EnemySpawner : MonoBehaviour, IPunObservable
                 break;
 
             case enemyType.Rogue:
-                RifleController ricon = ObjectPool.GetRifle();
-           
+                RifleController ricon = ObjectPool.GetRifle();     
                 ricon.gameObject.transform.position = spawnPos;
                 enemis.Add(ricon);
                 ricon.onDeath += () => enemis.Remove(ricon);
-                break;
-             
+                break;            
         }
     
     }
+
+
+    [PunRPC]
+    void enemyActive(Vector3 spawnPos, int _count)
+    {
+        enemis[_count].gameObject.SetActive(false);
+    }
+
+
 
 
     IEnumerator ShowRoutine(Vector3 spawnPos)
