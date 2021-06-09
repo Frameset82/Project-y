@@ -27,6 +27,7 @@ public class ObjectPool : MonoBehaviour
     private GameObject Potal; //포탈 범위 라인
 
     private Queue<BombRobotControl> RobotQueue = new Queue<BombRobotControl>(); //자폭로봇 큐
+
     private Queue<MeleeController> MeleeQueue = new Queue<MeleeController>();  //근접적 큐
     private Queue<RogueController> RogueQueue = new Queue<RogueController>();  // 로그적 큐
     private Queue<RifleController> RifleQueue = new Queue<RifleController>();  // 라이플적 큐
@@ -44,8 +45,8 @@ public class ObjectPool : MonoBehaviour
 
     void Initialize(int count) // 초기 설정
     {
-        if(PhotonNetwork.IsMasterClient)
-        {
+        //if(PhotonNetwork.IsMasterClient)
+        
             for(int i = 0; i< count; i++)
             {
                 RobotQueue.Enqueue(CreateNewBomb());
@@ -54,7 +55,7 @@ public class ObjectPool : MonoBehaviour
                 RifleQueue.Enqueue(CreateNewRifle());
             }
            
-        }
+        
 
         for (int i = 0; i < count; i++)
         {
