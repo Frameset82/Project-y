@@ -17,6 +17,7 @@ public class MeleeController : LivingEntity, IPunObservable
 
 
     [Header("기본속성")]
+    public AudioClip clip;
     public MeleeState mstate = MeleeState.None; // 근접적 상태변수
     public Vector3 targetPos; //공격 대상 위치
     public GameObject target; // 공격 대상
@@ -364,7 +365,8 @@ public class MeleeController : LivingEntity, IPunObservable
             else
             {
                 StopAllCoroutines();        
-                DamageEvent((int)dInfo.dType, dInfo.ccTime);              
+                DamageEvent((int)dInfo.dType, dInfo.ccTime);
+                SoundManager.instance.SFXPlay(clip, this.gameObject);
             }
         }
 

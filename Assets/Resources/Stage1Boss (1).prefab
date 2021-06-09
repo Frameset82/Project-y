@@ -1074,14 +1074,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d57e5b457836f946ba7b36f66f00597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 98fbb570c33585c45a2a65f127596e76, type: 3}
+  - {fileID: 8300000, guid: 17c50a757c1e3924c925733b75cda899, type: 3}
   bState: 0
   MoveSpeed: 10
-  players: []
+  players:
+  - {fileID: 0}
   TestPlayers: []
   target: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   StunEffect: {fileID: 100000, guid: 352304b7fbe11f445970df6ae36e6227, type: 3}
   Stuntrans: {fileID: 9076390738078520766}
+  BossUI: {fileID: 0}
+  HpUI: {fileID: 0}
+  DiffUI: {fileID: 0}
   bGun: {fileID: 7089603891097347392}
   attackRange: 7
   diff: 0

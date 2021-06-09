@@ -17,7 +17,8 @@ public class RifleController : LivingEntity, IPunObservable
     public GameObject target; // 공격 대상
     public int Idlestate;
     public Transform pTr;
-
+    public AudioClip clip1;
+    public AudioClip clip2;
 
     private PhotonView pv;
     private NavMeshAgent nav; // NavMesh 컴포넌트
@@ -236,7 +237,8 @@ public class RifleController : LivingEntity, IPunObservable
     public void OnAttackEvent()
     {
         StopAllCoroutines();
-        eGun.Fire(damage);    
+        eGun.Fire(damage);
+        SoundManager.instance.SFXPlay(clip2, this.gameObject);
     }
 
     // 공격을 당했을때
@@ -257,7 +259,7 @@ public class RifleController : LivingEntity, IPunObservable
                 StopAllCoroutines();
 
                 DamageEvent((int)dInfo.dType, dInfo.ccTime);
-               
+                SoundManager.instance.SFXPlay(clip1, this.gameObject);
             }
         }
     }

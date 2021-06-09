@@ -44,19 +44,25 @@ public class ObjectPool : MonoBehaviour
 
     void Initialize(int count) // 초기 설정
     {
-        if(PhotonNetwork.IsMasterClient)
-        { 
-         for (int i = 0; i < count; i++)
-         {
-               RobotQueue.Enqueue(CreateNewBomb());
-        //        MeleeQueue.Enqueue(CreateNewMelee());
-        //        RogueQueue.Enqueue(CreateNewRogue());
-        //        RifleQueue.Enqueue(CreateNewRifle());
-         }
-        }
+        //    if(PhotonNetwork.IsMasterClient)
+        //    { 
+        //     for (int i = 0; i < count; i++)
+        //     {
+        //           RobotQueue.Enqueue(CreateNewBomb());
+        //    //        MeleeQueue.Enqueue(CreateNewMelee());
+        //    //        RogueQueue.Enqueue(CreateNewRogue());
+        //    //        RifleQueue.Enqueue(CreateNewRifle());
+        //     }
+        //    }
 
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            RobotQueue.Enqueue(CreateNewBomb());
+        }
         for (int i = 0; i < count; i++)
         {
+            //RobotQueue.Enqueue(CreateNewBomb());
             BulletQueue.Enqueue(CreateNewBullet());
             DLineQueue.Enqueue(CreateNewLine());
             SBulletQueue.Enqueue(CreateNewSBullet());
@@ -97,9 +103,12 @@ public class ObjectPool : MonoBehaviour
 
     private BombRobotControl CreateNewBomb() // 로봇생성 
     {
-
-        BombRobotControl newObj = PhotonNetwork.Instantiate("BombRobot", transform.position, Quaternion.identity).GetComponent<BombRobotControl>();
+        var newObj = PhotonNetwork.Instantiate("BombRobot", transform.position, Quaternion.identity).GetComponent<BombRobotControl>();
+        newObj.gameObject.transform.parent = this.transform;
+        newObj.gameObject.SetActive(false);
         return newObj;
+        //BombRobotControl newObj = PhotonNetwork.Instantiate("BombRobot", transform.position, Quaternion.identity).GetComponent<BombRobotControl>();
+        //return newObj;
     }
 
     private EnemyBullet CreateNewBullet() //일반총알 생성
