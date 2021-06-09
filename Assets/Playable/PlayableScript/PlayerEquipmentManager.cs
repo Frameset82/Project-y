@@ -45,6 +45,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     GameObject particleObj;
     private PhotonView pv = null;
+    private GameManager gameManager;
     private void Start()
     {
         playerAnimation = GetComponent<PlayerAnimation>();
@@ -52,6 +53,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         playerInfo = GetComponent<PlayerInfo>();
         pv = GetComponent<PhotonView>();
         player = gameObject;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     public void Interation()
@@ -93,7 +95,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
         else if (subWeapon == null)
         {
-            if(GameManager.isMulti == true)
+            if (GameManager.isMulti == true)
             {
                 if (PhotonNetwork.IsMasterClient)
                     pv.RPC("WeaponOff1", RpcTarget.Others, equipWeapon.name);
@@ -200,7 +202,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             if (PhotonNetwork.IsMasterClient)
             {
                 nearObject.transform.SetParent(playerWeaponRoot.transform);
-                if (pv.IsMine) 
+                if (pv.IsMine)
                 {
                     nearObject.transform.position = newWeapon.tr.position;
                     nearObject.transform.rotation = newWeapon.tr.rotation;
@@ -486,11 +488,11 @@ public class PlayerEquipmentManager : MonoBehaviour
         if (other.tag == "Weapon" || other.tag == "Item")
         {
             nearObject = other.gameObject;
-            if(other.tag == "Weapon")
+            if (other.tag == "Weapon")
                 nearObject.GetComponent<Weapon>().SetPlayer(player);
-            else if(other.tag == "Item")
+            else if (other.tag == "Item")
                 nearObject.GetComponent<ActiveItem>().SetPlayer(player);
-        }   
+        }
     }
 
     private void OnTriggerExit(Collider other)

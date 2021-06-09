@@ -7,10 +7,33 @@ using Photon.Realtime;
 public class DoransSword : MeleeWeapon
 {
     private Damage damage;
-    private PhotonView pv = null;
+    public PhotonView pv;
 
-    private Vector3 currPos = Vector3.zero;
-    private Quaternion currRot = Quaternion.identity;
+    public Vector3 currPos = Vector3.zero;
+    public Quaternion currRot = Quaternion.identity;
+
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+        pv.ObservedComponents[0] = gameObject.transform;
+
+        currPos = transform.position;
+        currRot = transform.rotation;
+    }
+
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(tr.position);
+            stream.SendNext(tr.rotation);
+        }
+        else
+        {
+            currPos = (Vector3)stream.ReceiveNext();
+            currRot = (Quaternion)stream.ReceiveNext();
+        }
+    }
 
     public override void OnActive()
     {
@@ -68,11 +91,11 @@ public class DoransSword : MeleeWeapon
     void Update()
     {
         CollisionCheck();
-        if(weaponTrChanged == false)
+        if (weaponTrChanged == false)
         {
             TrChange();
         }
-        if(player != null)
+        if (player != null)
         {
             if (damageValue + playerInfo.defaultDamage != prevDamage)
             {

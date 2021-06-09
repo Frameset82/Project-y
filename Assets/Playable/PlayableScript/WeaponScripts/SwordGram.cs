@@ -1,10 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class SwordGram : MeleeWeapon
 {
     private Damage damage;
+    public PhotonView pv;
+
+    public Vector3 currPos = Vector3.zero;
+    public Quaternion currRot = Quaternion.identity;
+
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+        pv.ObservedComponents[0] = gameObject.transform;
+
+        currPos = transform.position;
+        currRot = transform.rotation;
+    }
+
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(tr.position);
+            stream.SendNext(tr.rotation);
+        }
+        else
+        {
+            currPos = (Vector3)stream.ReceiveNext();
+            currRot = (Quaternion)stream.ReceiveNext();
+        }
+    }
 
     public override void OnActive()
     {
@@ -59,11 +88,11 @@ public class SwordGram : MeleeWeapon
     void Update()
     {
         CollisionCheck();
-        if(weaponTrChanged == false)
+        if (weaponTrChanged == false)
         {
             TrChange();
         }
-        if(player != null)
+        if (player != null)
         {
             if (damageValue + playerInfo.defaultDamage != prevDamage)
             {
