@@ -15,7 +15,7 @@ public class Gungnir : MeleeWeapon
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
-        pv.ObservedComponents[0] = gameObject.transform;
+/*        pv.ObservedComponents[0] = gameObject.transform;*/
 
         currPos = transform.position;
         currRot = transform.rotation;

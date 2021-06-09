@@ -324,6 +324,7 @@ public class RogueController : LivingEntity, IPunObservable
         else if (PhotonNetwork.IsMasterClient)
         {
             health -= dInfo.dValue; //체력 감소      
+
             if (health <= 0 && !dead && this.gameObject.activeInHierarchy) // 체력이 0보다 작고 사망상태가 아닐때
             {
                 Die();             

@@ -21,6 +21,7 @@ public class ComboManager : MonoBehaviour
             playerAnimation.playerAnimator.SetBool("isAttack", false);
             playerKeyboardController.comboCnt = 0;
             playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
+            playerKeyboardController.gameObject.GetComponent<PlayerKeyboardInput>().isShoot = false;
         }
     }
     public void Combo2Check()
@@ -31,6 +32,7 @@ public class ComboManager : MonoBehaviour
             playerAnimation.playerAnimator.SetBool("isAttack", false);
             playerKeyboardController.comboCnt = 0;
             playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
+            playerKeyboardController.gameObject.GetComponent<PlayerKeyboardInput>().isShoot = false;
         }
     }
     public void Combo3Check()
@@ -39,7 +41,8 @@ public class ComboManager : MonoBehaviour
         playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
         playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
         playerAnimation.playerAnimator.SetBool("isAttack", false);
-        
+        playerKeyboardController.gameObject.GetComponent<PlayerKeyboardInput>().isShoot = false;
+
     }
 
     public void ComboMoveCheck()

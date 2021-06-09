@@ -74,7 +74,7 @@ public class PlayerKeyboardInput : MonoBehaviourPun
 
     public void InputMove()
     {
-        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight || isChange || playerInfo.playerUIEnable)
+        if (playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Dodge || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Death || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerKeyboardController.PlayerState.onCC || isRight || isChange || isShoot || playerInfo.playerUIEnable)
             return;
         playerKeyboardController.hAxis = Input.GetAxisRaw("Horizontal");
         playerKeyboardController.vAxis = Input.GetAxisRaw("Vertical");

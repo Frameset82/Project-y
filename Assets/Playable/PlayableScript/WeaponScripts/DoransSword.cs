@@ -15,7 +15,7 @@ public class DoransSword : MeleeWeapon
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
-        pv.ObservedComponents[0] = gameObject.transform;
+/*        pv.ObservedComponents[0] = gameObject.transform;*/
 
         currPos = transform.position;
         currRot = transform.rotation;
@@ -57,6 +57,12 @@ public class DoransSword : MeleeWeapon
             damage.hitNormal = transform.position - enemies[i].transform.position;
             enemies[i].GetComponent<LivingEntity>().OnDamage(damage);
         }
+    }
+
+    [PunRPC]
+    public void DamageCarculate()
+    {
+
     }
 
     [PunRPC]

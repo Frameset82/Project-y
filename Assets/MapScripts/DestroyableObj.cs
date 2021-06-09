@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
 
-public class DestroyableObj : MonoBehaviour, IDamageable
+public class DestroyableObj : LivingEntity
 {
     public delegate void BreakDelegate(float power);
     public BreakDelegate breakDelegate;

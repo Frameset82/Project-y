@@ -342,14 +342,15 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
                 MeleeInstantiateEffect(comboCnt);
+                playerEquipmentManager.equipWeapon.OnAttack();
                 if (comboCnt == 3)
                 {
                     comboCnt = 0;
-                    yield return new WaitForSeconds(0.7f);
+                    yield return new WaitForSeconds(delay);
                 }
             }
-            yield return new WaitForSeconds(delay * 0.7f);
-            playerEquipmentManager.equipWeapon.OnAttack();
+            yield return new WaitForSeconds(delay);
+            
             playerKeyboardInput.isShoot = false;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
