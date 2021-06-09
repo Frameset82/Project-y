@@ -382,11 +382,16 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
+                if (comboCnt == 2)
+                {
+                    playerRigidbody.AddForce(transform.forward * 18f, ForceMode.Impulse);
+                    playerRigidbody.velocity = Vector3.zero;
+                }
                 SpearInstantiateEffect(comboCnt);
                 if (comboCnt == 3)
                     comboCnt = 0;
             }
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay * 1.2f);
             playerEquipmentManager.equipWeapon.OnAttack();
             playerKeyboardInput.isShoot = false;
         }
@@ -464,7 +469,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
         {
             playerAnimation.RightAttack();
-            playerRigidbody.AddForce(transform.forward * 5f, ForceMode.Impulse);
+            playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
             playerRigidbody.velocity = Vector3.zero;
             /*            PlayerKeyboardInput.isRight = false;
                         yield return new WaitForSeconds(1f);
