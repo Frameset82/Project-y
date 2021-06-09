@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
 
-public class DestroyableObj : LivingEntity
+public class DestroyableObj : MonoBehaviour, IDamageable
 {
     public delegate void BreakDelegate(float power);
     public BreakDelegate breakDelegate;
@@ -16,7 +16,7 @@ public class DestroyableObj : LivingEntity
         pv = GetComponent<PhotonView>();
     }
 
-    public override void OnDamage(Damage damage) {
+    public void OnDamage(Damage damage) {
         if(isBroken) return; // 이미 파괴되어 있다면 반환
 
         if(GameManager.isMulti) // 멀티플레이 중일 경우 RPC 호출
