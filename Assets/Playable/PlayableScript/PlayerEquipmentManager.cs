@@ -256,6 +256,28 @@ public class PlayerEquipmentManager : MonoBehaviour
         dummyobj.SetActive(false);
     }
 
+    public void WeaponActiveOff1(string str)
+    {
+        if (GameManager.isMulti == true)
+        {
+            if (PhotonNetwork.IsMasterClient)
+                pv.RPC("WeaponOff1", RpcTarget.Others, str);
+            else
+                pv.RPC("WeaponOff2", RpcTarget.MasterClient, str);
+        }
+    }
+
+    public void WeaponActiveOff2(string str)
+    {
+        if (GameManager.isMulti == true)
+        {
+            if (PhotonNetwork.IsMasterClient)
+                pv.RPC("WeaponSyn1", RpcTarget.Others, str);
+            else
+                pv.RPC("WeaponSyn2", RpcTarget.MasterClient, str);
+        }
+    }
+
     [PunRPC]
     public void WeaponAnimChange(Weapon.WeaponType wType)
     {
@@ -283,23 +305,11 @@ public class PlayerEquipmentManager : MonoBehaviour
             playerKeyboardInput.isSwap = true;
             WeaponAnimChange(subWeapon.wType);
             mainWeapon.gameObject.SetActive(false);
-            if(GameManager.isMulti == true)
-            {
-                if (PhotonNetwork.IsMasterClient)
-                    pv.RPC("WeaponOff1", RpcTarget.Others, mainWeapon.name);
-                else
-                    pv.RPC("WeaponOff2", RpcTarget.MasterClient, mainWeapon.name);
-            }
+            WeaponActiveOff1(mainWeapon.name);
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
             equipWeapon = subWeapon;
             subWeapon.gameObject.SetActive(true);
-            if (GameManager.isMulti == true)
-            {
-                if (PhotonNetwork.IsMasterClient)
-                    pv.RPC("WeaponSyn1", RpcTarget.Others, subWeapon.name);
-                else
-                    pv.RPC("WeaponSyn2", RpcTarget.MasterClient, subWeapon.name);
-            }
+            WeaponActiveOff2(subWeapon.name);
             if (GameManager.isMulti == true)
                 pv.RPC("WeaponAnimChange", RpcTarget.All, subWeapon.wType);
             else
@@ -311,23 +321,11 @@ public class PlayerEquipmentManager : MonoBehaviour
             playerKeyboardInput.isSwap = true;
             WeaponAnimChange(mainWeapon.wType);
             subWeapon.gameObject.SetActive(false);
-            if (GameManager.isMulti == true)
-            {
-                if (PhotonNetwork.IsMasterClient)
-                    pv.RPC("WeaponOff1", RpcTarget.Others, subWeapon.name);
-                else
-                    pv.RPC("WeaponOff2", RpcTarget.MasterClient, subWeapon.name);
-            }
+            WeaponActiveOff1(subWeapon.name);
             StartCoroutine(SwapCoroutine()); //무기 변경 애니메이션 코루틴 실행
             equipWeapon = mainWeapon;
             mainWeapon.gameObject.SetActive(true);
-            if (GameManager.isMulti == true)
-            {
-                if (PhotonNetwork.IsMasterClient)
-                    pv.RPC("WeaponSyn1", RpcTarget.Others, mainWeapon.name);
-                else
-                    pv.RPC("WeaponSyn2", RpcTarget.MasterClient, mainWeapon.name);
-            }
+            WeaponActiveOff2(mainWeapon.name);
             if (GameManager.isMulti == true)
                 pv.RPC("WeaponAnimChange", RpcTarget.All, mainWeapon.wType);
             else
@@ -341,11 +339,11 @@ public class PlayerEquipmentManager : MonoBehaviour
     {
         // 들고있는 무기를 땅에 떨어트리는 과정
         mainWeapon.gameObject.SetActive(true);
+        WeaponActiveOff2(mainWeapon.name);
         mainWeapon.UnEquip();
         subWeapon.gameObject.SetActive(false);
+        WeaponActiveOff1(subWeapon.name);
         ParticleDelete();
-        /*        mainWeapon.transform.position = nearObject.transform.position;
-                mainWeapon.transform.rotation = nearObject.transform.rotation;*/
         mainWeapon.transform.position = player.transform.position + Vector3.up;
         mainWeapon.transform.rotation = player.transform.rotation;
         particleObj = mainWeapon.transform.GetChild(0).gameObject;
