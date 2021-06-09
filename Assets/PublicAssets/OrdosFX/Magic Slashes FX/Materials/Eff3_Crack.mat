@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Eff3_Crack
   m_Shader: {fileID: 4800000, guid: 0c4da5b854c93244b96fc0ae24e9b103, type: 3}
   m_ShaderKeywords: USE_ALPHA_CUTOUT _ALPHABLEND_ON _EMISSION
@@ -88,4 +89,4 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DistStrength: {r: 0, g: 0, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TintColor: {r: 0, g: 0.84137917, b: 2, a: 1}
+    - _TintColor: {r: 0.5849056, g: 0.47519526, b: 0.11863652, a: 0.19607843}

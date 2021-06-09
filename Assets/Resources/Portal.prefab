@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1465323844089819020}
   - component: {fileID: 1465323844071477826}
   - component: {fileID: 1465323844072229838}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wormhole_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4729,7 +4729,7 @@ GameObject:
   - component: {fileID: 1465323844089912406}
   - component: {fileID: 1465323844071557636}
   - component: {fileID: 1465323844072236012}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9465,7 +9465,7 @@ GameObject:
   - component: {fileID: 1465323844089914970}
   - component: {fileID: 1465323844071585634}
   - component: {fileID: 1465323844072182512}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wormhole_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14183,7 +14183,7 @@ GameObject:
   - component: {fileID: 1465323844089824574}
   - component: {fileID: 1465323844071484072}
   - component: {fileID: 1465323844071490842}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14197,15 +14197,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1465323844090181324}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 190, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.5, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1465323844089824834}
   - {fileID: 1465323844089912406}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 60, z: 0}
 --- !u!198 &1465323844071484072
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -18911,7 +18911,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1465323844089824834}
   - component: {fileID: 1465323844079917738}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wormhole
   m_TagString: Untagged
   m_Icon: {fileID: 0}

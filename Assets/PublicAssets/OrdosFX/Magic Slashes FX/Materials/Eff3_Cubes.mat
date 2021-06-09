@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Eff3_Cubes
   m_Shader: {fileID: 4800000, guid: 7e671e89f590cef458d0a2d232ccb988, type: 3}
   m_ShaderKeywords: USE_ALPHA_CUTOUT
@@ -87,4 +88,4 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DistStrength: {r: 0, g: 0, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 1.2867647, g: 2.0806286, b: 5, a: 1}
+    - _TintColor: {r: 0.34309703, g: 0.36389077, b: 0.44082767, a: 1}
