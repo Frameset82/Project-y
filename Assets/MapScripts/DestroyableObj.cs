@@ -16,7 +16,7 @@ public class DestroyableObj : LivingEntity
         pv = GetComponent<PhotonView>();
     }
 
-    public void OnDamage(Damage damage) {
+    public override void OnDamage(Damage damage) {
         if(isBroken) return; // 이미 파괴되어 있다면 반환
 
         if(GameManager.isMulti) // 멀티플레이 중일 경우 RPC 호출

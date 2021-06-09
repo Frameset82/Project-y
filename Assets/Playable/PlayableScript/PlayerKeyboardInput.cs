@@ -108,7 +108,10 @@ public class PlayerKeyboardInput : MonoBehaviourPun
         {
             RaycastHit hit;
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            int layerMask = 1 << LayerMask.NameToLayer("Ground");
+            // int layerMask = 1 << LayerMask.NameToLayer("Ground");
+            int layerMask = (1 << LayerMask.NameToLayer("Ground")) 
+                            + (1 << LayerMask.NameToLayer("Enemy"))
+                            + (1 << LayerMask.NameToLayer("Wall"));
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
                 Vector3 destination = new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z);
