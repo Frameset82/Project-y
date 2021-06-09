@@ -269,11 +269,11 @@ public class PlayerKeyboardController : MonoBehaviourPun
             if (hits.Length > 0)
             {
                 hit = hits[hits.Length - 1];
-                gameObject.transform.position = hit.point + Vector3.up * 0.15f;
+                gameObject.transform.position = hit.point + Vector3.up * 0.1f;
             }
             else if (Physics.Raycast(transform.position, Vector3.down, out hit, 10, layerMask))
             {
-                gameObject.transform.position = hit.point + Vector3.up * 0.15f;
+                gameObject.transform.position = hit.point + Vector3.up * 0.1f;
             }
             yield return new WaitForFixedUpdate();
         }

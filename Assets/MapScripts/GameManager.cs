@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public static bool isMulti{get; private set;} // 멀티플레이 환경 체크
 
-    public static GameObject[] players = new GameObject[2]; // 0은 마스터 1은 게스트
+    public GameObject serverP;
+    public GameObject clientP;
 
     // 씬에 싱글톤 오브젝트가 된 다른 GameManager 오브젝트가 있다면 자신을 파괴
     void Awake() {
@@ -41,11 +42,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         if(isMulti){
             if(PhotonNetwork.IsMasterClient){
                 PhotonNetwork.Instantiate(playerEffect.name, playerSpawn0.position, Quaternion.identity);
-                players[0] =  PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn0.position, Quaternion.identity);
+                PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn0.position, Quaternion.identity);
                 SoundManager.instance.SFXPlay(playerSpawnClip, gameObject);
             } else {
                 PhotonNetwork.Instantiate(playerEffect.name, playerSpawn1.position, Quaternion.identity);
-                players[1] =  PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn1.position, Quaternion.identity);
+                PhotonNetwork.Instantiate(playerPrefab.name, playerSpawn1.position, Quaternion.identity);
                 SoundManager.instance.SFXPlay(playerSpawnClip, gameObject);
             }
         } else {
@@ -58,5 +59,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         SoundManager.instance.BgmPlay();
     }
 
-
+    private void Update()
+    {
+        if (isMulti)
+        {
+            if (serverP == null)
+                serverP = GameObject.Find("ServerPlayer");
+            if (clientP == null)
+                clientP = GameObject.Find("ClientPlayer");
+        }
+    }
 }
