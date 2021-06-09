@@ -95,7 +95,8 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
             if (target.GetComponent<LivingEntity>().dead)
             { Die(); }
-            if(timer >= 2f)
+
+            if(timer >= 4f)
             {
                 Die();
             }
@@ -199,6 +200,8 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
     public override void OnDamage(Damage dInfo)
     {
+        return;
+
         if (dead) return;
 
         else if(PhotonNetwork.IsMasterClient)
