@@ -24,6 +24,7 @@ public class MeleeController : LivingEntity, IPunObservable
     public int Idlestate; // 아이들 상태
     public Transform pTr;
 
+    private new static float health;
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
     private Rigidbody rigid; //리지드 바디 컴포넌트
@@ -369,7 +370,10 @@ public class MeleeController : LivingEntity, IPunObservable
                 SoundManager.instance.SFXPlay(clip, this.gameObject);
             }
         }
-
+       else
+        {
+            health -= dInfo.dValue;
+        }
  
     }
     
