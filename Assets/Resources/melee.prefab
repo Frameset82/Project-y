@@ -132,7 +132,9 @@ MonoBehaviour:
     m_Bits: 512
   enemies: []
   isCollision: 0
-  abc: {fileID: 0}
+  pv: {fileID: 0}
+  currPos: {x: 0, y: 0, z: 0}
+  currRot: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &7899432412565083339
 MonoBehaviour:
   m_ObjectHideFlags: 0
