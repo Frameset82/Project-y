@@ -560,11 +560,11 @@ public class RogueController : LivingEntity, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(health);
+           // stream.SendNext(health);
         }
         else
         {  
-            health = (float)stream.ReceiveNext();
+            //health = (float)stream.ReceiveNext();
         }
     }
 
