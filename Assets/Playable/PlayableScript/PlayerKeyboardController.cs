@@ -342,7 +342,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
                 MeleeInstantiateEffect(comboCnt);
-                playerEquipmentManager.equipWeapon.OnAttack();
+/*                playerEquipmentManager.equipWeapon.OnAttack();*/
                 if (comboCnt == 3)
                 {
                     comboCnt = 0;

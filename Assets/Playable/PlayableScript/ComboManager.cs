@@ -6,11 +6,13 @@ public class ComboManager : MonoBehaviour
 {
     private PlayerKeyboardController playerKeyboardController;
     private PlayerAnimation playerAnimation;
+    private PlayerEquipmentManager playerEquipmentManager;
 
     private void Start()
     {
         playerKeyboardController = this.GetComponentInParent<PlayerKeyboardController>();
         playerAnimation = this.GetComponentInParent<PlayerAnimation>();
+        playerEquipmentManager = this.GetComponentInParent<PlayerEquipmentManager>();
     }
 
     public void Combo1Check()
@@ -24,6 +26,7 @@ public class ComboManager : MonoBehaviour
             playerKeyboardController.gameObject.GetComponent<PlayerKeyboardInput>().isShoot = false;
         }
     }
+
     public void Combo2Check()
     {
         playerKeyboardController.pState = PlayerKeyboardController.PlayerState.Idle;
@@ -35,6 +38,7 @@ public class ComboManager : MonoBehaviour
             playerKeyboardController.gameObject.GetComponent<PlayerKeyboardInput>().isShoot = false;
         }
     }
+
     public void Combo3Check()
     {
         playerKeyboardController.comboCnt = 0;
@@ -48,5 +52,10 @@ public class ComboManager : MonoBehaviour
     public void ComboMoveCheck()
     {
         playerKeyboardController.ComboMove();
+    }
+
+    public void Atk()
+    {
+        playerEquipmentManager.equipWeapon.OnAttack();
     }
 }
