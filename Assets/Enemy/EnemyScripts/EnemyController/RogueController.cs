@@ -22,6 +22,8 @@ public class RogueController : LivingEntity, IPunObservable
     private Animator anim; // 애니메이터 컴포넌트
     private Rigidbody rigid;
 
+    private new static float health;
+
     [SerializeField]
     private Healthbar healthbar;
 
@@ -337,6 +339,10 @@ public class RogueController : LivingEntity, IPunObservable
                 SoundManager.instance.SFXPlay(clip, this.gameObject);
             }
         }
+        else
+        {
+            health -= dInfo.dValue;
+        }
     }
 
     void DamageEvent(int dType, float ccTime)
@@ -554,11 +560,11 @@ public class RogueController : LivingEntity, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(health);
+           // stream.SendNext(health);
         }
         else
         {  
-            health = (float)stream.ReceiveNext();
+            //health = (float)stream.ReceiveNext();
         }
     }
 

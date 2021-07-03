@@ -26,7 +26,6 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
     private NavMeshAgent nav;
     private Animator anim;
-    private Rigidbody rigid;
     private PhotonView pv;
     private Vector3 targetPos;
 
@@ -40,7 +39,6 @@ public class BombRobotControl : LivingEntity, IPunObservable
         Defaultmesh = this.transform.GetChild(2).GetComponentsInChildren<MeshRenderer>();
         nav = GetComponent<NavMeshAgent>(); //네비게이션 가져오기
         anim = GetComponentInChildren<Animator>(); //애니메이터 가져오기 
-        rigid = GetComponent<Rigidbody>(); //리지드 바디
 
         damage.dType = Damage.DamageType.NuckBack;
         damage.ccTime = 1f;
@@ -48,9 +46,7 @@ public class BombRobotControl : LivingEntity, IPunObservable
         startingHealth = 30f;
 
         pv.ObservedComponents[0] = this;
-        pv.Synchronization = ViewSynchronization.UnreliableOnChange;
-
-       
+        pv.Synchronization = ViewSynchronization.UnreliableOnChange;       
     }
 
     protected override void OnEnable()
@@ -83,7 +79,6 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
     void Update()
     {
-        healthbar.SetHealth((int)health);
 
         if (!PhotonNetwork.IsMasterClient) { return; }
 
@@ -132,7 +127,9 @@ public class BombRobotControl : LivingEntity, IPunObservable
     private void OnTriggerEnter(Collider other)
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
-        else if (other.gameObject.layer == 8 && bstate != BombState.Exploding)//충돌한 상대가 플레어 일때
+        
+        
+        if (other.gameObject.layer == 8 && bstate != BombState.Exploding)//충돌한 상대가 플레어 일때
         {           
             bstate = BombState.Exploding;
             pv.RPC("StartExplosion", RpcTarget.All);
@@ -150,8 +147,9 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
     private IEnumerator Explode()
     {
-        //nav.isStopped = true; //네비 멈추기
+        
         nav.velocity = Vector3.zero; //네비 속도 0으로 맞추기
+        nav.isStopped = true; //네비 멈추기
         DangerRange.SetActive(true);
 
         yield return new WaitForSeconds(2.0f); // 2초간 정지후 실행
@@ -197,50 +195,124 @@ public class BombRobotControl : LivingEntity, IPunObservable
         }     
     }
 
+    //<**************************   데미지 처리 이벤트 ****************************>
 
-    public override void OnDamage(Damage dInfo)
-    {
-        return;
+    //public override void OnDamage(Damage dInfo)
+    //{
+    //    return;
 
-        if (dead) return;
+    //    if (dead) return;
 
-        else if(PhotonNetwork.IsMasterClient)
-        {
-            health -= dInfo.dValue;
+    //    else if(PhotonNetwork.IsMasterClient)
+    //    {
+    //        health -= dInfo.dValue;
 
-            if (health <= 0 && this.gameObject.activeInHierarchy && !dead)
-            {
-                dead = true;
-                Die();
-            }
-            else
-            {
-                StopAllCoroutines();
-                DamageEvent((int)dInfo.dType, dInfo.ccTime);
-            }
-        }  
-    }
+    //        if (health <= 0 && this.gameObject.activeInHierarchy && !dead)
+    //        {
+    //            dead = true;
+    //            Die();
+    //        }
+    //        else
+    //        {
+    //            StopAllCoroutines();
+    //            DamageEvent((int)dInfo.dType, dInfo.ccTime);
+    //        }
+    //    }  
+    //}
 
-    void DamageEvent(int dType, float ccTime)
-    {
-        switch (dType)
-        {
-            case 1:
-                StartCoroutine(NormalDamageRoutine()); //일반 공격일시
-                break;
+    //void DamageEvent(int dType, float ccTime)
+    //{
+    //    switch (dType)
+    //    {
+    //        case 1:
+    //            StartCoroutine(NormalDamageRoutine()); //일반 공격일시
+    //            break;
 
-            case 2:
-                bstate = BombState.Stun;
-                StartCoroutine(StunRoutine(ccTime));     
-                break;
+    //        case 2:
+    //            bstate = BombState.Stun;
+    //            StartCoroutine(StunRoutine(ccTime));     
+    //            break;
 
-            case 3:
-                bstate = BombState.KnockBack;
-                StartCoroutine(NuckBackDamageRoutine(ccTime));
-                break;
-        }
+    //        case 3:
+    //            bstate = BombState.KnockBack;
+    //            StartCoroutine(NuckBackDamageRoutine(ccTime));
+    //            break;
+    //    }
 
-    }
+    //}
+
+    //IEnumerator NormalDamageRoutine()
+    //{
+    //    if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+    //    { pv.RPC("ShowAnimation", RpcTarget.All, 4); }// 트리거 실행
+
+
+    //    float startTime = Time.time; //시간체크
+
+    //    nav.velocity = Vector3.zero;
+
+    //    while (Time.time < startTime + 0.7f)
+    //    {
+    //        nav.velocity = Vector3.zero;
+    //        yield return null;
+    //    }
+
+    //}
+
+    //IEnumerator StunRoutine(float nuckTime) //스턴
+    //{
+    //    nav.velocity = Vector3.zero;
+    //    if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+    //    { pv.RPC("ShowAnimation", RpcTarget.All, 3); } // 트리거 실행
+
+    //    float startTime = Time.time;
+
+    //    while (Time.time < startTime + nuckTime)
+    //    {
+    //        nav.isStopped = true;
+    //        rigid.angularVelocity = Vector3.zero;
+    //        yield return null;
+    //    }
+
+    //    pv.RPC("ShowAnimation", RpcTarget.All, 2);
+    //    yield return new WaitForSeconds(0.1f);
+
+    //    nav.isStopped = false;
+    //    bstate = BombState.MoveTarget;
+
+    //}
+
+    //IEnumerator NuckBackDamageRoutine(float nuckTime) //넉백시
+    //{
+    //    nav.velocity = Vector3.zero;
+
+    //    if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
+    //    { pv.RPC("ShowAnimation", RpcTarget.All, 1); }// 트리거 실행
+
+    //    float startTime = Time.time;
+
+    //    while (Time.time < startTime + nuckTime)
+    //    {
+    //        nav.isStopped = true;
+    //        rigid.angularVelocity = Vector3.zero;
+    //        yield return null;
+    //    }
+
+    //    startTime = Time.time;
+    //    pv.RPC("ShowAnimation", RpcTarget.All, 2);
+
+    //    while (Time.time < startTime + 2f)
+    //    {
+    //        rigid.angularVelocity = Vector3.zero;
+    //        yield return null;
+    //    }
+    //    nav.isStopped = false;
+    //    bstate = BombState.MoveTarget;
+    //}
+
+
+    //<**************************   데미지 처리 이벤트 ****************************>
+
 
     [PunRPC]
     void ShowAnimation(int a)
@@ -265,77 +337,6 @@ public class BombRobotControl : LivingEntity, IPunObservable
         }
     }
 
-
-    IEnumerator NormalDamageRoutine()
-    {
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { pv.RPC("ShowAnimation", RpcTarget.All, 4); }// 트리거 실행
-
-
-        float startTime = Time.time; //시간체크
-
-        nav.velocity = Vector3.zero;
-
-        while (Time.time < startTime + 0.7f)
-        {
-            nav.velocity = Vector3.zero;
-            yield return null;
-        }
-
-    }
-
-    IEnumerator StunRoutine(float nuckTime) //스턴
-    {
-        nav.velocity = Vector3.zero;
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { pv.RPC("ShowAnimation", RpcTarget.All, 3); } // 트리거 실행
-
-        float startTime = Time.time;
-
-        while (Time.time < startTime + nuckTime)
-        {
-            nav.isStopped = true;
-            rigid.angularVelocity = Vector3.zero;
-            yield return null;
-        }
-
-        pv.RPC("ShowAnimation", RpcTarget.All, 2);
-        yield return new WaitForSeconds(0.1f);
-
-        nav.isStopped = false;
-        bstate = BombState.MoveTarget;
-        
-    }
-
-    IEnumerator NuckBackDamageRoutine(float nuckTime) //넉백시
-    {
-        nav.velocity = Vector3.zero;
-
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.KnockBack"))
-        { pv.RPC("ShowAnimation", RpcTarget.All, 1); }// 트리거 실행
-
-        float startTime = Time.time;
-
-        while (Time.time < startTime + nuckTime)
-        {
-            nav.isStopped = true;
-            rigid.angularVelocity = Vector3.zero;
-            yield return null;
-        }
-
-        startTime = Time.time;
-        pv.RPC("ShowAnimation", RpcTarget.All, 2);
-
-        while (Time.time < startTime + 2f)
-        {
-            rigid.angularVelocity = Vector3.zero;
-            yield return null;
-        }
-        nav.isStopped = false;
-        bstate = BombState.MoveTarget;
-    }
-
-    
     public override void Die()
     {
         base.Die();

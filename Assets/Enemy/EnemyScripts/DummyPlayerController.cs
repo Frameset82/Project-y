@@ -23,7 +23,7 @@ public class DummyPlayerController : LivingEntity
     {
         startingHealth = sHealth;     
         base.OnEnable();
-        damage.dType = Damage.DamageType.Stun;
+        damage.dType = Damage.DamageType.NuckBack;
         damage.dValue = 10f;
         damage.ccTime = 3f;
 

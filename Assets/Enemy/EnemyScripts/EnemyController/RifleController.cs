@@ -20,6 +20,8 @@ public class RifleController : LivingEntity, IPunObservable
     public AudioClip clip1;
     public AudioClip clip2;
 
+
+    private new static float health;
     private PhotonView pv;
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Rigidbody rigid; 
@@ -262,6 +264,10 @@ public class RifleController : LivingEntity, IPunObservable
                 SoundManager.instance.SFXPlay(clip1, this.gameObject);
             }
         }
+        else
+        {
+            health -= dInfo.dValue;
+        }
     }
 
     void DamageEvent(int dType, float ccTime)
@@ -486,11 +492,11 @@ public class RifleController : LivingEntity, IPunObservable
     {
         if(stream.IsWriting)
         {  
-            stream.SendNext(health);
+           // stream.SendNext(health);
         }
         else
         {        
-            health = (float)stream.ReceiveNext();
+            //health = (float)stream.ReceiveNext();
         }
      
     }
