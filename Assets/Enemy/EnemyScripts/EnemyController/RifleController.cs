@@ -364,10 +364,11 @@ public class RifleController : LivingEntity, IPunObservable
         { pv.RPC("ShowAnimation", RpcTarget.All, 3); } // 트리거 실행
 
         float startTime = Time.time;
+        nav.isStopped = true;
 
         while (Time.time < startTime + nuckTime)
         {
-            nav.isStopped = true;
+          
             rigid.angularVelocity = Vector3.zero;
             yield return null;
         }
