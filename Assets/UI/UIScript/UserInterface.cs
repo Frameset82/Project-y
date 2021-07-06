@@ -21,7 +21,7 @@ public abstract class UserInterface : MonoBehaviour
         PlayerKeyboardController.isInteraction = true;
     }
     // UI 비활성화
-    public void CloseUI(){
+    public virtual void CloseUI(){
         uiCanvas.SetActive(false);
         PlayerKeyboardController.isInteraction = false;
     }
