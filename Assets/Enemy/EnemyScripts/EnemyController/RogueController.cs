@@ -87,6 +87,7 @@ public class RogueController : LivingEntity, IPunObservable
         rstate = RogueState.Idle;
         this.startingHealth = 50f; //테스트용 설정
         healthbar.SetMaxHealth((int)startingHealth);
+        health = this.startingHealth;
         base.OnEnable();
     }
 

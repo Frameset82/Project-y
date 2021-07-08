@@ -76,30 +76,35 @@ public class MeleeController : LivingEntity, IPunObservable
    
     }
 
+    
+
     protected override void OnEnable()
     {
-        //대기 상태로 설정
+        ////대기 상태로 설정
         isFirstAttack = true;
         mstate = MeleeState.Idle;
-        this.startingHealth = 50f; //스포너에 들어갈시 삭제
+        this.startingHealth = 100f; //스포너에 들어갈시 삭제
         healthbar.SetMaxHealth((int)startingHealth);
-        base.OnEnable(); 
+        health = this.startingHealth;
+        base.OnEnable();
     }
 
 
     private void Start()
     {
-       // this.transform.parent = ObjectPool.objectTrans;
-        //this.gameObject.SetActive(false);
+
+      
     }
 
     [PunRPC]
     public void Init(float _damage, float _speed, float _startHealth = 50f) //초기 설정 메소드
     {
+  
         nav.speed = _speed; //이동속도 설정
         damage.dValue = _damage; //초기 데미지값 설정
         damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
         this.startingHealth = _startHealth; //초기 HP값 설정
+        Debug.Log("MaxHealth :" + this.startingHealth);
     }
 
 

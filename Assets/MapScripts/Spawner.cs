@@ -84,6 +84,7 @@ public class Spawner : MonoBehaviour, IPunObservable
             case enemyType.Melee:
                 MeleeController mcon = PhotonNetwork.Instantiate("MeleeEnemy", spawnPos, Quaternion.identity).GetComponent<MeleeController>();              
                 enemis.Add(mcon);
+
                 mcon.onDeath += () => enemis.Remove(mcon);
                 mcon.onDeath += () => StartCoroutine(DestroyAfter(mcon.gameObject,10f));
                 break;
