@@ -54,6 +54,13 @@ public class BombRobotControl : LivingEntity, IPunObservable
         DangerRange.SetActive(false);
 
         timer = 0f;
+        nav.enabled = true;
+
+        foreach (MeshRenderer mesh in mesh)
+        {
+            mesh.material.color = Color.white;
+        }
+
         Explosion.SetActive(false); //폭발 프리팹 비활성화
         bstate = BombState.Idle; //기본 상태를 유휴 상태로 변경
         this.startingHealth = 100f; //테스트용 설정
@@ -61,20 +68,13 @@ public class BombRobotControl : LivingEntity, IPunObservable
         healthbar.SetMaxHealth((int)startingHealth);
     }
 
-    private void Start()
-    {
-        //this.transform.parent = ObjectPool.objectTrans;
-        //this.gameObject.SetActive(false);
-    }
-
-
 
     public void SetTarget(GameObject _target) //타겟 설정
     {
         if (!PhotonNetwork.IsMasterClient) { return; }
         target = _target;
          
-         bstate = BombState.MoveTarget;
+        bstate = BombState.MoveTarget;
     }
 
     void Update()
@@ -89,11 +89,15 @@ public class BombRobotControl : LivingEntity, IPunObservable
             targetPos = target.transform.position;
 
             if (target.GetComponent<LivingEntity>().dead)
-            { Die(); }
-
-            if(timer >= 4f)
             {
-                Die();
+                bstate = BombState.Exploding;
+                pv.RPC("StartExplosion", RpcTarget.All);
+            }
+
+            if (timer >= 4f)
+            {
+                bstate = BombState.Exploding;
+                pv.RPC("StartExplosion", RpcTarget.All);
             }
         } 
     
@@ -149,7 +153,7 @@ public class BombRobotControl : LivingEntity, IPunObservable
     {
         
         nav.velocity = Vector3.zero; //네비 속도 0으로 맞추기
-        nav.isStopped = true; //네비 멈추기
+        nav.enabled = false; //네비 멈추기
         DangerRange.SetActive(true);
 
         yield return new WaitForSeconds(2.0f); // 2초간 정지후 실행
@@ -351,7 +355,7 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
         bstate = BombState.Die;
         dead = true; 
-        nav.enabled = false;
+       
         yield return new WaitForSeconds(1f);
 
         Explosion.SetActive(false);

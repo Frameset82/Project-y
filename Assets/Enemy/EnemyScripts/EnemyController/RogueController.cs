@@ -85,7 +85,7 @@ public class RogueController : LivingEntity, IPunObservable
     {
         //대기 상태로 설정
         rstate = RogueState.Idle;
-        this.startingHealth = 50f; //테스트용 설정
+        this.startingHealth = 1f; //테스트용 설정
         healthbar.SetMaxHealth((int)startingHealth);
         health = this.startingHealth;
         base.OnEnable();
@@ -513,7 +513,7 @@ public class RogueController : LivingEntity, IPunObservable
         }
 
 
-        yield return new WaitForSeconds(1f); // 1초 대기
+        yield return new WaitForSeconds(2f); // 1초 대기
 
         ObjectPool.ReturnRogue(this); //다시 오브젝트 풀에 반납
     }

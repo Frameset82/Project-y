@@ -94,6 +94,8 @@ public class BossController : LivingEntity, IPunObservable
         this.startingHealth = 300f; //테스트용 설정
         this.diff = 50f;
 
+       
+
         base.OnEnable();
     }
 
@@ -199,12 +201,12 @@ public class BossController : LivingEntity, IPunObservable
             //StartCoroutine(NormalAttack());
             //anim.SetTrigger("Shoot");
             //StartCoroutine(NormalAttack());
-           // CreateBomobRobot();
+           CreateBomobRobot();
             
             // StartCoroutine(SnipingShot());
             // StartCoroutine(Dash());
             // StartCoroutine(BackDash());
-             StartCoroutine(Enable());
+            //StartCoroutine(Enable());
            // StartCoroutine(Stun());
         }
         //if (Input.GetKeyDown(KeyCode.M))
@@ -369,7 +371,7 @@ public class BossController : LivingEntity, IPunObservable
                 case 3:
                 case 4:
                     StartCoroutine(Dash());
-                    break;
+                    break;              
                 case 1:
                 case 5:
                     StartCoroutine(CreateBomobRobot());
