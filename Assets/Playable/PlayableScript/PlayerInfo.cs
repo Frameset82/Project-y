@@ -161,6 +161,11 @@ public class PlayerInfo : LivingEntity
             playerKeyboardInput.onHit = false;
             timer = 0.0f;
         }
+        if (maxHealth < health)
+        {
+            health = maxHealth;
+            CalculateHealthPoint();
+        }
     }
 
    /* private void OnTriggerEnter(Collider other)
