@@ -25,11 +25,21 @@ public class UINetworkManager : UserInterface
     public Button StartBtn;             // 시작 버튼
     public List<Button> RoomListBtn;    // 방 목록 버튼 리스트
 
-    // 시작 시 모든 버튼 비활성화 후 서버 연결 시도
-    void Start() {
+    // // 시작 시 모든 버튼 비활성화 후 서버 연결 시도
+    // void Start() {
+    //     ConnectingServer();
+    // }
+
+    void OnEnable() {
+        ServerConnectReady();
+    }
+
+    // 서버 연결 시도
+    public void ServerConnectReady(){
         AllBtnInactive();
         RoomPnlInactive();
         networkManager.Connect();
+        Debug.Log("Connect()");
     }
 
     // 모든 버튼 비활성화
@@ -132,10 +142,16 @@ public class UINetworkManager : UserInterface
     public void ClickLeaveRoomBtn(){
         networkManager.LeaveRoom();
     }
-    // ESC 버튼 클릭
+    // X 버튼 클릭
     public void ClickEscapeBtn(){
         // CloseUI();
         interactionObj.InactiveUI();
+    }
+    // UI가 꺼질 때
+    public override void CloseUI(){
+        base.CloseUI();
+        networkManager.DisConnect();
+        Debug.Log("DisConnect()");
     }
     // 로비정보 새로고침 버튼 클릭
     public void ClickRefreshBtn(){
