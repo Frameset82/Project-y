@@ -19,7 +19,6 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
     private Damage damage;
     private bool isWalk;
-    private float timer;
   
     private MeshRenderer[] mesh;
     private MeshRenderer[] Defaultmesh;
@@ -29,43 +28,33 @@ public class BombRobotControl : LivingEntity, IPunObservable
     private PhotonView pv;
     private Vector3 targetPos;
 
-    [SerializeField]
-    private Healthbar healthbar;
+   
 
     void Awake()
     {
+        
+        mesh = this.transform.GetChild(2).GetComponentsInChildren<MeshRenderer>();
+        Defaultmesh = mesh;
         pv = GetComponent<PhotonView>();
-        mesh = this.transform.GetChild(2).GetComponentsInChildren<MeshRenderer>();  
-        Defaultmesh = this.transform.GetChild(2).GetComponentsInChildren<MeshRenderer>();
         nav = GetComponent<NavMeshAgent>(); //네비게이션 가져오기
         anim = GetComponentInChildren<Animator>(); //애니메이터 가져오기 
 
         damage.dType = Damage.DamageType.NuckBack;
         damage.ccTime = 1f;
         damage.dValue = 1f;
-        startingHealth = 30f;
-
+   
         pv.ObservedComponents[0] = this;
         pv.Synchronization = ViewSynchronization.UnreliableOnChange;       
     }
 
     protected override void OnEnable()
     {
-        DangerRange.SetActive(false);
-
-        timer = 0f;
+        DangerRange.SetActive(false);        
         nav.enabled = true;
-
-        foreach (MeshRenderer mesh in mesh)
-        {
-            mesh.material.color = Color.white;
-        }
+        nav.isStopped = false;
 
         Explosion.SetActive(false); //폭발 프리팹 비활성화
         bstate = BombState.Idle; //기본 상태를 유휴 상태로 변경
-        this.startingHealth = 100f; //테스트용 설정
-        health = startingHealth;
-        healthbar.SetMaxHealth((int)startingHealth);
     }
 
 
@@ -82,8 +71,6 @@ public class BombRobotControl : LivingEntity, IPunObservable
 
         if (!PhotonNetwork.IsMasterClient) { return; }
 
-        timer += Time.deltaTime;
-
         if (target!= null && bstate != BombState.Exploding && gameObject.activeSelf) //타겟이 있을때만
         { 
             targetPos = target.transform.position;
@@ -92,13 +79,7 @@ public class BombRobotControl : LivingEntity, IPunObservable
             {
                 bstate = BombState.Exploding;
                 pv.RPC("StartExplosion", RpcTarget.All);
-            }
-
-            if (timer >= 4f)
-            {
-                bstate = BombState.Exploding;
-                pv.RPC("StartExplosion", RpcTarget.All);
-            }
+            }          
         } 
     
         CheckState(); //상태 체크
@@ -356,16 +337,18 @@ public class BombRobotControl : LivingEntity, IPunObservable
         bstate = BombState.Die;
         dead = true; 
        
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.3f);
 
         Explosion.SetActive(false);
 
-        for(int i = 0; i< Defaultmesh.Length; i++)
-        {
-            mesh[i].material.color = Defaultmesh[i].material.color;
-        }
+        PhotonNetwork.Destroy(this.gameObject);
+       
+        //for(int i = 0; i< Defaultmesh.Length; i++)
+        //{
+        //    mesh[i].material.color = Defaultmesh[i].material.color;
+        //}
 
-        ObjectPool.ReturnBombRobot(this);
+        //ObjectPool.ReturnBombRobot(this);
 
         //if (PhotonNetwork.IsMasterClient)
         //{

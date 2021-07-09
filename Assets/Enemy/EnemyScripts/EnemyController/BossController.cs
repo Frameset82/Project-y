@@ -15,7 +15,7 @@ public class BossController : LivingEntity, IPunObservable
     public BossState bState = BossState.None; // 보스 상태 변수
     public float MoveSpeed; // 이동속도
     public LivingEntity[] players;//플레이어들 
-    public GameObject[] TestPlayers;//플레이어들 
+    public GameObject[] Players;//플레이어들 
     public LivingEntity target; // 공격대상
     public Vector3 targetPos; // 공격 대상 위치 
     public GameObject StunEffect; //스턴
@@ -189,25 +189,25 @@ public class BossController : LivingEntity, IPunObservable
         { return; }
 
 
-        //else if (target != null && timer >= 10f && target.dead)
-        //{ ChangeTarget();  }
+        else if (target != null && timer >= 10f && target.dead)
+        { ChangeTarget(); }
 
         if (target != null)
         { sectorCheck(); }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-         
+
             //StartCoroutine(NormalAttack());
             //anim.SetTrigger("Shoot");
             //StartCoroutine(NormalAttack());
-           CreateBomobRobot();
-            
+           // StartCoroutine(CreateBomobRobot());
+
             // StartCoroutine(SnipingShot());
             // StartCoroutine(Dash());
             // StartCoroutine(BackDash());
             //StartCoroutine(Enable());
-           // StartCoroutine(Stun());
+            // StartCoroutine(Stun());
         }
         //if (Input.GetKeyDown(KeyCode.M))
         //{
@@ -322,8 +322,6 @@ public class BossController : LivingEntity, IPunObservable
 
         pv.RPC("ShowAnimation", RpcTarget.All, (int)BossState.None);
 
-
-     
         BossUI.SetActive(true);
 
         yield return new WaitForSeconds(0.3f);
@@ -338,7 +336,7 @@ public class BossController : LivingEntity, IPunObservable
     IEnumerator Think() // 패턴설정
     {     
         yield return new WaitForSeconds(0.2f);
-        //StopAllCoroutines();
+ 
 
         randState = Random.Range(0, 7);
 
@@ -413,8 +411,8 @@ public class BossController : LivingEntity, IPunObservable
             spawnPos.x += this.transform.position.x;
             spawnPos.z = spawnPos.y + this.transform.position.z;
             spawnPos.y = this.transform.position.y;
-
-            pv.RPC("SpawnRobot", RpcTarget.All, spawnPos);
+            SpawnRobot(spawnPos);
+           //pv.RPC("SpawnRobot", RpcTarget., spawnPos);
             SpawnRobot(spawnPos);
             yield return new WaitForSeconds(0.1f);
         }
@@ -426,9 +424,9 @@ public class BossController : LivingEntity, IPunObservable
     [PunRPC]
     void SpawnRobot(Vector3 spawnPos)//로봇소환
     {
-        BombRobotControl BombRobot = ObjectPool.GetRobot();
-        BombRobot.transform.position = spawnPos;
-        BombRobot.gameObject.SetActive(true);
+        BombRobotControl BombRobot = PhotonNetwork.Instantiate("BombRobot", spawnPos, Quaternion.identity).GetComponent<BombRobotControl>(); //ObjectPool.GetRobot();
+       // BombRobot.transform.position = spawnPos;
+        //BombRobot.gameObject.SetActive(true);
         if (PhotonNetwork.IsMasterClient)
         { BombRobot.SetTarget(target.gameObject); }
        

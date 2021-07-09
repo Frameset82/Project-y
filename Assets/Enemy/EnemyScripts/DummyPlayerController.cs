@@ -15,6 +15,7 @@ public class DummyPlayerController : LivingEntity
 
     private void Awake()
     {
+      
         animator = GetComponentInChildren<Animator>(); //애니메이터 가져오기
         OnEnable(); // 초기 설정하기
     }
@@ -34,6 +35,8 @@ public class DummyPlayerController : LivingEntity
 
     private void Update()
     {
+        
+
         if (health <= 0) // health가 0이하일경우 추가 입력 방지
             return;
 
