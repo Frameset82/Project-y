@@ -52,7 +52,7 @@ public class WeaponKeyboard : MeleeWeapon    //상속
         damage.dType = Damage.DamageType.Melee; //데미지 종류 설정 (좌클릭)
         for (int i = 0; i < enemies.Count; i++)
         {
-            
+            playerInfo.RestoreHealth(1f); // 도란검 효과
             damage.hitPoint = enemies[i].GetComponent<Collider>().ClosestPoint(transform.position);
             damage.hitNormal = transform.position - enemies[i].transform.position;
             enemies[i].GetComponent<LivingEntity>().OnDamage(damage);
@@ -78,11 +78,11 @@ public class WeaponKeyboard : MeleeWeapon    //상속
     public override void OnEquip() // 기본 효과들
     {
         pv = GetComponent<PhotonView>();
-        damageValue = 10f; // 기본 공격력
+        damageValue = 10f; // 도란검 기본 공격력
         prevDamage = damageValue + playerInfo.defaultDamage;
         damage.dValue = prevDamage; //초기 데미지값 설정
         weaponTrChanged = true;
-        /*playerInfo.maxHealth += 20f; //최대 체력 올라가는거*/
+        playerInfo.maxHealth += 20f; //최대 체력 올라가는거
         playerInfo.CalculateHealthPoint(); // 체력바 동기화
     }
 
@@ -90,7 +90,7 @@ public class WeaponKeyboard : MeleeWeapon    //상속
     {
         pv = null;
         weaponTrChanged = false;
-       /* playerInfo.maxHealth -= 20f;*/
+        playerInfo.maxHealth -= 20f;
         playerInfo.CalculateHealthPoint(); // 체력바 동기화
     }
 

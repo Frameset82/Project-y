@@ -22,6 +22,8 @@ public class PlayerInfo : LivingEntity
     public float defaultDamage; // 기본 데미지
     public float AtkSpeed ; // 공격속도
     public float MoveSpeed = 7.0f ; // 추가 이동속도
+    public Vector3 moveVec2; // 구르기용 벡터
+
     [Header("플레이어 추가 속성들")]
     public float shield; // 보호막
     public float criProbability; // 치명타 확률
@@ -56,6 +58,7 @@ public class PlayerInfo : LivingEntity
         }
 
         startingHealth = 100.0f; // 시작체력
+        moveVec2 = transform.forward;
         maxHealth = startingHealth;
         health = startingHealth;
 
@@ -91,6 +94,14 @@ public class PlayerInfo : LivingEntity
         healthMaterial.SetFloat("_HeightPercent", health/maxHealth*100);
         healthText.text = health + " / " + maxHealth; // 체력 갱신
     }
+/*    public void MovePoint()
+    {
+            Vector3 heading = mainCamera.transform.localRotation * Vector3.forward;
+            heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
+            moveVec2 = heading* Time.fixedDeltaTime * Input.GetAxisRaw("Vertical") * moveSpeed;
+            moveVec2 += Quaternion.Euler(0, 90, 0) * heading* Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * moveSpeed;
+    }*/
+                      
 
     public override void OnDamage(Damage dInfo)
     {
