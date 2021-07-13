@@ -58,4 +58,8 @@ public class ComboManager : MonoBehaviour
     {
         playerEquipmentManager.equipWeapon.OnAttack();
     }
+    public void Atk2()
+    {
+        playerEquipmentManager.equipWeapon.OnActive();
+    }
 }
