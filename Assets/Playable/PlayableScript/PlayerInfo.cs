@@ -79,7 +79,7 @@ public class PlayerInfo : LivingEntity
         CalculateHealthPoint();
     }
 
-    public override void RestoreHealth(float newHealth)
+    public override void RestoreHealth(float newHealth) //피회복
     {
         // LivingEntity의 RestoreHealth() 실행 (체력증가)
         base.RestoreHealth(newHealth);
@@ -133,9 +133,18 @@ public class PlayerInfo : LivingEntity
 
         if (canDamage)
         {
-            health -= dInfo.dValue; // 체력 감소
-            CalculateHealthPoint(); // 체력 갱신
+            if (shield != 0)
+            {
+                shield -= dInfo.dValue; // 쉴드 감소
+                CalculateHealthPoint(); // 쉴드 갱신
+            }
+            else
+            {
+                health -= dInfo.dValue; // 체력 감소
+                CalculateHealthPoint(); // 체력 갱신
+            }
         }
+        
         if (health <= 0 && !dead)
         {
             Die();

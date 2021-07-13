@@ -60,13 +60,13 @@ public class CoolDown : MonoBehaviour
         yield break;
     }
 
-    IEnumerator CoolTimeCounter()
+    IEnumerator CoolTimeCounter() // 쿨타임
     {
         while (currentCoolTime > 0)
         {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(1.0f);  // =
 
-            currentCoolTime -= 1.0f;
+            currentCoolTime -= 1.0f; // =
             coolTimeCounter.text = "" + currentCoolTime;
         }
 

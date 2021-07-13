@@ -8,8 +8,9 @@ public class DoransRing : ActiveItem
     {
         playerInfo.defaultDamage += 8f;
         playerInfo.maxHealth += 20f;
-        playerKeyboardInput.animSpeed += 0.1f;
+        playerKeyboardInput.animSpeed += 0.1f; // 애니메이션 스피드 0.1 증가
         playerAnimation.playerAnimator.SetFloat("AttackSpeed", playerKeyboardInput.animSpeed);
+        playerInfo.CalculateHealthPoint();
     }
 
     public override void UnEquip()
@@ -18,5 +19,6 @@ public class DoransRing : ActiveItem
         playerInfo.maxHealth -= 20f;
         playerKeyboardInput.animSpeed -= 0.1f;
         playerAnimation.playerAnimator.SetFloat("AttackSpeed", playerKeyboardInput.animSpeed);
+        playerInfo.CalculateHealthPoint();
     }
 }

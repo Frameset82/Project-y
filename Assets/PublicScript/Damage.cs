@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct Damage
+public struct Damage 
 {
     public enum DamageType { None = 0, Melee = 1, Stun = 2, NuckBack = 3, End } //공격타입
     public DamageType dType; 
