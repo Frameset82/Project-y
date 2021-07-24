@@ -337,6 +337,7 @@ public class MeleeController : LivingEntity, IPunObservable
         damage.hitNormal = transform.position - target.transform.position;
 
         sectorCheck();
+
         if(isCollision) //공격범위 안이라면
         {
            enemytarget.OnDamage(damage); //데미지 이벤트 실행

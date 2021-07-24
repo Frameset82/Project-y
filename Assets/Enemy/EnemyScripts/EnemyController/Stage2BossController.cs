@@ -17,10 +17,13 @@ public class Stage2BossController : LivingEntity
         PowerAttack = 4,
         ComboAttack = 5,
         Dash = 6,
-        BackStep = 7,
-        Hide = 8,
-        Stun = 9,
-        Die = 10
+        DashWheelWind = 7,
+        BackStep = 8,
+        Hide = 9,
+        Stun = 10,
+        StartConcent = 11,
+        FinishConcent = 12,
+        Die = 13
     }
     public LivingEntity[] players;
 
@@ -30,10 +33,6 @@ public class Stage2BossController : LivingEntity
     private LivingEntity target; // 공격대상
 
     private Vector3 targetPos; //공격 대상 위치값
-    [SerializeField]
-    private GameObject sturnEffect; //스턴 효과
-    [SerializeField]
-    private Transform sturnTrans; // 스턴 효과를 생성할 트랜스폼 변수
 
     [SerializeField]
     private BossState bState;
@@ -41,7 +40,8 @@ public class Stage2BossController : LivingEntity
     [Header("대쉬 속성")]
     [SerializeField]
     private float dashSpeed;
-
+    [SerializeField]
+    private float dashTime;
 
     [Header("랜더러 속성")]
     private MeshRenderer[] meshes;
@@ -80,17 +80,29 @@ public class Stage2BossController : LivingEntity
     [Header("전투 속성")]
     private Damage nDamage; //일반 공격 데미지
     private Damage pDamage; //강 공격 데미지
+    private Damage attackDamage; //실제로 적용할 데미지
+
     public float attackRange = 7f; // 공격 사거리
     public float diff; //방어도
 
     [Header("공격범위 속성")]
     public float angleRange = 45f;
-    [SerializeField]
     private bool isCollision = false;
     Color blue = new Color(0f, 0f, 1f, 0.2f);
     Color red = new Color(1f, 0f, 0f, 0.2f);
     float dotValue = 0f;
     Vector3 direction;
+
+    [Header("이펙트")]
+    [SerializeField]
+    private GameObject recoveryEffect;
+    [SerializeField]
+    private GameObject slashEffect;
+    [SerializeField]
+    private GameObject sturnEffect; //스턴 효과
+    [SerializeField]
+    private Transform sturnTrans; // 스턴 효과를 생성할 트랜스폼 변수
+
     #endregion
 
 
@@ -124,6 +136,7 @@ public class Stage2BossController : LivingEntity
 
 
         base.OnEnable();
+        this.health = 100f;
     }
 
     private void FixedUpdate()
@@ -142,7 +155,8 @@ public class Stage2BossController : LivingEntity
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(Hiding());
+            //StartCoroutine(Dash());
+            StartCoroutine(Enable());
         }
     }
 
@@ -159,32 +173,43 @@ public class Stage2BossController : LivingEntity
         yield return new WaitForSeconds(0.5f);
         ShowAnimation((int)bState);
         yield return new WaitForSeconds(6.8f);
-
+        StartCoroutine(Dash());
     }
 
     //플레이어 추적 동작
     private IEnumerator MoveRoutine()
     {
-        Vector3 lookPosition = Vector3.zero;
         bState = BossState.MoveToTarget;
-        lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
         nav.isStopped = false;
-        nav.SetDestination(lookPosition);
-        transform.LookAt(lookPosition);
 
         bState = BossState.MoveToTarget;
         ShowAnimation((int)bState);
 
-        yield return new WaitUntil(() => isCollision == true); //플레이어 에게 닿았을시
+        yield return new WaitForSeconds(0.1f);
+
+        while(!isCollision)
+        {
+            if (isCollision)
+            {
+                break;
+            }
+            nav.SetDestination(targetPos);
+            transform.LookAt(targetPos);
+            yield return new WaitForSeconds(0.1f);
+          
+        }
 
         ShowAnimation((int)bState);
-      
+
         nav.isStopped = true;
         nav.velocity = Vector3.zero;
 
-        StartCoroutine(ComboAttack()); //일반 공격 동작 실행
-    }
+        yield return new WaitForSeconds(0.2f);
 
+        StartCoroutine(PowerAttack()); //일반 공격 동작 실행
+
+       
+    }
 
     //애니메이션 재생
     private void ShowAnimation(int state)
@@ -207,6 +232,9 @@ public class Stage2BossController : LivingEntity
                 anim.SetTrigger("PowerAttack");
                 break;
             case (int)BossState.Dash:
+                anim.SetTrigger("Dash");
+                break;
+            case (int)BossState.DashWheelWind:
                 anim.SetTrigger("DashWheel");
                 break;
             case (int)BossState.ComboAttack:
@@ -220,6 +248,12 @@ public class Stage2BossController : LivingEntity
                 break;
             case (int)BossState.Stun:
                 anim.SetTrigger("Stun");
+                break;
+            case (int)BossState.StartConcent:
+                anim.SetTrigger("StartConcentrate");
+                break;
+            case (int)BossState.FinishConcent:
+                anim.SetTrigger("FinishConcentrate");
                 break;
             case (int)BossState.Die:
                 anim.SetTrigger("isDead");
@@ -241,6 +275,7 @@ public class Stage2BossController : LivingEntity
                 case 0:
                 case 1:
                 case 2:
+                    StartCoroutine(ComboAttack());
                     break;
 
                 case 3:
@@ -251,8 +286,38 @@ public class Stage2BossController : LivingEntity
 
                 case 6:
                 case 7:
+                    if (!WallCheck())
+                        StartCoroutine(BackStep());
+                    else
+                        StartCoroutine(NormalAttack());
                     break;
             }    
+        }
+        else
+        {
+            switch (randState)
+            {
+                case 0:
+                    StartCoroutine(Dash());
+                    break;
+                case 1:
+                case 2:
+                    StartCoroutine(MoveRoutine());
+                    break;
+
+                case 3:
+                    StartCoroutine(Hiding());
+                    break;
+                case 4:
+                case 5:
+                    StartCoroutine(DashWheelWind());
+                    break;
+
+                case 6:
+                case 7:
+                    StartCoroutine(Concentrate());
+                    break;
+            }
         }
     }
     
@@ -261,9 +326,10 @@ public class Stage2BossController : LivingEntity
     {
         bState = BossState.NormalAttack;
         nav.isStopped = true;
+        attackDamage = nDamage;
         ShowAnimation((int)bState);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.7f);
         StartCoroutine(Think());
     }
 
@@ -271,10 +337,11 @@ public class Stage2BossController : LivingEntity
     private IEnumerator PowerAttack()
     {
         bState = BossState.PowerAttack;
+        attackDamage = pDamage;
         nav.isStopped = true;
         ShowAnimation((int)bState);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         StartCoroutine(Think());
 
     }
@@ -283,40 +350,125 @@ public class Stage2BossController : LivingEntity
     private IEnumerator ComboAttack()
     {
         bState = BossState.ComboAttack;
+        attackDamage = nDamage;
         nav.isStopped = true;
         ShowAnimation((int)bState);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1.5f);
         StartCoroutine(Think());
     }
 
-    //돌진
+    //대쉬
     private IEnumerator Dash()
     {
         bState = BossState.Dash;
 
-        Vector3 movePosition = this.transform.position + (transform.forward * 16f);
+        float startTime = Time.time;
+
+        Vector3 lookPosition = Vector3.zero;
+        ShowAnimation((int)bState);
+
+        while(!isCollision)
+        {
+            lookPosition = new Vector3(targetPos.x, this.transform.position.y, targetPos.z);
+            nav.SetDestination(lookPosition);
+            nav.speed = dashSpeed;
+            nav.isStopped = false;
+            nav.acceleration = dashSpeed;
+            transform.LookAt(lookPosition);
+
+            yield return null;
+        }
+
+        nav.velocity = Vector3.zero;
+        nav.isStopped = true;
+        nav.acceleration = 8f;
+        nav.speed = moveSpeed;
+
+        yield return new WaitForSeconds(0.1f);
+
+        StartCoroutine(NormalAttack());
+    }
+
+    //휠윈드
+    private IEnumerator DashWheelWind()
+    {
+        bState = BossState.DashWheelWind;
+        Vector3 movePosition = targetPos;
+        attackDamage = nDamage;
+
         ShowAnimation((int)bState);
 
         nav.speed = dashSpeed;
         nav.acceleration = dashSpeed;
+        transform.LookAt(movePosition);
 
         yield return new WaitForSeconds(0.5f);
         nav.SetDestination(movePosition);
         nav.isStopped = false;
 
-        if (direction.magnitude <= attackRange)
-        {
-            nav.velocity = Vector3.zero;
-            nav.isStopped = true;
-            nav.acceleration = 8f;
-            nav.speed = moveSpeed;
-            yield return new WaitForSeconds(0.2f);          
-            StartCoroutine(NormalAttack());
-        }
+        yield return new WaitForSeconds(1f);
+        nav.velocity = Vector3.zero;
+        nav.isStopped = true;
+        nav.acceleration = 8f;
+        nav.speed = moveSpeed;
+   
+
+        yield return new WaitForSeconds(0.2f);
+  
+        StartCoroutine(MoveRoutine());
 
     }
 
+    //백스탭
+    private IEnumerator BackStep()
+    {
+        bState = BossState.BackStep;
+        float startTime = Time.time;
+        Vector3 movePosition = this.transform.position - (transform.forward * 6f);
+
+        ShowAnimation((int)bState);
+        while (Time.time < startTime + dashTime)
+        {
+            nav.SetDestination(movePosition);
+            nav.speed = dashSpeed;
+            nav.isStopped = false;
+            nav.acceleration = dashSpeed;
+                  
+            yield return null;
+        }
+
+        nav.velocity = Vector3.zero;
+        nav.isStopped = true;
+        nav.acceleration = 8f;
+        nav.speed = moveSpeed;
+
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(Think());
+
+    }
+    private bool WallCheck() //뒷쪽에 장애물이 있는지 체크
+    {
+        RaycastHit hit; //레이캐스트 
+        Vector3 hitPosition = Vector3.zero; //레이를 쏠 방향
+
+        if (Physics.Raycast(this.transform.position, this.transform.forward * -1f, out hit, 6f))
+        {
+            if (hit.collider.gameObject.tag == "Wall")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+
+    }
     //은신 루틴
     private IEnumerator Hiding()
     {
@@ -349,7 +501,40 @@ public class Stage2BossController : LivingEntity
             sMesh.enabled = true;
         }
 
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(Think());
 
+    }
+
+    //명상
+    private IEnumerator Concentrate()
+    {
+        bState = BossState.StartConcent;
+        nav.isStopped = true;
+        ShowAnimation((int)bState);
+        timer = 0;
+
+        Instantiate(recoveryEffect, this.transform);
+
+        float startTime = Time.time;
+        while(timer < startTime + 4f)
+        {
+            if(isCollision == true)
+            {
+                break;
+            }
+            float newHealth = startingHealth * 2 / 100;
+            RestoreHealth(newHealth);
+
+            timer = Time.time;
+           
+            yield return new WaitForSeconds(1f);
+        }
+        bState = BossState.FinishConcent;
+        ShowAnimation((int)bState);
+
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(Think());
     }
 
     // 부챗꼴 범위 충돌
@@ -359,6 +544,7 @@ public class Stage2BossController : LivingEntity
         direction = target.transform.position - transform.position;
         if (direction.magnitude <= attackRange)
         {
+            rigid.isKinematic = true;
             if (Vector3.Dot(direction.normalized, transform.forward) > dotValue)
             {
                 isCollision = true;
@@ -367,10 +553,12 @@ public class Stage2BossController : LivingEntity
                 isCollision = false;
         }
         else
+        {
             isCollision = false;
+            rigid.isKinematic = true;
+        }
+            
     }
-
- 
 
     // 범위 그리기
     private void OnDrawGizmos() 
@@ -396,5 +584,28 @@ public class Stage2BossController : LivingEntity
         this.startingHealth = _startHealth; //초기 HP값 설정
     }
 
-   
+    //체력 회복
+    public override void RestoreHealth(float newHealth)
+    {
+        if (health + newHealth > startingHealth)
+        {
+
+            health = startingHealth;
+        }
+        else
+        {
+            base.RestoreHealth(newHealth);
+        }
+    }
+
+    public void OnAttackEvent()
+    {
+
+      if(isCollision)
+        {
+            target.OnDamage(attackDamage);
+        }
+
+    }
+
 }
