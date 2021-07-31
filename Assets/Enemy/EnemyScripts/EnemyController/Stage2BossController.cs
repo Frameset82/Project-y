@@ -5,6 +5,15 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.AI;
 
+[System.Serializable]
+public struct EffectInfo
+{
+    public GameObject effect;
+    public Transform effectTr;
+    public float removeTime;
+}
+
+
 public class Stage2BossController : LivingEntity
 {
     #region
@@ -57,8 +66,8 @@ public class Stage2BossController : LivingEntity
 
     private float timer; //타이머
     private int randState; //랜덤한 보스 상태
-    private bool isMove; //움직임 관련
-    
+    private bool isMove;
+
     [Header("컴포넌트")]
     private NavMeshAgent nav; 
    // private PhotonView pv; 
@@ -95,13 +104,9 @@ public class Stage2BossController : LivingEntity
 
     [Header("이펙트")]
     [SerializeField]
+    private EffectInfo[] effects;
+    [SerializeField]
     private GameObject recoveryEffect;
-    [SerializeField]
-    private GameObject slashEffect;
-    [SerializeField]
-    private GameObject sturnEffect; //스턴 효과
-    [SerializeField]
-    private Transform sturnTrans; // 스턴 효과를 생성할 트랜스폼 변수
 
     #endregion
 
@@ -156,8 +161,11 @@ public class Stage2BossController : LivingEntity
         if (Input.GetKeyDown(KeyCode.E))
         {
             //StartCoroutine(Dash());
-            StartCoroutine(Enable());
+           // StartCoroutine(Enable());
+            StartCoroutine(MoveRoutine());
         }
+
+      
     }
 
     //처음 시작시 실행되는 루틴
@@ -182,12 +190,13 @@ public class Stage2BossController : LivingEntity
         bState = BossState.MoveToTarget;
         nav.isStopped = false;
 
-        bState = BossState.MoveToTarget;
+        isMove = true;
         ShowAnimation((int)bState);
+   
 
         yield return new WaitForSeconds(0.1f);
 
-        while(!isCollision)
+        while (!isCollision)
         {
             if (isCollision)
             {
@@ -195,20 +204,21 @@ public class Stage2BossController : LivingEntity
             }
             nav.SetDestination(targetPos);
             transform.LookAt(targetPos);
-            yield return new WaitForSeconds(0.1f);
-          
+            yield return null;
+
         }
 
-        ShowAnimation((int)bState);
+        yield return new WaitForSeconds(0.1f);
 
+        isMove = false;
+        ShowAnimation((int)bState);
+        
         nav.isStopped = true;
         nav.velocity = Vector3.zero;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
 
-        StartCoroutine(PowerAttack()); //일반 공격 동작 실행
-
-       
+     //   StartCoroutine(PowerAttack()); //일반 공격 동작 실행
     }
 
     //애니메이션 재생
@@ -220,10 +230,18 @@ public class Stage2BossController : LivingEntity
                 anim.SetTrigger("Appear");
                 break;
             case (int)BossState.MoveToTarget:
-                if (!isCollision)
-                    anim.SetTrigger("MoveToTarget");
-                else
-                    anim.SetTrigger("EndMove");
+                //if (!isCollision)
+                //{
+                //    isMove = true;
+                //   // anim.SetTrigger("MoveToTarget");    
+                //}
+                //else
+                //{
+                //    isMove = false;
+                //    //anim.SetTrigger("EndMove");
+                //}
+                anim.SetTrigger("MoveToTarget");
+                anim.SetBool("isMove", isMove);
                 break;
             case (int)BossState.NormalAttack:
                 anim.SetTrigger("NormalAttack");
@@ -268,7 +286,7 @@ public class Stage2BossController : LivingEntity
 
         randState = Random.Range(0, 8);
 
-        if(isCollision)
+        if(direction.sqrMagnitude <= attackRange + 5)
         {
             switch(randState)
             {
@@ -298,7 +316,7 @@ public class Stage2BossController : LivingEntity
             switch (randState)
             {
                 case 0:
-                    StartCoroutine(Dash());
+                    StartCoroutine(Concentrate());
                     break;
                 case 1:
                 case 2:
@@ -315,7 +333,7 @@ public class Stage2BossController : LivingEntity
 
                 case 6:
                 case 7:
-                    StartCoroutine(Concentrate());
+                    StartCoroutine(Dash());                
                     break;
             }
         }
@@ -354,7 +372,7 @@ public class Stage2BossController : LivingEntity
         nav.isStopped = true;
         ShowAnimation((int)bState);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
         StartCoroutine(Think());
     }
 
@@ -414,7 +432,7 @@ public class Stage2BossController : LivingEntity
         nav.speed = moveSpeed;
    
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
   
         StartCoroutine(MoveRoutine());
 
@@ -443,7 +461,7 @@ public class Stage2BossController : LivingEntity
         nav.acceleration = 8f;
         nav.speed = moveSpeed;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         StartCoroutine(Think());
 
     }
@@ -501,7 +519,7 @@ public class Stage2BossController : LivingEntity
             sMesh.enabled = true;
         }
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
         StartCoroutine(Think());
 
     }
@@ -533,7 +551,7 @@ public class Stage2BossController : LivingEntity
         bState = BossState.FinishConcent;
         ShowAnimation((int)bState);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
         StartCoroutine(Think());
     }
 
@@ -600,7 +618,6 @@ public class Stage2BossController : LivingEntity
 
     public void OnAttackEvent()
     {
-
       if(isCollision)
         {
             target.OnDamage(attackDamage);

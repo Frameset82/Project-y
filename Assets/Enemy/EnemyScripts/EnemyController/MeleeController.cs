@@ -89,13 +89,6 @@ public class MeleeController : LivingEntity, IPunObservable
         base.OnEnable();
     }
 
-
-    private void Start()
-    {
-
-      
-    }
-
     [PunRPC]
     public void Init(float _damage, float _speed, float _startHealth = 50f) //초기 설정 메소드
     {

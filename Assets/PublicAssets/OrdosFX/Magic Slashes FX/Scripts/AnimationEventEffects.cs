@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationEventEffects : MonoBehaviour {
-    //public GameObject EffectPrefab;
-    //public Transform EffectStartPosition;
-    //public float DestroyAfter = 10;
-    //[Space]
-    //public GameObject EffectPrefabWorldSpace;
-    //public Transform EffectStartPositionWorld;
-    //public float DestroyAfterWorld = 10;
+    public GameObject EffectPrefab;
+    public Transform EffectStartPosition;
+    public float DestroyAfter = 10;
+    [Space]
+    public GameObject EffectPrefabWorldSpace;
+    public Transform EffectStartPositionWorld;
+    public float DestroyAfterWorld = 10;
 
     public EffectInfo[] Effects;
 
@@ -23,19 +23,20 @@ public class AnimationEventEffects : MonoBehaviour {
         public bool UseLocalPosition = true;
     }
 
-    //   // Update is called once per frame
-    //   void CreateEffect () {
-    //       var effectOBJ = Instantiate(EffectPrefab, EffectStartPosition);
-    //       effectOBJ.transform.localPosition = Vector3.zero;
-    //       Destroy(effectOBJ, DestroyAfter);        		
-    //}
+    // Update is called once per frame
+    void CreateEffect()
+    {
+        var effectOBJ = Instantiate(EffectPrefab, EffectStartPosition);
+        effectOBJ.transform.localPosition = Vector3.zero;
+        Destroy(effectOBJ, DestroyAfter);
+    }
 
-    //   void CreateEffectWorldSpace()
-    //   {
-    //       var effectOBJ = Instantiate(EffectPrefabWorldSpace, EffectStartPositionWorld.transform.position, EffectStartPositionWorld.transform.rotation);
+    void CreateEffectWorldSpace()
+    {
+        var effectOBJ = Instantiate(EffectPrefabWorldSpace, EffectStartPositionWorld.transform.position, EffectStartPositionWorld.transform.rotation);
 
-    //       Destroy(effectOBJ, DestroyAfterWorld);
-    //   }
+        Destroy(effectOBJ, DestroyAfterWorld);
+    }
     void Start() {
     }
             

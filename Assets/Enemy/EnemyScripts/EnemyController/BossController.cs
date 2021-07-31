@@ -33,19 +33,6 @@ public class BossController : LivingEntity, IPunObservable
     private Rigidbody rigid;
     private Animator anim; // 애니메이터 컴포넌트                         
     public BossGun bGun; //보스 총 컴포넌트
-    private GameManager gm;
-
-    private bool hasTarget
-    {
-        get
-        {
-            if (target != null)
-            {
-                return true;
-            }
-            return false;
-        }
-    }
 
 
     [Header("전투 속성")]
@@ -94,14 +81,11 @@ public class BossController : LivingEntity, IPunObservable
         this.startingHealth = 300f; //테스트용 설정
         this.diff = 50f;
 
-       
-
         base.OnEnable();
     }
 
     private void Start()
-    {
-       
+    {       
         HpUI.maxPoint = this.health;
         HpUI.currentPoint = this.health;
 
@@ -110,8 +94,8 @@ public class BossController : LivingEntity, IPunObservable
     }
 
     public EffectInfo[] Effects; // 이펙트 들
+    
     [System.Serializable]
-
     public class EffectInfo
     {
         public GameObject Effecta;// 이펙트
