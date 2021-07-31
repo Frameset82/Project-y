@@ -23,7 +23,7 @@ public class SingleMeleeController : LivingEntity
     private NavMeshAgent nav; // NavMesh 컴포넌트
     private Animator anim; // 애니메이터 컴포넌트
     private Rigidbody rigid; //리지드 바디 컴포넌트
-    private PhotonView pv; //포톤뷰 컴포넌트
+
     [SerializeField]
     private Healthbar healthbar;
 

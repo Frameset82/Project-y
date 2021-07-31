@@ -38,19 +38,20 @@ public class Spawner : MonoBehaviour, IPunObservable
     {
         isSpanw = false;
         isEnter = false;
-        pv = GetComponent<PhotonView>();
+        //pv = GetComponent<PhotonView>();
         wave = 0;
     }
 
     private void Update()
     {
-        if(PhotonNetwork.IsMasterClient)
-        {
+        //if(PhotonNetwork.IsMasterClient)
+        //{
             if(enemis.Count <= 0 && isSpanw)
             {
-                pv.RPC("AfterWave", RpcTarget.All);
+            //pv.RPC("AfterWave", RpcTarget.All);
+            AfterWave();
             }
-        }
+        //}
     }
 
     [PunRPC]
@@ -82,7 +83,10 @@ public class Spawner : MonoBehaviour, IPunObservable
         switch (eTypes[count])
         {
             case enemyType.Melee:
-                MeleeController mcon = PhotonNetwork.Instantiate("MeleeEnemy", spawnPos, Quaternion.identity).GetComponent<MeleeController>();              
+                //MeleeController mcon = PhotonNetwork.Instantiate("MeleeEnemy", spawnPos, Quaternion.identity).GetComponent<MeleeController>();              
+                SingleMeleeController mcon = ObjectPool.GetMelee();
+                mcon.transform.position = spawnPos;
+                mcon.transform.rotation = Quaternion.identity;
                 enemis.Add(mcon);
 
                 mcon.onDeath += () => enemis.Remove(mcon);
@@ -90,14 +94,23 @@ public class Spawner : MonoBehaviour, IPunObservable
                 break;
 
             case enemyType.Rifle:
-                RogueController rcon = PhotonNetwork.Instantiate("RogueEnemy", spawnPos, Quaternion.identity).GetComponent<RogueController>();
+                //RogueController rcon = PhotonNetwork.Instantiate("RogueEnemy", spawnPos, Quaternion.identity).GetComponent<RogueController>();
+                SingleRogueController rcon = ObjectPool.GetRogue();
+                rcon.transform.position = spawnPos;
+                rcon.transform.rotation = Quaternion.identity;
+
                 enemis.Add(rcon);
+
                 rcon.onDeath += () => enemis.Remove(rcon);
                 rcon.onDeath += () => StartCoroutine(DestroyAfter(rcon.gameObject, 10f));
                 break;
 
             case enemyType.Rogue:
-                RifleController ricon = PhotonNetwork.Instantiate("RifleEnemy", spawnPos, Quaternion.identity).GetComponent<RifleController>();            
+                // RifleController ricon = PhotonNetwork.Instantiate("RifleEnemy", spawnPos, Quaternion.identity).GetComponent<RifleController>();            
+                SingleRifleController ricon = ObjectPool.GetRifle();
+                ricon.transform.rotation = Quaternion.identity;
+                ricon.transform.position = spawnPos;
+
                 enemis.Add(ricon);
                 ricon.onDeath += () => enemis.Remove(ricon);
                 ricon.onDeath += () => StartCoroutine(DestroyAfter(ricon.gameObject, 10f));
@@ -112,7 +125,8 @@ public class Spawner : MonoBehaviour, IPunObservable
 
         if(target != null)
         {
-            PhotonNetwork.Destroy(target);
+            //  PhotonNetwork.Destroy(target);
+            //Destroy(target);
         }
     }
 
@@ -130,7 +144,7 @@ public class Spawner : MonoBehaviour, IPunObservable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && PhotonNetwork.IsMasterClient && !isEnter) //플레이어와 충돌하고 마스터 클라이언트일 경우
+        if (other.gameObject.CompareTag("Player") /*&& PhotonNetwork.IsMasterClient*/ && !isEnter) //플레이어와 충돌하고 마스터 클라이언트일 경우
         {
             SetSpawn();
             isEnter = true;

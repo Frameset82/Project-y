@@ -551,7 +551,7 @@ public class MeleeController : LivingEntity, IPunObservable
 
         yield return new WaitForSeconds(3f); // 3초 대기
 
-        ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
+      //  ObjectPool.ReturnMeleeEnemy(this); //다시 오브젝트 풀에 반납
 
     }
 

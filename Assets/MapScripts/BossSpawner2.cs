@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using System;
 
-public class BossSpawn : MonoBehaviour
+public class BossSpawner2 : MonoBehaviour
 {
-    public BossController Boss;
+    public Stage2BossController Boss;
     public CameraSetup cam;
     private bool first;
 
@@ -17,7 +15,7 @@ public class BossSpawn : MonoBehaviour
 
     IEnumerator StartBoss()
     {
-        Boss.startRoutine();
+        Boss.StartRoutine();
         cam.BossTargeting();
 
         yield return new WaitForSeconds(3f);
@@ -28,7 +26,7 @@ public class BossSpawn : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && PhotonNetwork.IsMasterClient  && first)
+        if (other.gameObject.CompareTag("Player") /*&& PhotonNetwork.IsMasterClient*/ && first)
         {
             StartCoroutine(StartBoss());
             SoundManager.instance.BgmPlay();

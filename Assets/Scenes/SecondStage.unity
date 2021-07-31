@@ -120,7 +120,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 4ebe2aa9ccbdb39498dc6aa1f962bc59, type: 2}
 --- !u!1 &1796742
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,12 +573,12 @@ GameObject:
   - component: {fileID: 25699428}
   - component: {fileID: 25699427}
   - component: {fileID: 25699426}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &25699425
 Transform:
@@ -708,7 +708,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27119552}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -801,7 +801,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27768680}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -945,12 +945,12 @@ GameObject:
   - component: {fileID: 32014657}
   - component: {fileID: 32014656}
   - component: {fileID: 32014655}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &32014654
 Transform:
@@ -1080,7 +1080,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33089308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1222,6 +1222,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -1533,7 +1537,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 43353478}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1859,6 +1863,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -2743,12 +2751,12 @@ GameObject:
   - component: {fileID: 93040218}
   - component: {fileID: 93040217}
   - component: {fileID: 93040216}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &93040215
 Transform:
@@ -2836,6 +2844,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (52)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 106
@@ -2900,12 +2912,12 @@ GameObject:
   - component: {fileID: 98621565}
   - component: {fileID: 98621564}
   - component: {fileID: 98621563}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &98621562
 Transform:
@@ -2994,12 +3006,12 @@ GameObject:
   - component: {fileID: 102189838}
   - component: {fileID: 102189837}
   - component: {fileID: 102189836}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &102189835
 Transform:
@@ -3506,6 +3518,99 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &128966191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 128966192}
+  - component: {fileID: 128966195}
+  - component: {fileID: 128966194}
+  - component: {fileID: 128966193}
+  m_Layer: 0
+  m_Name: Wall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &128966192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128966191}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -27.42, y: 0, z: -1.42}
+  m_LocalScale: {x: 6.2333, y: 10, z: 17.216318}
+  m_Children: []
+  m_Father: {fileID: 1917281565}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &128966193
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128966191}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &128966194
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128966191}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &128966195
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128966191}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &129375858
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3599,6 +3704,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -3655,6 +3764,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (32)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -4083,7 +4196,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147292088}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4410,6 +4523,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -4558,6 +4675,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (37)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -4796,6 +4917,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWallCorner (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4660015660617000, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_RootOrder
       value: 48
@@ -4860,12 +4985,12 @@ GameObject:
   - component: {fileID: 178427574}
   - component: {fileID: 178427573}
   - component: {fileID: 178427572}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &178427572
 MeshCollider:
@@ -4953,6 +5078,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -5009,6 +5138,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (42)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -5450,12 +5583,12 @@ GameObject:
   - component: {fileID: 198866792}
   - component: {fileID: 198866791}
   - component: {fileID: 198866790}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &198866790
 MeshCollider:
@@ -5820,12 +5953,12 @@ GameObject:
   - component: {fileID: 208970476}
   - component: {fileID: 208970475}
   - component: {fileID: 208970474}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &208970473
 Transform:
@@ -6102,7 +6235,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 212765357}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6337,6 +6470,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -6551,7 +6688,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224647673}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6995,7 +7132,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227170502}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -7088,7 +7225,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232312114}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -7140,12 +7277,12 @@ GameObject:
   - component: {fileID: 234373368}
   - component: {fileID: 234373367}
   - component: {fileID: 234373366}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &234373365
 Transform:
@@ -7314,6 +7451,70 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &238299475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 238299476}
+  - component: {fileID: 238299478}
+  - component: {fileID: 238299477}
+  m_Layer: 0
+  m_Name: Spawner2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &238299476
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238299475}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -43.3, y: 5.52, z: -85.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 428963733}
+  - {fileID: 1085461196}
+  m_Father: {fileID: 1894719070}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &238299477
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238299475}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 14.918167, y: 5.741156, z: 4.0545692}
+  m_Center: {x: -5.718754, y: -2.370578, z: 20.51967}
+--- !u!114 &238299478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238299475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8596a6b7b433c5a43a982e5fb713d920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eTypes: 0100000002000000030000000100000002000000
+  wave: 0
+  boxScale: {fileID: 428963733}
+  Walls:
+  - {fileID: 1085461195}
 --- !u!1001 &240517599
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7324,6 +7525,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -7389,12 +7594,12 @@ GameObject:
   - component: {fileID: 241466951}
   - component: {fileID: 241466950}
   - component: {fileID: 241466949}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &241466948
 Transform:
@@ -8010,12 +8215,12 @@ GameObject:
   - component: {fileID: 263572189}
   - component: {fileID: 263572188}
   - component: {fileID: 263572187}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &263572186
 Transform:
@@ -8145,7 +8350,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279434534}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8195,6 +8400,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (27)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -8659,7 +8868,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 285707752}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -9597,7 +9806,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313273513}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -9647,6 +9856,10 @@ PrefabInstance:
     - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_Name
       value: Fence (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
@@ -10349,6 +10562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (54)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 108
@@ -10411,6 +10628,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -10566,6 +10787,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (35)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -11192,12 +11417,12 @@ GameObject:
   - component: {fileID: 372782705}
   - component: {fileID: 372782704}
   - component: {fileID: 372782703}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &372782702
 Transform:
@@ -11286,12 +11511,12 @@ GameObject:
   - component: {fileID: 374948465}
   - component: {fileID: 374948464}
   - component: {fileID: 374948463}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &374948463
 MeshCollider:
@@ -11728,12 +11953,12 @@ GameObject:
   - component: {fileID: 396852400}
   - component: {fileID: 396852399}
   - component: {fileID: 396852398}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &396852397
 Transform:
@@ -11955,7 +12180,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399676348}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -12048,7 +12273,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 404277337}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -12255,12 +12480,12 @@ GameObject:
   - component: {fileID: 415234153}
   - component: {fileID: 415234152}
   - component: {fileID: 415234151}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &415234150
 Transform:
@@ -12439,6 +12664,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -12780,7 +13009,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422776776}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -12912,6 +13141,169 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &428963732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 428963733}
+  - component: {fileID: 428963735}
+  - component: {fileID: 428963734}
+  m_Layer: 0
+  m_Name: SpawnRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &428963733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428963732}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.66, z: 0}
+  m_LocalScale: {x: 25, y: 1, z: 25}
+  m_Children: []
+  m_Father: {fileID: 238299476}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &428963734
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428963732}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &428963735
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428963732}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &432860101
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586114677987885361, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590489312079127623, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: explain
+      value: katana
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590489312079127623, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: weaponName
+      value: katana
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590489312079127623, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: damageValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1591461700619843351, guid: c92b0350a54529a4aa7929b895151068,
+        type: 3}
+      propertyPath: m_Name
+      value: Katana
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c92b0350a54529a4aa7929b895151068, type: 3}
 --- !u!1001 &436568775
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12922,6 +13314,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -13245,6 +13641,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (55)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -13658,12 +14058,12 @@ GameObject:
   - component: {fileID: 454412236}
   - component: {fileID: 454412235}
   - component: {fileID: 454412234}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &454412233
 Transform:
@@ -13752,12 +14152,12 @@ GameObject:
   - component: {fileID: 456466021}
   - component: {fileID: 456466020}
   - component: {fileID: 456466019}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &456466019
 MeshCollider:
@@ -14439,7 +14839,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469107649}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -14583,12 +14983,12 @@ GameObject:
   - component: {fileID: 473389784}
   - component: {fileID: 473389783}
   - component: {fileID: 473389782}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &473389782
 MeshCollider:
@@ -15201,6 +15601,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -15257,6 +15661,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -15324,7 +15732,7 @@ PrefabInstance:
     - target: {fileID: 9013905380230623159, guid: 64e1beda942a5104bac8992b52586d31,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.96
+      value: 34.1
       objectReference: {fileID: 0}
     - target: {fileID: 9013905380230623159, guid: 64e1beda942a5104bac8992b52586d31,
         type: 3}
@@ -15334,7 +15742,7 @@ PrefabInstance:
     - target: {fileID: 9013905380230623159, guid: 64e1beda942a5104bac8992b52586d31,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -142.1
       objectReference: {fileID: 0}
     - target: {fileID: 9013905380230623159, guid: 64e1beda942a5104bac8992b52586d31,
         type: 3}
@@ -15823,6 +16231,85 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &528899826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 528899827}
+  - component: {fileID: 528899829}
+  - component: {fileID: 528899828}
+  m_Layer: 0
+  m_Name: SpawnRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &528899827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528899826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.66, z: 0}
+  m_LocalScale: {x: 25, y: 1, z: 25}
+  m_Children: []
+  m_Father: {fileID: 1584855787}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &528899828
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528899826}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &528899829
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528899826}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &531259231
 GameObject:
   m_ObjectHideFlags: 0
@@ -15927,12 +16414,12 @@ GameObject:
   - component: {fileID: 538278392}
   - component: {fileID: 538278391}
   - component: {fileID: 538278390}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (35)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &538278389
 Transform:
@@ -16020,6 +16507,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -16076,6 +16567,10 @@ PrefabInstance:
     - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_Name
       value: Fence
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
@@ -16176,7 +16671,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543585019}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -16361,7 +16856,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545156290}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -16638,7 +17133,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549962445}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -16690,12 +17185,12 @@ GameObject:
   - component: {fileID: 550342502}
   - component: {fileID: 550342501}
   - component: {fileID: 550342500}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &550342499
 Transform:
@@ -17683,6 +18178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -17745,6 +18244,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -17878,6 +18381,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -17977,7 +18484,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 577255120}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -18109,6 +18616,80 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &580494599
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 826980572495021927, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342528937519, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_Name
+      value: Spear
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.539
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.072
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.136
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5392481
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5503771
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.4712322
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.42922822
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 93.520996
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 35.589996
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398003342529094159, guid: 4cd24a2e7c4c7cf4997b8245782f2305,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 114.730995
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4cd24a2e7c4c7cf4997b8245782f2305, type: 3}
 --- !u!1 &581354946
 GameObject:
   m_ObjectHideFlags: 0
@@ -19657,6 +20238,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -20594,6 +21179,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (47)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 114
@@ -20656,6 +21245,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -20756,7 +21349,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670110340}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -21463,6 +22056,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -21877,6 +22474,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -23392,6 +23993,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (40)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 84
@@ -23548,12 +24153,12 @@ GameObject:
   - component: {fileID: 748341677}
   - component: {fileID: 748341676}
   - component: {fileID: 748341675}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &748341674
 Transform:
@@ -23827,6 +24432,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -24069,12 +24678,12 @@ GameObject:
   - component: {fileID: 767529204}
   - component: {fileID: 767529203}
   - component: {fileID: 767529202}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &767529201
 Transform:
@@ -24351,6 +24960,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -24717,7 +25330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  Boss: {fileID: 0}
+  Boss: {fileID: 1070229352}
   offsetX: 7
   offsetY: 9
   offsetZ: 7
@@ -25078,6 +25691,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (31)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 66
@@ -25418,12 +26035,12 @@ GameObject:
   - component: {fileID: 794215874}
   - component: {fileID: 794215873}
   - component: {fileID: 794215872}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &794215871
 Transform:
@@ -25553,7 +26170,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795127754}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -25605,12 +26222,12 @@ GameObject:
   - component: {fileID: 803222133}
   - component: {fileID: 803222132}
   - component: {fileID: 803222131}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &803222130
 Transform:
@@ -25740,7 +26357,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804497320}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -25790,6 +26407,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (49)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -26017,6 +26638,80 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.3538384, y: 1.3538388, z: 5.80816}
   m_Center: {x: 0, y: 0, z: 2.8831034}
+--- !u!1001 &813423032
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 33.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -147.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265142222, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265429998, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: m_Name
+      value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177187328265429999, guid: 39ac09dd17d3da240a098b2356e936af,
+        type: 3}
+      propertyPath: damageValue
+      value: 50
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 39ac09dd17d3da240a098b2356e936af, type: 3}
 --- !u!1001 &813488095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26027,6 +26722,10 @@ PrefabInstance:
     - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_Name
       value: Fence
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
@@ -26335,12 +27034,12 @@ GameObject:
   - component: {fileID: 823232703}
   - component: {fileID: 823232702}
   - component: {fileID: 823232701}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &823232700
 Transform:
@@ -26735,6 +27434,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 50
@@ -26797,6 +27500,10 @@ PrefabInstance:
     - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_Name
       value: RiverWallCorner (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4660015660617000, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_RootOrder
@@ -27034,6 +27741,189 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &839942773
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694861, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971964220759694865, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+        type: 3}
+      propertyPath: m_Name
+      value: BossHpCanvas
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1971964219946250172, guid: 75a2aa5b1b0470c4d9da922f8351b55d, type: 3}
+    - {fileID: 1971964219644311986, guid: 75a2aa5b1b0470c4d9da922f8351b55d, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 75a2aa5b1b0470c4d9da922f8351b55d, type: 3}
+--- !u!1 &839942774 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1971964220759694865, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+    type: 3}
+  m_PrefabInstance: {fileID: 839942773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &839942775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1971964219946250113, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+    type: 3}
+  m_PrefabInstance: {fileID: 839942773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &839942776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839942775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa83157a193a7443a34d984b3875f7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxPoint: 100
+  currentPoint: 50
+  barObject: {fileID: 839942780}
+  material: {fileID: 2100000, guid: 0e1d771279585ff4db87af14c351d5dd, type: 2}
+--- !u!1 &839942777 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1971964219644311991, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+    type: 3}
+  m_PrefabInstance: {fileID: 839942773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &839942778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839942777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa83157a193a7443a34d984b3875f7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxPoint: 100
+  currentPoint: 50
+  barObject: {fileID: 839942779}
+  material: {fileID: 2100000, guid: 2867c008f0f408d4ab6ab364cb43d2c7, type: 2}
+--- !u!1 &839942779 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1971964221601311593, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+    type: 3}
+  m_PrefabInstance: {fileID: 839942773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &839942780 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1971964220324039876, guid: 75a2aa5b1b0470c4d9da922f8351b55d,
+    type: 3}
+  m_PrefabInstance: {fileID: 839942773}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &843133539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27044,6 +27934,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -27150,7 +28044,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849823049}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -27547,12 +28441,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 854667677}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &854667677
 Transform:
@@ -27917,7 +28811,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858710172}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -28552,7 +29446,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877264645}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -28604,12 +29498,12 @@ GameObject:
   - component: {fileID: 879177517}
   - component: {fileID: 879177516}
   - component: {fileID: 879177515}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &879177514
 Transform:
@@ -28696,6 +29590,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -29026,6 +29924,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -29267,6 +30169,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -29416,6 +30322,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -29478,6 +30388,10 @@ PrefabInstance:
     - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_Name
       value: Fence
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
@@ -29628,6 +30542,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -29776,6 +30694,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -30101,12 +31023,12 @@ GameObject:
   - component: {fileID: 933061978}
   - component: {fileID: 933061977}
   - component: {fileID: 933061976}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &933061975
 Transform:
@@ -30848,6 +31770,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWallOpen (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1298343669249514, guid: dd6f629302f173646a25d46dbd945d78, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4164064348375738, guid: dd6f629302f173646a25d46dbd945d78, type: 3}
       propertyPath: m_RootOrder
       value: 117
@@ -30910,6 +31836,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -31240,6 +32170,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (30)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 55
@@ -31396,12 +32330,12 @@ GameObject:
   - component: {fileID: 975961018}
   - component: {fileID: 975961017}
   - component: {fileID: 975961016}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &975961015
 Transform:
@@ -31613,7 +32547,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984803678}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -31663,6 +32597,10 @@ PrefabInstance:
     - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_Name
       value: RiverWallCorner (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4660015660617000, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_RootOrder
@@ -31716,6 +32654,85 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 986403154}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &991377937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 991377938}
+  - component: {fileID: 991377940}
+  - component: {fileID: 991377939}
+  m_Layer: 0
+  m_Name: SpawnRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &991377938
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991377937}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.43, y: -2.66, z: 1.43}
+  m_LocalScale: {x: 25, y: 1, z: 25}
+  m_Children: []
+  m_Father: {fileID: 1917281565}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &991377939
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991377937}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &991377940
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991377937}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &991911732
 GameObject:
   m_ObjectHideFlags: 0
@@ -31820,12 +32837,12 @@ GameObject:
   - component: {fileID: 994646287}
   - component: {fileID: 994646286}
   - component: {fileID: 994646285}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &994646284
 Transform:
@@ -31914,12 +32931,12 @@ GameObject:
   - component: {fileID: 996009904}
   - component: {fileID: 996009903}
   - component: {fileID: 996009902}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &996009901
 Transform:
@@ -32099,6 +33116,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (50)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 104
@@ -32162,6 +33183,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -32218,6 +33243,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (44)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -32283,12 +33312,12 @@ GameObject:
   - component: {fileID: 1003070470}
   - component: {fileID: 1003070469}
   - component: {fileID: 1003070468}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1003070467
 Transform:
@@ -32457,6 +33486,10 @@ PrefabInstance:
     - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_Name
       value: Fence
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
@@ -32791,6 +33824,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 43
@@ -32853,6 +33890,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -33084,6 +34125,99 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1038185356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1038185357}
+  - component: {fileID: 1038185360}
+  - component: {fileID: 1038185359}
+  - component: {fileID: 1038185358}
+  m_Layer: 0
+  m_Name: Wall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1038185357
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038185356}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.154, y: 0, z: -27.42}
+  m_LocalScale: {x: 20.308716, y: 10, z: 5}
+  m_Children: []
+  m_Father: {fileID: 1584855787}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1038185358
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038185356}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1038185359
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038185356}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1038185360
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038185356}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1048850328
 GameObject:
   m_ObjectHideFlags: 0
@@ -33188,12 +34322,12 @@ GameObject:
   - component: {fileID: 1049395733}
   - component: {fileID: 1049395732}
   - component: {fileID: 1049395731}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1049395730
 Transform:
@@ -33372,6 +34506,10 @@ PrefabInstance:
     - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_Name
       value: RiverWallCorner (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4660015660617000, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_RootOrder
@@ -33671,6 +34809,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4484433408099896, guid: d362e56f7a8edcf449cea294c0e6acff,
     type: 3}
   m_PrefabInstance: {fileID: 1066585758}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1070229352 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1247601711156252608, guid: 5d202724a7462c0448f6e65b44dec0ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 1298465536}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1072356554
 GameObject:
@@ -34030,6 +35174,99 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.3538384, y: 1.3538388, z: 5.80816}
   m_Center: {x: 0, y: 0, z: 2.8831034}
+--- !u!1 &1085461195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1085461196}
+  - component: {fileID: 1085461199}
+  - component: {fileID: 1085461198}
+  - component: {fileID: 1085461197}
+  m_Layer: 0
+  m_Name: Wall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1085461196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085461195}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.583, y: 0, z: -3.03}
+  m_LocalScale: {x: 6.2333, y: 10, z: 17.216318}
+  m_Children: []
+  m_Father: {fileID: 238299476}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1085461197
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085461195}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1085461198
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085461195}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1085461199
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085461195}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1086270448
 GameObject:
   m_ObjectHideFlags: 0
@@ -34299,6 +35536,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (39)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -34825,12 +36066,12 @@ GameObject:
   - component: {fileID: 1129206208}
   - component: {fileID: 1129206207}
   - component: {fileID: 1129206206}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1129206205
 Transform:
@@ -34917,6 +36158,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (45)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -35164,6 +36409,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (34)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -35597,12 +36846,12 @@ GameObject:
   - component: {fileID: 1147058197}
   - component: {fileID: 1147058196}
   - component: {fileID: 1147058195}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1147058194
 Transform:
@@ -36132,6 +37381,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -36231,7 +37484,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156380791}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -36508,7 +37761,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168519890}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -37549,7 +38802,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200030406}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -37734,7 +38987,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202058871}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -37784,6 +39037,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (46)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -37940,6 +39197,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWallCorner (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4660015660617000, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_RootOrder
       value: 65
@@ -38003,6 +39264,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -38061,12 +39326,12 @@ GameObject:
   - component: {fileID: 1224076742}
   - component: {fileID: 1224076741}
   - component: {fileID: 1224076740}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1224076739
 Transform:
@@ -38153,6 +39418,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -38827,6 +40096,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -39233,12 +40506,12 @@ GameObject:
   - component: {fileID: 1259915830}
   - component: {fileID: 1259915829}
   - component: {fileID: 1259915828}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1259915827
 Transform:
@@ -39854,6 +41127,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 22
@@ -40008,6 +41285,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -40255,6 +41536,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (38)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -40978,6 +42263,107 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &1298465536
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1247601711156252608, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_Name
+      value: Stage2Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 59.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -188.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.95437026
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.29862586
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -34.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247601711156351904, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930609950828323949, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: diff
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930609950828323949, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: hpUI
+      value: 
+      objectReference: {fileID: 839942778}
+    - target: {fileID: 1930609950828323949, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: bossUI
+      value: 
+      objectReference: {fileID: 839942774}
+    - target: {fileID: 1930609950828323949, guid: 5d202724a7462c0448f6e65b44dec0ce,
+        type: 3}
+      propertyPath: diffUI
+      value: 
+      objectReference: {fileID: 839942776}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5d202724a7462c0448f6e65b44dec0ce, type: 3}
+--- !u!114 &1298465537 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1930609950828323949, guid: 5d202724a7462c0448f6e65b44dec0ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 1298465536}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070229352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1fad6bc9a68d14087cbae875368a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1301117168
 GameObject:
   m_ObjectHideFlags: 0
@@ -41173,6 +42559,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -41341,7 +42731,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307842213}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -41824,12 +43214,12 @@ GameObject:
   - component: {fileID: 1327278080}
   - component: {fileID: 1327278079}
   - component: {fileID: 1327278078}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1327278077
 Transform:
@@ -42530,12 +43920,12 @@ GameObject:
   - component: {fileID: 1350088705}
   - component: {fileID: 1350088704}
   - component: {fileID: 1350088703}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1350088702
 Transform:
@@ -43065,6 +44455,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWallCorner (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4660015660617000, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -43184,6 +44578,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (41)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -43432,6 +44830,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWallStairs (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1256809392869866, guid: 4777f8950f6f12940a096d9d73d45fc0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4856842641037232, guid: 4777f8950f6f12940a096d9d73d45fc0, type: 3}
       propertyPath: m_RootOrder
       value: 25
@@ -43590,6 +44992,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -44103,6 +45509,10 @@ PrefabInstance:
     - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_Name
       value: RiverWallCorner (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4660015660617000, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_RootOrder
@@ -44710,12 +46120,12 @@ GameObject:
   - component: {fileID: 1437328838}
   - component: {fileID: 1437328837}
   - component: {fileID: 1437328836}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1437328835
 Transform:
@@ -44958,6 +46368,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWallStairs (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1256809392869866, guid: 4777f8950f6f12940a096d9d73d45fc0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4856842641037232, guid: 4777f8950f6f12940a096d9d73d45fc0, type: 3}
       propertyPath: m_RootOrder
       value: 49
@@ -45199,6 +46613,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -45251,6 +46669,65 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1441931263}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1442169670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1442169671}
+  - component: {fileID: 1442169672}
+  - component: {fileID: 1442169673}
+  m_Layer: 0
+  m_Name: BossSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1442169671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442169670}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 38.1, y: 0, z: -153.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1894719070}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1442169672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442169670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9af242d2193ce46a1a26ca765d5bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Boss: {fileID: 1298465537}
+  cam: {fileID: 773654511}
+--- !u!65 &1442169673
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442169670}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 18.906551, y: 6.5087833, z: 3.5490875}
+  m_Center: {x: -2.0305004, y: 2.7543917, z: 1.2745438}
 --- !u!1 &1443961720
 GameObject:
   m_ObjectHideFlags: 0
@@ -45353,6 +46830,10 @@ PrefabInstance:
     - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_Name
       value: Fence (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
@@ -45917,6 +47398,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (43)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 87
@@ -46288,7 +47773,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469578131}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -46381,7 +47866,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471281171}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -46820,6 +48305,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -47718,6 +49207,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWallCorner
       objectReference: {fileID: 0}
+    - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4660015660617000, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -48129,6 +49622,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (28)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 53
@@ -48193,12 +49690,12 @@ GameObject:
   - component: {fileID: 1565161160}
   - component: {fileID: 1565161159}
   - component: {fileID: 1565161158}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1565161157
 Transform:
@@ -48470,6 +49967,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -48526,6 +50027,10 @@ PrefabInstance:
     - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_Name
       value: Fence (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
@@ -49054,6 +50559,70 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.3538384, y: 1.3538388, z: 5.80816}
   m_Center: {x: 0, y: 0, z: 2.8831034}
+--- !u!1 &1584855786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1584855787}
+  - component: {fileID: 1584855788}
+  - component: {fileID: 1584855789}
+  m_Layer: 0
+  m_Name: Spawner1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1584855787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584855786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -43.3, y: 5.52, z: 1.83}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 528899827}
+  - {fileID: 1038185357}
+  m_Father: {fileID: 1894719070}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1584855788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584855786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8596a6b7b433c5a43a982e5fb713d920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eTypes: 0100000001000000020000000300000001000000
+  wave: 0
+  boxScale: {fileID: 528899827}
+  Walls:
+  - {fileID: 1038185356}
+--- !u!65 &1584855789
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584855786}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8381577, y: 7.5390205, z: 20.045004}
+  m_Center: {x: 17.491398, y: -1.2695103, z: -2.477498}
 --- !u!1 &1585829432
 GameObject:
   m_ObjectHideFlags: 0
@@ -49433,6 +51002,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -49567,6 +51140,10 @@ PrefabInstance:
     - target: {fileID: 1256809392869866, guid: 4777f8950f6f12940a096d9d73d45fc0, type: 3}
       propertyPath: m_Name
       value: RiverWallStairs
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256809392869866, guid: 4777f8950f6f12940a096d9d73d45fc0, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4856842641037232, guid: 4777f8950f6f12940a096d9d73d45fc0, type: 3}
       propertyPath: m_RootOrder
@@ -50003,6 +51580,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (26)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 47
@@ -50067,12 +51648,12 @@ GameObject:
   - component: {fileID: 1610068722}
   - component: {fileID: 1610068721}
   - component: {fileID: 1610068720}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1610068719
 Transform:
@@ -50253,12 +51834,12 @@ GameObject:
   - component: {fileID: 1616166353}
   - component: {fileID: 1616166352}
   - component: {fileID: 1616166351}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1616166350
 Transform:
@@ -50437,6 +52018,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (57)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -50684,6 +52269,10 @@ PrefabInstance:
     - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_Name
       value: RiverWallCorner (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4660015660617000, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_RootOrder
@@ -51990,7 +53579,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1678716329}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -52520,6 +54109,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -52668,6 +54261,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -53007,6 +54604,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -53509,12 +55110,12 @@ GameObject:
   - component: {fileID: 1709115163}
   - component: {fileID: 1709115162}
   - component: {fileID: 1709115161}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1709115160
 Transform:
@@ -53644,7 +55245,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709801305}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -53961,6 +55562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (29)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 54
@@ -54025,12 +55630,12 @@ GameObject:
   - component: {fileID: 1728858766}
   - component: {fileID: 1728858765}
   - component: {fileID: 1728858764}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1728858763
 Transform:
@@ -54117,6 +55722,10 @@ PrefabInstance:
     - target: {fileID: 1298343669249514, guid: dd6f629302f173646a25d46dbd945d78, type: 3}
       propertyPath: m_Name
       value: RiverWallOpen
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298343669249514, guid: dd6f629302f173646a25d46dbd945d78, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4164064348375738, guid: dd6f629302f173646a25d46dbd945d78, type: 3}
       propertyPath: m_RootOrder
@@ -54591,7 +56200,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740027274}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -54641,6 +56250,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -54780,6 +56393,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (48)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -54967,12 +56584,12 @@ GameObject:
   - component: {fileID: 1752752245}
   - component: {fileID: 1752752244}
   - component: {fileID: 1752752243}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1752752242
 Transform:
@@ -55654,7 +57271,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774057752}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -55706,12 +57323,12 @@ GameObject:
   - component: {fileID: 1775195736}
   - component: {fileID: 1775195735}
   - component: {fileID: 1775195734}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1775195733
 Transform:
@@ -56423,6 +58040,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (36)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 72
@@ -56579,6 +58200,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (51)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -56951,7 +58576,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813537340}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -57494,7 +59119,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829682440}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -57636,6 +59261,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -57781,6 +59410,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (33)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -58071,7 +59704,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851162106}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -58121,6 +59754,10 @@ PrefabInstance:
     - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_Name
       value: RiverWallCorner (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1932968684583758, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4660015660617000, guid: 78c5bede736cca04ea483d26c7811ed9, type: 3}
       propertyPath: m_RootOrder
@@ -58227,7 +59864,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852549018}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -58277,6 +59914,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -58342,12 +59983,12 @@ GameObject:
   - component: {fileID: 1856261757}
   - component: {fileID: 1856261756}
   - component: {fileID: 1856261755}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &1856261755
 MeshCollider:
@@ -58618,6 +60259,10 @@ PrefabInstance:
     - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_Name
       value: Fence
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
@@ -59191,6 +60836,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (58)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 112
@@ -59388,7 +61037,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885343467}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -59481,7 +61130,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885865911}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -59625,12 +61274,12 @@ GameObject:
   - component: {fileID: 1887499714}
   - component: {fileID: 1887499713}
   - component: {fileID: 1887499712}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1887499711
 Transform:
@@ -59997,14 +61646,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7868640255752265049, guid: 2be92709dddcc2c4380528ab8e3d4950,
         type: 3}
+      propertyPath: enviroSound
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868640255752265049, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
       propertyPath: bgList.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7868640255752265049, guid: 2be92709dddcc2c4380528ab8e3d4950,
         type: 3}
       propertyPath: bgList.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: e7368875b03720e41aebbdacece53187, type: 3}
+    - target: {fileID: 7868640255752265049, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: bgList.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0477d9618a144a549a5f3524329052f7, type: 3}
+    - target: {fileID: 7868640255752265049, guid: 2be92709dddcc2c4380528ab8e3d4950,
+        type: 3}
+      propertyPath: bgList.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: fcf41eab87eabfe48ad1dba0860a1450, type: 3}
     - target: {fileID: 7868640255752265050, guid: 2be92709dddcc2c4380528ab8e3d4950,
         type: 3}
       propertyPath: m_RootOrder
@@ -60125,6 +61789,40 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1893821619}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1894719069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1894719070}
+  m_Layer: 0
+  m_Name: SpawnerGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1894719070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894719069}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1584855787}
+  - {fileID: 238299476}
+  - {fileID: 1917281565}
+  - {fileID: 1442169671}
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1899051043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60260,7 +61958,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902148537}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -60312,12 +62010,12 @@ GameObject:
   - component: {fileID: 1905238873}
   - component: {fileID: 1905238872}
   - component: {fileID: 1905238871}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1905238870
 Transform:
@@ -60487,6 +62185,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (25)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 46
@@ -60539,6 +62241,70 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1912363586}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1917281564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1917281565}
+  - component: {fileID: 1917281567}
+  - component: {fileID: 1917281566}
+  m_Layer: 0
+  m_Name: Spawner3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1917281565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917281564}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 35.61, y: 5.52, z: -83.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 991377938}
+  - {fileID: 128966192}
+  m_Father: {fileID: 1894719070}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!65 &1917281566
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917281564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 14.918167, y: 5.741156, z: 4.0545692}
+  m_Center: {x: -5.718754, y: -2.370578, z: 20.51967}
+--- !u!114 &1917281567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917281564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8596a6b7b433c5a43a982e5fb713d920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eTypes: 0300000002000000010000000300000002000000
+  wave: 0
+  boxScale: {fileID: 991377938}
+  Walls:
+  - {fileID: 128966191}
 --- !u!1 &1928043256
 GameObject:
   m_ObjectHideFlags: 0
@@ -60827,12 +62593,12 @@ GameObject:
   - component: {fileID: 1935336532}
   - component: {fileID: 1935336531}
   - component: {fileID: 1935336530}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PavingStone Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &1935336530
 MeshCollider:
@@ -61195,6 +62961,10 @@ PrefabInstance:
     - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_Name
       value: Fence (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356388990661210, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4203431030706318, guid: 694a9c3445f3cb0448c24a04ce64d96d, type: 3}
       propertyPath: m_RootOrder
@@ -62004,12 +63774,12 @@ GameObject:
   - component: {fileID: 1993878159}
   - component: {fileID: 1993878158}
   - component: {fileID: 1993878157}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RockPlane (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1993878156
 Transform:
@@ -62454,6 +64224,62 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &2003978206
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2003978208}
+  - component: {fileID: 2003978207}
+  m_Layer: 0
+  m_Name: ObjectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2003978207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003978206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3e7c6ade355994abf3770cf8799bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BombRobot: {fileID: 4302171039993932412, guid: abbc705a072e72843acec96b9f92fc92,
+    type: 3}
+  MeeleEnemy: {fileID: 5066665721144860178, guid: 0451bee092d7bf74d95ae8c49a25e8e3,
+    type: 3}
+  RogueEnemy: {fileID: 4798260833034480588, guid: 23b9e8bef293eb54b9d2ef8c52f3684c,
+    type: 3}
+  RifeEnemy: {fileID: 546951366444283137, guid: fe4a58310679bb548aab310fe1cf7c47,
+    type: 3}
+  Bullet: {fileID: 6558181412500326322, guid: 9500d1ced99076e4e93465025535e654, type: 3}
+  SBullet: {fileID: 615383201410121422, guid: de8461391bc1ebb44b29f7b96caa14e9, type: 3}
+  DangerLine: {fileID: 5096835186524517751, guid: d1ab30c9435752f4ba0ab6f9a6c4418a,
+    type: 3}
+  Potal: {fileID: 1465323844090181324, guid: bfafa3e179f95dc479e56d9e95de81b4, type: 3}
+--- !u!4 &2003978208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003978206}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2004091027
 GameObject:
   m_ObjectHideFlags: 0
@@ -63549,6 +65375,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -63790,6 +65620,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -63889,7 +65723,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089361598}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -64463,6 +66297,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverWall (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -64617,6 +66455,10 @@ PrefabInstance:
     - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_Name
       value: RiverWall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308262449071418, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4668014256311012, guid: a7eb417a6c9b1d94aa4238bd72633934, type: 3}
       propertyPath: m_RootOrder
@@ -64811,7 +66653,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2134064582}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -65088,7 +66930,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139301134}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

@@ -75,7 +75,7 @@ public class EnemySpawner : MonoBehaviour, IPunObservable
             sPos.Add(spawnPos);
 
             // pv.RPC("SpawnEnemy", RpcTarget.All, spawnPos, count);
-            SpawnEnemy(spawnPos, count);
+          //  SpawnEnemy(spawnPos, count);
             pv.RPC("enemyActive", RpcTarget.Others, spawnPos, count);
             //SpawnEnemy(spawnPos);
             count++;
@@ -83,36 +83,36 @@ public class EnemySpawner : MonoBehaviour, IPunObservable
       
     }
 
-    [PunRPC]
-    void SpawnEnemy(Vector3 spawnPos, int _count) //몹 스폰
-    {
-       StartCoroutine(ShowRoutine(spawnPos));
+    //[PunRPC]
+    //void SpawnEnemy(Vector3 spawnPos, int _count) //몹 스폰
+    //{
+    //   StartCoroutine(ShowRoutine(spawnPos));
 
-        switch (eTypes[_count])
-        { 
-            case enemyType.Melee:
-                MeleeController mcon = ObjectPool.GetMelee();       
-                mcon.gameObject.transform.position = spawnPos; 
-                enemis.Add(mcon);
-                mcon.onDeath += () => enemis.Remove(mcon);
-                break;
+    //    switch (eTypes[_count])
+    //    { 
+    //        case enemyType.Melee:
+    //            MeleeController mcon = ObjectPool.GetMelee();       
+    //            mcon.gameObject.transform.position = spawnPos; 
+    //            enemis.Add(mcon);
+    //            mcon.onDeath += () => enemis.Remove(mcon);
+    //            break;
 
-            case enemyType.Rifle:
-                RogueController rcon = ObjectPool.GetRogue();
-                rcon.gameObject.transform.position = spawnPos;          
-                enemis.Add(rcon);
-                rcon.onDeath += () => enemis.Remove(rcon);
-                break;
+    //        case enemyType.Rifle:
+    //            RogueController rcon = ObjectPool.GetRogue();
+    //            rcon.gameObject.transform.position = spawnPos;          
+    //            enemis.Add(rcon);
+    //            rcon.onDeath += () => enemis.Remove(rcon);
+    //            break;
 
-            case enemyType.Rogue:
-                RifleController ricon = ObjectPool.GetRifle();     
-                ricon.gameObject.transform.position = spawnPos;
-                enemis.Add(ricon);
-                ricon.onDeath += () => enemis.Remove(ricon);
-                break;            
-        }
+    //        case enemyType.Rogue:
+    //            RifleController ricon = ObjectPool.GetRifle();     
+    //            ricon.gameObject.transform.position = spawnPos;
+    //            enemis.Add(ricon);
+    //            ricon.onDeath += () => enemis.Remove(ricon);
+    //            break;            
+    //    }
     
-    }
+    //}
 
 
     [PunRPC]

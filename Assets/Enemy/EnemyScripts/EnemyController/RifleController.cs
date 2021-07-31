@@ -448,7 +448,7 @@ public class RifleController : LivingEntity, IPunObservable
 
         yield return new WaitForSeconds(3f); // 1초 대기
 
-        ObjectPool.ReturnRifle(this); //다시 오브젝트 풀에 반납
+        //ObjectPool.ReturnRifle(this); //다시 오브젝트 풀에 반납
     }
 
     private void Update()

@@ -515,7 +515,7 @@ public class RogueController : LivingEntity, IPunObservable
 
         yield return new WaitForSeconds(2f); // 1초 대기
 
-        ObjectPool.ReturnRogue(this); //다시 오브젝트 풀에 반납
+      //  ObjectPool.ReturnRogue(this); //다시 오브젝트 풀에 반납
     }
 
     private void Update()

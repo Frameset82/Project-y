@@ -154,7 +154,9 @@ public class Stage2BossController : LivingEntity
 
     private void Update()
     {
-        
+        hpUI.RefreshUI(this.health);
+        diffUI.RefreshUI(this.diff);
+
         if (hasTarget)
         { sectorCheck(); }
 
@@ -169,7 +171,7 @@ public class Stage2BossController : LivingEntity
     }
 
     //처음 시작시 실행되는 루틴
-    private void StartRoutine()
+    public void StartRoutine()
     {
         StartCoroutine(Enable());
     }
@@ -218,7 +220,7 @@ public class Stage2BossController : LivingEntity
 
         yield return new WaitForSeconds(0.4f);
 
-     //   StartCoroutine(PowerAttack()); //일반 공격 동작 실행
+        StartCoroutine(PowerAttack()); //일반 공격 동작 실행
     }
 
     //애니메이션 재생
@@ -230,16 +232,16 @@ public class Stage2BossController : LivingEntity
                 anim.SetTrigger("Appear");
                 break;
             case (int)BossState.MoveToTarget:
-                //if (!isCollision)
-                //{
-                //    isMove = true;
-                //   // anim.SetTrigger("MoveToTarget");    
-                //}
-                //else
-                //{
-                //    isMove = false;
-                //    //anim.SetTrigger("EndMove");
-                //}
+                if (!isCollision)
+                {
+                    isMove = true;
+                    // anim.SetTrigger("MoveToTarget");    
+                }
+                else
+                {
+                    isMove = false;
+                    //anim.SetTrigger("EndMove");
+                }
                 anim.SetTrigger("MoveToTarget");
                 anim.SetBool("isMove", isMove);
                 break;
@@ -614,6 +616,34 @@ public class Stage2BossController : LivingEntity
         {
             base.RestoreHealth(newHealth);
         }
+    }
+
+    // 공격을 당했을때
+    public override void OnDamage(Damage dInfo)
+    {
+        if (dead) return;
+
+      
+        health -= dInfo.dValue; // 체력 감소
+
+        diff -= 6;  /* (int)((dInfo.dValue * dInfo.inCapValue) / 100)*/ //총공격력에서 무력화수치 퍼센트만큼 방어도 감소
+
+        if (diff <= 0 && bState != BossState.Stun)
+        {
+            StopAllCoroutines();
+           // StartCoroutine(Stun());
+        }
+        else if (diff <= 0)
+        {
+            diff = 0;
+        }
+
+        if (health <= 0 && this.gameObject.activeInHierarchy && !dead) // 체력이 0보다 작고 사망상태가 아닐때
+        {
+            StopAllCoroutines();
+            Die();
+        }
+
     }
 
     public void OnAttackEvent()
