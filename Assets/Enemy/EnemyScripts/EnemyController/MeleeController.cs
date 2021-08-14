@@ -83,7 +83,7 @@ public class MeleeController : LivingEntity, IPunObservable
         ////대기 상태로 설정
         isFirstAttack = true;
         mstate = MeleeState.Idle;
-        this.startingHealth = 1f; //스포너에 들어갈시 삭제
+        this.startingHealth = 100f; //스포너에 들어갈시 삭제
         healthbar.SetMaxHealth((int)startingHealth);
         health = this.startingHealth;
         base.OnEnable();

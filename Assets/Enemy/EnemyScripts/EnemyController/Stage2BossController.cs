@@ -139,9 +139,10 @@ public class Stage2BossController : LivingEntity
         this.startingHealth = 300f;
         this.diff = 100f;
 
+        target = FindObjectOfType<PlayerInfo>();
 
         base.OnEnable();
-        this.health = 100f;
+   
     }
 
     private void FixedUpdate()

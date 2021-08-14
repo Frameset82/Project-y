@@ -27,9 +27,9 @@ public class ObjectPool : MonoBehaviour
     private GameObject Potal; //포탈 범위 라인
 
     private static Queue<BombRobotControl> RobotQueue = new Queue<BombRobotControl>(); //자폭로봇 큐
-    private static Queue<SingleMeleeController> MeleeQueue = new Queue<SingleMeleeController>();  //근접적 큐
-    private static Queue<SingleRogueController> RogueQueue = new Queue<SingleRogueController>();  // 로그적 큐
-    private static Queue<SingleRifleController> RifleQueue = new Queue<SingleRifleController>();  // 라이플적 큐
+    private static Queue<MeleeController> MeleeQueue = new Queue<MeleeController>();  //근접적 큐
+    private static Queue<RogueController> RogueQueue = new Queue<RogueController>();  // 로그적 큐
+    private static Queue<RifleController> RifleQueue = new Queue<RifleController>();  // 라이플적 큐
     private Queue<EnemyBullet> BulletQueue = new Queue<EnemyBullet>();  //일반총알 
     private Queue<EnemyBullet> SBulletQueue = new Queue<EnemyBullet>();  //스나이핑 총알
     private Queue<DangerLine> DLineQueue = new Queue<DangerLine>(); 
@@ -44,25 +44,25 @@ public class ObjectPool : MonoBehaviour
 
     void Initialize(int count) // 초기 설정
     {
-        //    if(PhotonNetwork.IsMasterClient)
-        //    { 
-        //     for (int i = 0; i < count; i++)
-        //     {
-        //           RobotQueue.Enqueue(CreateNewBomb());
-        //    //        MeleeQueue.Enqueue(CreateNewMelee());
-        //    //        RogueQueue.Enqueue(CreateNewRogue());
-        //    //        RifleQueue.Enqueue(CreateNewRifle());
-        //     }
-        //    }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                RobotQueue.Enqueue(CreateNewBomb());
+                MeleeQueue.Enqueue(CreateNewMelee());
+                RogueQueue.Enqueue(CreateNewRogue());
+                RifleQueue.Enqueue(CreateNewRifle());
+            }
+        }
 
 
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    RobotQueue.Enqueue(CreateNewBomb());
-        //}
+        if (PhotonNetwork.IsMasterClient)
+        {
+            RobotQueue.Enqueue(CreateNewBomb());
+        }
         for (int i = 0; i < count; i++)
         {
-            //RobotQueue.Enqueue(CreateNewBomb());
+            RobotQueue.Enqueue(CreateNewBomb());
             BulletQueue.Enqueue(CreateNewBullet());
             DLineQueue.Enqueue(CreateNewLine());
             SBulletQueue.Enqueue(CreateNewSBullet());
@@ -82,10 +82,10 @@ public class ObjectPool : MonoBehaviour
         return potal;
     }
 
-    private SingleRifleController CreateNewRifle() //라이플 적 생성
+    private RifleController CreateNewRifle() //라이플 적 생성
     {
-        // RifleController newObj = PhotonNetwork.Instantiate("RifleEnemy", transform.position, Quaternion.identity).GetComponent<RifleController>();
-        SingleRifleController newObj = Instantiate(RifeEnemy, transform.position, Quaternion.identity).GetComponent<SingleRifleController>();
+        RifleController newObj = PhotonNetwork.Instantiate("RifleEnemy", transform.position, Quaternion.identity).GetComponent<RifleController>();
+       // SingleRifleController newObj = Instantiate(RifeEnemy, transform.position, Quaternion.identity).GetComponent<SingleRifleController>();
         newObj.gameObject.SetActive(false);
         return newObj;
     }
@@ -100,10 +100,10 @@ public class ObjectPool : MonoBehaviour
         return newObj;
     }
 
-    private SingleRogueController CreateNewRogue() // 로그적생성 
+    private RogueController CreateNewRogue() // 로그적생성 
     {
-        //RogueController newObj = PhotonNetwork.Instantiate("RogueEnemy", transform.position, Quaternion.identity).GetComponent<RogueController>();
-        SingleRogueController newObj = Instantiate(RogueEnemy, transform.position, Quaternion.identity).GetComponent<SingleRogueController>();
+        RogueController newObj = PhotonNetwork.Instantiate("RogueEnemy", transform.position, Quaternion.identity).GetComponent<RogueController>();
+        //SingleRogueController newObj = Instantiate(RogueEnemy, transform.position, Quaternion.identity).GetComponent<SingleRogueController>();
        newObj.gameObject.SetActive(false);
         return newObj;
     }
@@ -116,7 +116,7 @@ public class ObjectPool : MonoBehaviour
         newObj.gameObject.SetActive(false);
         return newObj;
         //BombRobotControl newObj = PhotonNetwork.Instantiate("BombRobot", transform.position, Quaternion.identity).GetComponent<BombRobotControl>();
-        //return newObj;
+        return newObj;
     }
 
     private EnemyBullet CreateNewBullet() //일반총알 생성
@@ -134,10 +134,10 @@ public class ObjectPool : MonoBehaviour
         return newBullet;
     }
 
-    private SingleMeleeController CreateNewMelee() //근접적생성 
+    private MeleeController CreateNewMelee() //근접적생성 
     {
-        //  MeleeController newObj = PhotonNetwork.Instantiate("MeleeEnemy", transform.position, Quaternion.identity).GetComponent<MeleeController>();
-        SingleMeleeController newObj = Instantiate(MeeleEnemy, transform.position, Quaternion.identity).GetComponent<SingleMeleeController>();
+         MeleeController newObj = PhotonNetwork.Instantiate("MeleeEnemy", transform.position, Quaternion.identity).GetComponent<MeleeController>();
+        //MeleeController newObj = Instantiate(MeeleEnemy, transform.position, Quaternion.identity).GetComponent<SingleMeleeController>();
         newObj.gameObject.SetActive(false);
         return newObj;
     }
@@ -214,7 +214,7 @@ public class ObjectPool : MonoBehaviour
         ObjectPool.RobotQueue.Enqueue(bombr); //다시 큐에 넣기
     }
 
-    public static SingleMeleeController GetMelee() //근접적 가져가기
+    public static MeleeController GetMelee() //근접적 가져가기
     {
         if (ObjectPool.MeleeQueue.Count > 0) //0보다 많으면 큐에서 꺼내주기
         {
@@ -233,14 +233,14 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    public static void ReturnMeleeEnemy(SingleMeleeController mbr) //근접적 반환
+    public static void ReturnMeleeEnemy(MeleeController mbr) //근접적 반환
     {
         mbr.gameObject.SetActive(false); //오브젝트 비활성화
         mbr.transform.SetParent(Instance.transform); //오브젝트 풀의 자식으로 설정
         ObjectPool.MeleeQueue.Enqueue(mbr); //다시 큐에 넣기
     }
 
-    public static SingleRogueController GetRogue() //로그적 가져가기
+    public static RogueController GetRogue() //로그적 가져가기
     {
         if (ObjectPool.RogueQueue.Count > 0) //0보다 많으면 큐에서 꺼내주기
         {
@@ -259,14 +259,14 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    public static void ReturnRogue(SingleRogueController mbr) //로그적 반환
+    public static void ReturnRogue(RogueController mbr) //로그적 반환
     {
         mbr.gameObject.SetActive(false); //오브젝트 비활성화
         mbr.transform.SetParent(Instance.transform); //오브젝트 풀의 자식으로 설정
         ObjectPool.RogueQueue.Enqueue(mbr); //다시 큐에 넣기
     }
 
-    public static SingleRifleController GetRifle() //라이플적 가져가기
+    public static RifleController GetRifle() //라이플적 가져가기
     {
         if (ObjectPool.RifleQueue.Count > 0) //0보다 많으면 큐에서 꺼내주기
         {
@@ -285,7 +285,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    public static void ReturnRifle(SingleRifleController mbr) //라이플적 반환
+    public static void ReturnRifle(RifleController mbr) //라이플적 반환
     {
         mbr.gameObject.SetActive(false); //오브젝트 비활성화
         mbr.transform.SetParent(Instance.transform); //오브젝트 풀의 자식으로 설정

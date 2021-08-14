@@ -80,7 +80,7 @@ public class RifleController : LivingEntity, IPunObservable
     {
         //대기 상태로 설정
         rstate = RifleState.Idle;
-        this.startingHealth = 1f; //테스트용 설정
+        this.startingHealth = 100f; //테스트용 설정
         damage.dValue = 10f; //초기 데미지값 설정
         damage.dType = Damage.DamageType.Melee; //데미지 종류 설정
         healthbar.SetMaxHealth((int)startingHealth);
