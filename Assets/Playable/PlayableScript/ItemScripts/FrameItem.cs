@@ -9,7 +9,7 @@ public class FrameItem : ActiveItem
     // Start is called before the first frame update
     public override void OnEquip()
     {
-        playerKeyboardInput.moveSpeed += 3f;
+        playerInput.moveSpeed += 3f;
         /*        playerInfo.maxHealth += 80f;*/
         /* playerInfo.MoveSpeed += 0.3f; // */
         damage.dValue += 100f;
@@ -18,7 +18,7 @@ public class FrameItem : ActiveItem
 
     public override void UnEquip()
     {
-        playerKeyboardInput.moveSpeed -= 3f;
+        playerInput.moveSpeed -= 3f;
         /*        playerInfo.maxHealth -= 80f;*/
         /*        playerInfo.MoveSpeed -= 0.3f;*/
         damage.dValue -= 100f;

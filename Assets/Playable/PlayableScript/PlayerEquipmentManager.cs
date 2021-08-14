@@ -9,7 +9,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 {
     private PlayerAnimation playerAnimation;
     private PlayerInfo playerInfo;
-    private PlayerKeyboardInput playerKeyboardInput;
+    private PlayerInput playerKeyboardInput;
     private GameObject player;
     private GameManager GM;
     public string weaponRoot = "/Male/Armature/Hips/Spine/Spine1/Spine2/RightShoulder/RightArm/RightForeArm/RightHand/";
@@ -49,7 +49,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     private void Start()
     {
         playerAnimation = GetComponent<PlayerAnimation>();
-        playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
+        playerKeyboardInput = GetComponent<PlayerInput>();
         playerInfo = GetComponent<PlayerInfo>();
         pv = GetComponent<PhotonView>();
         player = gameObject;

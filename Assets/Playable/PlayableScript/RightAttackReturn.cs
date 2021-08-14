@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class RightAttackReturn : StateMachineBehaviour
 {
-    private PlayerKeyboardInput playerKeyboardInput;
+    private PlayerInput playerInput;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        playerKeyboardInput = animator.GetComponentInParent<PlayerKeyboardInput>();
-        playerKeyboardInput.isRight = true;
+        playerInput = animator.GetComponentInParent<PlayerInput>();
+        playerInput.isRight = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -22,7 +22,7 @@ public class RightAttackReturn : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        playerKeyboardInput.isRight = false;
+        playerInput.isRight = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

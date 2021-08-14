@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class PlayerKeyboardController : MonoBehaviourPun
+public class PlayerController : MonoBehaviourPun
 {
     // 이동속도와 회전속도 회피속도
     public float dodgePower = 400f;
@@ -38,7 +38,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
     // 스크립트들
     private PlayerEquipmentManager playerEquipmentManager;
     private PlayerAnimation playerAnimation;
-    private PlayerKeyboardInput playerKeyboardInput;
+    private PlayerInput playerInput;
 
     private bool onceUpdate = true; // 한번만업데이트
 
@@ -164,7 +164,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
         playerRigidbody = GetComponent<Rigidbody>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         playerAnimation = GetComponent<PlayerAnimation>();
-        playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
+        playerInput = GetComponent<PlayerInput>();
     }
 
     // 상호작용 범위에 들어갔을 때
@@ -183,7 +183,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
         if (pState == PlayerState.Idle )
         {
             pState = PlayerState.Movement;
-            if (playerKeyboardInput.isSwap)
+            if (playerInput.isSwap)
                 pState = PlayerState.Idle;
         }
     }
@@ -199,7 +199,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
     {
         if (onceUpdate)
         {
-            playerKeyboardInput = GetComponent<PlayerKeyboardInput>();
+            playerInput = GetComponent<PlayerInput>();
             playerAnimation = GetComponent<PlayerAnimation>();
             playerRigidbody = GetComponent<Rigidbody>();
             onceUpdate = false;
@@ -216,10 +216,10 @@ public class PlayerKeyboardController : MonoBehaviourPun
             playerAnimation.playerAnimator.SetBool("isMove", false);
         }
 
-        Vector3 heading = PlayerKeyboardInput.mainCamera.transform.localRotation * Vector3.forward;
+        Vector3 heading = PlayerInput.mainCamera.transform.localRotation * Vector3.forward;
         heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
         moveVec = (vAxis * heading + Quaternion.Euler(0, 90, 0) * heading * hAxis).normalized;
-        moveVec = Time.fixedDeltaTime * moveVec * playerKeyboardInput.moveSpeed;
+        moveVec = Time.fixedDeltaTime * moveVec * playerInput.moveSpeed;
 
         playerRigidbody.MovePosition(playerRigidbody.position + moveVec);
         moveVec1 = moveVec;
@@ -238,14 +238,14 @@ public class PlayerKeyboardController : MonoBehaviourPun
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
                 comboCnt = 0;
-                playerKeyboardInput.isShoot = false;
+                playerInput.isShoot = false;
             }
             else if(pState == PlayerState.RIghtAttack)
             {
-                playerKeyboardInput.isRight = false;
+                playerInput.isRight = false;
             }
 /*            playerRigidbody.constraints = RigidbodyConstraints.FreezePositionY;*/
-            playerKeyboardInput.isDodge = true;
+            playerInput.isDodge = true;
             nextDodgeableTime = Time.time + timeBetDodge;
             StartCoroutine(DodgeCoroutine(dir));
         }
@@ -296,7 +296,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
     // 실제 공격
     public IEnumerator AttackCoroutine(Vector3 destination, float delay, float animSpeed)
     {
-        playerKeyboardInput.isShoot = true;
+        playerInput.isShoot = true;
         pState = PlayerState.Attack;
 
         gameObject.transform.LookAt(destination);
@@ -319,7 +319,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             
             yield return new WaitForSeconds(0.2f); // 딜레이
 
-            playerKeyboardInput.isShoot = false;
+            playerInput.isShoot = false;
             pState = PlayerState.Idle;
         }
 /*        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
@@ -328,7 +328,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             CreateBullet(); //총알 생성하기
             yield return new WaitForSeconds(0.1f);
 
-            PlayerKeyboardInput.isShoot = false;
+            PlayerInput.isShoot = false;
             yield return new WaitForSeconds(0.3f);
             pState = PlayerState.Idle;
         }*/
@@ -351,7 +351,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             }
             yield return new WaitForSeconds(delay);
             
-            playerKeyboardInput.isShoot = false;
+            playerInput.isShoot = false;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
@@ -371,7 +371,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             }
             yield return new WaitForSeconds(delay * 2f);
             playerEquipmentManager.equipWeapon.OnAttack();
-            playerKeyboardInput.isShoot = false;
+            playerInput.isShoot = false;
             
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
@@ -394,7 +394,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             }
             yield return new WaitForSeconds(delay * 1.2f);
             playerEquipmentManager.equipWeapon.OnAttack();
-            playerKeyboardInput.isShoot = false;
+            playerInput.isShoot = false;
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
@@ -422,7 +422,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
 
     public IEnumerator RightAttackCoroutine(Vector3 destination)
     {
-/*        PlayerKeyboardInput.isRight = true;
+/*        PlayerInput.isRight = true;
         pState = PlayerState.RIghtAttack;*/
         gameObject.transform.LookAt(destination);
 
@@ -435,14 +435,14 @@ public class PlayerKeyboardController : MonoBehaviourPun
         {
             playerAnimation.RightAttack();
             /*            yield return new WaitForSeconds(1); // 딜레이
-                        PlayerKeyboardInput.isRight = false;
+                        PlayerInput.isRight = false;
                         pState = PlayerState.Idle;*/
             playerEquipmentManager.equipWeapon.OnActive();
         }
 /*        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().isGun == true)
         {
             playerAnimation.RightAttack();
-            PlayerKeyboardInput.isRight = false;
+            PlayerInput.isRight = false;
             yield return new WaitForSeconds(1f);
             pState = PlayerState.Idle;
 
@@ -453,7 +453,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             playerAnimation.RightAttack();
             playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
             playerRigidbody.velocity = Vector3.zero;
-            /*            PlayerKeyboardInput.isRight = false;
+            /*            PlayerInput.isRight = false;
                         yield return new WaitForSeconds(1);
                         pState = PlayerState.Idle;*/
             playerEquipmentManager.equipWeapon.OnActive();
@@ -462,7 +462,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
             playerAnimation.RightAttack();
-            /*            PlayerKeyboardInput.isRight = false;
+            /*            PlayerInput.isRight = false;
                         yield return new WaitForSeconds(1f);
                         pState = PlayerState.Idle;*/
             playerEquipmentManager.equipWeapon.OnActive();
@@ -472,7 +472,7 @@ public class PlayerKeyboardController : MonoBehaviourPun
             playerAnimation.RightAttack();
             playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
             playerRigidbody.velocity = Vector3.zero;
-            /*            PlayerKeyboardInput.isRight = false;
+            /*            PlayerInput.isRight = false;
                         yield return new WaitForSeconds(1f);
                         pState = PlayerState.Idle;*/
             playerEquipmentManager.equipWeapon.OnActive();

@@ -16,14 +16,14 @@ public abstract class UserInterface : MonoBehaviour
     
     // UI 활성화
     public void OpenUI(){
-        if(PlayerKeyboardController.isInteraction == true) return;
+        if(PlayerController.isInteraction == true) return;
         uiCanvas.SetActive(true);
-        PlayerKeyboardController.isInteraction = true;
+        PlayerController.isInteraction = true;
     }
     // UI 비활성화
     public virtual void CloseUI(){
         uiCanvas.SetActive(false);
-        PlayerKeyboardController.isInteraction = false;
+        PlayerController.isInteraction = false;
     }
     // UI 변경
     public void ChangeUI(UserInterface ui){

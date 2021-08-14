@@ -14,7 +14,7 @@ public abstract class ActiveItem : MonoBehaviour
     [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector] public PlayerInfo playerInfo;
     [HideInInspector] public PlayerAnimation playerAnimation;
-    [HideInInspector] public PlayerKeyboardInput playerKeyboardInput;
+    [HideInInspector] public PlayerInput playerInput;
 
     public virtual void OnActive() //아이템 사용시 구현할 함수
     {
@@ -27,7 +27,7 @@ public abstract class ActiveItem : MonoBehaviour
         playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
         playerInfo = player.GetComponent<PlayerInfo>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
-        playerKeyboardInput = player.GetComponent<PlayerKeyboardInput>();
+        playerInput = player.GetComponent<PlayerInput>();
     }
 
     public abstract void OnEquip(); // 무기 장착

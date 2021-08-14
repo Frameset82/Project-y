@@ -19,7 +19,7 @@ public class InteractionObj : MonoBehaviour
     void OnTriggerEnter(Collider coll) {
         if(coll.tag == "Player"){
             interactionCanvas.SetActive(true);
-            coll.GetComponent<PlayerKeyboardController>().OnInteractionEnter(this);
+            coll.GetComponent<PlayerController>().OnInteractionEnter(this);
         }
     }
 
@@ -29,7 +29,7 @@ public class InteractionObj : MonoBehaviour
     void OnTriggerExit(Collider coll) {
         if(coll.tag == "Player"){
             interactionCanvas.SetActive(false);
-            coll.GetComponent<PlayerKeyboardController>().OnInteractionExit();
+            coll.GetComponent<PlayerController>().OnInteractionExit();
         }
     }
 

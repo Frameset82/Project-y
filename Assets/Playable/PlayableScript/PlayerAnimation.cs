@@ -6,12 +6,12 @@ public class PlayerAnimation : MonoBehaviour
 {
 
     public Animator playerAnimator; // 캐릭터 애니메이터
-    private PlayerKeyboardInput playerKeyboardInput;
+    private PlayerInput playerKeyboardInput;
     public RuntimeAnimatorController[] anim = new RuntimeAnimatorController[4]; // 0 검 1 밀리 2 창 3 라이플
 
     private void Start()
     {
-        playerKeyboardInput = gameObject.GetComponent<PlayerKeyboardInput>();
+        playerKeyboardInput = gameObject.GetComponent<PlayerInput>();
     }
 
     public void ChangeAnimator()

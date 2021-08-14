@@ -24,7 +24,7 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
     [HideInInspector]public GameObject player;
     [HideInInspector]public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector]public PlayerInfo playerInfo;
-    [HideInInspector]public PlayerKeyboardInput playerKeyboardInput;
+    [HideInInspector]public PlayerInput playerKeyboardInput;
     [HideInInspector]public PlayerAnimation playerAnimation;
 
     public enum WeaponType // 플레이어 상태 리스트
@@ -40,7 +40,7 @@ public abstract class Weapon : MonoBehaviour, IDamageSource
         player = playerObj;
         playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
         playerInfo = player.GetComponent<PlayerInfo>();
-        playerKeyboardInput = player.GetComponent<PlayerKeyboardInput>();
+        playerKeyboardInput = player.GetComponent<PlayerInput>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
     }
 

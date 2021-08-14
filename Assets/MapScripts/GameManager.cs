@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             Instantiate(playerPrefab, playerSpawn0.position, Quaternion.identity);
             SoundManager.instance.SFXPlay(playerSpawnClip, gameObject);
         }
-        PlayerKeyboardController.isInteraction=false;
+        PlayerController.isInteraction=false;
         playerSpawn.Invoke();
         SoundManager.instance.BgmPlay();
     }
