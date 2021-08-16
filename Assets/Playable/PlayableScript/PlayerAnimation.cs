@@ -12,6 +12,7 @@ public class PlayerAnimation : MonoBehaviour
     private void Start()
     {
         playerKeyboardInput = gameObject.GetComponent<PlayerInput>();
+        playerAnimator = gameObject.GetComponentInChildren<Animator>();
     }
 
     public void ChangeAnimator()

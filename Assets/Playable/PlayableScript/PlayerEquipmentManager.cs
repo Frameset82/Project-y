@@ -135,7 +135,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             changeImg1.sprite = mainWeaponImg.sprite;
             changeImg2.sprite = subWeaponImg.sprite;
             playerInfo.playerUIEnable = true;
-            playerKeyboardInput.isShoot = true;
+            playerKeyboardInput.isBasicAttacking = true;
         }
     }
 
@@ -181,7 +181,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             iChangeImg2.sprite = SecondItemImg.sprite;
             iChangeImg3.sprite = ThirdItemImg.sprite;
             playerInfo.playerUIEnable = true;
-            playerKeyboardInput.isShoot = true;
+            playerKeyboardInput.isBasicAttacking = true;
         }
     }
 
@@ -367,7 +367,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         playerAnimation.ChangeAnimator();
         changeEquipment.SetActive(false); // 패널 끄기
         StateReset();
-        playerKeyboardInput.isShoot = false;
+        playerKeyboardInput.isBasicAttacking = false;
         playerInfo.playerUIEnable = false;
     }
 
@@ -399,7 +399,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         playerAnimation.ChangeAnimator();
         changeEquipment.SetActive(false); // 패널 끄기
         StateReset();
-        playerKeyboardInput.isShoot = false;
+        playerKeyboardInput.isBasicAttacking = false;
         playerInfo.playerUIEnable = false;
     }
 
@@ -423,7 +423,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj.SetActive(false);
         changeItem.SetActive(false); // 패널 끄기
         StateReset();
-        playerKeyboardInput.isShoot = false;
+        playerKeyboardInput.isBasicAttacking = false;
         playerInfo.playerUIEnable = false;
     }
 
@@ -447,7 +447,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj.SetActive(false);
         changeItem.SetActive(false); // 패널 끄기
         StateReset();
-        playerKeyboardInput.isShoot = false;
+        playerKeyboardInput.isBasicAttacking = false;
         playerInfo.playerUIEnable = false;
     }
 
@@ -471,14 +471,14 @@ public class PlayerEquipmentManager : MonoBehaviour
         particleObj.SetActive(false);
         changeItem.SetActive(false); // 패널 끄기
         StateReset();
-        playerKeyboardInput.isShoot = false;
+        playerKeyboardInput.isBasicAttacking = false;
         playerInfo.playerUIEnable = false;
     }
 
     public void StateReset()
     {
         playerKeyboardInput.isDodge = false;
-        playerKeyboardInput.isRight = false;
+        playerKeyboardInput.isSpecialAttacking = false;
         playerKeyboardInput.isSwap = false;
         playerKeyboardInput.isChange = false;
     }
@@ -502,7 +502,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public IEnumerator SwapCoroutine()
     {
-        if (playerKeyboardInput.isDodge == false && playerKeyboardInput.isShoot == false)
+        if (playerKeyboardInput.isDodge == false && playerKeyboardInput.isBasicAttacking == false)
         {
             yield return new WaitForSeconds(0.01f);
             playerAnimation.Swap();

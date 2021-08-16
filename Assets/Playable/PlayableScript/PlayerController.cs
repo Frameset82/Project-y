@@ -6,8 +6,7 @@ using Photon.Pun;
 public class PlayerController : MonoBehaviourPun
 {
     // 이동속도와 회전속도 회피속도
-    public float dodgePower = 400f;
-    public ParticleSystem ps;
+    public float dashPower = 100f;
     // 회피명령 딜레이 변수
     private float timeBetDodge = 1f;
     private float nextDodgeableTime = 0f;
@@ -26,8 +25,8 @@ public class PlayerController : MonoBehaviourPun
 
     public GameObject effect; //총구 화염 이펙트
 
-    [HideInInspector] public float hAxis;
-    [HideInInspector] public float vAxis;
+    private Vector3 moveDirection;
+
     [HideInInspector] Vector3 moveVec; // 움직임 벡터
     [HideInInspector] public Vector3 moveVec1; // 상태 초기화용 벡터
     private Rigidbody playerRigidbody;
@@ -35,132 +34,62 @@ public class PlayerController : MonoBehaviourPun
     public AudioClip[] footStepSound;
     public int footStepTemp;
 
-    // 스크립트들
-    private PlayerEquipmentManager playerEquipmentManager;
-    private PlayerAnimation playerAnimation;
-    private PlayerInput playerInput;
+    private PlayerEquipmentManager playerEquipmentManager;  // 플레이어 장비 관리 스크립트(?)
+    private PlayerAnimation playerAnimation;  // 플레이어 애니메이션 관리 스크립트
+    private PlayerInput playerInput;  // 플레이어 조작 입력단 스크립트
 
-    private bool onceUpdate = true; // 한번만업데이트
-
-
+    private IEnumerator playerStateCoroutine;
 
     public enum PlayerState // 플레이어 상태 리스트
     {
         Idle, // 가만히 서있는 상태
-        Movement, // 이동중인 상태
-        Dodge, // 회피중인 상태
-        Attack, // 공격중인 상태
-        RIghtAttack, // 우클릭 공격중인 상태
-        onHit, // 맞고있는 상태
-        Death, // 사망한 상태
+        Move, // 이동 중인 상태
+        Dodge, // 회피 중인 상태
+        BasicAttack, // 공격 중인 상태
+        SpecialAttack, // 우클릭 공격 중인 상태
+        Hit, // 맞고 있는 상태
+        Die, // 사망한 상태
         Swap, // 스왑 상태
-        onCC, // CC 상태
-        Grenade // 수류탄 투척 상태
+        Stun, // CC 상태
     }
+
     public EffectInfo[] Effects;
 
-    [System.Serializable]
+    [Header("파티클")]
+    [SerializeField]
+    public GameObject particleParent;
 
-    public class EffectInfo
-    {
-        public GameObject MeleeEffect;// 한손검이펙트
-        public GameObject SwordEffect;// 대검이펙트
-        public GameObject SpearEffect;// 창이펙트
-        public GameObject DashEffect;// 대쉬이펙트
-        public GameObject RightEffect; // 한손검 우클릭 이펙트
-        public Transform StartPositionRotation; //이펙트 시작지점
-        public Transform StartPositionRotation1; //우클릭 시작지점
-        public float DestroyAfter = 10; // 이펙트 지속시간
-        public bool UseLocalPosition = true;
-    }
+    [Header("약진 파티클")]
+    public GameObject dashParticle;
+    public Transform dashParticleTransform;
 
-    void MeleeInstantiateEffect(int EffectNumber)
-    {
-        if (Effects == null || Effects.Length <= EffectNumber)
-        {
-            Debug.LogError("Incorrect effect number or effect is null");
-        }
+    [Header("일반 공격 파티클")]
+    public GameObject basicAttackParticle;
+    public Transform basicAttackParticleTransform;
 
-        var instance = Instantiate(Effects[EffectNumber].MeleeEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+    [Header("특수 공격 파티클")]
+    public GameObject specialAttackParticle;
+    public Transform specialAttackParticleTransform;
 
-        if (Effects[EffectNumber].UseLocalPosition)
-        {
-            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
-            instance.transform.localPosition = Vector3.zero;
-            instance.transform.localRotation = new Quaternion();
-        }
-        Destroy(instance, Effects[EffectNumber].DestroyAfter);
-    }
-    void SwordInstantiateEffect(int EffectNumber)
-    {
-        if (Effects == null || Effects.Length <= EffectNumber)
-        {
-            Debug.LogError("Incorrect effect number or effect is null");
-        }
+    // 플레이어 행동 제약에 사용할 논리 변수
+    [HideInInspector]
+    public bool canMove { get; private set; } = true;
+    [HideInInspector]
+    public bool canBasicAttack { get; private set; } = true;
+    [HideInInspector]
+    public bool canSpecialAttack { get; private set; } = true;
+    [HideInInspector]
+    public bool canDodge { get; private set; } = true;
 
-        var instance = Instantiate(Effects[EffectNumber].SwordEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
+    void ActiveParticle(GameObject particle, Vector3 targetPosition, Quaternion targetRotation, float duration) {  // 파티클 생성 담당 메서드
+        GameObject instancedParticle = Instantiate(particle, targetPosition, targetRotation);
+        instancedParticle.transform.parent = particleParent.transform;
+        Destroy(instancedParticle, duration);
 
-        if (Effects[EffectNumber].UseLocalPosition)
-        {
-            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
-            instance.transform.localPosition = Vector3.zero;
-            instance.transform.localRotation = new Quaternion();
-        }
-        Destroy(instance, Effects[EffectNumber].DestroyAfter);
-    }
-    void SpearInstantiateEffect(int EffectNumber)
-    {
-        if (Effects == null || Effects.Length <= EffectNumber)
-        {
-            Debug.LogError("Incorrect effect number or effect is null");
-        }
-
-        var instance = Instantiate(Effects[EffectNumber].SpearEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
-
-        if (Effects[EffectNumber].UseLocalPosition)
-        {
-            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
-            instance.transform.localPosition = Vector3.zero;
-            instance.transform.localRotation = new Quaternion();
-        }
-        Destroy(instance, Effects[EffectNumber].DestroyAfter);
-    }
-    void RightmeleeInstantiateEffect(int EffectNumber)
-    {
-        if (Effects == null || Effects.Length <= EffectNumber)
-        {
-            Debug.LogError("Incorrect effect number or effect is null");
-        }
-
-        var instance = Instantiate(Effects[EffectNumber].RightEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
-
-        if (Effects[EffectNumber].UseLocalPosition)
-        {
-            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
-            instance.transform.localPosition = Vector3.zero;
-            instance.transform.localRotation = new Quaternion();
-        }
-        Destroy(instance, Effects[EffectNumber].DestroyAfter);
-    }
-    void DashInstantiateEffect(int EffectNumber)
-    {
-        if (Effects == null || Effects.Length <= EffectNumber)
-        {
-            Debug.LogError("Incorrect effect number or effect is null");
-        }
-
-        var instance = Instantiate(Effects[EffectNumber].DashEffect, Effects[EffectNumber].StartPositionRotation.position, Effects[EffectNumber].StartPositionRotation.rotation);
-
-        if (Effects[EffectNumber].UseLocalPosition)
-        {
-            instance.transform.parent = Effects[EffectNumber].StartPositionRotation.transform;
-            instance.transform.localPosition = Vector3.zero;
-            instance.transform.localRotation = new Quaternion();
-        }
-        Destroy(instance, Effects[EffectNumber].DestroyAfter);
     }
     private void Start()
     {
+        particleParent = transform.Find("Particles Parent").gameObject;
         playerRigidbody = GetComponent<Rigidbody>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         playerAnimation = GetComponent<PlayerAnimation>();
@@ -177,48 +106,26 @@ public class PlayerController : MonoBehaviourPun
         targetInterObj = null;
     }
 
-    // 캐릭터 이동명령
-    public void NowMove()
-    {
-        if (pState == PlayerState.Idle )
-        {
-            pState = PlayerState.Movement;
-            if (playerInput.isSwap)
-                pState = PlayerState.Idle;
-        }
-    }
-    public void UnMove()
-    {
-        if (pState == PlayerState.Movement)
-        {
-            pState = PlayerState.Idle;
-        }
+    public void SetMoveDirection(Vector3 direction) {
+        moveDirection = direction;
     }
 
-    public void Move()
-    {
-        if (onceUpdate)
-        {
-            playerInput = GetComponent<PlayerInput>();
-            playerAnimation = GetComponent<PlayerAnimation>();
-            playerRigidbody = GetComponent<Rigidbody>();
-            onceUpdate = false;
-        }
-        
-        if (hAxis != 0 || vAxis != 0)
-        {
-            NowMove();
+    public void Move() {
+        if (moveDirection != Vector3.zero) {
             playerAnimation.playerAnimator.SetBool("isMove", true);
-        }
-        else
-        {
-            UnMove();
-            playerAnimation.playerAnimator.SetBool("isMove", false);
+            if (canMove) {
+                pState = PlayerState.Move;
+            }
+        } else {
+            if(pState == PlayerState.Move) {
+                playerAnimation.playerAnimator.SetBool("isMove", false);
+            }
         }
 
         Vector3 heading = PlayerInput.mainCamera.transform.localRotation * Vector3.forward;
+        print(heading);
         heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
-        moveVec = (vAxis * heading + Quaternion.Euler(0, 90, 0) * heading * hAxis).normalized;
+        moveVec = (moveDirection.x * heading + Quaternion.Euler(0, 90, 0) * heading * moveDirection.z).normalized;
         moveVec = Time.fixedDeltaTime * moveVec * playerInput.moveSpeed;
 
         playerRigidbody.MovePosition(playerRigidbody.position + moveVec);
@@ -231,18 +138,18 @@ public class PlayerController : MonoBehaviourPun
     // 캐릭터 회피명령
     public void Dodge(Vector3 dir)
     {
-        if ((pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack || pState == PlayerState.onCC || pState == PlayerState.RIghtAttack) && Time.time >= nextDodgeableTime)
+        if ((pState == PlayerState.Idle || pState == PlayerState.Move || pState == PlayerState.BasicAttack || pState == PlayerState.Stun || pState == PlayerState.SpecialAttack) && Time.time >= nextDodgeableTime)
         {
-            if(pState == PlayerState.Attack)
+            if(pState == PlayerState.BasicAttack)
             {
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
                 comboCnt = 0;
-                playerInput.isShoot = false;
+                playerInput.isBasicAttacking = false;
             }
-            else if(pState == PlayerState.RIghtAttack)
+            else if(pState == PlayerState.SpecialAttack)
             {
-                playerInput.isRight = false;
+                playerInput.isSpecialAttacking = false;
             }
 /*            playerRigidbody.constraints = RigidbodyConstraints.FreezePositionY;*/
             playerInput.isDodge = true;
@@ -254,9 +161,13 @@ public class PlayerController : MonoBehaviourPun
     // 캐릭터 실제 회피
     public IEnumerator DodgeCoroutine(Vector3 dir)
     {
-        DashInstantiateEffect(0);
+        try {
+            ActiveParticle(dashParticle, dashParticleTransform.position, dashParticleTransform.rotation, 1.5f);  //  회피 파티클 재생, 1.5초 후 제거
+        } catch {
+            Debug.LogError("Dash Particle Error");
+        }
         playerRigidbody.useGravity = false;
-        playerRigidbody.AddForce(dir.normalized * dodgePower, ForceMode.Impulse);
+        playerRigidbody.AddForce(dir.normalized * dashPower, ForceMode.Impulse);
         playerRigidbody.velocity = Vector3.zero;
         playerAnimation.DodgeAni();
         for (float t = 0f; t < 0.45f; t += Time.fixedDeltaTime)
@@ -284,20 +195,20 @@ public class PlayerController : MonoBehaviourPun
         playerRigidbody.velocity = Vector3.zero; // 가속도 초기화
     }
 
-    public void Attack(Vector3 destination, float delay, float animSpeed)
+    public void BasicAttack(Vector3 destination, float delay, float animSpeed)
     { 
-        if (pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack)
+        if (pState == PlayerState.Idle || pState == PlayerState.Move || pState == PlayerState.BasicAttack)
         {
-            StartCoroutine(AttackCoroutine(destination, delay, animSpeed));
+            StartCoroutine(BasicAttackCoroutine(destination, delay, animSpeed));
         }
     }
 
 
     // 실제 공격
-    public IEnumerator AttackCoroutine(Vector3 destination, float delay, float animSpeed)
+    public IEnumerator BasicAttackCoroutine(Vector3 destination, float delay, float animSpeed)
     {
-        playerInput.isShoot = true;
-        pState = PlayerState.Attack;
+        playerInput.isBasicAttacking = true;
+        pState = PlayerState.BasicAttack;
 
         gameObject.transform.LookAt(destination);
 
@@ -305,11 +216,8 @@ public class PlayerController : MonoBehaviourPun
         {
             Debug.Log("무기없음");
             yield return new WaitForSeconds(0.0f);
-        }
-        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
-        {
+        } else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle) {
             playerAnimation.Attack();
-            ps.Emit(1);
             
             for (int i = 0; i < 3; i++)
             {
@@ -319,19 +227,9 @@ public class PlayerController : MonoBehaviourPun
             
             yield return new WaitForSeconds(0.2f); // 딜레이
 
-            playerInput.isShoot = false;
+            playerInput.isBasicAttacking = false;
             pState = PlayerState.Idle;
         }
-/*        else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Rifle)
-        {
-            playerAnimation.Attack();
-            CreateBullet(); //총알 생성하기
-            yield return new WaitForSeconds(0.1f);
-
-            PlayerInput.isShoot = false;
-            yield return new WaitForSeconds(0.3f);
-            pState = PlayerState.Idle;
-        }*/
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
             playerAnimation.playerAnimator.SetBool("isAttack", true);
@@ -341,7 +239,6 @@ public class PlayerController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3); // 0~3으로 제한  
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
-                MeleeInstantiateEffect(comboCnt);
 /*                playerEquipmentManager.equipWeapon.OnAttack();*/
                 if (comboCnt == 3)
                 {
@@ -351,7 +248,7 @@ public class PlayerController : MonoBehaviourPun
             }
             yield return new WaitForSeconds(delay);
             
-            playerInput.isShoot = false;
+            playerInput.isBasicAttacking = false;
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Sword)
         {
@@ -362,7 +259,6 @@ public class PlayerController : MonoBehaviourPun
                 comboCnt += 1;
                 comboCnt = Mathf.Clamp(comboCnt, 0, 3);  // 0~3으로 제한
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", comboCnt);
-                SwordInstantiateEffect(comboCnt);
                 if (comboCnt == 3)
                 {
                     comboCnt = 0;
@@ -371,7 +267,7 @@ public class PlayerController : MonoBehaviourPun
             }
             yield return new WaitForSeconds(delay * 2f);
             playerEquipmentManager.equipWeapon.OnAttack();
-            playerInput.isShoot = false;
+            playerInput.isBasicAttacking = false;
             
         }
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Spear)
@@ -388,13 +284,12 @@ public class PlayerController : MonoBehaviourPun
                     playerRigidbody.AddForce(transform.forward * 18f, ForceMode.Impulse);
                     playerRigidbody.velocity = Vector3.zero;
                 }
-                SpearInstantiateEffect(comboCnt);
                 if (comboCnt == 3)
                     comboCnt = 0;
             }
             yield return new WaitForSeconds(delay * 1.2f);
             playerEquipmentManager.equipWeapon.OnAttack();
-            playerInput.isShoot = false;
+            playerInput.isBasicAttacking = false;
         }
         playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
     }
@@ -412,15 +307,15 @@ public class PlayerController : MonoBehaviourPun
            gameObject.transform.LookAt(destination);
     }*/
 
-    public void RightAttack(Vector3 destination)
+    public void SpecialAttack(Vector3 destination)
     {
-        if (pState == PlayerState.Idle || pState == PlayerState.Movement || pState == PlayerState.Attack)
+        if (pState == PlayerState.Idle || pState == PlayerState.Move || pState == PlayerState.BasicAttack)
         {
-            StartCoroutine(RightAttackCoroutine(destination));
+            StartCoroutine(SpecialAttackCoroutine(destination));
         }
     }
 
-    public IEnumerator RightAttackCoroutine(Vector3 destination)
+    public IEnumerator SpecialAttackCoroutine(Vector3 destination)
     {
 /*        PlayerInput.isRight = true;
         pState = PlayerState.RIghtAttack;*/
@@ -449,7 +344,6 @@ public class PlayerController : MonoBehaviourPun
         }*/
         else if (playerEquipmentManager.equipWeapon.GetComponent<Weapon>().wType == Weapon.WeaponType.Melee)
         {
-            RightmeleeInstantiateEffect(1);
             playerAnimation.RightAttack();
             playerRigidbody.AddForce(transform.forward * 12f, ForceMode.Impulse);
             playerRigidbody.velocity = Vector3.zero;

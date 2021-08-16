@@ -109,19 +109,19 @@ public class PlayerInfo : LivingEntity
         {
             if (dInfo.dType == Damage.DamageType.NuckBack && !dead) // 넉백공격일때
             {
-                playerInput.isShoot = false;
+                playerInput.isBasicAttacking = false;
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
                 playerControll.comboCnt = 0;
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", playerControll.comboCnt);
                 playerInput.maxCcTime = dInfo.ccTime;
                 playerAnimation.OnNuckBack();
                 playerInput.onNuckBack = true;
-                playerControll.pState = PlayerController.PlayerState.onCC;
+                playerControll.pState = PlayerController.PlayerState.Stun;
                 playerControll.NuckBackMove();
             }
             else if((dInfo.dType == Damage.DamageType.Melee || dInfo.dType == Damage.DamageType.None) && !dead) // 일반공격일때
             {
-                playerInput.isShoot = false;
+                playerInput.isBasicAttacking = false;
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
                 playerControll.comboCnt = 0;
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", playerControll.comboCnt);
@@ -131,14 +131,14 @@ public class PlayerInfo : LivingEntity
             }
             else if(dInfo.dType == Damage.DamageType.Stun && !dead)
             {
-                playerInput.isShoot = false;
+                playerInput.isBasicAttacking = false;
                 playerAnimation.playerAnimator.SetBool("isAttack", false);
                 playerControll.comboCnt = 0;
                 playerAnimation.playerAnimator.SetInteger("ComboCnt", playerControll.comboCnt);
                 playerInput.maxCcTime = dInfo.ccTime;
                 playerAnimation.OnStun();
                 playerInput.onStun = true;
-                playerControll.pState = PlayerController.PlayerState.onCC;
+                playerControll.pState = PlayerController.PlayerState.Stun;
             }
         }
 
@@ -165,7 +165,7 @@ public class PlayerInfo : LivingEntity
     public override void Die()
     {
         base.Die();
-        playerControll.pState = PlayerController.PlayerState.Death;
+        playerControll.pState = PlayerController.PlayerState.Die;
         playerAnimation.Dead();
     }
 

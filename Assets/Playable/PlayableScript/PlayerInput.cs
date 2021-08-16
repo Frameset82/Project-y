@@ -14,7 +14,7 @@ public class PlayerInput : MonoBehaviourPun
     public Vector3 moveVec2; // 구르기용 벡터
     public static Camera mainCamera;
 
-    private PlayerController playerKeyboardController;
+    private PlayerController playerController;
     private PlayerEquipmentManager playerEquipmentManager;
     private PlayerAnimation playerAnimation;
     private PlayerInfo playerInfo;
@@ -23,8 +23,8 @@ public class PlayerInput : MonoBehaviourPun
     public Ray ray;
     public float moveSpeed = 7.0f;
 
-    public bool isShoot = false; // 공격중
-    public bool isRight = false; // 우클릭 공격중
+    public bool isBasicAttacking = false; // 공격중
+    public bool isSpecialAttacking = false; // 우클릭 공격중
     public bool isSwap = false; // 스왑중
     public bool isDodge = false; // 회피중
     public bool onHit = false; // 맞는중
@@ -38,10 +38,12 @@ public class PlayerInput : MonoBehaviourPun
     public float animSpeed = 1.0f; // 애니메이터 스피드
     //스턴 파티클
     public GameObject Stunps;
+
+    Vector3 inputDirection;
     
     private void Start()
     {
-        playerKeyboardController = gameObject.GetComponent<PlayerController>();
+        playerController = gameObject.GetComponent<PlayerController>();
         playerEquipmentManager = gameObject.GetComponent<PlayerEquipmentManager>();
         playerInfo = gameObject.GetComponent<PlayerInfo>();
         playerAnimation = gameObject.GetComponent<PlayerAnimation>();
@@ -63,74 +65,63 @@ public class PlayerInput : MonoBehaviourPun
     {
         if (GameManager.isMulti && !photonView.IsMine) return;
         InputEscape();
-        Attack();
+        BasicAttack();
         Interation();
-        RightAttack();
+        SpecialAttack();
         SwapInput();
         StateCheck();
         CcCheck();
         //Grenade();
     }
 
-    public void InputMove()
-    {
-        if (playerKeyboardController.pState == PlayerController.PlayerState.Dodge || playerKeyboardController.pState == PlayerController.PlayerState.Death || playerKeyboardController.pState == PlayerController.PlayerState.Attack || isSwap == true || onHit == true || playerKeyboardController.pState == PlayerController.PlayerState.onCC || isRight || isChange || isShoot || playerInfo.playerUIEnable)
-            return;
-        playerKeyboardController.hAxis = Input.GetAxisRaw("Horizontal");
-        playerKeyboardController.vAxis = Input.GetAxisRaw("Vertical");
-
-        playerKeyboardController.Move();
+    public void InputMove() {
+        if (!playerController.canMove) return;
+        inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        playerController.Move();
+        print(playerController);
     }
 
-    public void InputDodge()
-    {
-        if (Input.GetButton(dodgeButtonName) && playerKeyboardController.pState != PlayerController.PlayerState.Dodge && !playerInfo.playerUIEnable)
+    public void InputDodge() {
+        if (Input.GetButton(dodgeButtonName) && playerController.canDodge && !playerInfo.playerUIEnable)
         {
-            if (playerKeyboardController.hAxis != 0 || playerKeyboardController.vAxis != 0)
-            {
+            if (inputDirection != Vector3.zero) {
                 Vector3 heading = mainCamera.transform.localRotation * Vector3.forward;
                 heading = Vector3.Scale(heading, new Vector3(1, 0, 1)).normalized;
                 moveVec2 = heading * Time.fixedDeltaTime * Input.GetAxisRaw("Vertical") * moveSpeed;
                 moveVec2 += Quaternion.Euler(0, 90, 0) * heading * Time.fixedDeltaTime * Input.GetAxisRaw("Horizontal") * moveSpeed;
-            }
-            else if (playerKeyboardController.hAxis == 0 && playerKeyboardController.vAxis == 0)
-            {
+            } else {
                 moveVec2 = transform.forward;
             }
             transform.LookAt(transform.position + moveVec2);
-            playerKeyboardController.Dodge(moveVec2);
+            playerController.Dodge(moveVec2);
         }
     }
 
-    public void Attack()
+    public void BasicAttack() {
+        if (Input.GetMouseButtonDown(0) && playerController.canBasicAttack) {
+            RaycastHit hit;
+            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            int layerMask = (1 << LayerMask.NameToLayer("Ground")) | (1 << LayerMask.NameToLayer("Enemy"));  // 땅, 적만 raycast
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
+                Vector3 destination = new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z);
+                playerController.BasicAttack(destination, delay, animSpeed);
+            }
+        }
+    }
+
+    public void SpecialAttack()
     {
-        if (Input.GetMouseButtonDown(0) && !isShoot && playerKeyboardController.pState != PlayerController.PlayerState.RIghtAttack && playerEquipmentManager.equipWeapon != null && isSwap == false)
+        if (Input.GetMouseButtonDown(1) && !isSpecialAttacking && playerController.pState != PlayerController.PlayerState.BasicAttack && playerEquipmentManager.equipWeapon != null && isSwap == false)
         {
             RaycastHit hit;
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            // int layerMask = 1 << LayerMask.NameToLayer("Ground");
-            int layerMask = (1 << LayerMask.NameToLayer("Ground"))
-                            + (1 << LayerMask.NameToLayer("Enemy"));
-/*                            + (1 << LayerMask.NameToLayer("Wall"));*/
+            int layerMask = (1 << LayerMask.NameToLayer("Ground")) | (1 << LayerMask.NameToLayer("Enemy"));  // 땅, 적만 raycast
+
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
                 Vector3 destination = new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z);
-                playerKeyboardController.Attack(destination, delay, animSpeed);
-            }
-            print(hit.transform.gameObject.name);
-        }
-    }
-
-    public void RightAttack()
-    {
-        if (Input.GetMouseButtonDown(1) && !isRight && playerKeyboardController.pState != PlayerController.PlayerState.Attack && playerEquipmentManager.equipWeapon != null && isSwap == false)
-        {
-            RaycastHit hit;
-            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                Vector3 destination = new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z);
-                playerKeyboardController.RightAttack(destination);
+                playerController.SpecialAttack(destination);
             }
         }
     }
@@ -142,8 +133,8 @@ public class PlayerInput : MonoBehaviourPun
             if(playerEquipmentManager.nearObject != null && isSwap == false && isDodge == false){
                 playerEquipmentManager.Interation();
             }
-            if(playerKeyboardController.targetInterObj != null){
-                playerKeyboardController.targetInterObj.ActiveUI();
+            if(playerController.targetInterObj != null){
+                playerController.targetInterObj.ActiveUI();
             }
         }
 
@@ -161,7 +152,7 @@ public class PlayerInput : MonoBehaviourPun
         if (Input.GetButtonDown("Swap2") && (playerEquipmentManager.subWeapon == null || PlayerEquipmentManager.equipCount == 2))
             return;
 
-        if (playerKeyboardController.pState != PlayerController.PlayerState.Attack && !playerKeyboardInput.isDodge && !playerKeyboardInput.isSwap)
+        if (playerController.pState != PlayerController.PlayerState.BasicAttack && !playerKeyboardInput.isDodge && !playerKeyboardInput.isSwap)
         {
             if (Input.GetButtonDown("Swap1"))
             {
@@ -177,25 +168,25 @@ public class PlayerInput : MonoBehaviourPun
     public void StateCheck()
     {
         if (playerKeyboardInput.isSwap == true)
-            playerKeyboardController.pState = PlayerController.PlayerState.Swap;
-        else if (playerKeyboardController.pState == PlayerController.PlayerState.Swap && playerKeyboardInput.isSwap == false)
-            playerKeyboardController.pState = PlayerController.PlayerState.Idle;
+            playerController.pState = PlayerController.PlayerState.Swap;
+        else if (playerController.pState == PlayerController.PlayerState.Swap && playerKeyboardInput.isSwap == false)
+            playerController.pState = PlayerController.PlayerState.Idle;
 
         if (isDodge == true)
         {
-            playerKeyboardController.pState = PlayerController.PlayerState.Dodge;
+            playerController.pState = PlayerController.PlayerState.Dodge;
             playerInfo.canDamage = false;
         }
-        else if (playerKeyboardController.pState == PlayerController.PlayerState.Dodge && playerKeyboardInput.isDodge == false)
+        else if (playerController.pState == PlayerController.PlayerState.Dodge && playerKeyboardInput.isDodge == false)
         {
-            playerKeyboardController.pState = PlayerController.PlayerState.Idle;
+            playerController.pState = PlayerController.PlayerState.Idle;
             playerInfo.canDamage = true;
         }
 
-        if (isRight == true)
-            playerKeyboardController.pState = PlayerController.PlayerState.RIghtAttack;
-        else if (playerKeyboardController.pState == PlayerController.PlayerState.RIghtAttack && playerKeyboardInput.isRight == false)
-            playerKeyboardController.pState = PlayerController.PlayerState.Idle;
+        if (isSpecialAttacking == true)
+            playerController.pState = PlayerController.PlayerState.SpecialAttack;
+        else if (playerController.pState == PlayerController.PlayerState.SpecialAttack && playerKeyboardInput.isSpecialAttacking == false)
+            playerController.pState = PlayerController.PlayerState.Idle;
      
     }
 
@@ -218,16 +209,16 @@ public class PlayerInput : MonoBehaviourPun
                 onNuckBack = false;
                 onStun = false;
                 playerAnimation.playerAnimator.SetBool("OnCC", false);
-                playerKeyboardController.pState = PlayerController.PlayerState.Idle;
+                playerController.pState = PlayerController.PlayerState.Idle;
             }
         }
         if(onHit == true)
         {
-            playerKeyboardController.pState = PlayerController.PlayerState.onHit;
+            playerController.pState = PlayerController.PlayerState.Hit;
         }
-        else if(playerKeyboardController.pState == PlayerController.PlayerState.onHit && onHit == false)
+        else if(playerController.pState == PlayerController.PlayerState.Hit && onHit == false)
         {
-            playerKeyboardController.pState = PlayerController.PlayerState.Idle;
+            playerController.pState = PlayerController.PlayerState.Idle;
         }
     }
 
@@ -235,8 +226,8 @@ public class PlayerInput : MonoBehaviourPun
     void InputEscape(){
         if(Input.GetKeyDown(KeyCode.Escape)){
             if(PlayerController.isInteraction){
-                if(playerKeyboardController.targetInterObj != null){
-                    playerKeyboardController.targetInterObj.InactiveUI();
+                if(playerController.targetInterObj != null){
+                    playerController.targetInterObj.InactiveUI();
                 }
                 uiSetting.CloseUI();
             } else {

@@ -23,7 +23,7 @@ public class ComboManager : MonoBehaviour
             playerAnimation.playerAnimator.SetBool("isAttack", false);
             playerController.comboCnt = 0;
             playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
-            playerController.gameObject.GetComponent<PlayerInput>().isShoot = false;
+            playerController.gameObject.GetComponent<PlayerInput>().isBasicAttacking = false;
         }
     }
 
@@ -35,7 +35,7 @@ public class ComboManager : MonoBehaviour
             playerAnimation.playerAnimator.SetBool("isAttack", false);
             playerController.comboCnt = 0;
             playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
-            playerController.gameObject.GetComponent<PlayerInput>().isShoot = false;
+            playerController.gameObject.GetComponent<PlayerInput>().isBasicAttacking = false;
         }
     }
 
@@ -45,7 +45,7 @@ public class ComboManager : MonoBehaviour
         playerAnimation.playerAnimator.SetInteger("ComboCnt", 0);
         playerController.pState = PlayerController.PlayerState.Idle;
         playerAnimation.playerAnimator.SetBool("isAttack", false);
-        playerController.gameObject.GetComponent<PlayerInput>().isShoot = false;
+        playerController.gameObject.GetComponent<PlayerInput>().isBasicAttacking = false;
 
     }
 
